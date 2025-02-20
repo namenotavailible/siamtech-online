@@ -1,7 +1,7 @@
 
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { Loading } from "@/components/ui/loading";
 
 const products = [
   {
@@ -41,6 +41,11 @@ const products = [
 const ProductDetail = () => {
   const { id } = useParams();
   const product = products.find(p => p.id === Number(id));
+
+  // Simulate loading
+  if (!id) {
+    return <Loading />;
+  }
 
   if (!product) {
     return (
