@@ -1,7 +1,8 @@
 
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loading } from "@/components/ui/loading";
+import { useEffect } from "react";
 
 const products = [
   {
@@ -40,7 +41,23 @@ const products = [
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const product = products.find(p => p.id === Number(id));
+
+  // Handle escape key press
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        navigate("/");
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [navigate]);
 
   // Simulate loading
   if (!id) {
@@ -54,6 +71,11 @@ const ProductDetail = () => {
       </div>
     );
   }
+
+  const handleLearnMore = () => {
+    // Here you can add the specific learn more action
+    window.open("https://www.fifine.com", "_blank");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white">
@@ -100,7 +122,10 @@ const ProductDetail = () => {
               <button className="w-full bg-white text-black py-3 rounded-md hover:bg-gray-200 transition-colors">
                 Add to Cart
               </button>
-              <button className="w-full border border-white/20 py-3 rounded-md hover:bg-white/10 transition-colors">
+              <button 
+                onClick={handleLearnMore}
+                className="w-full border border-white/20 py-3 rounded-md hover:bg-white/10 transition-colors"
+              >
                 Learn More
               </button>
             </motion.div>
