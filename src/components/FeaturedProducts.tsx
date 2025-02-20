@@ -3,16 +3,16 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 const FeaturedProducts = () => {
-  const [sectionTitle, setSectionTitle] = useState("Premium Audio Equipment");
+  const [sectionTitle, setSectionTitle] = useState("Audio Equipment");
   const [sectionSubtitle, setSectionSubtitle] = useState("Featured Products");
   
   const [products, setProducts] = useState([
     {
       id: 1,
-      name: "Studio Pro Mic",
-      price: "$299",
+      name: "FIFINE Ampligame AM8",
+      price: "2,490 ฿",
       image: "/lovable-uploads/895e0863-a00d-4ccd-9f78-21e1181817a3.png",
-      category: "Professional"
+      category: "Dynamic Microphone #1"
     },
     {
       id: 2,
