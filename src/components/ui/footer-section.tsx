@@ -2,13 +2,11 @@
 "use client";
 
 import * as React from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Facebook, Instagram, Moon, Send, Sun } from "lucide-react";
-import { Link } from "react-router-dom";
+import { NewsletterSection } from "./footer/newsletter-section";
+import { QuickLinks } from "./footer/quick-links";
+import { ContactInfo } from "./footer/contact-info";
+import { SocialSection } from "./footer/social-section";
+import { BottomSection } from "./footer/bottom-section";
 
 function Footerdemo() {
   const [isDarkMode, setIsDarkMode] = React.useState(true);
@@ -25,219 +23,12 @@ function Footerdemo() {
     <footer className="relative border-t border-gray-800 bg-black text-white">
       <div className="mx-auto w-full max-w-[85rem] px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          {/* Newsletter Section */}
-          <div className="relative space-y-4">
-            <h2 
-              className="text-2xl font-bold tracking-tight text-white"
-              contentEditable
-              suppressContentEditableWarning
-            >
-              Stay Connected
-            </h2>
-            <p 
-              className="text-sm text-gray-400"
-              contentEditable
-              suppressContentEditableWarning
-            >
-              Join our newsletter for the latest updates and exclusive offers.
-            </p>
-            <form className="relative mt-6">
-              <Input 
-                type="email" 
-                placeholder="Enter your email" 
-                className="w-full bg-gray-900/50 border-gray-800 text-white placeholder:text-gray-500 focus:border-gray-700 focus:ring-gray-700"
-              />
-              <Button 
-                type="submit" 
-                size="icon" 
-                className="absolute right-1 top-1 h-8 w-8 rounded-full bg-white hover:bg-gray-200 text-black transition-all"
-              >
-                <Send className="h-4 w-4" />
-                <span className="sr-only">Subscribe</span>
-              </Button>
-            </form>
-          </div>
-
-          {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 
-              className="text-lg font-semibold text-white"
-              contentEditable
-              suppressContentEditableWarning
-            >
-              Quick Links
-            </h3>
-            <nav className="flex flex-col space-y-3 text-sm">
-              <Link 
-                to="/" 
-                className="text-gray-400 transition-colors hover:text-white"
-                contentEditable
-                suppressContentEditableWarning
-              >
-                Home
-              </Link>
-              <Link 
-                to="/about" 
-                className="text-gray-400 transition-colors hover:text-white"
-                contentEditable
-                suppressContentEditableWarning
-              >
-                About Us
-              </Link>
-              <Link 
-                to="/products" 
-                className="text-gray-400 transition-colors hover:text-white"
-                contentEditable
-                suppressContentEditableWarning
-              >
-                Products
-              </Link>
-              <Link 
-                to="/contact" 
-                className="text-gray-400 transition-colors hover:text-white"
-                contentEditable
-                suppressContentEditableWarning
-              >
-                Contact
-              </Link>
-            </nav>
-          </div>
-
-          {/* Contact Info */}
-          <div className="space-y-4">
-            <h3 
-              className="text-lg font-semibold text-white"
-              contentEditable
-              suppressContentEditableWarning
-            >
-              Contact Us
-            </h3>
-            <address className="space-y-3 text-sm text-gray-400 not-italic">
-              <p contentEditable suppressContentEditableWarning>1444/97 Nakhon Chaisi Road,</p>
-              <p contentEditable suppressContentEditableWarning>Thanon Nakhon Chaisi Subdistrict,</p>
-              <p contentEditable suppressContentEditableWarning>Dusit District, Bangkok 10300, Thailand</p>
-              <p contentEditable suppressContentEditableWarning>Phone: 66+99 999 9999</p>
-              <p contentEditable suppressContentEditableWarning>Email: info@siamtechonline.com</p>
-            </address>
-          </div>
-
-          {/* Social Links & Theme Toggle */}
-          <div className="space-y-4">
-            <h3 
-              className="text-lg font-semibold text-white mb-6"
-              contentEditable
-              suppressContentEditableWarning
-            >
-              Follow Us
-            </h3>
-            {/* Social Icons */}
-            <div className="flex flex-col space-y-6">
-              <div className="flex space-x-4">
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <a 
-                        href="https://www.facebook.com/profile.php?id=61551372441862" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="group"
-                      >
-                        <Button 
-                          variant="outline" 
-                          size="icon" 
-                          className="rounded-full border-gray-700 bg-gray-900/50 hover:bg-gray-800"
-                        >
-                          <Facebook className="h-4 w-4 text-gray-400 group-hover:text-white" />
-                          <span className="sr-only">Facebook</span>
-                        </Button>
-                      </a>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p contentEditable suppressContentEditableWarning>Follow us on Facebook</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-                
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <a 
-                        href="https://www.instagram.com/siamtechonline/" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="group"
-                      >
-                        <Button 
-                          variant="outline" 
-                          size="icon" 
-                          className="rounded-full border-gray-700 bg-gray-900/50 hover:bg-gray-800"
-                        >
-                          <Instagram className="h-4 w-4 text-gray-400 group-hover:text-white" />
-                          <span className="sr-only">Instagram</span>
-                        </Button>
-                      </a>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p contentEditable suppressContentEditableWarning>Follow us on Instagram</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-
-              {/* Theme Toggle */}
-              <div className="flex items-center space-x-2">
-                <Sun className="h-4 w-4 text-gray-400" />
-                <Switch 
-                  id="dark-mode" 
-                  checked={isDarkMode} 
-                  onCheckedChange={setIsDarkMode}
-                  className="data-[state=checked]:bg-gray-700 data-[state=unchecked]:bg-gray-900"
-                />
-                <Moon className="h-4 w-4 text-gray-400" />
-                <Label htmlFor="dark-mode" className="sr-only">
-                  Toggle dark mode
-                </Label>
-              </div>
-            </div>
-          </div>
+          <NewsletterSection />
+          <QuickLinks />
+          <ContactInfo />
+          <SocialSection isDarkMode={isDarkMode} onDarkModeChange={setIsDarkMode} />
         </div>
-
-        {/* Bottom Section */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-800 pt-8 text-center md:flex-row">
-          <p 
-            className="text-sm text-gray-400"
-            contentEditable
-            suppressContentEditableWarning
-          >
-            © 2024 Siamtech Online Group Co.,Ltd. All rights reserved.
-          </p>
-          <nav className="flex gap-6 text-sm">
-            <Link 
-              to="/privacy" 
-              className="text-gray-400 transition-colors hover:text-white"
-              contentEditable
-              suppressContentEditableWarning
-            >
-              Privacy Policy
-            </Link>
-            <Link 
-              to="/terms" 
-              className="text-gray-400 transition-colors hover:text-white"
-              contentEditable
-              suppressContentEditableWarning
-            >
-              Terms of Service
-            </Link>
-            <Link 
-              to="/cookies" 
-              className="text-gray-400 transition-colors hover:text-white"
-              contentEditable
-              suppressContentEditableWarning
-            >
-              Cookie Settings
-            </Link>
-          </nav>
-        </div>
+        <BottomSection />
       </div>
     </footer>
   );
