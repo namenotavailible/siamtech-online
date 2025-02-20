@@ -1,9 +1,8 @@
 
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Facebook, Instagram, Moon, Sun } from "lucide-react";
+import { Facebook, Instagram } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 interface SocialSectionProps {
   isDarkMode: boolean;
@@ -74,17 +73,10 @@ export function SocialSection({ isDarkMode, onDarkModeChange }: SocialSectionPro
         </div>
 
         <div className="flex items-center justify-center space-x-2">
-          <Sun className="h-4 w-4 text-gray-400" />
-          <Switch 
-            id="dark-mode" 
-            checked={isDarkMode} 
-            onCheckedChange={onDarkModeChange}
-            className="data-[state=checked]:bg-gray-700 data-[state=unchecked]:bg-gray-900"
+          <ThemeToggle 
+            isDark={isDarkMode}
+            onDarkModeChange={onDarkModeChange}
           />
-          <Moon className="h-4 w-4 text-gray-400" />
-          <Label htmlFor="dark-mode" className="sr-only">
-            Toggle dark mode
-          </Label>
         </div>
       </div>
     </div>
