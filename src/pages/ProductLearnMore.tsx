@@ -3,8 +3,22 @@ import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
 
-const products = {
-  1: {
+type ProductData = {
+  name: string;
+  features: string[];
+  details: string;
+  specs: {
+    frequency: string;
+    sensitivity: string;
+    spl: string;
+    impedance: string;
+    connection: string;
+    compatibility: string;
+  };
+};
+
+const products: Record<string, ProductData> = {
+  "1": {
     name: "FIFINE Ampligame AM8",
     features: [
       "Professional Dynamic USB Microphone",
@@ -24,7 +38,7 @@ const products = {
       compatibility: "Windows, macOS, PS4/PS5"
     }
   },
-  2: {
+  "2": {
     name: "FIFINE Ampligame A8",
     features: [
       "Professional Condenser USB Microphone",
@@ -49,7 +63,7 @@ const products = {
 const ProductLearnMore = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const product = products[id as keyof typeof products];
+  const product = id ? products[id] : null;
 
   if (!product) {
     return (
