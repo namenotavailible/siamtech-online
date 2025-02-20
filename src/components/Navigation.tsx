@@ -11,9 +11,9 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <a href="/" className="flex flex-col items-start leading-tight">
+            <a href="/" className="flex flex-col items-start -space-y-1">
               <span className="text-white text-lg font-medium tracking-wide">SIAMTECH</span>
-              <span className="text-gray-400 text-sm font-light tracking-wide">ONLINE</span>
+              <span className="text-gray-400 text-[0.65rem] font-light tracking-widest uppercase">online</span>
             </a>
           </div>
           
