@@ -19,7 +19,7 @@ const FeaturedProducts = () => {
       id: 2,
       name: "FIFINE Ampligame A8",
       price: "1,990 ฿",
-      image: "/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png",
+      image: "/lovable-uploads/0bb46080-e4f4-4402-a40d-ecd94be8eade.png",
       category: "Condenser Microphone #2"
     },
     {
