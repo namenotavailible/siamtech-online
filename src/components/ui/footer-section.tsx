@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 
 function Footerdemo() {
   const [isDarkMode, setIsDarkMode] = React.useState(true);
+  
   React.useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add("dark");
@@ -26,8 +27,18 @@ function Footerdemo() {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Newsletter Section */}
           <div className="relative space-y-4">
-            <h2 className="text-2xl font-bold tracking-tight text-white">Stay Connected</h2>
-            <p className="text-sm text-gray-400">
+            <h2 
+              className="text-2xl font-bold tracking-tight text-white"
+              contentEditable
+              suppressContentEditableWarning
+            >
+              Stay Connected
+            </h2>
+            <p 
+              className="text-sm text-gray-400"
+              contentEditable
+              suppressContentEditableWarning
+            >
               Join our newsletter for the latest updates and exclusive offers.
             </p>
             <form className="relative mt-6">
@@ -49,18 +60,44 @@ function Footerdemo() {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">Quick Links</h3>
+            <h3 
+              className="text-lg font-semibold text-white"
+              contentEditable
+              suppressContentEditableWarning
+            >
+              Quick Links
+            </h3>
             <nav className="flex flex-col space-y-3 text-sm">
-              <Link to="/" className="text-gray-400 transition-colors hover:text-white">
+              <Link 
+                to="/" 
+                className="text-gray-400 transition-colors hover:text-white"
+                contentEditable
+                suppressContentEditableWarning
+              >
                 Home
               </Link>
-              <Link to="/about" className="text-gray-400 transition-colors hover:text-white">
+              <Link 
+                to="/about" 
+                className="text-gray-400 transition-colors hover:text-white"
+                contentEditable
+                suppressContentEditableWarning
+              >
                 About Us
               </Link>
-              <Link to="/products" className="text-gray-400 transition-colors hover:text-white">
+              <Link 
+                to="/products" 
+                className="text-gray-400 transition-colors hover:text-white"
+                contentEditable
+                suppressContentEditableWarning
+              >
                 Products
               </Link>
-              <Link to="/contact" className="text-gray-400 transition-colors hover:text-white">
+              <Link 
+                to="/contact" 
+                className="text-gray-400 transition-colors hover:text-white"
+                contentEditable
+                suppressContentEditableWarning
+              >
                 Contact
               </Link>
             </nav>
@@ -68,19 +105,31 @@ function Footerdemo() {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">Contact Us</h3>
+            <h3 
+              className="text-lg font-semibold text-white"
+              contentEditable
+              suppressContentEditableWarning
+            >
+              Contact Us
+            </h3>
             <address className="space-y-3 text-sm text-gray-400 not-italic">
-              <p>1444/97 Nakhon Chaisi Road,</p>
-              <p>Thanon Nakhon Chaisi Subdistrict,</p>
-              <p>Dusit District, Bangkok 10300, Thailand</p>
-              <p>Phone: 66+99 999 9999</p>
-              <p>Email: info@siamtechonline.com</p>
+              <p contentEditable suppressContentEditableWarning>1444/97 Nakhon Chaisi Road,</p>
+              <p contentEditable suppressContentEditableWarning>Thanon Nakhon Chaisi Subdistrict,</p>
+              <p contentEditable suppressContentEditableWarning>Dusit District, Bangkok 10300, Thailand</p>
+              <p contentEditable suppressContentEditableWarning>Phone: 66+99 999 9999</p>
+              <p contentEditable suppressContentEditableWarning>Email: info@siamtechonline.com</p>
             </address>
           </div>
 
           {/* Social Links & Theme Toggle */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">Follow Us</h3>
+            <h3 
+              className="text-lg font-semibold text-white"
+              contentEditable
+              suppressContentEditableWarning
+            >
+              Follow Us
+            </h3>
             <div className="flex space-x-4">
               <TooltipProvider>
                 <Tooltip>
@@ -102,7 +151,7 @@ function Footerdemo() {
                     </a>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Follow us on Facebook</p>
+                    <p contentEditable suppressContentEditableWarning>Follow us on Facebook</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -127,7 +176,7 @@ function Footerdemo() {
                     </a>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Follow us on Instagram</p>
+                    <p contentEditable suppressContentEditableWarning>Follow us on Instagram</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -151,17 +200,36 @@ function Footerdemo() {
 
         {/* Bottom Section */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-800 pt-8 text-center md:flex-row">
-          <p className="text-sm text-gray-400">
+          <p 
+            className="text-sm text-gray-400"
+            contentEditable
+            suppressContentEditableWarning
+          >
             © 2024 Siamtech Online Group Co.,Ltd. All rights reserved.
           </p>
           <nav className="flex gap-6 text-sm">
-            <Link to="/privacy" className="text-gray-400 transition-colors hover:text-white">
+            <Link 
+              to="/privacy" 
+              className="text-gray-400 transition-colors hover:text-white"
+              contentEditable
+              suppressContentEditableWarning
+            >
               Privacy Policy
             </Link>
-            <Link to="/terms" className="text-gray-400 transition-colors hover:text-white">
+            <Link 
+              to="/terms" 
+              className="text-gray-400 transition-colors hover:text-white"
+              contentEditable
+              suppressContentEditableWarning
+            >
               Terms of Service
             </Link>
-            <Link to="/cookies" className="text-gray-400 transition-colors hover:text-white">
+            <Link 
+              to="/cookies" 
+              className="text-gray-400 transition-colors hover:text-white"
+              contentEditable
+              suppressContentEditableWarning
+            >
               Cookie Settings
             </Link>
           </nav>
