@@ -11,7 +11,7 @@ const FeaturedProducts = () => {
       id: 1,
       name: "Studio Pro Mic",
       price: "$299",
-      image: "/placeholder.svg",
+      image: "/lovable-uploads/895e0863-a00d-4ccd-9f78-21e1181817a3.png",
       category: "Professional"
     },
     {
