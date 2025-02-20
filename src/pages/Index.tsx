@@ -19,9 +19,7 @@ const Index = () => {
       }} className="text-center max-w-4xl mx-auto">
           <span className="text-sm uppercase tracking-wider text-gray-400">WELCOME TO SIAMTECH ONLINE GROUP</span>
           <h1 className="mt-6 text-4xl sm:text-6xl font-bold leading-tight">Professional Equipment for Every Need</h1>
-          <p className="mt-6 text-xl text-gray-300 max-w-2xl mx-auto">
-            Discover our premium selection of microphones and audio gear, crafted for professionals and enthusiasts alike.
-          </p>
+          <p className="mt-6 text-xl text-gray-300 max-w-2xl mx-auto">Discover our premium selection of accessories and audio gear, crafted for professionals and enthusiasts alike.</p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <button className="px-8 py-3 bg-white text-black rounded-md hover:bg-gray-200 transition-colors">
               Shop Now
