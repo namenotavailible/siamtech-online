@@ -1,38 +1,42 @@
 
 import { motion } from "framer-motion";
-
-const products = [
-  {
-    id: 1,
-    name: "Studio Pro Mic",
-    price: "$299",
-    image: "/placeholder.svg",
-    category: "Professional"
-  },
-  {
-    id: 2,
-    name: "Wireless Lavalier",
-    price: "$149",
-    image: "/placeholder.svg",
-    category: "Wireless"
-  },
-  {
-    id: 3,
-    name: "Podcast Kit",
-    price: "$399",
-    image: "/placeholder.svg",
-    category: "Bundle"
-  },
-  {
-    id: 4,
-    name: "Gaming Headset",
-    price: "$199",
-    image: "/placeholder.svg",
-    category: "Gaming"
-  }
-];
+import { useState } from "react";
 
 const FeaturedProducts = () => {
+  const [sectionTitle, setSectionTitle] = useState("Premium Audio Equipment");
+  const [sectionSubtitle, setSectionSubtitle] = useState("Featured Products");
+  
+  const [products, setProducts] = useState([
+    {
+      id: 1,
+      name: "Studio Pro Mic",
+      price: "$299",
+      image: "/placeholder.svg",
+      category: "Professional"
+    },
+    {
+      id: 2,
+      name: "Wireless Lavalier",
+      price: "$149",
+      image: "/placeholder.svg",
+      category: "Wireless"
+    },
+    {
+      id: 3,
+      name: "Podcast Kit",
+      price: "$399",
+      image: "/placeholder.svg",
+      category: "Bundle"
+    },
+    {
+      id: 4,
+      name: "Gaming Headset",
+      price: "$199",
+      image: "/placeholder.svg",
+      category: "Gaming"
+    }
+  ]);
+
   return (
     <section className="py-20 bg-gradient-to-b from-black to-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,16 +45,22 @@ const FeaturedProducts = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-sm text-gray-400 uppercase tracking-wider"
+            contentEditable
+            suppressContentEditableWarning
+            onBlur={(e) => setSectionSubtitle(e.currentTarget.textContent || sectionSubtitle)}
           >
-            Featured Products
+            {sectionSubtitle}
           </motion.span>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             className="mt-2 text-3xl font-bold text-white"
+            contentEditable
+            suppressContentEditableWarning
+            onBlur={(e) => setSectionTitle(e.currentTarget.textContent || sectionTitle)}
           >
-            Premium Audio Equipment
+            {sectionTitle}
           </motion.h2>
         </div>
 
@@ -71,9 +81,42 @@ const FeaturedProducts = () => {
                 />
               </div>
               <div className="p-6">
-                <span className="text-sm text-gray-400">{product.category}</span>
-                <h3 className="mt-1 text-xl font-semibold text-white">{product.name}</h3>
-                <p className="mt-2 text-gray-300">{product.price}</p>
+                <span 
+                  className="text-sm text-gray-400"
+                  contentEditable
+                  suppressContentEditableWarning
+                  onBlur={(e) => {
+                    const newProducts = [...products];
+                    newProducts[index].category = e.currentTarget.textContent || product.category;
+                    setProducts(newProducts);
+                  }}
+                >
+                  {product.category}
+                </span>
+                <h3 
+                  className="mt-1 text-xl font-semibold text-white"
+                  contentEditable
+                  suppressContentEditableWarning
+                  onBlur={(e) => {
+                    const newProducts = [...products];
+                    newProducts[index].name = e.currentTarget.textContent || product.name;
+                    setProducts(newProducts);
+                  }}
+                >
+                  {product.name}
+                </h3>
+                <p 
+                  className="mt-2 text-gray-300"
+                  contentEditable
+                  suppressContentEditableWarning
+                  onBlur={(e) => {
+                    const newProducts = [...products];
+                    newProducts[index].price = e.currentTarget.textContent || product.price;
+                    setProducts(newProducts);
+                  }}
+                >
+                  {product.price}
+                </p>
                 <button className="mt-4 w-full bg-white text-black py-2 rounded-md hover:bg-gray-200 transition-colors">
                   Add to Cart
                 </button>
