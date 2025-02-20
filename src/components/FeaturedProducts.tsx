@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 const FeaturedProducts = () => {
   const [sectionTitle, setSectionTitle] = useState("Audio Equipment");
   const [sectionSubtitle, setSectionSubtitle] = useState("Featured Products");
-  const [accessoriesTitle, setAccessoriesTitle] = useState("Accessories");
+  const [accessoriesTitle, setAccessoriesTitle] = useState("Gaming Mice");
+  const [accessoriesSubtitle, setAccessoriesSubtitle] = useState("Featured Products");
   
   const [products, setProducts] = useState([
     {
@@ -132,11 +133,21 @@ const FeaturedProducts = () => {
         </div>
 
         <div className="text-center my-16">
+          <motion.span 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-sm text-gray-400 uppercase tracking-wider"
+            contentEditable
+            suppressContentEditableWarning
+            onBlur={(e) => setAccessoriesSubtitle(e.currentTarget.textContent || accessoriesSubtitle)}
+          >
+            {accessoriesSubtitle}
+          </motion.span>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-3xl font-bold text-white"
+            className="mt-2 text-3xl font-bold text-white"
             contentEditable
             suppressContentEditableWarning
             onBlur={(e) => setAccessoriesTitle(e.currentTarget.textContent || accessoriesTitle)}
