@@ -19,8 +19,8 @@ const Navigation = () => {
             <a href="/products" className="text-gray-300 hover:text-white transition-colors">
               Products
             </a>
-            <a href="/collections" className="text-gray-300 hover:text-white transition-colors">
-              Collections
+            <a href="/warranty" className="text-gray-300 hover:text-white transition-colors">
+              Warranty
             </a>
             <a href="/support" className="text-gray-300 hover:text-white transition-colors">
               Support
@@ -56,8 +56,8 @@ const Navigation = () => {
               <a href="/products" className="block px-3 py-2 text-gray-300 hover:text-white transition-colors">
                 Products
               </a>
-              <a href="/collections" className="block px-3 py-2 text-gray-300 hover:text-white transition-colors">
-                Collections
+              <a href="/warranty" className="block px-3 py-2 text-gray-300 hover:text-white transition-colors">
+                Warranty
               </a>
               <a href="/support" className="block px-3 py-2 text-gray-300 hover:text-white transition-colors">
                 Support

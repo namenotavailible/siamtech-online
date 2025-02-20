@@ -5,6 +5,7 @@ import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import ProductDetail from "./pages/ProductDetail";
 import ProductLearnMore from "./pages/ProductLearnMore";
+import Warranty from "./pages/Warranty";
 import "./App.css";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/about" element={<About />} />
+        <Route path="/warranty" element={<Warranty />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/product/:id/learn-more" element={<ProductLearnMore />} />
         <Route path="*" element={<NotFound />} />
