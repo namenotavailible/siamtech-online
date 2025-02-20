@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loading } from "@/components/ui/loading";
@@ -45,7 +44,6 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const product = products.find(p => p.id === Number(id));
 
-  // Handle escape key press
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -60,7 +58,6 @@ const ProductDetail = () => {
     };
   }, [navigate]);
 
-  // Simulate loading
   if (!id) {
     return <Loading />;
   }
@@ -74,8 +71,7 @@ const ProductDetail = () => {
   }
 
   const handleLearnMore = () => {
-    // Here you can add the specific learn more action
-    window.open("https://www.fifine.com", "_blank");
+    navigate(`/product/${id}/learn-more`);
   };
 
   return (
