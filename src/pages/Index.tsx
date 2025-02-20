@@ -2,6 +2,7 @@
 import { Vortex } from "@/components/ui/vortex";
 import Navigation from "@/components/Navigation";
 import FeaturedProducts from "@/components/FeaturedProducts";
+import { Footerdemo } from "@/components/ui/footer-section";
 import { motion } from "framer-motion";
 
 const Index = () => {
@@ -41,6 +42,7 @@ const Index = () => {
       </Vortex>
 
       <FeaturedProducts />
+      <Footerdemo />
     </div>
   );
 };
