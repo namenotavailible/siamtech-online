@@ -73,7 +73,7 @@ export function SocialSection({ isDarkMode, onDarkModeChange }: SocialSectionPro
           </TooltipProvider>
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center justify-center space-x-2">
           <Sun className="h-4 w-4 text-gray-400" />
           <Switch 
             id="dark-mode" 
