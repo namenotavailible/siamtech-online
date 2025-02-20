@@ -1,13 +1,15 @@
+
 import { ShoppingCart, Menu, Search } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   return <nav className="fixed w-full z-50 bg-black/10 backdrop-blur-md border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <a href="/" className="flex flex-col items-start -space-y-1">
+            <a href="/" className="flex flex-col items-start -space-y-1 pl-0">
               <span className="text-white font-medium tracking-wide text-base">SIAMTECH</span>
               <span className="text-gray-400 text-[0.65rem] font-light tracking-widest uppercase">online</span>
             </a>
@@ -65,4 +67,5 @@ const Navigation = () => {
       </AnimatePresence>
     </nav>;
 };
+
 export default Navigation;
