@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -18,59 +19,84 @@ function Footerdemo() {
       document.documentElement.classList.remove("dark");
     }
   }, [isDarkMode]);
-  return <footer className="relative border-t bg-background text-foreground transition-colors duration-300">
-      <div className="container mx-auto px-4 py-12 md:px-6 lg:px-8">
+  
+  return (
+    <footer className="relative border-t border-gray-800 bg-black text-white">
+      <div className="mx-auto w-full max-w-[85rem] px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          <div className="relative">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight">Stay Connected</h2>
-            <p className="mb-6 text-muted-foreground">
+          {/* Newsletter Section */}
+          <div className="relative space-y-4">
+            <h2 className="text-2xl font-bold tracking-tight text-white">Stay Connected</h2>
+            <p className="text-sm text-gray-400">
               Join our newsletter for the latest updates and exclusive offers.
             </p>
-            <form className="relative">
-              <Input type="email" placeholder="Enter your email" className="pr-12 backdrop-blur-sm" />
-              <Button type="submit" size="icon" className="absolute right-1 top-1 h-8 w-8 rounded-full bg-primary text-primary-foreground transition-transform hover:scale-105">
+            <form className="relative mt-6">
+              <Input 
+                type="email" 
+                placeholder="Enter your email" 
+                className="w-full bg-gray-900/50 border-gray-800 text-white placeholder:text-gray-500 focus:border-gray-700 focus:ring-gray-700"
+              />
+              <Button 
+                type="submit" 
+                size="icon" 
+                className="absolute right-1 top-1 h-8 w-8 rounded-full bg-white hover:bg-gray-200 text-black transition-all"
+              >
                 <Send className="h-4 w-4" />
                 <span className="sr-only">Subscribe</span>
               </Button>
             </form>
-            <div className="absolute -right-4 top-0 h-24 w-24 rounded-full bg-primary/10 blur-2xl" />
           </div>
-          <div>
-            <h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
-            <nav className="space-y-2 text-sm">
-              <Link to="/" className="block transition-colors hover:text-primary">
+
+          {/* Quick Links */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-white">Quick Links</h3>
+            <nav className="flex flex-col space-y-3 text-sm">
+              <Link to="/" className="text-gray-400 transition-colors hover:text-white">
                 Home
               </Link>
-              <Link to="/about" className="block transition-colors hover:text-primary">
+              <Link to="/about" className="text-gray-400 transition-colors hover:text-white">
                 About Us
               </Link>
-              <Link to="/products" className="block transition-colors hover:text-primary">
+              <Link to="/products" className="text-gray-400 transition-colors hover:text-white">
                 Products
               </Link>
-              <Link to="/contact" className="block transition-colors hover:text-primary">
+              <Link to="/contact" className="text-gray-400 transition-colors hover:text-white">
                 Contact
               </Link>
             </nav>
           </div>
-          <div>
-            <h3 className="mb-4 text-lg font-semibold">Contact Us</h3>
-            <address className="space-y-2 text-sm not-italic">
-              <p>1444/97 Nakhon Chaisi Road, Thanon Nakhon Chaisi Subdistrict,</p>
-              <p>Dusit District, Bangkok 10300, Thailand 
-            </p>
+
+          {/* Contact Info */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-white">Contact Us</h3>
+            <address className="space-y-3 text-sm text-gray-400 not-italic">
+              <p>1444/97 Nakhon Chaisi Road,</p>
+              <p>Thanon Nakhon Chaisi Subdistrict,</p>
+              <p>Dusit District, Bangkok 10300, Thailand</p>
               <p>Phone: 66+99 999 9999</p>
               <p>Email: info@siamtechonline.com</p>
             </address>
           </div>
-          <div className="relative">
-            <h3 className="mb-4 text-lg font-semibold">Follow Us</h3>
-            <div className="mb-6 flex space-x-4">
+
+          {/* Social Links & Theme Toggle */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-white">Follow Us</h3>
+            <div className="flex space-x-4">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <a href="https://www.facebook.com/profile.php?id=61551372441862" target="_blank" rel="noopener noreferrer">
-                      <Button variant="outline" size="icon" className="rounded-full">
-                        <Facebook className="h-4 w-4" />
+                    <a 
+                      href="https://www.facebook.com/profile.php?id=61551372441862" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="group"
+                    >
+                      <Button 
+                        variant="outline" 
+                        size="icon" 
+                        className="rounded-full border-gray-700 bg-gray-900/50 hover:bg-gray-800"
+                      >
+                        <Facebook className="h-4 w-4 text-gray-400 group-hover:text-white" />
                         <span className="sr-only">Facebook</span>
                       </Button>
                     </a>
@@ -80,12 +106,22 @@ function Footerdemo() {
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
+              
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <a href="https://www.instagram.com/siamtechonline/?utm_source=ig_web_button_share_sheet" target="_blank" rel="noopener noreferrer">
-                      <Button variant="outline" size="icon" className="rounded-full">
-                        <Instagram className="h-4 w-4" />
+                    <a 
+                      href="https://www.instagram.com/siamtechonline/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="group"
+                    >
+                      <Button 
+                        variant="outline" 
+                        size="icon" 
+                        className="rounded-full border-gray-700 bg-gray-900/50 hover:bg-gray-800"
+                      >
+                        <Instagram className="h-4 w-4 text-gray-400 group-hover:text-white" />
                         <span className="sr-only">Instagram</span>
                       </Button>
                     </a>
@@ -96,31 +132,43 @@ function Footerdemo() {
                 </Tooltip>
               </TooltipProvider>
             </div>
-            <div className="flex items-center space-x-2">
-              <Sun className="h-4 w-4" />
-              <Switch id="dark-mode" checked={isDarkMode} onCheckedChange={setIsDarkMode} />
-              <Moon className="h-4 w-4" />
+
+            <div className="flex items-center space-x-2 pt-4">
+              <Sun className="h-4 w-4 text-gray-400" />
+              <Switch 
+                id="dark-mode" 
+                checked={isDarkMode} 
+                onCheckedChange={setIsDarkMode}
+                className="data-[state=checked]:bg-gray-700 data-[state=unchecked]:bg-gray-900"
+              />
+              <Moon className="h-4 w-4 text-gray-400" />
               <Label htmlFor="dark-mode" className="sr-only">
                 Toggle dark mode
               </Label>
             </div>
           </div>
         </div>
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 text-center md:flex-row">
-          <p className="text-sm text-muted-foreground">© 2024 Siamtech Online Group Co.,Ltd. All rights reserved.</p>
-          <nav className="flex gap-4 text-sm">
-            <Link to="/privacy" className="transition-colors hover:text-primary">
+
+        {/* Bottom Section */}
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-800 pt-8 text-center md:flex-row">
+          <p className="text-sm text-gray-400">
+            © 2024 Siamtech Online Group Co.,Ltd. All rights reserved.
+          </p>
+          <nav className="flex gap-6 text-sm">
+            <Link to="/privacy" className="text-gray-400 transition-colors hover:text-white">
               Privacy Policy
             </Link>
-            <Link to="/terms" className="transition-colors hover:text-primary">
+            <Link to="/terms" className="text-gray-400 transition-colors hover:text-white">
               Terms of Service
             </Link>
-            <Link to="/cookies" className="transition-colors hover:text-primary">
+            <Link to="/cookies" className="text-gray-400 transition-colors hover:text-white">
               Cookie Settings
             </Link>
           </nav>
         </div>
       </div>
-    </footer>;
+    </footer>
+  );
 }
+
 export { Footerdemo };
