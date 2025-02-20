@@ -1,6 +1,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const FeaturedProducts = () => {
   const [sectionTitle, setSectionTitle] = useState("Audio Equipment");
@@ -66,62 +67,63 @@ const FeaturedProducts = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {products.map((product, index) => (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="group relative bg-gray-900/50 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all"
-            >
-              <div className="aspect-square overflow-hidden">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="p-6">
-                <span 
-                  className="text-sm text-gray-400"
-                  contentEditable
-                  suppressContentEditableWarning
-                  onBlur={(e) => {
-                    const newProducts = [...products];
-                    newProducts[index].category = e.currentTarget.textContent || product.category;
-                    setProducts(newProducts);
-                  }}
-                >
-                  {product.category}
-                </span>
-                <h3 
-                  className="mt-1 text-xl font-semibold text-white"
-                  contentEditable
-                  suppressContentEditableWarning
-                  onBlur={(e) => {
-                    const newProducts = [...products];
-                    newProducts[index].name = e.currentTarget.textContent || product.name;
-                    setProducts(newProducts);
-                  }}
-                >
-                  {product.name}
-                </h3>
-                <p 
-                  className="mt-2 text-gray-300"
-                  contentEditable
-                  suppressContentEditableWarning
-                  onBlur={(e) => {
-                    const newProducts = [...products];
-                    newProducts[index].price = e.currentTarget.textContent || product.price;
-                    setProducts(newProducts);
-                  }}
-                >
-                  {product.price}
-                </p>
-                <button className="mt-4 w-full bg-white text-black py-2 rounded-md hover:bg-gray-200 transition-colors">
-                  Add to Cart
-                </button>
-              </div>
-            </motion.div>
+            <Link to={`/product/${product.id}`} key={product.id}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="group relative bg-gray-900/50 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all"
+              >
+                <div className="aspect-square overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <span 
+                    className="text-sm text-gray-400"
+                    contentEditable
+                    suppressContentEditableWarning
+                    onBlur={(e) => {
+                      const newProducts = [...products];
+                      newProducts[index].category = e.currentTarget.textContent || product.category;
+                      setProducts(newProducts);
+                    }}
+                  >
+                    {product.category}
+                  </span>
+                  <h3 
+                    className="mt-1 text-xl font-semibold text-white"
+                    contentEditable
+                    suppressContentEditableWarning
+                    onBlur={(e) => {
+                      const newProducts = [...products];
+                      newProducts[index].name = e.currentTarget.textContent || product.name;
+                      setProducts(newProducts);
+                    }}
+                  >
+                    {product.name}
+                  </h3>
+                  <p 
+                    className="mt-2 text-gray-300"
+                    contentEditable
+                    suppressContentEditableWarning
+                    onBlur={(e) => {
+                      const newProducts = [...products];
+                      newProducts[index].price = e.currentTarget.textContent || product.price;
+                      setProducts(newProducts);
+                    }}
+                  >
+                    {product.price}
+                  </p>
+                  <button className="mt-4 w-full bg-white text-black py-2 rounded-md hover:bg-gray-200 transition-colors">
+                    Add to Cart
+                  </button>
+                </div>
+              </motion.div>
+            </Link>
           ))}
         </div>
       </div>
