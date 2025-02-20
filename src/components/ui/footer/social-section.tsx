@@ -20,7 +20,7 @@ export function SocialSection({ isDarkMode, onDarkModeChange }: SocialSectionPro
       >
         Follow Us
       </h3>
-      <div className="flex flex-col space-y-6">
+      <div className="flex flex-col space-y-8">
         <div className="flex justify-center space-x-4">
           <TooltipProvider>
             <Tooltip>
