@@ -14,11 +14,11 @@ const products = [
   },
   {
     id: 2,
-    name: "Wireless Lavalier",
-    price: "$149",
-    image: "/placeholder.svg",
-    category: "Wireless",
-    description: "High-quality wireless lavalier microphone system ideal for presentations, interviews, and mobile recording."
+    name: "FIFINE Ampligame A8",
+    price: "1,990 ฿",
+    image: "/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png",
+    category: "Condenser Microphone #2",
+    description: "High-quality condenser microphone featuring RGB lighting effects and professional audio quality, perfect for streaming and content creation."
   },
   {
     id: 3,

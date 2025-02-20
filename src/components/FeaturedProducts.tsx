@@ -17,10 +17,10 @@ const FeaturedProducts = () => {
     },
     {
       id: 2,
-      name: "Wireless Lavalier",
-      price: "$149",
-      image: "/placeholder.svg",
-      category: "Wireless"
+      name: "FIFINE Ampligame A8",
+      price: "1,990 ฿",
+      image: "/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png",
+      category: "Condenser Microphone #2"
     },
     {
       id: 3,
