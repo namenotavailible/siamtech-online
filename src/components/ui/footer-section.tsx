@@ -53,8 +53,9 @@ function Footerdemo() {
           <div>
             <h3 className="mb-4 text-lg font-semibold">Contact Us</h3>
             <address className="space-y-2 text-sm not-italic">
-              <p>1444/97 Nakhon Chaisi Rd.</p>
-              <p>Bangkok 10300</p>
+              <p>1444/97 Nakhon Chaisi Road, Thanon Nakhon Chaisi Subdistrict,</p>
+              <p>Dusit District, Bangkok 10300, Thailand 
+            </p>
               <p>Phone: 66+99 999 9999</p>
               <p>Email: info@siamtechonline.com</p>
             </address>
