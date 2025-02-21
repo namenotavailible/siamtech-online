@@ -1,9 +1,9 @@
-
 import { ShoppingCart, Menu, Search } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CartPanel from "./CartPanel";
 import SearchPanel from "./SearchPanel";
+import SignUpDialog from "./SignUpDialog";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,6 +47,7 @@ const Navigation = () => {
               >
                 <ShoppingCart className="h-5 w-5" />
               </button>
+              <SignUpDialog />
               <button 
                 className="md:hidden text-gray-300 hover:text-white transition-colors" 
                 onClick={() => setIsOpen(!isOpen)}
