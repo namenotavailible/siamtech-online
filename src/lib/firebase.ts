@@ -3,12 +3,12 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyDVvRFbYunXAenLAoctEJNUAvzLpY8ngg4",
+  authDomain: "account-siamtech.firebaseapp.com",
+  projectId: "account-siamtech",
+  storageBucket: "account-siamtech.firebasestorage.app",
+  messagingSenderId: "572082007637",
+  appId: "1:572082007637:web:7f11066334bce13f852edc"
 };
 
 const app = initializeApp(firebaseConfig);
