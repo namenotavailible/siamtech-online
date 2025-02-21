@@ -39,40 +39,40 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
         initial={{ x: "100%" }}
         animate={{ x: isOpen ? 0 : "100%" }}
         transition={{ type: "spring", damping: 20 }}
-        className="fixed right-0 top-0 h-full w-full max-w-md bg-gray-900 shadow-xl z-50"
+        className="fixed right-0 top-0 h-full w-full max-w-xs bg-white/5 backdrop-blur-xl border-l border-white/10 shadow-xl z-50"
       >
-        <div className="p-6 h-full flex flex-col">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-semibold text-white">Your Cart</h2>
+        <div className="p-4 h-full flex flex-col">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-medium text-white">Your Cart</h2>
             <button onClick={onClose} className="text-gray-400 hover:text-white">
-              <X className="h-6 w-6" />
+              <X className="h-5 w-5" />
             </button>
           </div>
 
           {cartItems.length === 0 ? (
             <div className="flex-1 flex items-center justify-center">
-              <p className="text-gray-400">Your cart is empty</p>
+              <p className="text-gray-400 text-sm">Your cart is empty</p>
             </div>
           ) : (
             <>
-              <div className="flex-1 overflow-y-auto space-y-4">
+              <div className="flex-1 overflow-y-auto space-y-3">
                 {cartItems.map((item) => (
-                  <div key={item.id} className="flex gap-4 bg-gray-800/50 p-4 rounded-lg">
-                    <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded" />
+                  <div key={item.id} className="flex gap-3 bg-white/5 p-3 rounded-lg">
+                    <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
                     <div className="flex-1">
-                      <h3 className="text-white font-medium">{item.name}</h3>
-                      <p className="text-gray-400">{item.price}</p>
+                      <h3 className="text-white text-sm font-medium">{item.name}</h3>
+                      <p className="text-gray-400 text-xs">{item.price}</p>
                       <div className="flex items-center gap-2 mt-2">
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="px-2 py-1 bg-gray-700 rounded hover:bg-gray-600"
+                          className="px-2 py-1 bg-white/10 rounded hover:bg-white/20"
                         >
                           -
                         </button>
-                        <span className="text-white">{item.quantity}</span>
+                        <span className="text-white text-sm">{item.quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="px-2 py-1 bg-gray-700 rounded hover:bg-gray-600"
+                          className="px-2 py-1 bg-white/10 rounded hover:bg-white/20"
                         >
                           +
                         </button>
@@ -82,13 +82,13 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                       onClick={() => removeFromCart(item.id)}
                       className="text-gray-400 hover:text-white"
                     >
-                      <X className="h-5 w-5" />
+                      <X className="h-4 w-4" />
                     </button>
                   </div>
                 ))}
               </div>
-              <div className="mt-6 pt-6 border-t border-gray-800">
-                <button className="w-full bg-white text-black py-3 rounded-md hover:bg-gray-200 transition-colors">
+              <div className="mt-4 pt-4 border-t border-white/10">
+                <button className="w-full bg-white text-black py-2 rounded-md text-sm hover:bg-gray-200 transition-colors">
                   Checkout
                 </button>
               </div>
