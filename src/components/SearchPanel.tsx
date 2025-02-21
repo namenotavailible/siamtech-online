@@ -65,38 +65,38 @@ const SearchPanel = ({ isOpen, onClose }: SearchPanelProps) => {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: isOpen ? 0 : -20, opacity: isOpen ? 1 : 0 }}
         transition={{ type: "spring", damping: 20 }}
-        className={`fixed top-0 left-0 right-0 bg-gray-900 shadow-xl z-50 ${!isOpen && 'pointer-events-none'}`}
+        className={`fixed top-0 left-0 right-0 backdrop-blur-md z-50 ${!isOpen && 'pointer-events-none'}`}
       >
-        <div className="max-w-3xl mx-auto p-6">
-          <div className="flex items-center gap-4 bg-gray-800/50 rounded-lg p-4">
-            <SearchIcon className="h-5 w-5 text-gray-400" />
+        <div className="max-w-2xl mx-auto p-4">
+          <div className="flex items-center gap-3 bg-white/5 backdrop-blur-lg rounded-full px-4 py-2">
+            <SearchIcon className="h-4 w-4 text-gray-400" />
             <input
               type="text"
               placeholder="Search products..."
-              className="flex-1 bg-transparent border-none text-white focus:outline-none"
+              className="flex-1 bg-transparent border-none text-white text-sm focus:outline-none"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               autoFocus
             />
             <button onClick={onClose} className="text-gray-400 hover:text-white">
-              <X className="h-5 w-5" />
+              <X className="h-4 w-4" />
             </button>
           </div>
 
           {results.length > 0 && (
-            <div className="mt-6 space-y-4">
+            <div className="mt-4 space-y-2 bg-gray-900/90 backdrop-blur-md rounded-lg p-4">
               {results.map((result) => (
                 <Link
                   key={result.id}
                   to={`/product/${result.id}`}
-                  className="flex items-center gap-4 bg-gray-800/50 p-4 rounded-lg hover:bg-gray-800 transition-colors"
+                  className="flex items-center gap-4 bg-gray-800/50 p-3 rounded-lg hover:bg-gray-800 transition-colors"
                   onClick={onClose}
                 >
-                  <img src={result.image} alt={result.name} className="w-16 h-16 object-cover rounded" />
+                  <img src={result.image} alt={result.name} className="w-12 h-12 object-cover rounded" />
                   <div>
-                    <h3 className="text-white font-medium">{result.name}</h3>
-                    <p className="text-gray-400">{result.category}</p>
-                    <p className="text-gray-400">{result.price}</p>
+                    <h3 className="text-white font-medium text-sm">{result.name}</h3>
+                    <p className="text-gray-400 text-xs">{result.category}</p>
+                    <p className="text-gray-400 text-xs">{result.price}</p>
                   </div>
                 </Link>
               ))}
@@ -104,7 +104,7 @@ const SearchPanel = ({ isOpen, onClose }: SearchPanelProps) => {
           )}
 
           {searchQuery && results.length === 0 && (
-            <div className="mt-6 text-center text-gray-400">
+            <div className="mt-4 text-center text-gray-400 text-sm bg-gray-900/90 backdrop-blur-md rounded-lg p-4">
               No results found for "{searchQuery}"
             </div>
           )}
