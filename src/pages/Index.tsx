@@ -5,6 +5,7 @@ import FeaturedProducts from "@/components/FeaturedProducts";
 import { Footerdemo } from "@/components/ui/footer-section";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const [heroTitle, setHeroTitle] = useState("Professional Equipment for Every Need");
@@ -47,9 +48,9 @@ const Index = () => {
             {heroSubtitle}
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="px-8 py-3 bg-white text-black rounded-md hover:bg-gray-200 transition-colors">
+            <Link to="/products" className="px-8 py-3 bg-white text-black rounded-md hover:bg-gray-200 transition-colors">
               Shop Now
-            </button>
+            </Link>
             <button className="px-8 py-3 border border-white/20 rounded-md hover:bg-white/10 transition-colors">
               Learn More
             </button>
