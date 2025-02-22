@@ -14,7 +14,7 @@ import { useEffect } from "react";
 import { useCart } from '@/contexts/CartContext';
 import { useNavigate } from 'react-router-dom';
 
-const Navigation = () => {
+function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -169,46 +169,46 @@ const Navigation = () => {
                 <User className="h-5 w-5" />
               </button>
               <Dialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
-                <DialogContent className="sm:max-w-[400px] max-h-[90vh] w-[95%] p-4">
+                <DialogContent className="sm:max-w-[400px]">
                   <div className="flex flex-col items-center gap-2">
                     <div className="flex size-10 shrink-0 items-center justify-center rounded-full border border-white/10">
                       <User className="h-5 w-5 text-white" />
                     </div>
                     <DialogHeader className="space-y-1">
-                      <DialogTitle className="text-center text-base">Sign up to SIAMTECH</DialogTitle>
-                      <DialogDescription className="text-center text-sm">
+                      <DialogTitle className="text-center">Sign up to SIAMTECH</DialogTitle>
+                      <DialogDescription className="text-center">
                         Create an account to access your cart
                       </DialogDescription>
                     </DialogHeader>
                   </div>
 
-                  <form onSubmit={handleEmailSignUp} className="space-y-4 mt-2">
+                  <form onSubmit={handleEmailSignUp} className="space-y-4">
                     <div className="space-y-3">
                       <div className="space-y-1">
-                        <Label htmlFor="signup-name" className="text-sm">Full name</Label>
-                        <Input 
-                          id="signup-name" 
-                          placeholder="John Doe" 
+                        <Label htmlFor="signup-name">Full name</Label>
+                        <Input
+                          id="signup-name"
+                          placeholder="John Doe"
                           value={formData.name}
                           onChange={handleInputChange}
-                          required 
+                          required
                           className="h-8"
                         />
                       </div>
                       <div className="space-y-1">
-                        <Label htmlFor="signup-email" className="text-sm">Email</Label>
-                        <Input 
-                          id="signup-email" 
-                          type="email" 
-                          placeholder="john@example.com" 
+                        <Label htmlFor="signup-email">Email</Label>
+                        <Input
+                          id="signup-email"
+                          type="email"
+                          placeholder="john@example.com"
                           value={formData.email}
                           onChange={handleInputChange}
-                          required 
+                          required
                           className="h-8"
                         />
                       </div>
                       <div className="space-y-1">
-                        <Label htmlFor="signup-password" className="text-sm">Password</Label>
+                        <Label htmlFor="signup-password">Password</Label>
                         <Input
                           id="signup-password"
                           type="password"
@@ -229,9 +229,13 @@ const Navigation = () => {
                     <span className="text-xs text-gray-400">Or</span>
                   </div>
 
-                  <Button variant="outline" onClick={handleGoogleSignIn} className="w-full h-8 text-sm">
-                    Continue with Google
-                  </Button>
+                  <div className="space-y-2">
+                    <Button variant="outline" onClick={handleGoogleSignIn} className="w-full h-8 text-sm">
+                      Continue with Google
+                    </Button>
+                    
+                    <EmailLinkAuth />
+                  </div>
 
                   <p className="text-center text-xs text-gray-400 mt-2">
                     By signing up you agree to our{" "}
@@ -280,6 +284,6 @@ const Navigation = () => {
       <SearchPanel isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </>
   );
-};
+}
 
 export default Navigation;
