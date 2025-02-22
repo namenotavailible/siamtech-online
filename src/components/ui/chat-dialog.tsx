@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Send, Loader2 } from "lucide-react";
@@ -49,12 +49,8 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] h-[600px] flex flex-col p-0">
-        <DialogHeader className="p-6 border-b">
-          <DialogTitle>Chat Assistant</DialogTitle>
-        </DialogHeader>
-        
-        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+      <DialogContent className="!fixed !bottom-[88px] !top-auto !left-auto !right-6 !translate-x-0 !translate-y-0 sm:max-w-[440px] h-[600px] flex flex-col p-0 rounded-2xl bg-white/5 backdrop-blur-lg border-white/10">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.map((message, index) => (
             <motion.div
               key={index}
@@ -63,10 +59,10 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
               className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[80%] rounded-lg p-4 ${
+                className={`max-w-[80%] rounded-lg p-3 text-sm ${
                   message.role === "user"
-                    ? "bg-primary text-primary-foreground ml-4"
-                    : "bg-muted"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-white/5 text-white/90"
                 }`}
               >
                 {message.content}
@@ -79,14 +75,14 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
               animate={{ opacity: 1, y: 0 }}
               className="flex justify-start"
             >
-              <div className="bg-muted rounded-lg p-4">
-                <Loader2 className="h-5 w-5 animate-spin" />
+              <div className="bg-white/5 rounded-lg p-3">
+                <Loader2 className="h-4 w-4 animate-spin text-white/50" />
               </div>
             </motion.div>
           )}
         </div>
 
-        <div className="p-4 border-t">
+        <div className="p-4 border-t border-white/10">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -95,12 +91,17 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
             className="flex gap-2"
           >
             <Input
-              placeholder="Type your message..."
+              placeholder="Message..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className="flex-1"
+              className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/50"
             />
-            <Button type="submit" disabled={isLoading}>
+            <Button 
+              type="submit" 
+              disabled={isLoading}
+              size="icon"
+              className="bg-white/10 hover:bg-white/20 text-white"
+            >
               <Send className="h-4 w-4" />
             </Button>
           </form>
