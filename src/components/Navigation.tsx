@@ -1,4 +1,3 @@
-
 import { ShoppingCart, Menu, Search, User, LogOut } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -135,33 +134,34 @@ const Navigation = () => {
                 </button>
               )}
               <Dialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
-                <DialogContent>
+                <DialogContent className="sm:max-w-[400px] max-h-[90vh] w-[95%] p-4">
                   <div className="flex flex-col items-center gap-2">
-                    <div className="flex size-11 shrink-0 items-center justify-center rounded-full border border-white/10">
-                      <User className="h-6 w-6 text-white" />
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-full border border-white/10">
+                      <User className="h-5 w-5 text-white" />
                     </div>
-                    <DialogHeader>
-                      <DialogTitle className="sm:text-center">Sign up to SIAMTECH</DialogTitle>
-                      <DialogDescription className="sm:text-center">
-                        Create an account to access your cart and manage orders
+                    <DialogHeader className="space-y-1">
+                      <DialogTitle className="text-center text-base">Sign up to SIAMTECH</DialogTitle>
+                      <DialogDescription className="text-center text-sm">
+                        Create an account to access your cart
                       </DialogDescription>
                     </DialogHeader>
                   </div>
 
-                  <form onSubmit={handleEmailSignUp} className="space-y-5">
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="signup-name">Full name</Label>
+                  <form onSubmit={handleEmailSignUp} className="space-y-4 mt-2">
+                    <div className="space-y-3">
+                      <div className="space-y-1">
+                        <Label htmlFor="signup-name" className="text-sm">Full name</Label>
                         <Input 
                           id="signup-name" 
                           placeholder="John Doe" 
                           value={formData.name}
                           onChange={handleInputChange}
                           required 
+                          className="h-8"
                         />
                       </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="signup-email">Email</Label>
+                      <div className="space-y-1">
+                        <Label htmlFor="signup-email" className="text-sm">Email</Label>
                         <Input 
                           id="signup-email" 
                           type="email" 
@@ -169,10 +169,11 @@ const Navigation = () => {
                           value={formData.email}
                           onChange={handleInputChange}
                           required 
+                          className="h-8"
                         />
                       </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="signup-password">Password</Label>
+                      <div className="space-y-1">
+                        <Label htmlFor="signup-password" className="text-sm">Password</Label>
                         <Input
                           id="signup-password"
                           type="password"
@@ -180,23 +181,24 @@ const Navigation = () => {
                           value={formData.password}
                           onChange={handleInputChange}
                           required
+                          className="h-8"
                         />
                       </div>
                     </div>
-                    <Button type="submit" className="w-full">
+                    <Button type="submit" className="w-full h-8 text-sm">
                       Sign up
                     </Button>
                   </form>
 
-                  <div className="flex items-center gap-3 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
+                  <div className="flex items-center gap-2 my-2 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
                     <span className="text-xs text-gray-400">Or</span>
                   </div>
 
-                  <Button variant="outline" onClick={handleGoogleSignIn} className="w-full">
+                  <Button variant="outline" onClick={handleGoogleSignIn} className="w-full h-8 text-sm">
                     Continue with Google
                   </Button>
 
-                  <p className="text-center text-xs text-gray-400">
+                  <p className="text-center text-xs text-gray-400 mt-2">
                     By signing up you agree to our{" "}
                     <a href="/privacy" className="underline hover:no-underline">
                       Terms
