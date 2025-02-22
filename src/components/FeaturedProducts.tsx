@@ -10,6 +10,7 @@ import { useState } from "react";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { User } from "lucide-react";
 import { useCart } from '@/contexts/CartContext';
+import { ButtonColorful } from "@/components/ui/button-colorful";
 
 const products = [
   {
@@ -157,77 +158,22 @@ const FeaturedProducts = () => {
           ))}
         </div>
 
-        <Dialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
-          <DialogContent className="sm:max-w-[400px] max-h-[90vh] w-[95%] p-4">
-            <div className="flex flex-col items-center gap-2">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-full border border-white/10">
-                <User className="h-5 w-5 text-white" />
-              </div>
-              <DialogHeader className="space-y-1">
-                <DialogTitle className="text-center text-base">Sign up to SIAMTECH</DialogTitle>
-                <DialogDescription className="text-center text-sm">
-                  Create an account to access your cart
-                </DialogDescription>
-              </DialogHeader>
-            </div>
-
-            <form onSubmit={handleEmailSignUp} className="space-y-4 mt-2">
-              <div className="space-y-3">
-                <div className="space-y-1">
-                  <Label htmlFor="signup-name">Full name</Label>
-                  <Input 
-                    id="signup-name" 
-                    placeholder="John Doe" 
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required 
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="signup-email">Email</Label>
-                  <Input 
-                    id="signup-email" 
-                    type="email" 
-                    placeholder="john@example.com" 
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required 
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="signup-password">Password</Label>
-                  <Input
-                    id="signup-password"
-                    type="password"
-                    placeholder="Enter your password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-              </div>
-              <Button type="submit" className="w-full">
-                Sign up
-              </Button>
-            </form>
-
-            <div className="flex items-center gap-2 my-2 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
-              <span className="text-xs text-gray-400">Or</span>
-            </div>
-
-            <Button variant="outline" onClick={handleGoogleSignIn} className="w-full">
-              Continue with Google
-            </Button>
-
-            <p className="text-center text-xs text-gray-400">
-              By signing up you agree to our{" "}
-              <a href="/privacy" className="underline hover:no-underline">
-                Terms
-              </a>
-              .
-            </p>
-          </DialogContent>
-        </Dialog>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="mt-24 text-center"
+        >
+          <h2 className="text-3xl font-bold mb-6">Warranty Activation</h2>
+          <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+            Protect your investment with our comprehensive warranty coverage. Activate your product warranty today.
+          </p>
+          <ButtonColorful 
+            label="Activate Your Warranty"
+            onClick={() => window.location.href = '/warranty'}
+            className="mx-auto"
+          />
+        </motion.div>
 
         <div className="mt-16 text-center">
           <Link
@@ -238,6 +184,78 @@ const FeaturedProducts = () => {
           </Link>
         </div>
       </div>
+
+      <Dialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
+        <DialogContent className="sm:max-w-[400px] max-h-[90vh] w-[95%] p-4">
+          <div className="flex flex-col items-center gap-2">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-full border border-white/10">
+              <User className="h-5 w-5 text-white" />
+            </div>
+            <DialogHeader className="space-y-1">
+              <DialogTitle className="text-center text-base">Sign up to SIAMTECH</DialogTitle>
+              <DialogDescription className="text-center text-sm">
+                Create an account to access your cart
+              </DialogDescription>
+            </DialogHeader>
+          </div>
+
+          <form onSubmit={handleEmailSignUp} className="space-y-4 mt-2">
+            <div className="space-y-3">
+              <div className="space-y-1">
+                <Label htmlFor="signup-name">Full name</Label>
+                <Input 
+                  id="signup-name" 
+                  placeholder="John Doe" 
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required 
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="signup-email">Email</Label>
+                <Input 
+                  id="signup-email" 
+                  type="email" 
+                  placeholder="john@example.com" 
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required 
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="signup-password">Password</Label>
+                <Input
+                  id="signup-password"
+                  type="password"
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+            </div>
+            <Button type="submit" className="w-full">
+              Sign up
+            </Button>
+          </form>
+
+          <div className="flex items-center gap-2 my-2 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
+            <span className="text-xs text-gray-400">Or</span>
+          </div>
+
+          <Button variant="outline" onClick={handleGoogleSignIn} className="w-full">
+            Continue with Google
+          </Button>
+
+          <p className="text-center text-xs text-gray-400">
+            By signing up you agree to our{" "}
+            <a href="/privacy" className="underline hover:no-underline">
+              Terms
+            </a>
+            .
+          </p>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
