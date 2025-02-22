@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Send, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Message {
   role: "user" | "assistant";
@@ -30,14 +31,11 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: input.trim() }),
+      const { data, error } = await supabase.functions.invoke('chat', {
+        body: { prompt: input.trim() }
       });
 
-      const data = await response.json();
-      if (data.error) throw new Error(data.error);
+      if (error) throw error;
 
       setMessages(prev => [...prev, { role: "assistant", content: data.generatedText }]);
     } catch (error) {
