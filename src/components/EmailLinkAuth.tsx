@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { auth } from '@/lib/firebase';
 import { sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink } from 'firebase/auth';
 import { Input } from '@/components/ui/input';
@@ -61,7 +61,7 @@ const EmailLinkAuth = () => {
   };
 
   // Check for email link sign-in when component mounts
-  useState(() => {
+  useEffect(() => {
     checkEmailLink();
   }, []);
 

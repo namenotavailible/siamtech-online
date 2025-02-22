@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { useEffect } from "react";
 import { useCart } from '@/contexts/CartContext';
 import { useNavigate } from 'react-router-dom';
+import EmailLinkAuth from './EmailLinkAuth';
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
