@@ -1,11 +1,11 @@
 
 import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Send, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
+import { ChatInput, ChatInputTextArea, ChatInputSubmit } from "@/components/ui/chat-input";
 
 interface Message {
   role: "user" | "assistant";
@@ -81,28 +81,19 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
         </div>
 
         <div className="p-4 absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-xl border-t border-white/10">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSendMessage();
-            }}
-            className="flex gap-2 items-center"
+          <ChatInput
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onSubmit={handleSendMessage}
+            loading={isLoading}
+            className="bg-white/5 border-white/10"
           >
-            <Input
-              placeholder="Message..."
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/50 rounded-xl h-11"
+            <ChatInputTextArea 
+              placeholder="Message..." 
+              className="text-white placeholder:text-white/50"
             />
-            <Button 
-              type="submit" 
-              disabled={isLoading || !input.trim()}
-              size="icon"
-              className="bg-purple-600/80 hover:bg-purple-700/80 text-white rounded-xl h-11 w-11 shrink-0 backdrop-blur-sm"
-            >
-              <Send className="h-5 w-5" />
-            </Button>
-          </form>
+            <ChatInputSubmit className="bg-purple-600/80 hover:bg-purple-700/80 text-white" />
+          </ChatInput>
         </div>
       </DialogContent>
     </Dialog>
