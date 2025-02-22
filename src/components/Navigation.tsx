@@ -27,6 +27,32 @@ const Navigation = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setIsAuthenticated(!!user);
+      if (user) {
+        const pendingItem = sessionStorage.getItem('pendingCartItem');
+        if (pendingItem) {
+          const product = JSON.parse(pendingItem);
+          const savedCart = localStorage.getItem(`cart_${user.uid}`);
+          const currentCart = savedCart ? JSON.parse(savedCart) : [];
+          
+          const existingItemIndex = currentCart.findIndex((item: any) => item.id === product.id);
+          
+          if (existingItemIndex !== -1) {
+            currentCart[existingItemIndex].quantity += 1;
+          } else {
+            currentCart.push({
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              image: product.image,
+              quantity: 1
+            });
+          }
+
+          localStorage.setItem(`cart_${user.uid}`, JSON.stringify(currentCart));
+          sessionStorage.removeItem('pendingCartItem');
+          toast.success("Added to cart successfully!");
+        }
+      }
     });
 
     return () => unsubscribe();
@@ -220,16 +246,12 @@ const Navigation = () => {
 
         <AnimatePresence>
           {isOpen && (
-            <motion.div initial={{
-              opacity: 0,
-              y: -20
-            }} animate={{
-              opacity: 1,
-              y: 0
-            }} exit={{
-              opacity: 0,
-              y: -20
-            }} className="md:hidden bg-black/95 backdrop-blur-lg">
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="md:hidden bg-black/95 backdrop-blur-lg"
+            >
               <div className="px-4 pt-2 pb-3 space-y-1">
                 <a href="/products" className="block px-3 py-2 text-gray-300 hover:text-white transition-colors">
                   Products
