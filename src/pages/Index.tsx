@@ -6,6 +6,7 @@ import { Footerdemo } from "@/components/ui/footer-section";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import FloatingChat from "@/components/ui/floating-chat";
 
 const Index = () => {
   const [heroTitle, setHeroTitle] = useState("Professional Equipment for Every Need");
@@ -60,6 +61,7 @@ const Index = () => {
 
       <FeaturedProducts />
       <Footerdemo />
+      <FloatingChat />
     </div>
   );
 };
