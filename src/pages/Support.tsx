@@ -33,15 +33,15 @@ const Support = () => {
       <Navigation />
       
       <div className="pt-24 pb-16 px-4 max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8">Support Center</h1>
+        <h1 className="text-4xl font-bold mb-8 text-white">Support Center</h1>
 
         <Card className="bg-black border-white/10 mb-12">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 text-white">
               <MessageSquare className="h-5 w-5" />
               AI Chat Support
             </CardTitle>
-            <CardDescription className="text-gray-400">
+            <CardDescription className="text-gray-200">
               Get instant answers to your questions
             </CardDescription>
           </CardHeader>
@@ -57,16 +57,16 @@ const Support = () => {
         <div className="grid md:grid-cols-2 gap-6">
           <Card className="bg-white/5 border-white/10">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-white">
                 <Mail className="h-5 w-5" />
                 Email Support
               </CardTitle>
-              <CardDescription className="text-gray-400">
+              <CardDescription className="text-gray-200">
                 Get in touch via email
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-300">
+              <p className="text-gray-100">
                 support@siamtechonline.com<br />
                 Response within 24 hours
               </p>
@@ -75,17 +75,17 @@ const Support = () => {
 
           <Card className="bg-white/5 border-white/10">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-white">
                 <Phone className="h-5 w-5" />
                 Phone Support
               </CardTitle>
-              <CardDescription className="text-gray-400">
+              <CardDescription className="text-gray-200">
                 Talk to our support team
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-300">
-                +(66) 99 999 9999 <span className="text-red-400">(Unavailable)</span><br />
+              <p className="text-gray-100">
+                +(66) 99 999 9999 <span className="text-red-400 font-medium">(Unavailable)</span><br />
                 Mon-Fri: 9AM-6PM EST
               </p>
             </CardContent>
