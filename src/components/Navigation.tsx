@@ -1,4 +1,5 @@
-import { ShoppingCart, Menu, Search, User } from "lucide-react";
+
+import { ShoppingCart, Menu, Search, User, LogOut } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CartPanel from "./CartPanel";
@@ -8,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { auth, googleProvider } from "@/lib/firebase";
-import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
 import { toast } from "sonner";
 import { useEffect } from "react";
 
@@ -63,6 +64,16 @@ const Navigation = () => {
     }
   };
 
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      toast.success("Signed out successfully!");
+    } catch (error) {
+      console.error("Error signing out:", error);
+      toast.error("Failed to sign out. Please try again.");
+    }
+  };
+
   const handleCartClick = () => {
     if (isAuthenticated) {
       setIsCartOpen(true);
@@ -108,6 +119,21 @@ const Navigation = () => {
               >
                 <ShoppingCart className="h-5 w-5" />
               </button>
+              {isAuthenticated ? (
+                <button 
+                  className="text-gray-300 hover:text-white transition-colors flex items-center space-x-2"
+                  onClick={handleSignOut}
+                >
+                  <LogOut className="h-5 w-5" />
+                </button>
+              ) : (
+                <button 
+                  className="text-gray-300 hover:text-white transition-colors"
+                  onClick={() => setShowAuthDialog(true)}
+                >
+                  <User className="h-5 w-5" />
+                </button>
+              )}
               <Dialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
                 <DialogContent>
                   <div className="flex flex-col items-center gap-2">
