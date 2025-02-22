@@ -115,9 +115,7 @@ const FeaturedProducts = () => {
         delay: 0.2
       }} className="text-center mb-24">
           <h2 className="font-bold mb-6 text-4xl text-center">Warranty Activation</h2>
-          <p className="text-gray-400 mb-8 max-w-2xl mx-auto text-lg text-center">Ensure peace of mind and long-term reliability with our comprehensive warranty coverage. Activate your product warranty today to safeguard your investment and enjoy seamless support whenever you need it.
-
-        </p>
+          <p className="text-gray-400 mb-8 max-w-2xl mx-auto text-lg text-center">Protect your investment with our comprehensive warranty. Activate today for peace of mind and reliable support.</p>
           <ButtonColorful label="Activate Your Warranty" onClick={() => window.location.href = '/warranty'} className="mx-auto" />
         </motion.div>
 
