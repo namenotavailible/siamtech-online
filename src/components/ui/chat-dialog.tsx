@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -47,6 +48,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="!fixed !bottom-0 !left-0 !right-0 !top-auto !translate-x-0 !translate-y-0 sm:!right-6 sm:!left-auto sm:!bottom-[88px] sm:max-w-[400px] h-[60vh] sm:h-[600px] flex flex-col p-0 rounded-t-2xl sm:rounded-2xl bg-black/40 backdrop-blur-xl border border-white/10">
+        <DialogTitle className="sr-only">Chat Dialog</DialogTitle>
         <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-20 sm:pb-4 scrollbar-thin scrollbar-track-black/20 scrollbar-thumb-white/10 max-h-[calc(60vh-80px)] sm:max-h-[520px]">
           {messages.map((message, index) => (
             <motion.div
