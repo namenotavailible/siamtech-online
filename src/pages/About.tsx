@@ -1,8 +1,8 @@
-
 import Navigation from "@/components/Navigation";
 import { Footerdemo } from "@/components/ui/footer-section";
 import { motion } from "framer-motion";
 import { Building2, Users, Trophy, Target, Clock, Globe } from "lucide-react";
+import { SparklesCore } from "@/components/ui/sparkles";
 
 const About = () => {
   return (
@@ -10,15 +10,27 @@ const About = () => {
       <Navigation />
       
       <main className="pt-24 pb-16 px-4">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-center mb-16"
+            className="text-center mb-16 relative"
           >
-            <h1 className="text-4xl font-bold mb-4">About SIAMTECH</h1>
-            <p className="text-gray-400">Pioneering Audio Innovation Since 2010</p>
+            <div className="h-[20rem] w-full absolute top-[-8rem] left-0">
+              <SparklesCore
+                id="tsparticlesabout"
+                background="transparent"
+                minSize={0.6}
+                maxSize={1.4}
+                particleDensity={100}
+                className="w-full h-full"
+                particleColor="#FFFFFF"
+                speed={0.5}
+              />
+            </div>
+            <h1 className="text-4xl font-bold mb-4 relative z-10">About SIAMTECH</h1>
+            <p className="text-gray-400 relative z-10">Pioneering Audio Innovation Since 2010</p>
           </motion.div>
 
           <motion.div
