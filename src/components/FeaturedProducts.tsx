@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { auth, googleProvider } from "@/lib/firebase";
@@ -12,43 +11,40 @@ import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { User } from "lucide-react";
 import { useCart } from '@/contexts/CartContext';
 import { ButtonColorful } from "@/components/ui/button-colorful";
-
-const products = [
-  {
-    id: 1,
-    name: "FIFINE Ampligame AM8",
-    price: "2,490 ฿",
-    image: "/lovable-uploads/895e0863-a00d-4ccd-9f78-21e1181817a3.png",
-    category: "Dynamic Microphone",
-  },
-  {
-    id: 2,
-    name: "FIFINE Ampligame A8",
-    price: "1,990 ฿",
-    image: "/lovable-uploads/0bdd554b-e74a-4fe7-8d87-867680dd35bb.png",
-    category: "Condenser Microphone",
-  },
-];
-
+const products = [{
+  id: 1,
+  name: "FIFINE Ampligame AM8",
+  price: "2,490 ฿",
+  image: "/lovable-uploads/895e0863-a00d-4ccd-9f78-21e1181817a3.png",
+  category: "Dynamic Microphone"
+}, {
+  id: 2,
+  name: "FIFINE Ampligame A8",
+  price: "1,990 ฿",
+  image: "/lovable-uploads/0bdd554b-e74a-4fe7-8d87-867680dd35bb.png",
+  category: "Condenser Microphone"
+}];
 const FeaturedProducts = () => {
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [pendingProduct, setPendingProduct] = useState<any>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: "",
+    password: ""
   });
-
-  const { updateCartCount } = useCart();
-
+  const {
+    updateCartCount
+  } = useCart();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
+    const {
+      id,
+      value
+    } = e.target;
     setFormData(prev => ({
       ...prev,
       [id.split('-')[1]]: value
     }));
   };
-
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -63,7 +59,6 @@ const FeaturedProducts = () => {
       toast.error("Failed to create account. Please try again.");
     }
   };
-
   const handleGoogleSignIn = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
@@ -77,26 +72,20 @@ const FeaturedProducts = () => {
       toast.error("Failed to sign in with Google. Please try again.");
     }
   };
-
   const handleAddToCart = (product: any, e: React.MouseEvent | null, skipAuthCheck = false) => {
     if (e) {
       e.preventDefault();
     }
-    
     const user = auth.currentUser;
     if (!user && !skipAuthCheck) {
       setPendingProduct(product);
       setShowAuthDialog(true);
       return;
     }
-
     if (!user) return;
-
     const savedCart = localStorage.getItem(`cart_${user.uid}`);
     const currentCart = savedCart ? JSON.parse(savedCart) : [];
-    
     const existingItemIndex = currentCart.findIndex((item: any) => item.id === product.id);
-    
     if (existingItemIndex !== -1) {
       currentCart[existingItemIndex].quantity += 1;
     } else {
@@ -108,80 +97,69 @@ const FeaturedProducts = () => {
         quantity: 1
       });
     }
-
     localStorage.setItem(`cart_${user.uid}`, JSON.stringify(currentCart));
     updateCartCount(user.uid);
     toast.success("Added to cart successfully!");
     setPendingProduct(null);
   };
-
-  return (
-    <section className="py-24 bg-black text-white">
+  return <section className="py-24 bg-black text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Warranty Activation Section - Moved to top */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="text-center mb-24"
-        >
-          <h2 className="text-3xl font-bold mb-6">Warranty Activation</h2>
-          <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+        <motion.div initial={{
+        opacity: 0,
+        y: 20
+      }} animate={{
+        opacity: 1,
+        y: 0
+      }} transition={{
+        delay: 0.2
+      }} className="text-center mb-24">
+          <h2 className="font-bold mb-6 text-4xl">Warranty Activation</h2>
+          <p className="text-gray-400 mb-8 max-w-2xl mx-auto text-base">
             Protect your investment with our comprehensive warranty coverage. Activate your product warranty today.
           </p>
-          <ButtonColorful 
-            label="Activate Your Warranty"
-            onClick={() => window.location.href = '/warranty'}
-            className="mx-auto"
-          />
+          <ButtonColorful label="Activate Your Warranty" onClick={() => window.location.href = '/warranty'} className="mx-auto" />
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
+        <motion.div initial={{
+        opacity: 0,
+        y: 20
+      }} animate={{
+        opacity: 1,
+        y: 0
+      }} className="text-center mb-16">
           <h2 className="text-3xl font-bold">Featured Products</h2>
           <p className="mt-4 text-gray-400">Our most popular products</p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {products.map((product, index) => (
-            <Link to={`/product/${product.id}`} key={product.id}>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="group relative bg-gray-900/50 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all"
-              >
+          {products.map((product, index) => <Link to={`/product/${product.id}`} key={product.id}>
+              <motion.div initial={{
+            opacity: 0,
+            y: 20
+          }} animate={{
+            opacity: 1,
+            y: 0
+          }} transition={{
+            delay: index * 0.1
+          }} className="group relative bg-gray-900/50 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all">
                 <div className="aspect-square overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-300"
-                  />
+                  <img src={product.image} alt={product.name} className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="p-6">
                   <span className="text-sm text-gray-400">{product.category}</span>
                   <h3 className="mt-1 text-xl font-semibold text-white">{product.name}</h3>
                   <p className="mt-2 text-gray-300">{product.price}</p>
-                  <button 
-                    onClick={(e) => handleAddToCart(product, e)}
-                    className="mt-4 w-full bg-white text-black py-2 rounded-md hover:bg-gray-200 transition-colors"
-                  >
+                  <button onClick={e => handleAddToCart(product, e)} className="mt-4 w-full bg-white text-black py-2 rounded-md hover:bg-gray-200 transition-colors">
                     Add to Cart
                   </button>
                 </div>
               </motion.div>
-            </Link>
-          ))}
+            </Link>)}
         </div>
 
         <div className="mt-16 text-center">
-          <Link
-            to="/products"
-            className="inline-flex items-center justify-center px-8 py-3 border border-white/20 rounded-md hover:bg-white/10 transition-colors"
-          >
+          <Link to="/products" className="inline-flex items-center justify-center px-8 py-3 border border-white/20 rounded-md hover:bg-white/10 transition-colors">
             View All Products
           </Link>
         </div>
@@ -205,35 +183,15 @@ const FeaturedProducts = () => {
             <div className="space-y-3">
               <div className="space-y-1">
                 <Label htmlFor="signup-name">Full name</Label>
-                <Input 
-                  id="signup-name" 
-                  placeholder="John Doe" 
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required 
-                />
+                <Input id="signup-name" placeholder="John Doe" value={formData.name} onChange={handleInputChange} required />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="signup-email">Email</Label>
-                <Input 
-                  id="signup-email" 
-                  type="email" 
-                  placeholder="john@example.com" 
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required 
-                />
+                <Input id="signup-email" type="email" placeholder="john@example.com" value={formData.email} onChange={handleInputChange} required />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="signup-password">Password</Label>
-                <Input
-                  id="signup-password"
-                  type="password"
-                  placeholder="Enter your password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  required
-                />
+                <Input id="signup-password" type="password" placeholder="Enter your password" value={formData.password} onChange={handleInputChange} required />
               </div>
             </div>
             <Button type="submit" className="w-full">
@@ -258,8 +216,6 @@ const FeaturedProducts = () => {
           </p>
         </DialogContent>
       </Dialog>
-    </section>
-  );
+    </section>;
 };
-
 export default FeaturedProducts;
