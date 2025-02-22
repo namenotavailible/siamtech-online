@@ -63,7 +63,7 @@ const EmailLinkAuth = () => {
   // Check for email link sign-in when component mounts
   useEffect(() => {
     checkEmailLink();
-  }, []);
+  }, [navigate]); // Add navigate to dependency array
 
   return (
     <div className="space-y-4 w-full max-w-sm mx-auto">
