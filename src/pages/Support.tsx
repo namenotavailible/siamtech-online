@@ -48,7 +48,7 @@ const Support = () => {
             </CardHeader>
             <CardContent>
               <p className="text-gray-300">
-                +1 (555) 123-4567<br />
+                +(66) 99 999 9999 <span className="text-red-400">(Unavailable)</span><br />
                 Mon-Fri: 9AM-6PM EST
               </p>
             </CardContent>
