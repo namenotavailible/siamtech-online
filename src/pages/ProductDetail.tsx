@@ -1,11 +1,11 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loading } from "@/components/ui/loading";
 import { useEffect } from "react";
-import { X } from "lucide-react";
+import { X, ChevronLeft } from "lucide-react";
 import { auth } from "@/lib/firebase";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 const products = [
   {
@@ -107,6 +107,13 @@ const ProductDetail = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white relative">
+      <div className="absolute top-4 left-4 z-10">
+        <Button variant="link" onClick={() => navigate(-1)} className="text-white">
+          <ChevronLeft className="me-1 opacity-60" size={16} strokeWidth={2} aria-hidden="true" />
+          Go back
+        </Button>
+      </div>
+      
       <button 
         onClick={() => navigate("/")}
         className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors z-10"
