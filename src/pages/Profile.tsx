@@ -44,15 +44,15 @@ const Profile = () => {
     <div className="min-h-screen bg-black text-white">
       <Navigation />
       
-      <div className="pt-24 pb-16">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-6">
-            <Button variant="link" onClick={() => navigate('/')} className="text-white">
-              <ChevronLeft className="me-1 opacity-60" size={16} strokeWidth={2} aria-hidden="true" />
-              Go back
-            </Button>
-          </div>
+      <div className="pt-24 pb-16 relative">
+        <div className="absolute top-4 left-4 z-10">
+          <Button variant="link" onClick={() => navigate('/')} className="text-white">
+            <ChevronLeft className="me-1 opacity-60" size={16} strokeWidth={2} aria-hidden="true" />
+            Go back
+          </Button>
+        </div>
 
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gray-900/50 backdrop-blur-sm rounded-lg p-8 border border-white/10">
             <h1 className="text-2xl font-bold mb-8">Profile Settings</h1>
             
