@@ -47,8 +47,8 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="!fixed !bottom-[88px] !top-auto !left-auto !right-6 !translate-x-0 !translate-y-0 sm:max-w-[320px] h-[400px] flex flex-col p-0 rounded-2xl bg-white/5 backdrop-blur-lg border-white/10">
-        <div className="flex-1 overflow-y-auto p-3 space-y-3">
+      <DialogContent className="!fixed !bottom-0 !left-0 !right-0 !top-auto !translate-x-0 !translate-y-0 sm:!right-6 sm:!left-auto sm:!bottom-[88px] sm:max-w-[320px] h-[80vh] sm:h-[400px] flex flex-col p-0 rounded-t-2xl sm:rounded-2xl bg-white/5 backdrop-blur-lg border-white/10">
+        <div className="flex-1 overflow-y-auto p-3 space-y-3 pb-16 sm:pb-3">
           {messages.map((message, index) => (
             <motion.div
               key={index}
@@ -80,7 +80,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
           )}
         </div>
 
-        <div className="p-3 border-t border-white/10">
+        <div className="p-3 border-t border-white/10 absolute bottom-0 left-0 right-0 bg-black/50 backdrop-blur-md">
           <form
             onSubmit={(e) => {
               e.preventDefault();
