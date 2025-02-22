@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import Navigation from '@/components/Navigation';
 import { Footerdemo } from '@/components/ui/footer-section';
 import { ChevronLeft } from "lucide-react";
+import { isSignInWithEmailLink, signInWithEmailLink } from 'firebase/auth';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -18,6 +19,24 @@ const Profile = () => {
   });
 
   useEffect(() => {
+    // First, check if this is an email link sign-in attempt
+    if (isSignInWithEmailLink(auth, window.location.href)) {
+      const emailFromStorage = window.localStorage.getItem('emailForSignIn');
+      if (emailFromStorage) {
+        signInWithEmailLink(auth, emailFromStorage, window.location.href)
+          .then(() => {
+            window.localStorage.removeItem('emailForSignIn');
+            toast.success('Successfully signed in!');
+          })
+          .catch((error) => {
+            console.error('Error signing in with email link:', error);
+            toast.error('Failed to sign in. Please try again.');
+            navigate('/');
+          });
+      }
+    }
+
+    // Then check if user is authenticated
     const user = auth.currentUser;
     if (!user) {
       navigate('/');

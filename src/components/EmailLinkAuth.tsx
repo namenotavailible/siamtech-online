@@ -62,6 +62,9 @@ const EmailLinkAuth = () => {
 
   // Check for email link sign-in when component mounts
   useEffect(() => {
+    console.log('Checking email link...');
+    console.log('Current URL:', window.location.href);
+    console.log('Is sign in with email link?', isSignInWithEmailLink(auth, window.location.href));
     checkEmailLink();
   }, [navigate]); // Add navigate to dependency array
 
