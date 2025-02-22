@@ -8,22 +8,27 @@ import ProductLearnMore from "./pages/ProductLearnMore";
 import Warranty from "./pages/Warranty";
 import Products from "./pages/Products";
 import Privacy from "./pages/Privacy";
+import Profile from "./pages/Profile";
+import { CartProvider } from "./contexts/CartContext";
 import "./App.css";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/warranty" element={<Warranty />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/product/:id/learn-more" element={<ProductLearnMore />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Router>
+    <CartProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/warranty" element={<Warranty />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/product/:id/learn-more" element={<ProductLearnMore />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </CartProvider>
   );
 }
 

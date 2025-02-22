@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { auth, googleProvider } from "@/lib/firebase";
@@ -10,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { User } from "lucide-react";
+import { useCart } from '@/contexts/CartContext';
 
 const products = [
   {
@@ -36,6 +36,8 @@ const FeaturedProducts = () => {
     email: "",
     password: "",
   });
+
+  const { updateCartCount } = useCart();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -86,7 +88,7 @@ const FeaturedProducts = () => {
       return;
     }
 
-    if (!user) return; // Safety check
+    if (!user) return;
 
     const savedCart = localStorage.getItem(`cart_${user.uid}`);
     const currentCart = savedCart ? JSON.parse(savedCart) : [];
@@ -106,6 +108,7 @@ const FeaturedProducts = () => {
     }
 
     localStorage.setItem(`cart_${user.uid}`, JSON.stringify(currentCart));
+    updateCartCount(user.uid);
     toast.success("Added to cart successfully!");
     setPendingProduct(null);
   };

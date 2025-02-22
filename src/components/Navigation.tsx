@@ -11,6 +11,8 @@ import { auth, googleProvider } from "@/lib/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
 import { toast } from "sonner";
 import { useEffect } from "react";
+import { useCart } from '@/contexts/CartContext';
+import { useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +25,8 @@ const Navigation = () => {
     email: "",
     password: "",
   });
+  const { cartCount } = useCart();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -107,6 +111,14 @@ const Navigation = () => {
     }
   };
 
+  const handleUserClick = () => {
+    if (isAuthenticated) {
+      navigate('/profile');
+    } else {
+      setShowAuthDialog(true);
+    }
+  };
+
   return (
     <>
       <nav className="fixed w-full z-50 bg-black/10 backdrop-blur-md border-b border-white/10">
@@ -139,27 +151,23 @@ const Navigation = () => {
                 <Search className="h-5 w-5" />
               </button>
               <button 
-                className="text-gray-300 hover:text-white transition-colors"
+                className="text-gray-300 hover:text-white transition-colors relative"
                 onClick={handleCartClick}
               >
                 <ShoppingCart className="h-5 w-5" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-white text-black text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
               </button>
-              {isAuthenticated ? (
-                <button 
-                  className="text-gray-300 hover:text-white transition-colors flex items-center space-x-2"
-                  onClick={handleSignOut}
-                >
-                  <LogOut className="h-5 w-5" />
-                </button>
-              ) : (
-                <button 
-                  data-auth-trigger
-                  className="text-gray-300 hover:text-white transition-colors"
-                  onClick={() => setShowAuthDialog(true)}
-                >
-                  <User className="h-5 w-5" />
-                </button>
-              )}
+              <button 
+                data-auth-trigger
+                className="text-gray-300 hover:text-white transition-colors"
+                onClick={handleUserClick}
+              >
+                <User className="h-5 w-5" />
+              </button>
               <Dialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
                 <DialogContent className="sm:max-w-[400px] max-h-[90vh] w-[95%] p-4">
                   <div className="flex flex-col items-center gap-2">
