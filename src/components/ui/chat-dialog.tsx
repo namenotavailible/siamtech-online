@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
@@ -60,7 +59,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
               <div
                 className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
                   message.role === "user"
-                    ? "bg-purple-600/80 text-white backdrop-blur-sm"
+                    ? "bg-white/10 text-white backdrop-blur-sm"
                     : "bg-white/5 text-white/90 backdrop-blur-sm"
                 }`}
               >
@@ -87,13 +86,13 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
             onChange={(e) => setInput(e.target.value)}
             onSubmit={handleSendMessage}
             loading={isLoading}
-            className="bg-white/5 border-white/10"
+            className="bg-transparent border-white/10"
           >
             <ChatInputTextArea 
               placeholder="Message..." 
               className="text-white placeholder:text-white/50"
             />
-            <ChatInputSubmit className="bg-purple-600/80 hover:bg-purple-700/80 text-white" />
+            <ChatInputSubmit className="bg-white/10 hover:bg-white/20 text-white border-white/10" />
           </ChatInput>
         </div>
       </DialogContent>
