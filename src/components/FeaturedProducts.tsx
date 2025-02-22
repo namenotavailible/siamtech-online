@@ -1,8 +1,15 @@
 
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
-import { auth } from "@/lib/firebase";
+import { Link } from "react-router-dom";
+import { auth, googleProvider } from "@/lib/firebase";
 import { toast } from "sonner";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { User } from "lucide-react";
 
 const products = [
   {
@@ -22,22 +29,64 @@ const products = [
 ];
 
 const FeaturedProducts = () => {
-  const navigate = useNavigate();
+  const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const [pendingProduct, setPendingProduct] = useState<any>(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-  const handleAddToCart = (product: any, e: React.MouseEvent) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [id.split('-')[1]]: value
+    }));
+  };
+
+  const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    const user = auth.currentUser;
-    if (!user) {
-      // Store the product to be added after authentication
-      sessionStorage.setItem('pendingCartItem', JSON.stringify(product));
-      
-      // Find and click the auth trigger button
-      const authButton = document.querySelector('[data-auth-trigger]') as HTMLElement;
-      if (authButton) {
-        authButton.click();
+    try {
+      await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      toast.success("Account created successfully!");
+      setShowAuthDialog(false);
+      if (pendingProduct) {
+        handleAddToCart(pendingProduct, null, true);
       }
+    } catch (error) {
+      console.error("Error signing up:", error);
+      toast.error("Failed to create account. Please try again.");
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      toast.success("Signed in with Google successfully!");
+      setShowAuthDialog(false);
+      if (pendingProduct) {
+        handleAddToCart(pendingProduct, null, true);
+      }
+    } catch (error) {
+      console.error("Error signing in with Google:", error);
+      toast.error("Failed to sign in with Google. Please try again.");
+    }
+  };
+
+  const handleAddToCart = (product: any, e: React.MouseEvent | null, skipAuthCheck = false) => {
+    if (e) {
+      e.preventDefault();
+    }
+    
+    const user = auth.currentUser;
+    if (!user && !skipAuthCheck) {
+      setPendingProduct(product);
+      setShowAuthDialog(true);
       return;
     }
+
+    if (!user) return; // Safety check
 
     const savedCart = localStorage.getItem(`cart_${user.uid}`);
     const currentCart = savedCart ? JSON.parse(savedCart) : [];
@@ -58,6 +107,7 @@ const FeaturedProducts = () => {
 
     localStorage.setItem(`cart_${user.uid}`, JSON.stringify(currentCart));
     toast.success("Added to cart successfully!");
+    setPendingProduct(null);
   };
 
   return (
@@ -103,6 +153,78 @@ const FeaturedProducts = () => {
             </Link>
           ))}
         </div>
+
+        <Dialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
+          <DialogContent className="sm:max-w-[400px] max-h-[90vh] w-[95%] p-4">
+            <div className="flex flex-col items-center gap-2">
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-full border border-white/10">
+                <User className="h-5 w-5 text-white" />
+              </div>
+              <DialogHeader className="space-y-1">
+                <DialogTitle className="text-center text-base">Sign up to SIAMTECH</DialogTitle>
+                <DialogDescription className="text-center text-sm">
+                  Create an account to access your cart
+                </DialogDescription>
+              </DialogHeader>
+            </div>
+
+            <form onSubmit={handleEmailSignUp} className="space-y-4 mt-2">
+              <div className="space-y-3">
+                <div className="space-y-1">
+                  <Label htmlFor="signup-name">Full name</Label>
+                  <Input 
+                    id="signup-name" 
+                    placeholder="John Doe" 
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required 
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="signup-email">Email</Label>
+                  <Input 
+                    id="signup-email" 
+                    type="email" 
+                    placeholder="john@example.com" 
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required 
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="signup-password">Password</Label>
+                  <Input
+                    id="signup-password"
+                    type="password"
+                    placeholder="Enter your password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+              </div>
+              <Button type="submit" className="w-full">
+                Sign up
+              </Button>
+            </form>
+
+            <div className="flex items-center gap-2 my-2 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
+              <span className="text-xs text-gray-400">Or</span>
+            </div>
+
+            <Button variant="outline" onClick={handleGoogleSignIn} className="w-full">
+              Continue with Google
+            </Button>
+
+            <p className="text-center text-xs text-gray-400">
+              By signing up you agree to our{" "}
+              <a href="/privacy" className="underline hover:no-underline">
+                Terms
+              </a>
+              .
+            </p>
+          </DialogContent>
+        </Dialog>
 
         <div className="mt-16 text-center">
           <Link
