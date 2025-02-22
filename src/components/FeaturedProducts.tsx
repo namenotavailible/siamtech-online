@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { auth, googleProvider } from "@/lib/firebase";
@@ -117,6 +118,24 @@ const FeaturedProducts = () => {
   return (
     <section className="py-24 bg-black text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Warranty Activation Section - Moved to top */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-center mb-24"
+        >
+          <h2 className="text-3xl font-bold mb-6">Warranty Activation</h2>
+          <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+            Protect your investment with our comprehensive warranty coverage. Activate your product warranty today.
+          </p>
+          <ButtonColorful 
+            label="Activate Your Warranty"
+            onClick={() => window.location.href = '/warranty'}
+            className="mx-auto"
+          />
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -157,23 +176,6 @@ const FeaturedProducts = () => {
             </Link>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mt-24 text-center"
-        >
-          <h2 className="text-3xl font-bold mb-6">Warranty Activation</h2>
-          <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-            Protect your investment with our comprehensive warranty coverage. Activate your product warranty today.
-          </p>
-          <ButtonColorful 
-            label="Activate Your Warranty"
-            onClick={() => window.location.href = '/warranty'}
-            className="mx-auto"
-          />
-        </motion.div>
 
         <div className="mt-16 text-center">
           <Link
