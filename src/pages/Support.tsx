@@ -30,7 +30,7 @@ const Support = () => {
             </CardHeader>
             <CardContent>
               <p className="text-gray-300">
-                support@siamtech.com<br />
+                support@siamtechonline.com<br />
                 Response within 24 hours
               </p>
             </CardContent>
