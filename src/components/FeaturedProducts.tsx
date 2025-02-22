@@ -11,8 +11,6 @@ import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { User } from "lucide-react";
 import { useCart } from '@/contexts/CartContext';
 import { ButtonColorful } from "@/components/ui/button-colorful";
-import { Hero } from "@/components/ui/animated-hero";
-
 const products = [{
   id: 1,
   name: "FIFINE Ampligame AM8",
@@ -26,7 +24,6 @@ const products = [{
   image: "/lovable-uploads/0bdd554b-e74a-4fe7-8d87-867680dd35bb.png",
   category: "Condenser Microphone"
 }];
-
 const FeaturedProducts = () => {
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [pendingProduct, setPendingProduct] = useState<any>(null);
@@ -38,7 +35,6 @@ const FeaturedProducts = () => {
   const {
     updateCartCount
   } = useCart();
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       id,
@@ -49,7 +45,6 @@ const FeaturedProducts = () => {
       [id.split('-')[1]]: value
     }));
   };
-
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -64,7 +59,6 @@ const FeaturedProducts = () => {
       toast.error("Failed to create account. Please try again.");
     }
   };
-
   const handleGoogleSignIn = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
@@ -78,7 +72,6 @@ const FeaturedProducts = () => {
       toast.error("Failed to sign in with Google. Please try again.");
     }
   };
-
   const handleAddToCart = (product: any, e: React.MouseEvent | null, skipAuthCheck = false) => {
     if (e) {
       e.preventDefault();
@@ -109,9 +102,9 @@ const FeaturedProducts = () => {
     toast.success("Added to cart successfully!");
     setPendingProduct(null);
   };
-
   return <section className="py-24 bg-black text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Warranty Activation Section - Moved to top */}
         <motion.div initial={{
         opacity: 0,
         y: 20
@@ -121,7 +114,9 @@ const FeaturedProducts = () => {
       }} transition={{
         delay: 0.2
       }} className="text-center mb-24">
-          <Hero />
+          <h2 className="font-bold mb-6 text-4xl text-center">Warranty Activation</h2>
+          <p className="text-gray-400 mb-8 max-w-2xl mx-auto text-lg text-center">Protect your investment with our comprehensive warranty. Activate today for peace of mind and reliable support.</p>
+          <ButtonColorful label="Activate Your Warranty" onClick={() => window.location.href = '/warranty'} className="mx-auto" />
         </motion.div>
 
         <motion.div initial={{
@@ -221,5 +216,4 @@ const FeaturedProducts = () => {
       </Dialog>
     </section>;
 };
-
 export default FeaturedProducts;
