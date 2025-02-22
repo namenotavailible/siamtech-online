@@ -1,7 +1,9 @@
 
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { auth } from "@/lib/firebase";
+import { toast } from "sonner";
 
 export interface CartItem {
   id: number;
@@ -19,8 +21,33 @@ interface CartPanelProps {
 const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
+  // Load cart items from localStorage when auth state changes
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        const savedCart = localStorage.getItem(`cart_${user.uid}`);
+        if (savedCart) {
+          setCartItems(JSON.parse(savedCart));
+        }
+      } else {
+        setCartItems([]);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  // Save cart items to localStorage whenever they change
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (user && cartItems.length > 0) {
+      localStorage.setItem(`cart_${user.uid}`, JSON.stringify(cartItems));
+    }
+  }, [cartItems]);
+
   const removeFromCart = (id: number) => {
     setCartItems(cartItems.filter(item => item.id !== id));
+    toast.success("Item removed from cart");
   };
 
   const updateQuantity = (id: number, newQuantity: number) => {

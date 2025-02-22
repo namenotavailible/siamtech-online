@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { Loading } from "@/components/ui/loading";
 import { useEffect } from "react";
 import { X } from "lucide-react";
+import { auth } from "@/lib/firebase";
+import { toast } from "sonner";
 
 const products = [
   {
@@ -45,6 +47,38 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const product = products.find(p => p.id === Number(id));
 
+  const handleAddToCart = () => {
+    const user = auth.currentUser;
+    if (!user) {
+      navigate("/");
+      const authButton = document.querySelector('[data-auth-trigger]');
+      if (authButton instanceof HTMLElement) {
+        authButton.click();
+      }
+      return;
+    }
+
+    const savedCart = localStorage.getItem(`cart_${user.uid}`);
+    const currentCart = savedCart ? JSON.parse(savedCart) : [];
+    
+    const existingItemIndex = currentCart.findIndex((item: any) => item.id === product?.id);
+    
+    if (existingItemIndex !== -1) {
+      currentCart[existingItemIndex].quantity += 1;
+    } else if (product) {
+      currentCart.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        quantity: 1
+      });
+    }
+
+    localStorage.setItem(`cart_${user.uid}`, JSON.stringify(currentCart));
+    toast.success("Added to cart successfully!");
+  };
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -70,10 +104,6 @@ const ProductDetail = () => {
       </div>
     );
   }
-
-  const handleLearnMore = () => {
-    navigate(`/product/${id}/learn-more`);
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white relative">
@@ -124,11 +154,14 @@ const ProductDetail = () => {
               transition={{ delay: 0.3 }}
               className="space-y-4"
             >
-              <button className="w-full bg-white text-black py-3 rounded-md hover:bg-gray-200 transition-colors">
+              <button 
+                onClick={handleAddToCart}
+                className="w-full bg-white text-black py-3 rounded-md hover:bg-gray-200 transition-colors"
+              >
                 Add to Cart
               </button>
               <button 
-                onClick={handleLearnMore}
+                onClick={() => navigate(`/product/${id}/learn-more`)}
                 className="w-full border border-white/20 py-3 rounded-md hover:bg-white/10 transition-colors"
               >
                 Learn More

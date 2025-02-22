@@ -3,9 +3,12 @@ import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import { Footerdemo } from "@/components/ui/footer-section";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { auth } from "@/lib/firebase";
+import { toast } from "sonner";
 
 const Products = () => {
+  const navigate = useNavigate();
   const [products] = useState([
     {
       id: 1,
@@ -41,6 +44,39 @@ const Products = () => {
     }
   ]);
 
+  const handleAddToCart = (product: any, e: React.MouseEvent) => {
+    e.preventDefault();
+    const user = auth.currentUser;
+    if (!user) {
+      navigate("/");
+      const authButton = document.querySelector('[data-auth-trigger]');
+      if (authButton instanceof HTMLElement) {
+        authButton.click();
+      }
+      return;
+    }
+
+    const savedCart = localStorage.getItem(`cart_${user.uid}`);
+    const currentCart = savedCart ? JSON.parse(savedCart) : [];
+    
+    const existingItemIndex = currentCart.findIndex((item: any) => item.id === product.id);
+    
+    if (existingItemIndex !== -1) {
+      currentCart[existingItemIndex].quantity += 1;
+    } else {
+      currentCart.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        quantity: 1
+      });
+    }
+
+    localStorage.setItem(`cart_${user.uid}`, JSON.stringify(currentCart));
+    toast.success("Added to cart successfully!");
+  };
+
   return (
     <div className="min-h-screen bg-black text-white">
       <Navigation />
@@ -75,8 +111,11 @@ const Products = () => {
                   <span className="text-sm text-gray-400">{product.category}</span>
                   <h3 className="mt-1 text-xl font-semibold text-white">{product.name}</h3>
                   <p className="mt-2 text-gray-300">{product.price}</p>
-                  <button className="mt-4 w-full bg-white text-black py-2 rounded-md hover:bg-gray-200 transition-colors">
-                    View Details
+                  <button 
+                    onClick={(e) => handleAddToCart(product, e)}
+                    className="mt-4 w-full bg-white text-black py-2 rounded-md hover:bg-gray-200 transition-colors"
+                  >
+                    Add to Cart
                   </button>
                 </div>
               </motion.div>
