@@ -49,8 +49,8 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="!fixed !bottom-[88px] !top-auto !left-auto !right-6 !translate-x-0 !translate-y-0 sm:max-w-[440px] h-[600px] flex flex-col p-0 rounded-2xl bg-white/5 backdrop-blur-lg border-white/10">
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <DialogContent className="!fixed !bottom-[88px] !top-auto !left-auto !right-6 !translate-x-0 !translate-y-0 sm:max-w-[320px] h-[400px] flex flex-col p-0 rounded-2xl bg-white/5 backdrop-blur-lg border-white/10">
+        <div className="flex-1 overflow-y-auto p-3 space-y-3">
           {messages.map((message, index) => (
             <motion.div
               key={index}
@@ -59,7 +59,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
               className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[80%] rounded-lg p-3 text-sm ${
+                className={`max-w-[80%] rounded-lg p-2.5 text-sm ${
                   message.role === "user"
                     ? "bg-primary text-primary-foreground"
                     : "bg-white/5 text-white/90"
@@ -75,14 +75,14 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
               animate={{ opacity: 1, y: 0 }}
               className="flex justify-start"
             >
-              <div className="bg-white/5 rounded-lg p-3">
+              <div className="bg-white/5 rounded-lg p-2.5">
                 <Loader2 className="h-4 w-4 animate-spin text-white/50" />
               </div>
             </motion.div>
           )}
         </div>
 
-        <div className="p-4 border-t border-white/10">
+        <div className="p-3 border-t border-white/10">
           <form
             onSubmit={(e) => {
               e.preventDefault();
