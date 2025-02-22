@@ -12,7 +12,7 @@ const CartContext = createContext<CartContextType>({
   updateCartCount: () => {},
 });
 
-export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
 
   const updateCartCount = (userId: string) => {
@@ -45,4 +45,12 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const useCart = () => useContext(CartContext);
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error('useCart must be used within a CartProvider');
+  }
+  return context;
+};
+
+export default CartContext;
