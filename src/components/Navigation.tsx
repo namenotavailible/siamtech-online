@@ -1,3 +1,4 @@
+
 import { ShoppingCart, Menu, Search, User, LogOut, ChevronDown } from "lucide-react";
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -193,36 +194,36 @@ function Navigation() {
                 </DropdownMenu>
               </div>
 
-              <div className="flex items-center space-x-4">  
+              <div className="flex items-center gap-2 sm:gap-4">  
                 <button 
-                  className="text-gray-300 hover:text-white transition-colors"
+                  className="p-2 text-gray-300 hover:text-white transition-colors"
                   onClick={() => setIsSearchOpen(true)}
                 >
-                  <Search className="h-5 w-5" />
+                  <Search className="h-4 w-4 sm:h-5 sm:w-5" />
                 </button>
                 <button 
-                  className="text-gray-300 hover:text-white transition-colors relative"
+                  className="p-2 text-gray-300 hover:text-white transition-colors relative"
                   onClick={handleCartClick}
                 >
-                  <ShoppingCart className="h-5 w-5" />
+                  <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
                   {cartCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-white text-black text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 bg-white text-black text-[0.65rem] sm:text-xs w-3 h-3 sm:w-4 sm:h-4 rounded-full flex items-center justify-center">
                       {cartCount}
                     </span>
                   )}
                 </button>
                 <button 
                   data-auth-trigger
-                  className="text-gray-300 hover:text-white transition-colors"
+                  className="p-2 text-gray-300 hover:text-white transition-colors"
                   onClick={handleUserClick}
                 >
-                  <User className="h-5 w-5" />
+                  <User className="h-4 w-4 sm:h-5 sm:w-5" />
                 </button>
                 <button 
-                  className="md:hidden text-gray-300 hover:text-white transition-colors" 
+                  className="md:hidden p-2 text-gray-300 hover:text-white transition-colors" 
                   onClick={() => setIsOpen(!isOpen)}
                 >
-                  <Menu className="h-5 w-5" />
+                  <Menu className="h-4 w-4 sm:h-5 sm:w-5" />
                 </button>
               </div>
             </div>
