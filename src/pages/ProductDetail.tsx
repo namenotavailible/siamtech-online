@@ -45,11 +45,6 @@ const products = [
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const product = products.find(p => p.id === Number(id));
 
   const handleAddToCart = () => {
