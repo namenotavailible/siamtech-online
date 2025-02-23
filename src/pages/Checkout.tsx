@@ -18,6 +18,13 @@ const Checkout = () => {
     const user = auth.currentUser;
     if (!user) {
       navigate('/');
+      // Trigger auth dialog after a short delay to ensure navigation is complete
+      setTimeout(() => {
+        const authButton = document.querySelector('[data-auth-trigger]');
+        if (authButton instanceof HTMLElement) {
+          authButton.click();
+        }
+      }, 100);
       return;
     }
 
@@ -34,6 +41,29 @@ const Checkout = () => {
       setTotal(cartTotal);
     }
   }, [navigate]);
+
+  const handlePlaceOrder = () => {
+    const user = auth.currentUser;
+    if (!user) {
+      navigate('/');
+      setTimeout(() => {
+        const authButton = document.querySelector('[data-auth-trigger]');
+        if (authButton instanceof HTMLElement) {
+          authButton.click();
+        }
+      }, 100);
+      return;
+    }
+
+    toast.success("Order placed successfully!");
+    localStorage.removeItem(`cart_${user.uid}`);
+    navigate('/');
+  };
+
+  // If not authenticated, don't render the page content
+  if (!auth.currentUser) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -86,7 +116,11 @@ const Checkout = () => {
                     <span>{total.toFixed(2)} ฿</span>
                   </div>
                 </div>
-                <Button className="w-full" size="lg">
+                <Button 
+                  className="w-full" 
+                  size="lg"
+                  onClick={handlePlaceOrder}
+                >
                   Place Order
                 </Button>
               </div>

@@ -1,5 +1,5 @@
 import { ShoppingCart, Menu, Search, User, LogOut } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CartPanel from "./CartPanel";
 import SearchPanel from "./SearchPanel";
