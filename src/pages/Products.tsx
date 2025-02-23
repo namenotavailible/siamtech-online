@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import { Footerdemo } from "@/components/ui/footer-section";
 import { motion } from "framer-motion";
@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "@/lib/firebase";
 import { toast } from "sonner";
 import { useCart } from '@/contexts/CartContext';
+import { Helmet } from "react-helmet";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -18,7 +19,8 @@ const Products = () => {
       price: "2,490 ฿",
       image: "/lovable-uploads/895e0863-a00d-4ccd-9f78-21e1181817a3.png",
       category: "Dynamic Microphone",
-      description: "Professional dynamic microphone perfect for gaming, streaming, and content creation."
+      description: "Professional dynamic microphone perfect for gaming, streaming, and content creation.",
+      alt: "FIFINE Ampligame AM8 Dynamic USB Microphone for Gaming and Streaming"
     },
     {
       id: 2,
@@ -26,7 +28,8 @@ const Products = () => {
       price: "1,990 ฿",
       image: "/lovable-uploads/0bdd554b-e74a-4fe7-8d87-867680dd35bb.png",
       category: "Condenser Microphone",
-      description: "High-quality condenser microphone featuring RGB lighting effects."
+      description: "High-quality condenser microphone featuring RGB lighting effects.",
+      alt: "FIFINE Ampligame A8 RGB Condenser USB Microphone"
     },
     {
       id: 5,
@@ -34,7 +37,8 @@ const Products = () => {
       price: "1,290 ฿",
       image: "/lovable-uploads/e4346941-0357-4549-8e1e-77ef2c16e8ed.png",
       category: "Gaming Mouse",
-      description: "High-performance wireless gaming mouse with precision tracking and ergonomic design."
+      description: "High-performance wireless gaming mouse with precision tracking and ergonomic design.",
+      alt: "VXE Dragonfly R1 High-Performance Gaming Mouse"
     },
     {
       id: 6,
@@ -42,9 +46,45 @@ const Products = () => {
       price: "1,690 ฿",
       image: "/lovable-uploads/eb227e57-8859-4673-9eda-54e1deb03124.png",
       category: "Gaming Mouse",
-      description: "Premium wireless gaming mouse with advanced sensors and customizable features."
+      description: "Premium wireless gaming mouse with advanced sensors and customizable features.",
+      alt: "VGN Dragonfly F1 Premium Gaming Mouse with Customizable Features"
     }
   ]);
+
+  useEffect(() => {
+    // Structured data for products
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": products.map((product, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "item": {
+          "@type": "Product",
+          "name": product.name,
+          "description": product.description,
+          "image": window.location.origin + product.image,
+          "category": product.category,
+          "offers": {
+            "@type": "Offer",
+            "price": product.price.replace(/[^\d.]/g, ''),
+            "priceCurrency": "THB",
+            "availability": "https://schema.org/InStock"
+          }
+        }
+      }))
+    };
+
+    // Add structured data to head
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(structuredData);
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, [products]);
 
   const handleAddToCart = (product: any, e: React.MouseEvent) => {
     e.preventDefault();
@@ -85,6 +125,13 @@ const Products = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <Helmet>
+        <title>Gaming Peripherals & Audio Equipment | SIAMTECH Online Store</title>
+        <meta name="description" content="Shop premium gaming mice and professional microphones. Find the perfect audio and gaming equipment for streaming, content creation, and competitive gaming." />
+        <meta name="keywords" content="gaming mouse, microphone, streaming equipment, gaming peripherals, FIFINE, VXE, VGN, Dragonfly" />
+        <link rel="canonical" href={window.location.href} />
+      </Helmet>
+      
       <Navigation />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
@@ -109,17 +156,19 @@ const Products = () => {
                 <div className="aspect-square overflow-hidden">
                   <img
                     src={product.image}
-                    alt={product.name}
+                    alt={product.alt}
                     className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-300"
+                    loading={index > 1 ? "lazy" : undefined}
                   />
                 </div>
                 <div className="p-6">
                   <span className="text-sm text-gray-400">{product.category}</span>
-                  <h3 className="mt-1 text-xl font-semibold text-white">{product.name}</h3>
+                  <h2 className="mt-1 text-xl font-semibold text-white">{product.name}</h2>
                   <p className="mt-2 text-gray-300">{product.price}</p>
                   <button 
                     onClick={(e) => handleAddToCart(product, e)}
                     className="mt-4 w-full bg-white text-black py-2 rounded-md hover:bg-gray-200 transition-colors"
+                    aria-label={`Add ${product.name} to cart`}
                   >
                     Add to Cart
                   </button>
@@ -136,3 +185,4 @@ const Products = () => {
 };
 
 export default Products;
+
