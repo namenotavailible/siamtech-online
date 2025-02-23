@@ -57,6 +57,46 @@ const products: Record<string, ProductData> = {
       connection: "USB Type-C",
       compatibility: "Windows, macOS, PS4/PS5"
     }
+  },
+  "5": {
+    name: "VXE Dragonfly R1",
+    features: [
+      "High-Precision Optical Sensor",
+      "Ultra-Lightweight Design",
+      "RGB Illumination",
+      "6 Programmable Buttons",
+      "Up to 16000 DPI",
+      "Ergonomic Right-Handed Design"
+    ],
+    details: "The VXE Dragonfly R1 is a high-performance gaming mouse designed for competitive gaming. With its ultra-lightweight construction and high-precision optical sensor, it provides exceptional accuracy and control. The mouse features customizable RGB lighting and programmable buttons for a personalized gaming experience.",
+    specs: {
+      frequency: "1000Hz Polling Rate",
+      sensitivity: "100-16000 DPI",
+      spl: "N/A",
+      impedance: "N/A",
+      connection: "USB 2.0",
+      compatibility: "Windows, macOS"
+    }
+  },
+  "6": {
+    name: "VGN Dragonfly F1",
+    features: [
+      "Advanced Optical Sensor",
+      "Customizable Weight System",
+      "RGB Lighting Effects",
+      "8 Programmable Buttons",
+      "Up to 20000 DPI",
+      "Premium Build Quality"
+    ],
+    details: "The VGN Dragonfly F1 is a premium gaming mouse that combines advanced technology with exceptional build quality. Featuring a high-precision optical sensor and customizable weight system, it offers unparalleled control and comfort. The mouse includes extensive RGB lighting customization and programmable buttons for a truly personalized gaming setup.",
+    specs: {
+      frequency: "1000Hz Polling Rate",
+      sensitivity: "100-20000 DPI",
+      spl: "N/A",
+      impedance: "N/A",
+      connection: "USB 2.0",
+      compatibility: "Windows, macOS"
+    }
   }
 };
 

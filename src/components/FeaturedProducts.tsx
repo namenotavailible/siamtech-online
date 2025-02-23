@@ -28,13 +28,13 @@ const products = [{
   category: "Condenser Microphone"
 }, {
   id: 5,
-  name: "VXE Dragonfly R1 Series Wireless Mouse",
+  name: "VXE Dragonfly R1",
   price: "1,290 ฿",
   image: "/lovable-uploads/e4346941-0357-4549-8e1e-77ef2c16e8ed.png",
   category: "Gaming Mouse"
 }, {
   id: 6,
-  name: "VGN Dragonfly F1 Series Wireless Mouse",
+  name: "VGN Dragonfly F1",
   price: "1,690 ฿",
   image: "/lovable-uploads/eb227e57-8859-4673-9eda-54e1deb03124.png",
   category: "Gaming Mouse"

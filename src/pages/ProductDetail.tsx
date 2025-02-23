@@ -13,7 +13,7 @@ const products = [
     name: "FIFINE Ampligame AM8",
     price: "2,490 ฿",
     image: "/lovable-uploads/895e0863-a00d-4ccd-9f78-21e1181817a3.png",
-    category: "Dynamic Microphone #1",
+    category: "Dynamic Microphone",
     description: "Professional dynamic microphone perfect for gaming, streaming, and content creation. Features crystal clear audio capture and robust build quality."
   },
   {
@@ -21,24 +21,24 @@ const products = [
     name: "FIFINE Ampligame A8",
     price: "1,990 ฿",
     image: "/lovable-uploads/0bdd554b-e74a-4fe7-8d87-867680dd35bb.png",
-    category: "Condenser Microphone #2",
+    category: "Condenser Microphone",
     description: "High-quality condenser microphone featuring RGB lighting effects and professional audio quality, perfect for streaming and content creation."
   },
   {
-    id: 3,
-    name: "Podcast Kit",
-    price: "$399",
-    image: "/placeholder.svg",
-    category: "Bundle",
-    description: "Complete podcast studio kit including microphone, audio interface, stand, and accessories."
+    id: 5,
+    name: "VXE Dragonfly R1",
+    price: "1,290 ฿",
+    image: "/lovable-uploads/e4346941-0357-4549-8e1e-77ef2c16e8ed.png",
+    category: "Gaming Mouse",
+    description: "High-performance gaming mouse featuring a high-precision optical sensor, ultra-lightweight design, and customizable RGB lighting."
   },
   {
-    id: 4,
-    name: "Gaming Headset",
-    price: "$199",
-    image: "/placeholder.svg",
-    category: "Gaming",
-    description: "Premium gaming headset with surround sound, noise-canceling microphone, and comfortable design."
+    id: 6,
+    name: "VGN Dragonfly F1",
+    price: "1,690 ฿",
+    image: "/lovable-uploads/eb227e57-8859-4673-9eda-54e1deb03124.png",
+    category: "Gaming Mouse",
+    description: "Premium gaming mouse with advanced optical sensor, customizable weight system, and extensive RGB lighting customization options."
   }
 ];
 
