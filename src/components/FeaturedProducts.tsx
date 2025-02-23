@@ -11,6 +11,7 @@ import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { User, ShieldCheck } from "lucide-react";
 import { useCart } from '@/contexts/CartContext';
 import { ButtonColorful } from "@/components/ui/button-colorful";
+import { GoogleLogo } from "@/components/ui/google-logo";
 
 const products = [{
   id: 1,
@@ -24,6 +25,18 @@ const products = [{
   price: "1,990 ฿",
   image: "/lovable-uploads/0bdd554b-e74a-4fe7-8d87-867680dd35bb.png",
   category: "Condenser Microphone"
+}, {
+  id: 3,
+  name: "FIFINE K678",
+  price: "1,790 ฿",
+  image: "/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png",
+  category: "USB Microphone"
+}, {
+  id: 4,
+  name: "FIFINE Ampligame A6V2",
+  price: "1,590 ฿",
+  image: "/lovable-uploads/e4346941-0357-4549-8e1e-77ef2c16e8ed.png",
+  category: "USB Microphone"
 }];
 
 const FeaturedProducts = () => {
