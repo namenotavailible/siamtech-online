@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CartPanel from "./CartPanel";
@@ -16,6 +17,7 @@ import EmailLinkAuth from './EmailLinkAuth';
 import { Logo } from "./navigation/Logo";
 import { DropdownMenu } from "./navigation/DropdownMenu";
 import { ToolbarIcons } from "./navigation/ToolbarIcons";
+import { User } from "lucide-react"; // Added this import
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
