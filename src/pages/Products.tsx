@@ -29,20 +29,20 @@ const Products = () => {
       description: "High-quality condenser microphone featuring RGB lighting effects."
     },
     {
-      id: 3,
-      name: "Podcast Kit",
-      price: "$399",
-      image: "/placeholder.svg",
-      category: "Bundle",
-      description: "Complete podcast studio kit including microphone and accessories."
+      id: 5,
+      name: "VXE Dragonfly R1 Series Wireless Mouse",
+      price: "1,290 ฿",
+      image: "/lovable-uploads/e4346941-0357-4549-8e1e-77ef2c16e8ed.png",
+      category: "Gaming Mouse",
+      description: "High-performance wireless gaming mouse with precision tracking and ergonomic design."
     },
     {
-      id: 4,
-      name: "Gaming Headset",
-      price: "$199",
-      image: "/placeholder.svg",
-      category: "Gaming",
-      description: "Premium gaming headset with surround sound technology."
+      id: 6,
+      name: "VGN Dragonfly F1 Series Wireless Mouse",
+      price: "1,690 ฿",
+      image: "/lovable-uploads/eb227e57-8859-4673-9eda-54e1deb03124.png",
+      category: "Gaming Mouse",
+      description: "Premium wireless gaming mouse with advanced sensors and customizable features."
     }
   ]);
 
@@ -78,7 +78,6 @@ const Products = () => {
     localStorage.setItem(`cart_${user.uid}`, JSON.stringify(currentCart));
     toast.success("Added to cart successfully!");
     
-    // Update cart count after a short delay
     setTimeout(() => {
       updateCartCount(user.uid);
     }, 1000);
