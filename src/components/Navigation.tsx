@@ -21,6 +21,11 @@ function Navigation() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const [dropdowns, setDropdowns] = useState({
+    products: false,
+    warranty: false,
+    support: false
+  });
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -121,6 +126,13 @@ function Navigation() {
     }
   };
 
+  const toggleDropdown = (dropdown: 'products' | 'warranty' | 'support') => {
+    setDropdowns(prev => ({
+      ...prev,
+      [dropdown]: !prev[dropdown]
+    }));
+  };
+
   return (
     <>
       <nav className="fixed w-full z-50 bg-black/10 backdrop-blur-md border-b border-white/10">
@@ -133,33 +145,72 @@ function Navigation() {
               </a>
             </div>
 
-            <div className="flex items-center space-x-4">
-              <div className="hidden md:flex items-center">
-                <div className="relative">
-                  <button
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors px-4 py-2"
-                  >
-                    <span>Menu</span>
-                    <ChevronDown className="h-4 w-4" />
-                  </button>
-                  
-                  {isDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg py-1 z-50 border border-white/10">
-                      <a href="/products" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
-                        Products
-                      </a>
-                      <a href="/warranty" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
-                        Warranty
-                      </a>
-                      <a href="/support" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
-                        Support
-                      </a>
-                    </div>
-                  )}
-                </div>
+            <div className="hidden md:flex items-center space-x-8 mr-8">
+              <div className="relative">
+                <button
+                  onClick={() => toggleDropdown('products')}
+                  className="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors"
+                >
+                  <span>Products</span>
+                  <ChevronDown className="h-4 w-4" />
+                </button>
+                {dropdowns.products && (
+                  <div className="absolute left-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg py-1 z-50 border border-white/10">
+                    <a href="/products#microphones" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
+                      Microphones
+                    </a>
+                    <a href="/products#gaming-mouse" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
+                      Gaming Mouse
+                    </a>
+                  </div>
+                )}
               </div>
 
+              <div className="relative">
+                <button
+                  onClick={() => toggleDropdown('warranty')}
+                  className="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors"
+                >
+                  <span>Warranty</span>
+                  <ChevronDown className="h-4 w-4" />
+                </button>
+                {dropdowns.warranty && (
+                  <div className="absolute left-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg py-1 z-50 border border-white/10">
+                    <a href="/warranty#registration" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
+                      Warranty Registration
+                    </a>
+                    <a href="/warranty#policy" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
+                      Warranty Policy
+                    </a>
+                  </div>
+                )}
+              </div>
+
+              <div className="relative">
+                <button
+                  onClick={() => toggleDropdown('support')}
+                  className="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors"
+                >
+                  <span>Support</span>
+                  <ChevronDown className="h-4 w-4" />
+                </button>
+                {dropdowns.support && (
+                  <div className="absolute left-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg py-1 z-50 border border-white/10">
+                    <a href="/support#faqs" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
+                      FAQs
+                    </a>
+                    <a href="/support#contact" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
+                      Contact Us
+                    </a>
+                    <a href="/support#downloads" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
+                      Downloads
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-4">
               <button 
                 className="text-gray-300 hover:text-white transition-colors"
                 onClick={() => setIsSearchOpen(true)}
