@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import { Footerdemo } from "@/components/ui/footer-section";
 import { motion } from "framer-motion";
@@ -13,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { User } from "lucide-react";
+import EmailLinkAuth from "@/components/EmailLinkAuth";
 
 const features = [
   {
@@ -102,7 +102,6 @@ const Warranty = () => {
 
   const handleWarrantySubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the warranty data to your backend
     console.log("Warranty Data:", warrantyData);
     toast.success("Warranty registration submitted successfully!");
     setShowWarrantyForm(false);
@@ -176,58 +175,67 @@ const Warranty = () => {
           </div>
 
           <form onSubmit={handleEmailSignUp} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="signup-name">Full name</Label>
-              <Input
-                id="signup-name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className="bg-white/5"
-              />
+            <div className="space-y-3">
+              <div className="space-y-1">
+                <Label htmlFor="signup-name">Full name</Label>
+                <Input
+                  id="signup-name"
+                  placeholder="John Doe"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  className="h-8"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="signup-email">Email</Label>
+                <Input
+                  id="signup-email"
+                  type="email"
+                  placeholder="john@example.com"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="h-8"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="signup-password">Password</Label>
+                <Input
+                  id="signup-password"
+                  type="password"
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                  className="h-8"
+                />
+              </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="signup-email">Email</Label>
-              <Input
-                id="signup-email"
-                type="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className="bg-white/5"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="signup-password">Password</Label>
-              <Input
-                id="signup-password"
-                type="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                className="bg-white/5"
-              />
-            </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full h-8 text-sm">
               Sign up
             </Button>
           </form>
 
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-white/10" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
-                Or continue with
-              </span>
-            </div>
+          <div className="flex items-center gap-2 my-2 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
+            <span className="text-xs text-gray-400">Or</span>
           </div>
 
-          <Button
-            variant="outline"
-            onClick={handleGoogleSignIn}
-            className="w-full"
-          >
-            Continue with Google
-          </Button>
+          <div className="space-y-2">
+            <Button variant="outline" onClick={handleGoogleSignIn} className="w-full h-8 text-sm">
+              Continue with Google
+            </Button>
+            
+            <EmailLinkAuth />
+          </div>
+
+          <p className="text-center text-xs text-gray-400 mt-2">
+            By signing up you agree to our{" "}
+            <a href="/privacy" className="underline hover:no-underline">
+              Terms
+            </a>
+            .
+          </p>
         </DialogContent>
       </Dialog>
 
