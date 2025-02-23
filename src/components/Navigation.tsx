@@ -194,7 +194,7 @@ function Navigation() {
                 </DropdownMenu>
               </div>
 
-              <div className="flex items-center">
+              <div className="flex items-center gap-2 sm:gap-4">
                 <button 
                   className="p-3 sm:p-4 text-gray-300 hover:text-white transition-colors"
                   onClick={() => setIsSearchOpen(true)}
@@ -220,7 +220,7 @@ function Navigation() {
                   <User className="h-5 w-5 sm:h-6 sm:w-6" />
                 </button>
                 <button 
-                  className="md:hidden p-3 sm:p-4 text-gray-300 hover:text-white transition-colors ml-1" 
+                  className="md:hidden p-3 sm:p-4 text-gray-300 hover:text-white transition-colors" 
                   onClick={() => setIsOpen(!isOpen)}
                 >
                   <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
