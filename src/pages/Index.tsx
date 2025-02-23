@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import FloatingChat from "@/components/ui/floating-chat";
+import { TopBar } from "@/components/ui/top-bar";
 
 const Index = () => {
   const [heroTitle, setHeroTitle] = useState("Professional Equipment for Every Need");
@@ -15,6 +16,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
+      <TopBar />
       <Navigation />
       
       <Vortex backgroundColor="black" rangeY={800} particleCount={500} baseHue={240} className="h-screen flex items-center justify-center px-4">
