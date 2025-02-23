@@ -1,4 +1,3 @@
-
 import { ShoppingCart, Menu, Search, User, LogOut, ChevronDown } from "lucide-react";
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -131,71 +130,71 @@ function Navigation() {
     <>
       <nav className="fixed w-full z-50 bg-black/10 backdrop-blur-md border-b border-white/10">
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
-              <a href="/" className="flex flex-col items-start -space-y-1 pl-0">
+          <div className="flex items-center h-16">
+            <div className="flex items-center space-x-8">
+              <a href="/" className="flex flex-col items-start -space-y-1">
                 <span className="text-white font-medium tracking-wide text-base">SIAMTECH</span>
                 <span className="text-gray-400 text-[0.65rem] font-light tracking-widest uppercase">online</span>
               </a>
+
+              <div className="hidden md:flex items-center space-x-8">
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="text-gray-300 hover:text-white transition-colors flex items-center gap-1 data-[state=open]:text-white">
+                    Products
+                    <ChevronDown className="h-4 w-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-48 bg-black/90 backdrop-blur-lg border border-white/10">
+                    <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
+                      <a href="/products/laptops" className="w-full">Laptops</a>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
+                      <a href="/products/desktops" className="w-full">Desktop PCs</a>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
+                      <a href="/products/accessories" className="w-full">Accessories</a>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="text-gray-300 hover:text-white transition-colors flex items-center gap-1 data-[state=open]:text-white">
+                    Warranty
+                    <ChevronDown className="h-4 w-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-48 bg-black/90 backdrop-blur-lg border border-white/10">
+                    <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
+                      <a href="/warranty/registration" className="w-full">Product Registration</a>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
+                      <a href="/warranty/check" className="w-full">Check Status</a>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
+                      <a href="/warranty/terms" className="w-full">Terms & Conditions</a>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="text-gray-300 hover:text-white transition-colors flex items-center gap-1 data-[state=open]:text-white">
+                    Support
+                    <ChevronDown className="h-4 w-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-48 bg-black/90 backdrop-blur-lg border border-white/10">
+                    <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
+                      <a href="/support/contact" className="w-full">Contact Us</a>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
+                      <a href="/support/faq" className="w-full">FAQ</a>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
+                      <a href="/support/downloads" className="w-full">Downloads</a>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
-            
-            <div className="hidden md:flex items-center space-x-8">
-              <DropdownMenu>
-                <DropdownMenuTrigger className="text-gray-300 hover:text-white transition-colors flex items-center gap-1">
-                  Products
-                  <ChevronDown className="h-4 w-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-48 bg-black/90 backdrop-blur-lg border border-white/10">
-                  <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
-                    <a href="/products/laptops">Laptops</a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
-                    <a href="/products/desktops">Desktop PCs</a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
-                    <a href="/products/accessories">Accessories</a>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
 
-              <DropdownMenu>
-                <DropdownMenuTrigger className="text-gray-300 hover:text-white transition-colors flex items-center gap-1">
-                  Warranty
-                  <ChevronDown className="h-4 w-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-48 bg-black/90 backdrop-blur-lg border border-white/10">
-                  <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
-                    <a href="/warranty/registration">Product Registration</a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
-                    <a href="/warranty/check">Check Status</a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
-                    <a href="/warranty/terms">Terms & Conditions</a>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              <DropdownMenu>
-                <DropdownMenuTrigger className="text-gray-300 hover:text-white transition-colors flex items-center gap-1">
-                  Support
-                  <ChevronDown className="h-4 w-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-48 bg-black/90 backdrop-blur-lg border border-white/10">
-                  <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
-                    <a href="/support/contact">Contact Us</a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
-                    <a href="/support/faq">FAQ</a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white">
-                    <a href="/support/downloads">Downloads</a>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-
-            <div className="flex items-center space-x-4">
+            <div className="flex-1 flex justify-end items-center space-x-4">  
               <button 
                 className="text-gray-300 hover:text-white transition-colors"
                 onClick={() => setIsSearchOpen(true)}
