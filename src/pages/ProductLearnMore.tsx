@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { X, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 
 type ProductData = {
   name: string;
@@ -63,7 +64,20 @@ const products: Record<string, ProductData> = {
 const ProductLearnMore = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const product = id ? products[id] : null;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  if (!id) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <h1 className="text-2xl">Product not found</h1>
+      </div>
+    );
+  }
+
+  const product = products[id];
 
   if (!product) {
     return (

@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import { Footerdemo } from "@/components/ui/footer-section";
 import { motion } from "framer-motion";
@@ -11,6 +10,11 @@ import { useCart } from '@/contexts/CartContext';
 const Products = () => {
   const navigate = useNavigate();
   const { updateCartCount } = useCart();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [products] = useState([
     {
       id: 1,
