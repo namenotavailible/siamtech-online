@@ -130,14 +130,14 @@ function Navigation() {
     <>
       <nav className="fixed w-full z-50 bg-black/10 backdrop-blur-md border-b border-white/10">
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
-          <div className="flex items-center h-16">
-            <div className="flex items-center space-x-8">
-              <a href="/" className="flex flex-col items-start -space-y-1">
-                <span className="text-white font-medium tracking-wide text-base">SIAMTECH</span>
-                <span className="text-gray-400 text-[0.65rem] font-light tracking-widest uppercase">online</span>
-              </a>
+          <div className="flex items-center justify-between h-16">
+            <a href="/" className="flex flex-col items-start -space-y-1">
+              <span className="text-white font-medium tracking-wide text-base">SIAMTECH</span>
+              <span className="text-gray-400 text-[0.65rem] font-light tracking-widest uppercase">online</span>
+            </a>
 
-              <div className="hidden md:flex items-center space-x-8">
+            <div className="flex items-center justify-end flex-1">
+              <div className="hidden md:flex items-center space-x-8 mr-8">
                 <DropdownMenu>
                   <DropdownMenuTrigger className="text-gray-300 hover:text-white transition-colors flex items-center gap-1 data-[state=open]:text-white">
                     Products
@@ -192,117 +192,39 @@ function Navigation() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-            </div>
 
-            <div className="flex-1 flex justify-end items-center space-x-4">  
-              <button 
-                className="text-gray-300 hover:text-white transition-colors"
-                onClick={() => setIsSearchOpen(true)}
-              >
-                <Search className="h-5 w-5" />
-              </button>
-              <button 
-                className="text-gray-300 hover:text-white transition-colors relative"
-                onClick={handleCartClick}
-              >
-                <ShoppingCart className="h-5 w-5" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-white text-black text-xs w-4 h-4 rounded-full flex items-center justify-center">
-                    {cartCount}
-                  </span>
-                )}
-              </button>
-              <button 
-                data-auth-trigger
-                className="text-gray-300 hover:text-white transition-colors"
-                onClick={handleUserClick}
-              >
-                <User className="h-5 w-5" />
-              </button>
-              <Dialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
-                <DialogContent className="sm:max-w-[400px]">
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-full border border-white/10">
-                      <User className="h-5 w-5 text-white" />
-                    </div>
-                    <DialogHeader className="space-y-1">
-                      <DialogTitle className="text-center">Sign up to SIAMTECH</DialogTitle>
-                      <DialogDescription className="text-center">
-                        Create an account to access your cart
-                      </DialogDescription>
-                    </DialogHeader>
-                  </div>
-
-                  <form onSubmit={handleEmailSignUp} className="space-y-4">
-                    <div className="space-y-3">
-                      <div className="space-y-1">
-                        <Label htmlFor="signup-name">Full name</Label>
-                        <Input
-                          id="signup-name"
-                          placeholder="John Doe"
-                          value={formData.name}
-                          onChange={handleInputChange}
-                          required
-                          className="h-8"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label htmlFor="signup-email">Email</Label>
-                        <Input
-                          id="signup-email"
-                          type="email"
-                          placeholder="john@example.com"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          required
-                          className="h-8"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label htmlFor="signup-password">Password</Label>
-                        <Input
-                          id="signup-password"
-                          type="password"
-                          placeholder="Enter your password"
-                          value={formData.password}
-                          onChange={handleInputChange}
-                          required
-                          className="h-8"
-                        />
-                      </div>
-                    </div>
-                    <Button type="submit" className="w-full h-8 text-sm">
-                      Sign up
-                    </Button>
-                  </form>
-
-                  <div className="flex items-center gap-2 my-2 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
-                    <span className="text-xs text-gray-400">Or</span>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Button variant="outline" onClick={handleGoogleSignIn} className="w-full h-8 text-sm">
-                      Continue with Google
-                    </Button>
-                    
-                    <EmailLinkAuth />
-                  </div>
-
-                  <p className="text-center text-xs text-gray-400 mt-2">
-                    By signing up you agree to our{" "}
-                    <a href="/privacy" className="underline hover:no-underline">
-                      Terms
-                    </a>
-                    .
-                  </p>
-                </DialogContent>
-              </Dialog>
-              <button 
-                className="md:hidden text-gray-300 hover:text-white transition-colors" 
-                onClick={() => setIsOpen(!isOpen)}
-              >
-                <Menu className="h-5 w-5" />
-              </button>
+              <div className="flex items-center space-x-4">  
+                <button 
+                  className="text-gray-300 hover:text-white transition-colors"
+                  onClick={() => setIsSearchOpen(true)}
+                >
+                  <Search className="h-5 w-5" />
+                </button>
+                <button 
+                  className="text-gray-300 hover:text-white transition-colors relative"
+                  onClick={handleCartClick}
+                >
+                  <ShoppingCart className="h-5 w-5" />
+                  {cartCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-white text-black text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                      {cartCount}
+                    </span>
+                  )}
+                </button>
+                <button 
+                  data-auth-trigger
+                  className="text-gray-300 hover:text-white transition-colors"
+                  onClick={handleUserClick}
+                >
+                  <User className="h-5 w-5" />
+                </button>
+                <button 
+                  className="md:hidden text-gray-300 hover:text-white transition-colors" 
+                  onClick={() => setIsOpen(!isOpen)}
+                >
+                  <Menu className="h-5 w-5" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
