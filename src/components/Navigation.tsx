@@ -1,4 +1,4 @@
-import { ShoppingCart, Menu, Search, User, LogOut } from "lucide-react";
+import { ShoppingCart, Menu, Search, User, ChevronDown, LogOut } from "lucide-react";
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CartPanel from "./CartPanel";
@@ -28,6 +28,7 @@ function Navigation() {
   });
   const { cartCount } = useCart();
   const navigate = useNavigate();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -131,20 +132,34 @@ function Navigation() {
                 <span className="text-gray-400 text-[0.65rem] font-light tracking-widest uppercase">online</span>
               </a>
             </div>
-            
-            <div className="hidden md:flex items-center space-x-8">
-              <a href="/products" className="text-gray-300 hover:text-white transition-colors">
-                Products
-              </a>
-              <a href="/warranty" className="text-gray-300 hover:text-white transition-colors">
-                Warranty
-              </a>
-              <a href="/support" className="text-gray-300 hover:text-white transition-colors">
-                Support
-              </a>
-            </div>
 
             <div className="flex items-center space-x-4">
+              <div className="hidden md:flex items-center">
+                <div className="relative">
+                  <button
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    className="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors px-4 py-2"
+                  >
+                    <span>Menu</span>
+                    <ChevronDown className="h-4 w-4" />
+                  </button>
+                  
+                  {isDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg py-1 z-50 border border-white/10">
+                      <a href="/products" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
+                        Products
+                      </a>
+                      <a href="/warranty" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
+                        Warranty
+                      </a>
+                      <a href="/support" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
+                        Support
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+
               <button 
                 className="text-gray-300 hover:text-white transition-colors"
                 onClick={() => setIsSearchOpen(true)}
