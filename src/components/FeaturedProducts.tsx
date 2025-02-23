@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { auth, googleProvider } from "@/lib/firebase";
@@ -26,17 +27,17 @@ const products = [{
   image: "/lovable-uploads/0bdd554b-e74a-4fe7-8d87-867680dd35bb.png",
   category: "Condenser Microphone"
 }, {
-  id: 3,
-  name: "FIFINE K678",
-  price: "1,790 ฿",
-  image: "/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png",
-  category: "USB Microphone"
-}, {
-  id: 4,
-  name: "FIFINE Ampligame A6V2",
-  price: "1,590 ฿",
+  id: 5,
+  name: "VXE Dragonfly R1 Series Wireless Mouse",
+  price: "1,290 ฿",
   image: "/lovable-uploads/e4346941-0357-4549-8e1e-77ef2c16e8ed.png",
-  category: "USB Microphone"
+  category: "Gaming Mouse"
+}, {
+  id: 6,
+  name: "VGN Dragonfly F1 Series Wireless Mouse",
+  price: "1,690 ฿",
+  image: "/lovable-uploads/eb227e57-8859-4673-9eda-54e1deb03124.png",
+  category: "Gaming Mouse"
 }];
 
 const FeaturedProducts = () => {
