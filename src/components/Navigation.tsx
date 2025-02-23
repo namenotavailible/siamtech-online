@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CartPanel from "./CartPanel";
@@ -17,7 +16,8 @@ import EmailLinkAuth from './EmailLinkAuth';
 import { Logo } from "./navigation/Logo";
 import { DropdownMenu } from "./navigation/DropdownMenu";
 import { ToolbarIcons } from "./navigation/ToolbarIcons";
-import { User } from "lucide-react"; // Added this import
+import { User } from "lucide-react";
+import { GoogleLogo } from "@/components/ui/google-logo";
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -275,6 +275,7 @@ function Navigation() {
 
           <div className="space-y-2">
             <Button variant="outline" onClick={handleGoogleSignIn} className="w-full h-8 text-sm">
+              <GoogleLogo />
               Continue with Google
             </Button>
             

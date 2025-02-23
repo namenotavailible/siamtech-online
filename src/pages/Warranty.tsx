@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { User } from "lucide-react";
 import EmailLinkAuth from "@/components/EmailLinkAuth";
+import { GoogleLogo } from "@/components/ui/google-logo";
 
 const features = [
   {
@@ -223,6 +224,7 @@ const Warranty = () => {
 
           <div className="space-y-2">
             <Button variant="outline" onClick={handleGoogleSignIn} className="w-full h-8 text-sm">
+              <GoogleLogo />
               Continue with Google
             </Button>
             
