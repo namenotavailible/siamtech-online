@@ -7,6 +7,7 @@ import { Footerdemo } from '@/components/ui/footer-section';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft } from "lucide-react";
 import type { CartItem } from '@/components/CartPanel';
+import { toast } from 'sonner';
 
 const Checkout = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
