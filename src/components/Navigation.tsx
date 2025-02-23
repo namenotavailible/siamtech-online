@@ -1,5 +1,4 @@
-import { ShoppingCart, Menu, Search, User, ChevronDown, LogOut } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CartPanel from "./CartPanel";
 import SearchPanel from "./SearchPanel";
@@ -14,6 +13,9 @@ import { useEffect } from "react";
 import { useCart } from '@/contexts/CartContext';
 import { useNavigate } from 'react-router-dom';
 import EmailLinkAuth from './EmailLinkAuth';
+import { Logo } from "./navigation/Logo";
+import { DropdownMenu } from "./navigation/DropdownMenu";
+import { ToolbarIcons } from "./navigation/ToolbarIcons";
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,7 +35,6 @@ function Navigation() {
   });
   const { cartCount } = useCart();
   const navigate = useNavigate();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -139,186 +140,48 @@ function Navigation() {
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <a href="/" className="flex flex-col items-start -space-y-1 pl-0">
-                <span className="text-white font-medium tracking-wide text-base">SIAMTECH</span>
-                <span className="text-gray-400 text-[0.65rem] font-light tracking-widest uppercase">online</span>
-              </a>
+              <Logo />
             </div>
 
             <div className="flex items-center space-x-4">
               <div className="hidden md:flex items-center space-x-8">
-                <div className="relative">
-                  <button
-                    onClick={() => toggleDropdown('products')}
-                    className="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors"
-                  >
-                    <span>Products</span>
-                    <ChevronDown className="h-4 w-4" />
-                  </button>
-                  {dropdowns.products && (
-                    <div className="absolute left-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg py-1 z-50 border border-white/10">
-                      <a href="/products#microphones" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
-                        Microphones
-                      </a>
-                      <a href="/products#gaming-mouse" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
-                        Gaming Mouse
-                      </a>
-                    </div>
-                  )}
-                </div>
-
-                <div className="relative">
-                  <button
-                    onClick={() => toggleDropdown('warranty')}
-                    className="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors"
-                  >
-                    <span>Warranty</span>
-                    <ChevronDown className="h-4 w-4" />
-                  </button>
-                  {dropdowns.warranty && (
-                    <div className="absolute left-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg py-1 z-50 border border-white/10">
-                      <a href="/warranty#registration" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
-                        Warranty Registration
-                      </a>
-                      <a href="/warranty#policy" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
-                        Warranty Policy
-                      </a>
-                    </div>
-                  )}
-                </div>
-
-                <div className="relative">
-                  <button
-                    onClick={() => toggleDropdown('support')}
-                    className="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors"
-                  >
-                    <span>Support</span>
-                    <ChevronDown className="h-4 w-4" />
-                  </button>
-                  {dropdowns.support && (
-                    <div className="absolute left-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg py-1 z-50 border border-white/10">
-                      <a href="/support#faqs" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
-                        FAQs
-                      </a>
-                      <a href="/support#contact" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
-                        Contact Us
-                      </a>
-                      <a href="/support#downloads" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors">
-                        Downloads
-                      </a>
-                    </div>
-                  )}
-                </div>
+                <DropdownMenu
+                  label="Products"
+                  items={[
+                    { href: "/products#microphones", label: "Microphones" },
+                    { href: "/products#gaming-mouse", label: "Gaming Mouse" }
+                  ]}
+                  isOpen={dropdowns.products}
+                  onToggle={() => toggleDropdown('products')}
+                />
+                <DropdownMenu
+                  label="Warranty"
+                  items={[
+                    { href: "/warranty#registration", label: "Warranty Registration" },
+                    { href: "/warranty#policy", label: "Warranty Policy" }
+                  ]}
+                  isOpen={dropdowns.warranty}
+                  onToggle={() => toggleDropdown('warranty')}
+                />
+                <DropdownMenu
+                  label="Support"
+                  items={[
+                    { href: "/support#faqs", label: "FAQs" },
+                    { href: "/support#contact", label: "Contact Us" },
+                    { href: "/support#downloads", label: "Downloads" }
+                  ]}
+                  isOpen={dropdowns.support}
+                  onToggle={() => toggleDropdown('support')}
+                />
               </div>
               
-              <button 
-                className="text-gray-300 hover:text-white transition-colors"
-                onClick={() => setIsSearchOpen(true)}
-              >
-                <Search className="h-5 w-5" />
-              </button>
-              <button 
-                className="text-gray-300 hover:text-white transition-colors relative"
-                onClick={handleCartClick}
-              >
-                <ShoppingCart className="h-5 w-5" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-white text-black text-xs w-4 h-4 rounded-full flex items-center justify-center">
-                    {cartCount}
-                  </span>
-                )}
-              </button>
-              <button 
-                data-auth-trigger
-                className="text-gray-300 hover:text-white transition-colors"
-                onClick={handleUserClick}
-              >
-                <User className="h-5 w-5" />
-              </button>
-              <Dialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
-                <DialogContent className="sm:max-w-[400px]">
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-full border border-white/10">
-                      <User className="h-5 w-5 text-white" />
-                    </div>
-                    <DialogHeader className="space-y-1">
-                      <DialogTitle className="text-center">Sign up to SIAMTECH</DialogTitle>
-                      <DialogDescription className="text-center">
-                        Create an account to access your cart
-                      </DialogDescription>
-                    </DialogHeader>
-                  </div>
-
-                  <form onSubmit={handleEmailSignUp} className="space-y-4">
-                    <div className="space-y-3">
-                      <div className="space-y-1">
-                        <Label htmlFor="signup-name">Full name</Label>
-                        <Input
-                          id="signup-name"
-                          placeholder="John Doe"
-                          value={formData.name}
-                          onChange={handleInputChange}
-                          required
-                          className="h-8"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label htmlFor="signup-email">Email</Label>
-                        <Input
-                          id="signup-email"
-                          type="email"
-                          placeholder="john@example.com"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          required
-                          className="h-8"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label htmlFor="signup-password">Password</Label>
-                        <Input
-                          id="signup-password"
-                          type="password"
-                          placeholder="Enter your password"
-                          value={formData.password}
-                          onChange={handleInputChange}
-                          required
-                          className="h-8"
-                        />
-                      </div>
-                    </div>
-                    <Button type="submit" className="w-full h-8 text-sm">
-                      Sign up
-                    </Button>
-                  </form>
-
-                  <div className="flex items-center gap-2 my-2 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
-                    <span className="text-xs text-gray-400">Or</span>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Button variant="outline" onClick={handleGoogleSignIn} className="w-full h-8 text-sm">
-                      Continue with Google
-                    </Button>
-                    
-                    <EmailLinkAuth />
-                  </div>
-
-                  <p className="text-center text-xs text-gray-400 mt-2">
-                    By signing up you agree to our{" "}
-                    <a href="/privacy" className="underline hover:no-underline">
-                      Terms
-                    </a>
-                    .
-                  </p>
-                </DialogContent>
-              </Dialog>
-              <button 
-                className="md:hidden text-gray-300 hover:text-white transition-colors" 
-                onClick={() => setIsOpen(!isOpen)}
-              >
-                <Menu className="h-5 w-5" />
-              </button>
+              <ToolbarIcons 
+                onSearchClick={() => setIsSearchOpen(true)}
+                onCartClick={handleCartClick}
+                onUserClick={handleUserClick}
+                onMenuClick={() => setIsOpen(!isOpen)}
+                cartCount={cartCount}
+              />
             </div>
           </div>
         </div>
@@ -346,6 +209,85 @@ function Navigation() {
           )}
         </AnimatePresence>
       </nav>
+
+      <Dialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
+        <DialogContent className="sm:max-w-[400px]">
+          <div className="flex flex-col items-center gap-2">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-full border border-white/10">
+              <User className="h-5 w-5 text-white" />
+            </div>
+            <DialogHeader className="space-y-1">
+              <DialogTitle className="text-center">Sign up to SIAMTECH</DialogTitle>
+              <DialogDescription className="text-center">
+                Create an account to access your cart
+              </DialogDescription>
+            </DialogHeader>
+          </div>
+
+          <form onSubmit={handleEmailSignUp} className="space-y-4">
+            <div className="space-y-3">
+              <div className="space-y-1">
+                <Label htmlFor="signup-name">Full name</Label>
+                <Input
+                  id="signup-name"
+                  placeholder="John Doe"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  className="h-8"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="signup-email">Email</Label>
+                <Input
+                  id="signup-email"
+                  type="email"
+                  placeholder="john@example.com"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="h-8"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="signup-password">Password</Label>
+                <Input
+                  id="signup-password"
+                  type="password"
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                  className="h-8"
+                />
+              </div>
+            </div>
+            <Button type="submit" className="w-full h-8 text-sm">
+              Sign up
+            </Button>
+          </form>
+
+          <div className="flex items-center gap-2 my-2 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
+            <span className="text-xs text-gray-400">Or</span>
+          </div>
+
+          <div className="space-y-2">
+            <Button variant="outline" onClick={handleGoogleSignIn} className="w-full h-8 text-sm">
+              Continue with Google
+            </Button>
+            
+            <EmailLinkAuth />
+          </div>
+
+          <p className="text-center text-xs text-gray-400 mt-2">
+            By signing up you agree to our{" "}
+            <a href="/privacy" className="underline hover:no-underline">
+              Terms
+            </a>
+            .
+          </p>
+        </DialogContent>
+      </Dialog>
 
       <CartPanel isOpen={isCartOpen && isAuthenticated} onClose={() => setIsCartOpen(false)} />
       <SearchPanel isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
