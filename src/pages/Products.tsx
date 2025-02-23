@@ -6,9 +6,11 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "@/lib/firebase";
 import { toast } from "sonner";
+import { useCart } from '@/contexts/CartContext';
 
 const Products = () => {
   const navigate = useNavigate();
+  const { updateCartCount } = useCart();
   const [products] = useState([
     {
       id: 1,
@@ -75,6 +77,11 @@ const Products = () => {
 
     localStorage.setItem(`cart_${user.uid}`, JSON.stringify(currentCart));
     toast.success("Added to cart successfully!");
+    
+    // Update cart count after a short delay
+    setTimeout(() => {
+      updateCartCount(user.uid);
+    }, 1000);
   };
 
   return (

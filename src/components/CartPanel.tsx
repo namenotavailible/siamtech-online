@@ -4,6 +4,8 @@ import { X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { auth } from "@/lib/firebase";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { useCart } from '@/contexts/CartContext';
 
 export interface CartItem {
   id: number;
@@ -20,6 +22,8 @@ interface CartPanelProps {
 
 const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const navigate = useNavigate();
+  const { updateCartCount } = useCart();
 
   // Load cart items from localStorage when auth state changes
   useEffect(() => {
@@ -42,8 +46,9 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
     const user = auth.currentUser;
     if (user && cartItems.length > 0) {
       localStorage.setItem(`cart_${user.uid}`, JSON.stringify(cartItems));
+      updateCartCount(user.uid);
     }
-  }, [cartItems]);
+  }, [cartItems, updateCartCount]);
 
   const removeFromCart = (id: number) => {
     setCartItems(cartItems.filter(item => item.id !== id));
@@ -55,6 +60,11 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
     setCartItems(cartItems.map(item => 
       item.id === id ? { ...item, quantity: newQuantity } : item
     ));
+  };
+
+  const handleCheckout = () => {
+    onClose();
+    navigate('/checkout');
   };
 
   return (
@@ -115,7 +125,10 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                 ))}
               </div>
               <div className="mt-4 pt-4 border-t border-white/10">
-                <button className="w-full bg-white text-black py-2 rounded-md text-sm hover:bg-gray-200 transition-colors">
+                <button 
+                  onClick={handleCheckout}
+                  className="w-full bg-white text-black py-2 rounded-md hover:bg-gray-200 transition-colors"
+                >
                   Checkout
                 </button>
               </div>
