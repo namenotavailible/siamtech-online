@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CartPanel from "./CartPanel";
@@ -138,9 +137,31 @@ function Navigation() {
             <div className="hidden md:flex items-center justify-center flex-1">
               <Menu setActive={setActiveMenuItem}>
                 <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item="Products">
-                  <div className="flex flex-col space-y-4 text-sm">
-                    <HoveredLink to="/products#microphones">Microphones</HoveredLink>
-                    <HoveredLink to="/products#gaming-mouse">Gaming Mouse</HoveredLink>
+                  <div className="grid grid-cols-2 gap-4">
+                    <ProductItem
+                      title="FIFINE Ampligame AM8"
+                      description="Professional dynamic microphone perfect for gaming and streaming"
+                      href="/products#microphones"
+                      src="/lovable-uploads/895e0863-a00d-4ccd-9f78-21e1181817a3.png"
+                    />
+                    <ProductItem
+                      title="FIFINE Ampligame A8"
+                      description="High-quality condenser microphone with RGB lighting"
+                      href="/products#microphones"
+                      src="/lovable-uploads/0bdd554b-e74a-4fe7-8d87-867680dd35bb.png"
+                    />
+                    <ProductItem
+                      title="VXE Dragonfly R1"
+                      description="High-performance wireless gaming mouse"
+                      href="/products#gaming-mouse"
+                      src="/lovable-uploads/e4346941-0357-4549-8e1e-77ef2c16e8ed.png"
+                    />
+                    <ProductItem
+                      title="VGN Dragonfly F1"
+                      description="Premium wireless gaming mouse"
+                      href="/products#gaming-mouse"
+                      src="/lovable-uploads/eb227e57-8859-4673-9eda-54e1deb03124.png"
+                    />
                   </div>
                 </MenuItem>
                 <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item="Warranty">
