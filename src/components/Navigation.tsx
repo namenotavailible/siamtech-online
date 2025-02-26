@@ -1,8 +1,9 @@
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CartPanel from "./CartPanel";
 import SearchPanel from "./SearchPanel";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,10 +15,10 @@ import { useCart } from '@/contexts/CartContext';
 import { useNavigate } from 'react-router-dom';
 import EmailLinkAuth from './EmailLinkAuth';
 import { Logo } from "./navigation/Logo";
-import { DropdownMenu } from "./navigation/DropdownMenu";
 import { ToolbarIcons } from "./navigation/ToolbarIcons";
 import { User } from "lucide-react";
 import { GoogleLogo } from "@/components/ui/google-logo";
+import { Menu, MenuItem, HoveredLink } from "@/components/ui/navbar-menu";
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,11 +26,7 @@ function Navigation() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
-  const [dropdowns, setDropdowns] = useState({
-    products: false,
-    warranty: false,
-    support: false
-  });
+  const [activeMenuItem, setActiveMenuItem] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -129,13 +126,6 @@ function Navigation() {
     }
   };
 
-  const toggleDropdown = (dropdown: 'products' | 'warranty' | 'support') => {
-    setDropdowns(prev => ({
-      ...prev,
-      [dropdown]: !prev[dropdown]
-    }));
-  };
-
   return (
     <>
       <nav className="fixed w-full z-50 bg-black/10 backdrop-blur-md border-b border-white/10">
@@ -145,38 +135,31 @@ function Navigation() {
               <Logo />
             </div>
 
+            <div className="hidden md:flex items-center justify-center flex-1">
+              <Menu setActive={setActiveMenuItem}>
+                <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item="Products">
+                  <div className="flex flex-col space-y-4 text-sm">
+                    <HoveredLink to="/products#microphones">Microphones</HoveredLink>
+                    <HoveredLink to="/products#gaming-mouse">Gaming Mouse</HoveredLink>
+                  </div>
+                </MenuItem>
+                <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item="Warranty">
+                  <div className="flex flex-col space-y-4 text-sm">
+                    <HoveredLink to="/warranty#registration">Warranty Registration</HoveredLink>
+                    <HoveredLink to="/warranty#policy">Warranty Policy</HoveredLink>
+                  </div>
+                </MenuItem>
+                <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item="Support">
+                  <div className="flex flex-col space-y-4 text-sm">
+                    <HoveredLink to="/support#faqs">FAQs</HoveredLink>
+                    <HoveredLink to="/support#contact">Contact Us</HoveredLink>
+                    <HoveredLink to="/support#downloads">Downloads</HoveredLink>
+                  </div>
+                </MenuItem>
+              </Menu>
+            </div>
+
             <div className="flex items-center space-x-4">
-              <div className="hidden md:flex items-center space-x-8">
-                <DropdownMenu
-                  label="Products"
-                  items={[
-                    { href: "/products#microphones", label: "Microphones" },
-                    { href: "/products#gaming-mouse", label: "Gaming Mouse" }
-                  ]}
-                  isOpen={dropdowns.products}
-                  onToggle={() => toggleDropdown('products')}
-                />
-                <DropdownMenu
-                  label="Warranty"
-                  items={[
-                    { href: "/warranty#registration", label: "Warranty Registration" },
-                    { href: "/warranty#policy", label: "Warranty Policy" }
-                  ]}
-                  isOpen={dropdowns.warranty}
-                  onToggle={() => toggleDropdown('warranty')}
-                />
-                <DropdownMenu
-                  label="Support"
-                  items={[
-                    { href: "/support#faqs", label: "FAQs" },
-                    { href: "/support#contact", label: "Contact Us" },
-                    { href: "/support#downloads", label: "Downloads" }
-                  ]}
-                  isOpen={dropdowns.support}
-                  onToggle={() => toggleDropdown('support')}
-                />
-              </div>
-              
               <ToolbarIcons 
                 onSearchClick={() => setIsSearchOpen(true)}
                 onCartClick={handleCartClick}
