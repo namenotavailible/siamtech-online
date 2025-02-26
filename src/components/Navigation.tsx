@@ -17,7 +17,7 @@ import { Logo } from "./navigation/Logo";
 import { ToolbarIcons } from "./navigation/ToolbarIcons";
 import { User } from "lucide-react";
 import { GoogleLogo } from "@/components/ui/google-logo";
-import { Menu, MenuItem, HoveredLink } from "@/components/ui/navbar-menu";
+import { Menu, MenuItem, HoveredLink, ProductItem } from "@/components/ui/navbar-menu";
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
