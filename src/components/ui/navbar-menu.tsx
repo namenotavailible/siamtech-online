@@ -94,6 +94,9 @@ export const ProductItem = ({
         width={140}
         height={70}
         alt={title}
+        loading="eager"
+        fetchPriority="high"
+        decoding="sync"
         className="flex-shrink-0 rounded-md shadow-2xl"
       />
       <div>
