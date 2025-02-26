@@ -88,7 +88,7 @@ export const ProductItem = ({
   src: string;
 }) => {
   return (
-    <Link to={href} className="flex space-x-2">
+    <Link to={href} className="flex space-x-2 items-center justify-center w-full">
       <img
         src={src}
         width={140}
@@ -115,7 +115,7 @@ export const HoveredLink = ({ children, ...rest }: any) => {
   return (
     <Link
       {...rest}
-      className="text-neutral-700 dark:text-neutral-200 hover:text-black"
+      className="text-neutral-700 dark:text-neutral-200 hover:text-black text-center w-full"
     >
       {children}
     </Link>
