@@ -136,6 +136,12 @@ function Navigation() {
 
             <div className="hidden md:flex items-center justify-center flex-1">
               <Menu setActive={setActiveMenuItem}>
+                <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item="Warranty">
+                  <div className="flex flex-col space-y-4 text-sm">
+                    <HoveredLink to="/warranty#registration">Warranty Registration</HoveredLink>
+                    <HoveredLink to="/warranty#policy">Warranty Policy</HoveredLink>
+                  </div>
+                </MenuItem>
                 <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item="Products">
                   <div className="grid grid-cols-2 gap-4">
                     <ProductItem
@@ -162,12 +168,6 @@ function Navigation() {
                       href="/products#gaming-mouse"
                       src="/lovable-uploads/eb227e57-8859-4673-9eda-54e1deb03124.png"
                     />
-                  </div>
-                </MenuItem>
-                <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item="Warranty">
-                  <div className="flex flex-col space-y-4 text-sm">
-                    <HoveredLink to="/warranty#registration">Warranty Registration</HoveredLink>
-                    <HoveredLink to="/warranty#policy">Warranty Policy</HoveredLink>
                   </div>
                 </MenuItem>
                 <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item="Support">
