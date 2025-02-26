@@ -46,7 +46,7 @@ export const MenuItem = ({
               >
                 <motion.div
                   layout
-                  className="w-max h-full p-6"
+                  className="w-max h-full p-6 flex flex-col items-center"
                 >
                   {children}
                 </motion.div>
@@ -69,7 +69,7 @@ export const Menu = ({
   return (
     <nav
       onMouseLeave={() => setActive(null)}
-      className="relative dark:bg-black bg-white shadow-input flex justify-center space-x-4 px-8 py-6"
+      className="relative dark:bg-black bg-white shadow-input flex justify-center items-center space-x-8 px-8 py-6"
     >
       {children}
     </nav>
