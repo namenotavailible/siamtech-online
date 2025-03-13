@@ -54,7 +54,7 @@ const Index = () => {
         <meta name="twitter:title" content="SIAMTECH Online | Premium Gaming & Audio Equipment Store" />
         <meta name="twitter:description" content="Discover premium gaming peripherals and professional audio equipment at SIAMTECH Online." />
         <meta name="twitter:image" content="/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png" />
-        <link rel="canonical" href={window.location.origin} />
+        <meta name="canonical" content={window.location.origin} />
         <html lang={language} />
       </Helmet>
 
@@ -72,7 +72,7 @@ const Index = () => {
             บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด
           </span>
           <h1 className="mt-6 text-4xl sm:text-6xl font-bold leading-tight">
-            ตอบโจทย์ทุกความต้องการ
+            {t("hero_heading")}
           </h1>
           <p className="mt-6 text-xl text-gray-300 max-w-2xl mx-auto">
             {t("hero_subtitle")}
