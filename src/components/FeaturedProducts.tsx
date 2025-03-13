@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { auth, googleProvider } from "@/lib/firebase";
@@ -14,6 +13,7 @@ import { useCart } from '@/contexts/CartContext';
 import { ButtonColorful } from "@/components/ui/button-colorful";
 import { GoogleLogo } from "@/components/ui/google-logo";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const products = [{
   id: 1,
@@ -43,6 +43,9 @@ const products = [{
 
 const FeaturedProducts = () => {
   const { t } = useLanguage();
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+  
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [pendingProduct, setPendingProduct] = useState<any>(null);
   const [formData, setFormData] = useState({
@@ -125,7 +128,7 @@ const FeaturedProducts = () => {
     setPendingProduct(null);
   };
 
-  return <section className="py-24 bg-black text-white">
+  return <section className={`py-24 ${isDark ? 'bg-black' : 'bg-gray-100'} ${isDark ? 'text-white' : 'text-gray-800'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial={{
         opacity: 0,
@@ -136,9 +139,9 @@ const FeaturedProducts = () => {
       }} transition={{
         delay: 0.2
       }} className="text-center mb-24">
-          <ShieldCheck className="w-16 h-16 mx-auto mb-6 text-purple-500" />
-          <h2 className="font-bold mb-6 text-4xl text-center">{t("warranty_info")}</h2>
-          <p className="text-gray-400 mb-8 max-w-2xl mx-auto text-lg text-center">{t("warranty_policy_description")}</p>
+          <ShieldCheck className={`w-16 h-16 mx-auto mb-6 ${isDark ? 'text-purple-500' : 'text-purple-600'}`} />
+          <h2 className={`font-bold mb-6 text-4xl text-center ${isDark ? 'text-white' : 'text-gray-800'}`}>{t("warranty_info")}</h2>
+          <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} mb-8 max-w-2xl mx-auto text-lg text-center`}>{t("warranty_policy_description")}</p>
           <ButtonColorful label={t("activate_warranty_button")} onClick={() => window.location.href = '/warranty'} className="mx-auto" />
         </motion.div>
 
@@ -149,8 +152,8 @@ const FeaturedProducts = () => {
         opacity: 1,
         y: 0
       }} className="text-center mb-16">
-          <h2 className="text-3xl font-bold">{t("our_products")}</h2>
-          <p className="mt-4 text-gray-400">{t("products_description")}</p>
+          <h2 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>{t("our_products")}</h2>
+          <p className={`mt-4 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{t("products_description")}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -163,15 +166,15 @@ const FeaturedProducts = () => {
             y: 0
           }} transition={{
             delay: index * 0.1
-          }} className="group relative bg-gray-900/50 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all">
+          }} className={`group relative ${isDark ? 'bg-gray-900/50' : 'bg-white/80'} backdrop-blur-sm rounded-lg overflow-hidden ${isDark ? 'border border-white/10 hover:border-white/20' : 'border border-gray-200 hover:border-gray-300'} transition-all`}>
                 <div className="aspect-square overflow-hidden">
                   <img src={product.image} alt={product.name} className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="p-6">
-                  <span className="text-sm text-gray-400">{product.category}</span>
-                  <h3 className="mt-1 text-xl font-semibold text-white">{product.name}</h3>
-                  <p className="mt-2 text-gray-300">{product.price}</p>
-                  <button onClick={e => handleAddToCart(product, e)} className="mt-4 w-full bg-white text-black py-2 rounded-md hover:bg-gray-200 transition-colors">
+                  <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{product.category}</span>
+                  <h3 className={`mt-1 text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{product.name}</h3>
+                  <p className={`mt-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{product.price}</p>
+                  <button onClick={e => handleAddToCart(product, e)} className={`mt-4 w-full ${isDark ? 'bg-white text-black hover:bg-gray-200' : 'bg-gray-900 text-white hover:bg-gray-800'} py-2 rounded-md transition-colors`}>
                     {t("add_to_cart")}
                   </button>
                 </div>
@@ -180,7 +183,7 @@ const FeaturedProducts = () => {
         </div>
 
         <div className="mt-16 text-center">
-          <Link to="/products" className="inline-flex items-center justify-center px-8 py-3 border border-white/20 rounded-md hover:bg-white/10 transition-colors">
+          <Link to="/products" className={`inline-flex items-center justify-center px-8 py-3 ${isDark ? 'border border-white/20 hover:bg-white/10' : 'border border-gray-300 hover:bg-gray-100'} rounded-md transition-colors`}>
             {t("products")}
           </Link>
         </div>

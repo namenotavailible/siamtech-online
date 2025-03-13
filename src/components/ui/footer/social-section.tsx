@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Facebook, Instagram } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface SocialSectionProps {
   isDarkMode: boolean;
@@ -10,14 +11,14 @@ interface SocialSectionProps {
 }
 
 export function SocialSection({ isDarkMode, onDarkModeChange }: SocialSectionProps) {
+  const { t, language } = useLanguage();
+  
   return (
     <div className="space-y-4">
       <h3 
-        className="text-lg font-semibold text-white mb-6"
-        contentEditable
-        suppressContentEditableWarning
+        className="text-lg font-semibold dark:text-white text-gray-800 mb-6"
       >
-        Follow Us
+        {language === "en" ? "Follow Us" : "ติดตามเรา"}
       </h3>
       <div className="flex flex-col space-y-8">
         <div className="flex justify-center space-x-4">
@@ -33,15 +34,17 @@ export function SocialSection({ isDarkMode, onDarkModeChange }: SocialSectionPro
                   <Button 
                     variant="outline" 
                     size="icon" 
-                    className="rounded-full border-gray-700 bg-gray-900/50 hover:bg-gray-800"
+                    className="rounded-full dark:border-gray-700 dark:bg-gray-900/50 dark:hover:bg-gray-800
+                              light:border-gray-300 light:bg-gray-100 light:hover:bg-gray-200"
                   >
-                    <Facebook className="h-4 w-4 text-gray-400 group-hover:text-white" />
+                    <Facebook className="h-4 w-4 dark:text-gray-400 dark:group-hover:text-white
+                                        text-gray-600 group-hover:text-gray-900" />
                     <span className="sr-only">Facebook</span>
                   </Button>
                 </a>
               </TooltipTrigger>
               <TooltipContent>
-                <p contentEditable suppressContentEditableWarning>Follow us on Facebook</p>
+                <p>{language === "en" ? "Follow us on Facebook" : "ติดตามเราบน Facebook"}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -58,25 +61,27 @@ export function SocialSection({ isDarkMode, onDarkModeChange }: SocialSectionPro
                   <Button 
                     variant="outline" 
                     size="icon" 
-                    className="rounded-full border-gray-700 bg-gray-900/50 hover:bg-gray-800"
+                    className="rounded-full dark:border-gray-700 dark:bg-gray-900/50 dark:hover:bg-gray-800
+                              light:border-gray-300 light:bg-gray-100 light:hover:bg-gray-200"
                   >
-                    <Instagram className="h-4 w-4 text-gray-400 group-hover:text-white" />
+                    <Instagram className="h-4 w-4 dark:text-gray-400 dark:group-hover:text-white
+                                          text-gray-600 group-hover:text-gray-900" />
                     <span className="sr-only">Instagram</span>
                   </Button>
                 </a>
               </TooltipTrigger>
               <TooltipContent>
-                <p contentEditable suppressContentEditableWarning>Follow us on Instagram</p>
+                <p>{language === "en" ? "Follow us on Instagram" : "ติดตามเราบน Instagram"}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </div>
 
         <div className="flex items-center justify-center space-x-2">
-          <ThemeToggle 
-            isDark={isDarkMode}
-            onDarkModeChange={onDarkModeChange}
-          />
+          <span className="text-sm mr-2 dark:text-gray-400 text-gray-600">
+            {language === "en" ? "Theme" : "ธีม"}
+          </span>
+          <ThemeToggle />
         </div>
       </div>
     </div>

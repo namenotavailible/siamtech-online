@@ -1,38 +1,29 @@
 
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Moon, Sun } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useTheme } from "@/contexts/ThemeContext"
 
 interface ThemeToggleProps {
   className?: string;
-  isDark?: boolean;
-  onDarkModeChange?: (isDark: boolean) => void;
 }
 
-export function ThemeToggle({ className, isDark = true, onDarkModeChange }: ThemeToggleProps) {
-  const [internalIsDark, setInternalIsDark] = useState(isDark)
-
-  const toggleDark = () => {
-    const newValue = !internalIsDark;
-    setInternalIsDark(newValue);
-    onDarkModeChange?.(newValue);
-  }
-
-  // Use the controlled or uncontrolled isDark value
-  const actualIsDark = onDarkModeChange ? isDark : internalIsDark;
+export function ThemeToggle({ className }: ThemeToggleProps) {
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
 
   return (
     <div
       className={cn(
         "flex w-16 h-8 p-1 rounded-full cursor-pointer transition-all duration-300",
-        actualIsDark 
+        isDark 
           ? "bg-zinc-950 border border-zinc-800" 
           : "bg-white border border-zinc-200",
         className
       )}
-      onClick={toggleDark}
+      onClick={toggleTheme}
       role="button"
       tabIndex={0}
     >
@@ -40,12 +31,12 @@ export function ThemeToggle({ className, isDark = true, onDarkModeChange }: Them
         <div
           className={cn(
             "flex justify-center items-center w-6 h-6 rounded-full transition-transform duration-300",
-            actualIsDark 
+            isDark 
               ? "transform translate-x-0 bg-zinc-800" 
               : "transform translate-x-8 bg-gray-200"
           )}
         >
-          {actualIsDark ? (
+          {isDark ? (
             <Moon 
               className="w-4 h-4 text-white" 
               strokeWidth={1.5}
@@ -60,12 +51,12 @@ export function ThemeToggle({ className, isDark = true, onDarkModeChange }: Them
         <div
           className={cn(
             "flex justify-center items-center w-6 h-6 rounded-full transition-transform duration-300",
-            actualIsDark 
+            isDark 
               ? "bg-transparent" 
               : "transform -translate-x-8"
           )}
         >
-          {actualIsDark ? (
+          {isDark ? (
             <Sun 
               className="w-4 h-4 text-gray-500" 
               strokeWidth={1.5}

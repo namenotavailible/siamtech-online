@@ -7,26 +7,23 @@ import { QuickLinks } from "./footer/quick-links";
 import { ContactInfo } from "./footer/contact-info";
 import { SocialSection } from "./footer/social-section";
 import { BottomSection } from "./footer/bottom-section";
+import { useTheme } from "@/contexts/ThemeContext";
 
 function Footerdemo() {
-  const [isDarkMode, setIsDarkMode] = React.useState(true);
-  
-  React.useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [isDarkMode]);
+  const { theme, toggleTheme } = useTheme();
   
   return (
-    <footer className="relative border-t border-gray-800 bg-black text-white">
+    <footer className="relative border-t border-gray-800 dark:bg-black bg-gray-100 dark:text-white text-gray-800">
       <div className="mx-auto w-full max-w-[85rem] px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <NewsletterSection />
           <QuickLinks />
           <ContactInfo />
-          <SocialSection isDarkMode={isDarkMode} onDarkModeChange={setIsDarkMode} />
+          <SocialSection isDarkMode={theme === "dark"} onDarkModeChange={isDark => {
+            if ((isDark && theme === "light") || (!isDark && theme === "dark")) {
+              toggleTheme();
+            }
+          }} />
         </div>
         <BottomSection />
       </div>
