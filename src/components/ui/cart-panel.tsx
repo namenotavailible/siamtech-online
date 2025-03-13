@@ -6,6 +6,7 @@ import { auth } from "@/lib/firebase";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { useCart } from '@/contexts/CartContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export interface CartItem {
   id: number;
@@ -24,6 +25,8 @@ export function CartPanel({ open, setOpen }: CartPanelProps) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const navigate = useNavigate();
   const { updateCartCount } = useCart();
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   // Load cart items from localStorage when auth state changes
   useEffect(() => {
@@ -76,40 +79,40 @@ export function CartPanel({ open, setOpen }: CartPanelProps) {
         initial={{ x: "100%" }}
         animate={{ x: open ? 0 : "100%" }}
         transition={{ type: "spring", damping: 20 }}
-        className="fixed right-0 top-0 h-full w-full max-w-xs bg-white/5 backdrop-blur-xl border-l border-white/10 shadow-xl z-50"
+        className={`fixed right-0 top-0 h-full w-full max-w-xs ${isDark ? 'bg-white/5' : 'bg-white'} backdrop-blur-xl ${isDark ? 'border-l border-white/10' : 'border-l border-gray-200'} shadow-xl z-50`}
       >
         <div className="p-4 h-full flex flex-col">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-medium text-white">Your Cart</h2>
-            <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-white">
+            <h2 className={`text-lg font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Your Cart</h2>
+            <button onClick={() => setOpen(false)} className={`${isDark ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'}`}>
               <X className="h-5 w-5" />
             </button>
           </div>
 
           {cartItems.length === 0 ? (
             <div className="flex-1 flex items-center justify-center">
-              <p className="text-gray-400 text-sm">Your cart is empty</p>
+              <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} text-sm`}>Your cart is empty</p>
             </div>
           ) : (
             <>
               <div className="flex-1 overflow-y-auto space-y-3">
                 {cartItems.map((item) => (
-                  <div key={item.id} className="flex gap-3 bg-white/5 p-3 rounded-lg">
+                  <div key={item.id} className={`flex gap-3 ${isDark ? 'bg-white/5' : 'bg-gray-50'} p-3 rounded-lg`}>
                     <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
                     <div className="flex-1">
-                      <h3 className="text-white text-sm font-medium">{item.name}</h3>
-                      <p className="text-gray-400 text-xs">{item.price}</p>
+                      <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} text-sm font-medium`}>{item.name}</h3>
+                      <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} text-xs`}>{item.price}</p>
                       <div className="flex items-center gap-2 mt-2">
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="px-2 py-1 bg-white/10 rounded hover:bg-white/20"
+                          className={`px-2 py-1 ${isDark ? 'bg-white/10 hover:bg-white/20' : 'bg-gray-200 hover:bg-gray-300'} rounded`}
                         >
                           -
                         </button>
-                        <span className="text-white text-sm">{item.quantity}</span>
+                        <span className={`${isDark ? 'text-white' : 'text-gray-900'} text-sm`}>{item.quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="px-2 py-1 bg-white/10 rounded hover:bg-white/20"
+                          className={`px-2 py-1 ${isDark ? 'bg-white/10 hover:bg-white/20' : 'bg-gray-200 hover:bg-gray-300'} rounded`}
                         >
                           +
                         </button>
@@ -117,17 +120,17 @@ export function CartPanel({ open, setOpen }: CartPanelProps) {
                     </div>
                     <button
                       onClick={() => removeFromCart(item.id)}
-                      className="text-gray-400 hover:text-white"
+                      className={`${isDark ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'}`}
                     >
                       <X className="h-4 w-4" />
                     </button>
                   </div>
                 ))}
               </div>
-              <div className="mt-4 pt-4 border-t border-white/10">
+              <div className={`mt-4 pt-4 ${isDark ? 'border-t border-white/10' : 'border-t border-gray-200'}`}>
                 <button 
                   onClick={handleCheckout}
-                  className="w-full bg-white text-black py-2 rounded-md hover:bg-gray-200 transition-colors"
+                  className={`w-full ${isDark ? 'bg-white text-black' : 'bg-black text-white'} py-2 rounded-md ${isDark ? 'hover:bg-gray-200' : 'hover:bg-gray-800'} transition-colors`}
                 >
                   Checkout
                 </button>
