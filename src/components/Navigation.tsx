@@ -136,12 +136,6 @@ function Navigation() {
 
             <div className="hidden md:flex items-center justify-center flex-1">
               <Menu setActive={setActiveMenuItem}>
-                <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item="Warranty">
-                  <div className="flex flex-col space-y-4 text-sm">
-                    <HoveredLink to="/warranty#registration">Warranty Registration</HoveredLink>
-                    <HoveredLink to="/warranty#policy">Warranty Policy</HoveredLink>
-                  </div>
-                </MenuItem>
                 <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item="Products">
                   <div className="grid grid-cols-2 gap-4">
                     <ProductItem
@@ -168,6 +162,13 @@ function Navigation() {
                       href="/products#gaming-mouse"
                       src="/lovable-uploads/eb227e57-8859-4673-9eda-54e1deb03124.png"
                     />
+                  </div>
+                </MenuItem>
+                <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item="Warranty">
+                  <div className="flex flex-col space-y-4 text-sm">
+                    <HoveredLink to="/warranty#registration">Warranty Registration</HoveredLink>
+                    <HoveredLink to="/warranty#policy">Warranty Policy</HoveredLink>
+                    <HoveredLink to="/warranty#faqs">FAQs</HoveredLink>
                   </div>
                 </MenuItem>
                 <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item="Support">
@@ -198,16 +199,22 @@ function Navigation() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="md:hidden bg-black/95 backdrop-blur-lg"
+              className="md:hidden bg-black/80 backdrop-blur-lg border-b border-white/10"
             >
               <div className="px-4 pt-2 pb-3 space-y-1">
-                <a href="/products" className="block px-3 py-2 text-gray-300 hover:text-white transition-colors">
+                <a href="/products" className="block px-3 py-3 text-gray-300 hover:text-white transition-colors rounded-md hover:bg-white/5">
                   Products
                 </a>
-                <a href="/warranty" className="block px-3 py-2 text-gray-300 hover:text-white transition-colors">
-                  Warranty
+                <a href="/warranty#registration" className="block px-3 py-3 text-gray-300 hover:text-white transition-colors rounded-md hover:bg-white/5">
+                  Warranty Registration
                 </a>
-                <a href="/support" className="block px-3 py-2 text-gray-300 hover:text-white transition-colors">
+                <a href="/warranty#policy" className="block px-3 py-3 text-gray-300 hover:text-white transition-colors rounded-md hover:bg-white/5">
+                  Warranty Policy
+                </a>
+                <a href="/warranty#faqs" className="block px-3 py-3 text-gray-300 hover:text-white transition-colors rounded-md hover:bg-white/5">
+                  Warranty FAQs
+                </a>
+                <a href="/support" className="block px-3 py-3 text-gray-300 hover:text-white transition-colors rounded-md hover:bg-white/5">
                   Support
                 </a>
               </div>
