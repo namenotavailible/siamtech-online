@@ -128,7 +128,7 @@ const FeaturedProducts = () => {
     setPendingProduct(null);
   };
 
-  return <section className={`py-24 ${isDark ? 'bg-black' : 'bg-gray-100'} ${isDark ? 'text-white' : 'text-gray-800'}`}>
+  return <section className={`py-24 ${isDark ? 'bg-black' : 'bg-white'} ${isDark ? 'text-white' : 'text-gray-800'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial={{
         opacity: 0,
