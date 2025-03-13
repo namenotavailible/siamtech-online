@@ -1,10 +1,14 @@
+
 import Navigation from "@/components/Navigation";
 import { Footerdemo } from "@/components/ui/footer-section";
 import { motion } from "framer-motion";
 import { Building2, Users, Trophy, Target, Clock, Globe } from "lucide-react";
 import { SparklesCore } from "@/components/ui/sparkles";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const About = () => {
+  const { t } = useLanguage();
+  
   return (
     <div className="min-h-screen bg-black text-white">
       <Navigation />
@@ -29,8 +33,8 @@ const About = () => {
                 speed={0.5}
               />
             </div>
-            <h1 className="text-4xl font-bold mb-4 relative z-10">About SIAMTECH</h1>
-            <p className="text-gray-400 relative z-10">Pioneering Audio Innovation Since 2010</p>
+            <h1 className="text-4xl font-bold mb-4 relative z-10">{t("about_siamtech")}</h1>
+            <p className="text-gray-400 relative z-10">{t("about_subtitle")}</p>
           </motion.div>
 
           <motion.div
@@ -42,25 +46,19 @@ const About = () => {
             <div>
               <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
                 <Building2 className="h-6 w-6" />
-                Our Story
+                {t("our_story")}
               </h2>
               <p className="text-gray-300 leading-relaxed">
-                From our humble beginnings in Bangkok, SIAMTECH has evolved into a leading provider of 
-                professional audio equipment and accessories. What started as a small shop in the heart 
-                of Thailand has grown into an international brand trusted by audio professionals, 
-                content creators, and enthusiasts worldwide.
+                {t("our_story_content")}
               </p>
             </div>
             <div>
               <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
                 <Target className="h-6 w-6" />
-                Our Mission
+                {t("our_mission")}
               </h2>
               <p className="text-gray-300 leading-relaxed">
-                Our mission is to democratize access to professional-grade audio equipment. We believe 
-                that quality sound shouldn't be a luxury, but a standard. Through innovative products 
-                and exceptional service, we're making professional audio accessible to everyone who 
-                shares our passion for perfect sound.
+                {t("our_mission_content")}
               </p>
             </div>
           </motion.div>
@@ -73,29 +71,29 @@ const About = () => {
           >
             <h2 className="text-2xl font-semibold mb-8 text-center flex items-center justify-center gap-2">
               <Trophy className="h-6 w-6" />
-              Company Milestones
+              {t("company_milestones")}
             </h2>
             <div className="grid sm:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="mb-3 flex justify-center">
                   <Clock className="h-8 w-8 text-primary" />
                 </div>
-                <h3 className="font-semibold mb-2">13+ Years</h3>
-                <p className="text-gray-400">Of industry experience and innovation</p>
+                <h3 className="font-semibold mb-2">{t("experience")}</h3>
+                <p className="text-gray-400">{t("experience_description")}</p>
               </div>
               <div className="text-center">
                 <div className="mb-3 flex justify-center">
                   <Users className="h-8 w-8 text-primary" />
                 </div>
-                <h3 className="font-semibold mb-2">50,000+</h3>
-                <p className="text-gray-400">Satisfied customers worldwide</p>
+                <h3 className="font-semibold mb-2">{t("customers")}</h3>
+                <p className="text-gray-400">{t("customers_description")}</p>
               </div>
               <div className="text-center">
                 <div className="mb-3 flex justify-center">
                   <Globe className="h-8 w-8 text-primary" />
                 </div>
-                <h3 className="font-semibold mb-2">30+ Countries</h3>
-                <p className="text-gray-400">Global presence and distribution</p>
+                <h3 className="font-semibold mb-2">{t("countries")}</h3>
+                <p className="text-gray-400">{t("countries_description")}</p>
               </div>
             </div>
           </motion.div>
@@ -106,14 +104,12 @@ const About = () => {
             transition={{ delay: 0.8 }}
             className="text-center bg-gradient-to-b from-white/5 to-transparent rounded-lg p-8"
           >
-            <h2 className="text-2xl font-semibold mb-6">Join Our Journey</h2>
+            <h2 className="text-2xl font-semibold mb-6">{t("join_journey")}</h2>
             <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-              Whether you're a professional audio engineer, a content creator, or simply passionate 
-              about quality sound, we invite you to be part of our story. Let's create the future 
-              of audio together.
+              {t("join_journey_description")}
             </p>
             <button className="px-8 py-3 bg-white text-black rounded-md hover:bg-gray-200 transition-colors">
-              Get Started Today
+              {t("get_started")}
             </button>
           </motion.div>
         </div>
