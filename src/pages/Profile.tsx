@@ -10,9 +10,11 @@ import Navigation from '@/components/Navigation';
 import { Footerdemo } from '@/components/ui/footer-section';
 import { ChevronLeft } from "lucide-react";
 import { isSignInWithEmailLink, signInWithEmailLink } from 'firebase/auth';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [profile, setProfile] = useState({
     displayName: '',
     email: '',
@@ -67,17 +69,17 @@ const Profile = () => {
         <div className="absolute top-4 left-4 z-10">
           <Button variant="link" onClick={() => navigate('/')} className="text-white">
             <ChevronLeft className="me-1 opacity-60" size={16} strokeWidth={2} aria-hidden="true" />
-            Go back
+            {t("profile.go_back")}
           </Button>
         </div>
 
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gray-900/50 backdrop-blur-sm rounded-lg p-8 border border-white/10">
-            <h1 className="text-2xl font-bold mb-8">Profile Settings</h1>
+            <h1 className="text-2xl font-bold mb-8">{t("profile.title")}</h1>
             
             <div className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="displayName">Display Name</Label>
+                <Label htmlFor="displayName">{t("profile.display_name")}</Label>
                 <Input
                   id="displayName"
                   value={profile.displayName}
@@ -87,7 +89,7 @@ const Profile = () => {
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("profile.email")}</Label>
                 <Input
                   id="email"
                   type="email"
@@ -102,7 +104,7 @@ const Profile = () => {
                 onClick={handleSignOut}
                 className="w-full mt-6"
               >
-                Sign Out
+                {t("profile.sign_out")}
               </Button>
             </div>
           </div>

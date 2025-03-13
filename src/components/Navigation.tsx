@@ -18,6 +18,8 @@ import { ToolbarIcons } from "./navigation/ToolbarIcons";
 import { User } from "lucide-react";
 import { GoogleLogo } from "@/components/ui/google-logo";
 import { Menu, MenuItem, HoveredLink, ProductItem } from "@/components/ui/navbar-menu";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,6 +35,7 @@ function Navigation() {
   });
   const { cartCount } = useCart();
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -136,7 +139,7 @@ function Navigation() {
 
             <div className="hidden md:flex items-center justify-center flex-1">
               <Menu setActive={setActiveMenuItem}>
-                <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item="Products">
+                <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item={t("navigation.products")}>
                   <div className="grid grid-cols-2 gap-4">
                     <ProductItem
                       title="FIFINE Ampligame AM8"
@@ -164,17 +167,17 @@ function Navigation() {
                     />
                   </div>
                 </MenuItem>
-                <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item="Warranty">
+                <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item={t("navigation.warranty")}>
                   <div className="flex flex-col space-y-4 text-sm">
-                    <HoveredLink to="/warranty#registration">Warranty Registration</HoveredLink>
-                    <HoveredLink to="/warranty#policy">Warranty Policy</HoveredLink>
-                    <HoveredLink to="/warranty#faqs">FAQs</HoveredLink>
+                    <HoveredLink to="/warranty#registration">{t("warranty.registration.title")}</HoveredLink>
+                    <HoveredLink to="/warranty#policy">{t("warranty.policy.title")}</HoveredLink>
+                    <HoveredLink to="/warranty#faqs">{t("warranty.faq.title")}</HoveredLink>
                   </div>
                 </MenuItem>
-                <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item="Support">
+                <MenuItem setActive={setActiveMenuItem} active={activeMenuItem} item={t("navigation.support")}>
                   <div className="flex flex-col space-y-4 text-sm">
                     <HoveredLink to="/support#faqs">FAQs</HoveredLink>
-                    <HoveredLink to="/support#contact">Contact Us</HoveredLink>
+                    <HoveredLink to="/support#contact">{t("footer.contact_us")}</HoveredLink>
                     <HoveredLink to="/support#downloads">Downloads</HoveredLink>
                   </div>
                 </MenuItem>
@@ -182,6 +185,7 @@ function Navigation() {
             </div>
 
             <div className="flex items-center space-x-4">
+              <LanguageSwitcher />
               <ToolbarIcons 
                 onSearchClick={() => setIsSearchOpen(true)}
                 onCartClick={handleCartClick}
@@ -203,19 +207,19 @@ function Navigation() {
             >
               <div className="px-4 pt-2 pb-3 space-y-1">
                 <a href="/products" className="block px-3 py-3 text-gray-300 hover:text-white transition-colors rounded-md hover:bg-white/5">
-                  Products
+                  {t("navigation.products")}
                 </a>
                 <a href="/warranty#registration" className="block px-3 py-3 text-gray-300 hover:text-white transition-colors rounded-md hover:bg-white/5">
-                  Warranty Registration
+                  {t("warranty.registration.title")}
                 </a>
                 <a href="/warranty#policy" className="block px-3 py-3 text-gray-300 hover:text-white transition-colors rounded-md hover:bg-white/5">
-                  Warranty Policy
+                  {t("warranty.policy.title")}
                 </a>
                 <a href="/warranty#faqs" className="block px-3 py-3 text-gray-300 hover:text-white transition-colors rounded-md hover:bg-white/5">
-                  Warranty FAQs
+                  {t("warranty.faq.title")}
                 </a>
                 <a href="/support" className="block px-3 py-3 text-gray-300 hover:text-white transition-colors rounded-md hover:bg-white/5">
-                  Support
+                  {t("navigation.support")}
                 </a>
               </div>
             </motion.div>
@@ -230,9 +234,9 @@ function Navigation() {
               <User className="h-5 w-5 text-white" />
             </div>
             <DialogHeader className="space-y-1">
-              <DialogTitle className="text-center">Sign up to SIAMTECH</DialogTitle>
+              <DialogTitle className="text-center">{t("auth.sign_up")}</DialogTitle>
               <DialogDescription className="text-center">
-                Create an account to access your cart
+                {t("auth.create_account")}
               </DialogDescription>
             </DialogHeader>
           </div>
@@ -240,7 +244,7 @@ function Navigation() {
           <form onSubmit={handleEmailSignUp} className="space-y-4">
             <div className="space-y-3">
               <div className="space-y-1">
-                <Label htmlFor="signup-name">Full name</Label>
+                <Label htmlFor="signup-name">{t("auth.full_name")}</Label>
                 <Input
                   id="signup-name"
                   placeholder="John Doe"
@@ -251,7 +255,7 @@ function Navigation() {
                 />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="signup-email">Email</Label>
+                <Label htmlFor="signup-email">{t("auth.email")}</Label>
                 <Input
                   id="signup-email"
                   type="email"
@@ -263,7 +267,7 @@ function Navigation() {
                 />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="signup-password">Password</Label>
+                <Label htmlFor="signup-password">{t("auth.password")}</Label>
                 <Input
                   id="signup-password"
                   type="password"
@@ -276,29 +280,29 @@ function Navigation() {
               </div>
             </div>
             <Button type="submit" className="w-full h-8 text-sm">
-              Sign up
+              {t("auth.sign_up_button")}
             </Button>
           </form>
 
           <div className="flex items-center gap-2 my-2 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
-            <span className="text-xs text-gray-400">Or</span>
+            <span className="text-xs text-gray-400">{t("auth.or")}</span>
           </div>
 
           <div className="space-y-2">
             <Button variant="outline" onClick={handleGoogleSignIn} className="w-full h-8 text-sm">
               <GoogleLogo />
-              Continue with Google
+              {t("auth.continue_with_google")}
             </Button>
             
             <EmailLinkAuth />
           </div>
 
           <p className="text-center text-xs text-gray-400 mt-2">
-            By signing up you agree to our{" "}
+            {t("auth.terms_agreement")}{" "}
             <a href="/privacy" className="underline hover:no-underline">
-              Terms
+              {t("auth.terms")}
             </a>
-            .
+            {t("auth.of_ours")}
           </p>
         </DialogContent>
       </Dialog>
