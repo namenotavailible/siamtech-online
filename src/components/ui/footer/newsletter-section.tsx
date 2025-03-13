@@ -2,8 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function NewsletterSection() {
+  const { t } = useLanguage();
+  
   return (
     <div className="relative space-y-4">
       <h2 
@@ -11,19 +14,19 @@ export function NewsletterSection() {
         contentEditable
         suppressContentEditableWarning
       >
-        Stay Connected
+        {t("stay_connected")}
       </h2>
       <p 
         className="text-sm text-gray-400"
         contentEditable
         suppressContentEditableWarning
       >
-        Join our newsletter for the latest updates and exclusive offers.
+        {t("newsletter_description")}
       </p>
       <form className="relative mt-6">
         <Input 
           type="email" 
-          placeholder="Enter your email" 
+          placeholder={t("enter_email")}
           className="w-full bg-gray-900/50 border-gray-800 text-white placeholder:text-gray-500 focus:border-gray-700 focus:ring-gray-700"
         />
         <Button 
@@ -32,7 +35,7 @@ export function NewsletterSection() {
           className="absolute right-1 top-1 h-8 w-8 rounded-full bg-white hover:bg-gray-200 text-black transition-all"
         >
           <Send className="h-4 w-4" />
-          <span className="sr-only">Subscribe</span>
+          <span className="sr-only">{t("subscribe")}</span>
         </Button>
       </form>
     </div>

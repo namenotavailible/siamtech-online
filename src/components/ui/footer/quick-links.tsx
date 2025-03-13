@@ -1,7 +1,10 @@
 
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function QuickLinks() {
+  const { t } = useLanguage();
+  
   return (
     <div className="space-y-4">
       <h3 
@@ -9,7 +12,7 @@ export function QuickLinks() {
         contentEditable
         suppressContentEditableWarning
       >
-        Quick Links
+        {t("quick_links")}
       </h3>
       <nav className="flex flex-col space-y-3 text-sm">
         <Link 
@@ -18,7 +21,7 @@ export function QuickLinks() {
           contentEditable
           suppressContentEditableWarning
         >
-          Home
+          {t("home")}
         </Link>
         <Link 
           to="/about" 
@@ -26,7 +29,7 @@ export function QuickLinks() {
           contentEditable
           suppressContentEditableWarning
         >
-          About Us
+          {t("about")}
         </Link>
         <Link 
           to="/products" 
@@ -34,7 +37,7 @@ export function QuickLinks() {
           contentEditable
           suppressContentEditableWarning
         >
-          Products
+          {t("products")}
         </Link>
         <Link 
           to="/contact" 
@@ -42,7 +45,7 @@ export function QuickLinks() {
           contentEditable
           suppressContentEditableWarning
         >
-          Contact
+          {t("contact")}
         </Link>
       </nav>
     </div>

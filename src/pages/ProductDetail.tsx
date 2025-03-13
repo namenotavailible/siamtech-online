@@ -6,6 +6,7 @@ import { X, ChevronLeft } from "lucide-react";
 import { auth } from "@/lib/firebase";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const products = [
   {
@@ -45,6 +46,7 @@ const products = [
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { t, language } = useLanguage();
   const product = products.find(p => p.id === Number(id));
 
   const handleAddToCart = () => {
@@ -100,7 +102,7 @@ const ProductDetail = () => {
   if (!product) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <h1 className="text-2xl">Product not found</h1>
+        <h1 className="text-2xl">{language === "en" ? "Product not found" : "ไม่พบสินค้า"}</h1>
       </div>
     );
   }
@@ -110,7 +112,7 @@ const ProductDetail = () => {
       <div className="absolute top-4 left-4 z-10">
         <Button variant="link" onClick={() => navigate(-1)} className="text-white">
           <ChevronLeft className="me-1 opacity-60" size={16} strokeWidth={2} aria-hidden="true" />
-          Go back
+          {language === "en" ? "Go back" : "กลับไป"}
         </Button>
       </div>
       
@@ -165,13 +167,13 @@ const ProductDetail = () => {
                 onClick={handleAddToCart}
                 className="w-full bg-white text-black py-3 rounded-md hover:bg-gray-200 transition-colors"
               >
-                Add to Cart
+                {t("add_to_cart")}
               </button>
               <button 
                 onClick={() => navigate(`/product/${id}/learn-more`)}
                 className="w-full border border-white/20 py-3 rounded-md hover:bg-white/10 transition-colors"
               >
-                Learn More
+                {t("learn_more")}
               </button>
             </motion.div>
           </div>

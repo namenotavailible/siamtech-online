@@ -1,5 +1,9 @@
 
+import { useLanguage } from "@/contexts/LanguageContext";
+
 export function ContactInfo() {
+  const { t } = useLanguage();
+  
   return (
     <div className="space-y-4">
       <h3 
@@ -7,14 +11,14 @@ export function ContactInfo() {
         contentEditable
         suppressContentEditableWarning
       >
-        Contact Us
+        {t("contact_us")}
       </h3>
       <address className="space-y-3 text-sm text-gray-400 not-italic">
-        <p contentEditable suppressContentEditableWarning>1444/97 Nakhon Chaisi Road,</p>
-        <p contentEditable suppressContentEditableWarning>Thanon Nakhon Chaisi Subdistrict,</p>
-        <p contentEditable suppressContentEditableWarning>Dusit District, Bangkok 10300, Thailand</p>
-        <p contentEditable suppressContentEditableWarning>Phone: 66+99 999 9999</p>
-        <p contentEditable suppressContentEditableWarning>Email: info@siamtechonline.com</p>
+        <p contentEditable suppressContentEditableWarning>{t("address_line1")}</p>
+        <p contentEditable suppressContentEditableWarning>{t("address_line2")}</p>
+        <p contentEditable suppressContentEditableWarning>{t("address_line3")}</p>
+        <p contentEditable suppressContentEditableWarning>{t("phone")}</p>
+        <p contentEditable suppressContentEditableWarning>{t("email")}</p>
       </address>
     </div>
   );

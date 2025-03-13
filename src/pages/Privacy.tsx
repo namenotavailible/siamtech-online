@@ -1,20 +1,22 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Privacy = () => {
+  const { t, language } = useLanguage();
+  
   return (
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-16">
         <div className="mb-8">
           <Link to="/">
             <Button variant="outline" className="mb-6">
-              Back to Home
+              {language === "en" ? "Back to Home" : "กลับไปหน้าหลัก"}
             </Button>
           </Link>
-          <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
-          <p className="text-gray-600 mb-4">Last updated: {new Date().toLocaleDateString()}</p>
+          <h1 className="text-4xl font-bold mb-6">{t("privacy_title")}</h1>
+          <p className="text-gray-600 mb-4">{t("last_updated")} {new Date().toLocaleDateString(language === "en" ? "en-US" : "th-TH")}</p>
         </div>
 
         <div className="prose max-w-none">

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import { Footerdemo } from "@/components/ui/footer-section";
@@ -8,10 +7,13 @@ import { auth } from "@/lib/firebase";
 import { toast } from "sonner";
 import { useCart } from '@/contexts/CartContext';
 import { Helmet } from "react-helmet";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Products = () => {
   const navigate = useNavigate();
   const { updateCartCount } = useCart();
+  const { t, language } = useLanguage();
+  
   const [products] = useState([
     {
       id: 1,
@@ -52,7 +54,6 @@ const Products = () => {
   ]);
 
   useEffect(() => {
-    // Structured data for products
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "ItemList",
@@ -75,7 +76,6 @@ const Products = () => {
       }))
     };
 
-    // Add structured data to head
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.text = JSON.stringify(structuredData);
@@ -130,6 +130,7 @@ const Products = () => {
         <meta name="description" content="Shop premium gaming mice and professional microphones. Find the perfect audio and gaming equipment for streaming, content creation, and competitive gaming." />
         <meta name="keywords" content="gaming mouse, microphone, streaming equipment, gaming peripherals, FIFINE, VXE, VGN, Dragonfly" />
         <link rel="canonical" href={window.location.href} />
+        <html lang={language} />
       </Helmet>
       
       <Navigation />
@@ -140,8 +141,8 @@ const Products = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl font-bold">Our Products</h1>
-          <p className="mt-4 text-gray-400">Discover our premium selection of audio equipment and accessories</p>
+          <h1 className="text-4xl font-bold">{t("our_products")}</h1>
+          <p className="mt-4 text-gray-400">{t("products_description")}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -170,7 +171,7 @@ const Products = () => {
                     className="mt-4 w-full bg-white text-black py-2 rounded-md hover:bg-gray-200 transition-colors"
                     aria-label={`Add ${product.name} to cart`}
                   >
-                    Add to Cart
+                    {t("add_to_cart")}
                   </button>
                 </div>
               </motion.div>
@@ -185,4 +186,3 @@ const Products = () => {
 };
 
 export default Products;
-
