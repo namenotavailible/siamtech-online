@@ -1,7 +1,9 @@
+
 import { cn } from "@/lib/utils";
 import React, { useEffect, useRef } from "react";
 import { createNoise3D } from "simplex-noise";
 import { motion } from "framer-motion";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface VortexProps {
   children?: any;
@@ -18,6 +20,7 @@ interface VortexProps {
 }
 
 export const Vortex = (props: VortexProps) => {
+  const { theme } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef(null);
   const particleCount = props.particleCount || 700;
@@ -36,7 +39,8 @@ export const Vortex = (props: VortexProps) => {
   const xOff = 0.00125;
   const yOff = 0.00125;
   const zOff = 0.0005;
-  const backgroundColor = props.backgroundColor || "#000000";
+  // Use theme-aware background color, default to props.backgroundColor if provided
+  const backgroundColor = props.backgroundColor || (theme === "dark" ? "#000000" : "#FFFFFF");
   let tick = 0;
   const noise3D = createNoise3D();
   let particleProps = new Float32Array(particlePropsLength);
@@ -102,6 +106,7 @@ export const Vortex = (props: VortexProps) => {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Use the theme-aware background color
     ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -235,6 +240,16 @@ export const Vortex = (props: VortexProps) => {
       }
     });
   }, []);
+
+  // Add a theme-change effect to redraw canvas with new background color
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    if (canvas && ctx) {
+      // Force redraw when theme changes
+      setup();
+    }
+  }, [theme]);
 
   return (
     <div className={cn("relative h-full w-full", props.containerClassName)}>
