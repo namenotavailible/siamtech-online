@@ -109,7 +109,7 @@ export const Vortex = (props: VortexProps) => {
     // Clear and set background
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    // Apply the pure white/black background based on theme
+    // Apply the background based on theme
     ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -153,7 +153,10 @@ export const Vortex = (props: VortexProps) => {
     radius = particleProps[i8];
     hue = particleProps[i9];
 
-    drawParticle(x, y, x2, y2, life, ttl, radius, hue, ctx);
+    // Slightly different hue range based on theme
+    const actualHue = theme === "dark" ? hue : (hue + 50) % 360; // Shift hues in light mode to make them more visible
+    
+    drawParticle(x, y, x2, y2, life, ttl, radius, actualHue, ctx);
 
     life++;
 
@@ -180,7 +183,13 @@ export const Vortex = (props: VortexProps) => {
     ctx.save();
     ctx.lineCap = "round";
     ctx.lineWidth = radius;
-    ctx.strokeStyle = `hsla(${hue},100%,60%,${fadeInOut(life, ttl)})`;
+    
+    // Increase opacity and vibrancy for light mode
+    const opacity = theme === "dark" ? fadeInOut(life, ttl) : fadeInOut(life, ttl) * 0.9;
+    const saturation = theme === "dark" ? "100%" : "70%";
+    const lightness = theme === "dark" ? "60%" : "50%";
+    
+    ctx.strokeStyle = `hsla(${hue},${saturation},${lightness},${opacity})`;
     ctx.beginPath();
     ctx.moveTo(x, y);
     ctx.lineTo(x2, y2);
@@ -210,14 +219,18 @@ export const Vortex = (props: VortexProps) => {
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D
   ) => {
+    // Adjust glow effect based on theme
+    const blurAmount = theme === "dark" ? "8px" : "12px";
+    const brightness = theme === "dark" ? "200%" : "250%";
+    
     ctx.save();
-    ctx.filter = "blur(8px) brightness(200%)";
+    ctx.filter = `blur(${blurAmount}) brightness(${brightness})`;
     ctx.globalCompositeOperation = "lighter";
     ctx.drawImage(canvas, 0, 0);
     ctx.restore();
 
     ctx.save();
-    ctx.filter = "blur(4px) brightness(200%)";
+    ctx.filter = `blur(4px) brightness(${brightness})`;
     ctx.globalCompositeOperation = "lighter";
     ctx.drawImage(canvas, 0, 0);
     ctx.restore();
