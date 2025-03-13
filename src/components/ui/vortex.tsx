@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import React, { useEffect, useRef } from "react";
 import { createNoise3D } from "simplex-noise";
@@ -33,8 +32,10 @@ export const Vortex = (props: VortexProps) => {
   const rangeSpeed = props.rangeSpeed || 1.5;
   const baseRadius = props.baseRadius || 1;
   const rangeRadius = props.rangeRadius || 2;
+  // Set base hue to blue (220-240 is blue range)
   const baseHue = props.baseHue || 220;
-  const rangeHue = 100;
+  // Reduce hue range to stay within blue spectrum
+  const rangeHue = 40;
   const noiseSteps = 3;
   const xOff = 0.00125;
   const yOff = 0.00125;
@@ -96,8 +97,9 @@ export const Vortex = (props: VortexProps) => {
     life = 0;
     ttl = baseTTL + rand(rangeTTL);
     speed = baseSpeed + rand(rangeSpeed);
-    // Increase base radius for light mode
-    radius = baseRadius + rand(rangeRadius) + (theme === "light" ? 0.5 : 0);
+    // Increase radius for better visibility
+    radius = baseRadius + rand(rangeRadius) + (theme === "light" ? 0.8 : 0);
+    // Set hue to blue range (220-260)
     hue = baseHue + rand(rangeHue);
 
     particleProps.set([x, y, vx, vy, life, ttl, speed, radius, hue], i);
@@ -153,16 +155,24 @@ export const Vortex = (props: VortexProps) => {
     radius = particleProps[i8];
     hue = particleProps[i9];
 
-    // More noticeable color shift in light mode to favor pinks and purples
+    // Keep blue hues and add some darker particles in both themes
     let actualHue;
-    if (theme === "dark") {
-      actualHue = hue;
+    let saturation, lightness;
+    
+    // Create variation between dark blue and light blue
+    if (Math.random() > 0.6) {
+      // Darker blue particles (navy/midnight blue)
+      actualHue = theme === "dark" ? 240 : 230;
+      saturation = "80%";
+      lightness = theme === "dark" ? "20%" : "25%";
     } else {
-      // Shift hues toward pink/purple spectrum in light mode (280-360 is purple/pink range)
-      actualHue = ((hue + 100) % 360 + 280) % 360;
+      // Brighter blue particles
+      actualHue = hue;
+      saturation = "70%";
+      lightness = theme === "dark" ? "60%" : "45%";
     }
     
-    drawParticle(x, y, x2, y2, life, ttl, radius, actualHue, ctx);
+    drawParticle(x, y, x2, y2, life, ttl, radius, actualHue, saturation, lightness, ctx);
 
     life++;
 
@@ -184,24 +194,19 @@ export const Vortex = (props: VortexProps) => {
     ttl: number,
     radius: number,
     hue: number,
+    saturation: string,
+    lightness: string,
     ctx: CanvasRenderingContext2D
   ) => {
     ctx.save();
     ctx.lineCap = "round";
     ctx.lineWidth = radius;
     
-    // Enhance visibility in light mode with stronger colors
-    let opacity, saturation, lightness;
-    
-    if (theme === "dark") {
-      opacity = fadeInOut(life, ttl);
-      saturation = "100%";
-      lightness = "60%";
-    } else {
-      // Higher opacity and more vibrant colors for light mode
-      opacity = fadeInOut(life, ttl) * 0.8;
-      saturation = "90%";
-      lightness = "45%"; // Darker to stand out on white
+    // Enhanced opacity for better visibility
+    let opacity = fadeInOut(life, ttl);
+    // Increase opacity in light mode
+    if (theme === "light") {
+      opacity *= 0.9;
     }
     
     ctx.strokeStyle = `hsla(${hue},${saturation},${lightness},${opacity})`;
@@ -217,6 +222,37 @@ export const Vortex = (props: VortexProps) => {
     return x > canvas.width || x < 0 || y > canvas.height || y < 0;
   };
 
+  const renderGlow = (
+    canvas: HTMLCanvasElement,
+    ctx: CanvasRenderingContext2D
+  ) => {
+    // Enhanced blue glow effect
+    const blurAmount = theme === "dark" ? "10px" : "15px";
+    const brightness = theme === "dark" ? "180%" : "220%";
+    
+    ctx.save();
+    ctx.filter = `blur(${blurAmount}) brightness(${brightness})`;
+    ctx.globalCompositeOperation = "lighter";
+    ctx.drawImage(canvas, 0, 0);
+    ctx.restore();
+
+    // Additional stronger glow layer for light mode to make blues pop
+    if (theme === "light") {
+      ctx.save();
+      ctx.filter = `blur(25px) brightness(180%)`;
+      ctx.globalCompositeOperation = "lighter";
+      ctx.drawImage(canvas, 0, 0);
+      ctx.restore();
+    }
+
+    // Sharp detail layer
+    ctx.save();
+    ctx.filter = `blur(3px) brightness(${brightness})`;
+    ctx.globalCompositeOperation = "lighter";
+    ctx.drawImage(canvas, 0, 0);
+    ctx.restore();
+  };
+
   const resize = (
     canvas: HTMLCanvasElement,
     ctx?: CanvasRenderingContext2D
@@ -228,36 +264,6 @@ export const Vortex = (props: VortexProps) => {
 
     center[0] = 0.5 * canvas.width;
     center[1] = 0.5 * canvas.height;
-  };
-
-  const renderGlow = (
-    canvas: HTMLCanvasElement,
-    ctx: CanvasRenderingContext2D
-  ) => {
-    // Enhanced glow effect for light mode
-    const blurAmount = theme === "dark" ? "8px" : "15px";
-    const brightness = theme === "dark" ? "200%" : "300%";
-    
-    ctx.save();
-    ctx.filter = `blur(${blurAmount}) brightness(${brightness})`;
-    ctx.globalCompositeOperation = "lighter";
-    ctx.drawImage(canvas, 0, 0);
-    ctx.restore();
-
-    // Additional glow layers for light mode
-    if (theme === "light") {
-      ctx.save();
-      ctx.filter = `blur(25px) brightness(250%)`;
-      ctx.globalCompositeOperation = "lighter";
-      ctx.drawImage(canvas, 0, 0);
-      ctx.restore();
-    }
-
-    ctx.save();
-    ctx.filter = `blur(4px) brightness(${brightness})`;
-    ctx.globalCompositeOperation = "lighter";
-    ctx.drawImage(canvas, 0, 0);
-    ctx.restore();
   };
 
   const renderToScreen = (
