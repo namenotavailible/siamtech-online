@@ -6,9 +6,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const WarrantyFAQ = () => {
   const { t } = useLanguage();
+  const { theme } = useTheme();
   
   // Using translation keys for FAQ items
   const faqItems = [
@@ -47,7 +49,7 @@ const WarrantyFAQ = () => {
             <AccordionTrigger className="text-left">
               {item.question}
             </AccordionTrigger>
-            <AccordionContent className="text-gray-300">
+            <AccordionContent className={theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}>
               {item.answer}
             </AccordionContent>
           </AccordionItem>

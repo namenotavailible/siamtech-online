@@ -18,10 +18,12 @@ import { GoogleLogo } from "@/components/ui/google-logo";
 import WarrantyRegistrationForm from "@/components/warranty/WarrantyRegistrationForm";
 import WarrantyFAQ from "@/components/warranty/WarrantyFAQ";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const Warranty = () => {
   const navigate = useNavigate();
   const { t, language } = useLanguage();
+  const { theme } = useTheme();
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [showWarrantyForm, setShowWarrantyForm] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -102,7 +104,7 @@ const Warranty = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
       <Navigation />
       
       <main className="max-w-4xl mx-auto px-4 pt-24 pb-16">
@@ -116,14 +118,14 @@ const Warranty = () => {
             
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold">{t("our_warranty_policy")}</h2>
-              <p className="text-gray-300">
+              <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                 {t("warranty_policy_description")}
               </p>
             </div>
 
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold">{t("coverage_details")}</h2>
-              <ul className="list-disc list-inside text-gray-300 space-y-2">
+              <ul className={`list-disc list-inside ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} space-y-2`}>
                 <li>{t("coverage_details_list_1")}</li>
                 <li>{t("coverage_details_list_2")}</li>
                 <li>{t("coverage_details_list_3")}</li>
@@ -137,17 +139,17 @@ const Warranty = () => {
               features={features}
               title={t("how_to_activate_warranty")}
               autoPlayInterval={4000}
-              className="bg-gray-900/50 rounded-lg backdrop-blur-sm"
+              className={`${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/80'} rounded-lg backdrop-blur-sm`}
             />
 
-            <div className="mt-8 p-6 bg-gray-900/50 rounded-lg backdrop-blur-sm">
+            <div className={`mt-8 p-6 ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/80'} rounded-lg backdrop-blur-sm`}>
               <h2 className="text-2xl font-semibold mb-4">{t("activate_warranty")}</h2>
-              <p className="text-gray-300 mb-4">
+              <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} mb-4`}>
                 {t("activate_warranty_description")}
               </p>
               <Button
                 onClick={handleActivateWarranty}
-                className="bg-white text-black hover:bg-gray-200 transition-colors"
+                className={`${theme === 'dark' ? 'bg-white text-black hover:bg-gray-200' : 'bg-black text-white hover:bg-gray-800'} transition-colors`}
               >
                 {t("activate_warranty_button")}
               </Button>
@@ -156,18 +158,18 @@ const Warranty = () => {
 
           <section id="policy" className="space-y-6">
             <h2 className="text-2xl font-semibold">{t("extended_warranty_options")}</h2>
-            <p className="text-gray-300">
+            <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
               {t("extended_warranty_description")}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-6 bg-gray-900/50 rounded-lg backdrop-blur-sm">
+              <div className={`p-6 ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/80'} rounded-lg backdrop-blur-sm`}>
                 <h3 className="text-xl font-semibold mb-2">{t("premium_protection")}</h3>
-                <p className="text-gray-300 mb-4">{t("premium_protection_description")}</p>
+                <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} mb-4`}>{t("premium_protection_description")}</p>
                 <p className="text-lg font-semibold">750 ฿</p>
               </div>
-              <div className="p-6 bg-gray-900/50 rounded-lg backdrop-blur-sm">
+              <div className={`p-6 ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/80'} rounded-lg backdrop-blur-sm`}>
                 <h3 className="text-xl font-semibold mb-2">{t("complete_care")}</h3>
-                <p className="text-gray-300 mb-4">{t("complete_care_description")}</p>
+                <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} mb-4`}>{t("complete_care_description")}</p>
                 <p className="text-lg font-semibold">1,250 ฿</p>
               </div>
             </div>
