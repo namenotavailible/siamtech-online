@@ -9,9 +9,11 @@ import ChatDialog from "@/components/ui/chat-dialog";
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Helmet } from "react-helmet";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const Support = () => {
   const { t, language } = useLanguage();
+  const { theme } = useTheme();
   const [showChatDialog, setShowChatDialog] = useState(false);
 
   const placeholdersTH = [
@@ -42,7 +44,7 @@ const Support = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
       <Helmet>
         <title>{language === "en" ? "Support - SIAMTECH Online" : "บริการช่วยเหลือ - SIAMTECH ออนไลน์"}</title>
         <meta name="description" content={language === "en" 
@@ -54,17 +56,17 @@ const Support = () => {
       <Navigation />
       
       <div className="pt-24 pb-16 px-4 max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-white">
+        <h1 className="text-4xl font-bold mb-8">
           {language === "en" ? "Support Center" : "ศูนย์ช่วยเหลือ"}
         </h1>
 
-        <Card className="bg-black border-white/10 mb-12">
+        <Card className={`${theme === 'dark' ? 'bg-black border-white/10' : 'bg-white border-gray-200'} mb-12`}>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
+            <CardTitle className="flex items-center gap-2">
               <MessageSquare className="h-5 w-5" />
               {language === "en" ? "AI Chat Support" : "บริการแชทอัจฉริยะ"}
             </CardTitle>
-            <CardDescription className="text-gray-200">
+            <CardDescription className={theme === 'dark' ? 'text-gray-200' : 'text-gray-600'}>
               {language === "en" ? "Get instant answers to your questions" : "รับคำตอบทันทีสำหรับคำถามของคุณ"}
             </CardDescription>
           </CardHeader>
@@ -78,36 +80,36 @@ const Support = () => {
         </Card>
         
         <div className="grid md:grid-cols-2 gap-6">
-          <Card className="bg-white/5 border-white/10">
+          <Card className={`${theme === 'dark' ? 'bg-white/5 border-white/10' : 'bg-gray-50 border-gray-200'}`}>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
+              <CardTitle className="flex items-center gap-2">
                 <Mail className="h-5 w-5" />
                 {language === "en" ? "Email Support" : "สนับสนุนทางอีเมล"}
               </CardTitle>
-              <CardDescription className="text-gray-200">
+              <CardDescription className={theme === 'dark' ? 'text-gray-200' : 'text-gray-600'}>
                 {language === "en" ? "Get in touch via email" : "ติดต่อทางอีเมล"}
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-100">
+              <p className={theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}>
                 support@siamtechonline.com<br />
                 {language === "en" ? "Response within 24 hours" : "ตอบกลับภายใน 24 ชั่วโมง"}
               </p>
             </CardContent>
           </Card>
 
-          <Card className="bg-white/5 border-white/10">
+          <Card className={`${theme === 'dark' ? 'bg-white/5 border-white/10' : 'bg-gray-50 border-gray-200'}`}>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
+              <CardTitle className="flex items-center gap-2">
                 <Phone className="h-5 w-5" />
                 {language === "en" ? "Phone Support" : "สนับสนุนทางโทรศัพท์"}
               </CardTitle>
-              <CardDescription className="text-gray-200">
+              <CardDescription className={theme === 'dark' ? 'text-gray-200' : 'text-gray-600'}>
                 {language === "en" ? "Talk to our support team" : "พูดคุยกับทีมสนับสนุนของเรา"}
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-100">
+              <p className={theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}>
                 +(66) 99 999 9999 <span className="text-red-400 font-medium">
                   {language === "en" ? "(Unavailable)" : "(ไม่พร้อมให้บริการ)"}
                 </span><br />
