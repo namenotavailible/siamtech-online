@@ -10,9 +10,11 @@ import FloatingChat from "@/components/ui/floating-chat";
 import { TopBar } from "@/components/ui/top-bar";
 import { Helmet } from "react-helmet";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const Index = () => {
   const { t, language } = useLanguage();
+  const { theme } = useTheme();
   
   useEffect(() => {
     const structuredData = {
@@ -40,7 +42,7 @@ const Index = () => {
   }, [t]); // Add t as a dependency to recreate when language changes
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+    <div className={`min-h-screen ${theme === "dark" ? "bg-black" : "bg-white"} text-white overflow-x-hidden`}>
       <Helmet>
         <title>{language === "en" ? "SIAMTECH Online | Premium Gaming & Audio Equipment Store" : "SIAMTECH ออนไลน์ | ร้านอุปกรณ์เกมและเครื่องเสียงระดับพรีเมียม"}</title>
         <meta name="description" content={language === "en" 
@@ -69,32 +71,32 @@ const Index = () => {
       <TopBar />
       <Navigation />
       
-      <Vortex backgroundColor="black" rangeY={800} particleCount={500} baseHue={240} className="h-screen flex items-center justify-center px-4">
+      <Vortex rangeY={800} particleCount={500} baseHue={240} className="h-screen flex items-center justify-center px-4">
         <motion.div 
           initial={{ opacity: 0, y: 20 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ delay: 0.5 }} 
           className="text-center max-w-4xl mx-auto"
         >
-          <span className="text-sm uppercase tracking-wider text-gray-400">
+          <span className={`text-sm uppercase tracking-wider ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
             {t("company_name")}
           </span>
-          <h1 className="mt-6 text-4xl sm:text-6xl font-bold leading-tight">
+          <h1 className={`mt-6 text-4xl sm:text-6xl font-bold leading-tight ${theme === "dark" ? "text-white" : "text-black"}`}>
             {t("hero_heading")}
           </h1>
-          <p className="mt-6 text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className={`mt-6 text-xl ${theme === "dark" ? "text-gray-300" : "text-gray-700"} max-w-2xl mx-auto`}>
             {t("hero_subtitle")}
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link 
               to="/products" 
-              className="px-8 py-3 bg-white text-black rounded-md hover:bg-gray-200 transition-colors"
+              className={`px-8 py-3 ${theme === "dark" ? "bg-white text-black" : "bg-black text-white"} rounded-md hover:opacity-90 transition-colors`}
               aria-label={language === "en" ? "Browse our product catalog" : "เรียกดูแคตตาล็อกสินค้าของเรา"}
             >
               {t("shop_now")}
             </Link>
             <button 
-              className="px-8 py-3 border border-white/20 rounded-md hover:bg-white/10 transition-colors"
+              className={`px-8 py-3 border ${theme === "dark" ? "border-white/20 hover:bg-white/10" : "border-black/20 hover:bg-black/10"} rounded-md transition-colors`}
               aria-label={language === "en" ? "Learn more about our products and services" : "เรียนรู้เพิ่มเติมเกี่ยวกับสินค้าและบริการของเรา"}
             >
               {t("learn_more")}

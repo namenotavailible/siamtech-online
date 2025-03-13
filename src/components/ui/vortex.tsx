@@ -39,8 +39,10 @@ export const Vortex = (props: VortexProps) => {
   const xOff = 0.00125;
   const yOff = 0.00125;
   const zOff = 0.0005;
-  // Use theme-aware background color, default to props.backgroundColor if provided
+  
+  // Ensure pure white in light mode, pure black in dark mode
   const backgroundColor = props.backgroundColor || (theme === "dark" ? "#000000" : "#FFFFFF");
+  
   let tick = 0;
   const noise3D = createNoise3D();
   let particleProps = new Float32Array(particlePropsLength);
@@ -104,9 +106,10 @@ export const Vortex = (props: VortexProps) => {
   const draw = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
     tick++;
 
+    // Clear and set background
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Use the theme-aware background color
+    
+    // Apply the pure white/black background based on theme
     ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -241,12 +244,11 @@ export const Vortex = (props: VortexProps) => {
     });
   }, []);
 
-  // Add a theme-change effect to redraw canvas with new background color
+  // Force redraw when theme changes to update background
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
     if (canvas && ctx) {
-      // Force redraw when theme changes
       setup();
     }
   }, [theme]);
