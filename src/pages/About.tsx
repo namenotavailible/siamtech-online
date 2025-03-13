@@ -5,12 +5,14 @@ import { motion } from "framer-motion";
 import { Building2, Users, Trophy, Target, Clock, Globe } from "lucide-react";
 import { SparklesCore } from "@/components/ui/sparkles";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const About = () => {
   const { t } = useLanguage();
+  const { theme } = useTheme();
   
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
       <Navigation />
       
       <main className="pt-24 pb-16 px-4">
@@ -29,12 +31,12 @@ const About = () => {
                 maxSize={1.4}
                 particleDensity={100}
                 className="w-full h-full"
-                particleColor="#FFFFFF"
+                particleColor={theme === 'dark' ? "#FFFFFF" : "#000000"}
                 speed={0.5}
               />
             </div>
             <h1 className="text-4xl font-bold mb-4 relative z-10">{t("about_siamtech")}</h1>
-            <p className="text-gray-400 relative z-10">{t("about_subtitle")}</p>
+            <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} relative z-10`}>{t("about_subtitle")}</p>
           </motion.div>
 
           <motion.div
@@ -48,7 +50,7 @@ const About = () => {
                 <Building2 className="h-6 w-6" />
                 {t("our_story")}
               </h2>
-              <p className="text-gray-300 leading-relaxed">
+              <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} leading-relaxed`}>
                 {t("our_story_content")}
               </p>
             </div>
@@ -57,7 +59,7 @@ const About = () => {
                 <Target className="h-6 w-6" />
                 {t("our_mission")}
               </h2>
-              <p className="text-gray-300 leading-relaxed">
+              <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} leading-relaxed`}>
                 {t("our_mission_content")}
               </p>
             </div>
@@ -67,7 +69,7 @@ const About = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="bg-white/5 rounded-lg p-8 mb-16"
+            className={`${theme === 'dark' ? 'bg-white/5' : 'bg-gray-100'} rounded-lg p-8 mb-16`}
           >
             <h2 className="text-2xl font-semibold mb-8 text-center flex items-center justify-center gap-2">
               <Trophy className="h-6 w-6" />
@@ -79,21 +81,21 @@ const About = () => {
                   <Clock className="h-8 w-8 text-primary" />
                 </div>
                 <h3 className="font-semibold mb-2">{t("experience")}</h3>
-                <p className="text-gray-400">{t("experience_description")}</p>
+                <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{t("experience_description")}</p>
               </div>
               <div className="text-center">
                 <div className="mb-3 flex justify-center">
                   <Users className="h-8 w-8 text-primary" />
                 </div>
                 <h3 className="font-semibold mb-2">{t("customers")}</h3>
-                <p className="text-gray-400">{t("customers_description")}</p>
+                <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{t("customers_description")}</p>
               </div>
               <div className="text-center">
                 <div className="mb-3 flex justify-center">
                   <Globe className="h-8 w-8 text-primary" />
                 </div>
                 <h3 className="font-semibold mb-2">{t("countries")}</h3>
-                <p className="text-gray-400">{t("countries_description")}</p>
+                <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{t("countries_description")}</p>
               </div>
             </div>
           </motion.div>
@@ -102,13 +104,13 @@ const About = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
-            className="text-center bg-gradient-to-b from-white/5 to-transparent rounded-lg p-8"
+            className={`text-center ${theme === 'dark' ? 'bg-gradient-to-b from-white/5 to-transparent' : 'bg-gradient-to-b from-gray-100 to-transparent'} rounded-lg p-8`}
           >
             <h2 className="text-2xl font-semibold mb-6">{t("join_journey")}</h2>
-            <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} mb-8 max-w-2xl mx-auto`}>
               {t("join_journey_description")}
             </p>
-            <button className="px-8 py-3 bg-white text-black rounded-md hover:bg-gray-200 transition-colors">
+            <button className={`px-8 py-3 ${theme === 'dark' ? 'bg-white text-black hover:bg-gray-200' : 'bg-black text-white hover:bg-gray-800'} rounded-md transition-colors`}>
               {t("get_started")}
             </button>
           </motion.div>
