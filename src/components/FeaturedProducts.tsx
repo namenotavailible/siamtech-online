@@ -139,10 +139,10 @@ const FeaturedProducts = () => {
       }} transition={{
         delay: 0.2
       }} className="text-center mb-24">
-          <ShieldCheck className={`w-16 h-16 mx-auto mb-6 ${isDark ? 'text-purple-500' : 'text-purple-600'}`} />
+          <ShieldCheck className={`w-16 h-16 mx-auto mb-6 ${isDark ? 'text-purple-500' : 'text-black'}`} />
           <h2 className={`font-bold mb-6 text-4xl text-center ${isDark ? 'text-white' : 'text-gray-800'}`}>{t("warranty_info")}</h2>
           <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} mb-8 max-w-2xl mx-auto text-lg text-center`}>{t("warranty_policy_description")}</p>
-          <ButtonColorful label={t("activate_warranty_button")} onClick={() => window.location.href = '/warranty'} className="mx-auto" />
+          <ButtonColorful label={t("activate_warranty_button")} onClick={() => window.location.href = '/warranty'} className={`mx-auto ${!isDark && 'bg-black text-white hover:bg-gray-800'}`} />
         </motion.div>
 
         <motion.div initial={{
