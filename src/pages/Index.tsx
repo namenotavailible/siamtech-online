@@ -14,11 +14,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 const Index = () => {
   const { t, language } = useLanguage();
   
-  // These useState calls are for backwards compatibility with any code that depends on these values
-  const [heroTitle] = useState(t("hero_title"));
-  const [heroSubtitle] = useState(t("hero_subtitle"));
-  const [welcomeText] = useState(t("welcome_text"));
-
   useEffect(() => {
     // Add structured data for organization and website
     const structuredData = {

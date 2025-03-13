@@ -15,30 +15,32 @@ import Checkout from "./pages/Checkout";
 import { Toaster } from "@/components/ui/sonner"
 import { CartProvider } from "./contexts/CartContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
-
+import { Suspense } from "react";
 import "./App.css";
 
 function App() {
   return (
     <LanguageProvider>
-      <Router>
-        <CartProvider>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/support" element={<Support />} />
-            <Route path="/warranty" element={<Warranty />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/product/:id/learn-more" element={<ProductLearnMore />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <Toaster />
-        </CartProvider>
-      </Router>
+      <Suspense fallback={<div className="flex h-screen w-full items-center justify-center bg-black text-white">Loading...</div>}>
+        <Router>
+          <CartProvider>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/support" element={<Support />} />
+              <Route path="/warranty" element={<Warranty />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
+              <Route path="/product/:id/learn-more" element={<ProductLearnMore />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <Toaster />
+          </CartProvider>
+        </Router>
+      </Suspense>
     </LanguageProvider>
   );
 }

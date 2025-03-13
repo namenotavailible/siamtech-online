@@ -52,12 +52,18 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     const savedLanguage = localStorage.getItem("language") as Language;
     return savedLanguage || getBrowserLanguage() || "th";
   });
+  
+  // Track whether translations are loaded
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // Load translations when the component mounts or language changes
   useEffect(() => {
     const loadAllTranslations = async () => {
-      await loadTranslations("en");
-      await loadTranslations("th");
+      await Promise.all([
+        loadTranslations("en"),
+        loadTranslations("th")
+      ]);
+      setIsLoaded(true);
     };
     
     loadAllTranslations();
@@ -78,6 +84,11 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     if (!translations[language]) return key;
     return translations[language][key] || translations["en"][key] || key;
   };
+
+  // Show a loading state while translations are being loaded
+  if (!isLoaded) {
+    return null; // Or a loading spinner component
+  }
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
