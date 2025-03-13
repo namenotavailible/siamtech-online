@@ -74,7 +74,7 @@ const Index = () => {
           className="text-center max-w-4xl mx-auto"
         >
           <span className="text-sm uppercase tracking-wider text-gray-400">
-            {t("welcome_text")}
+            บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด
           </span>
           <h1 className="mt-6 text-4xl sm:text-6xl font-bold leading-tight">
             {t("hero_title")}
