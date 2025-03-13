@@ -5,7 +5,6 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { useState } from "react";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 const productOptions = [
   { id: 1, name: "FIFINE Ampligame AM8" },
@@ -19,8 +18,6 @@ interface WarrantyRegistrationFormProps {
 }
 
 const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) => {
-  const { t } = useLanguage();
-  
   const [formData, setFormData] = useState({
     productId: "",
     orderNumber: "",
@@ -56,10 +53,10 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="productId">{t("warranty.form.product")}</Label>
+        <Label htmlFor="productId">Product</Label>
         <Select value={formData.productId} onValueChange={handleSelectChange} required>
           <SelectTrigger>
-            <SelectValue placeholder={t("warranty.form.select_product")} />
+            <SelectValue placeholder="Select your product" />
           </SelectTrigger>
           <SelectContent>
             {productOptions.map(product => (
@@ -71,17 +68,17 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
         </Select>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="orderNumber">{t("warranty.form.order_number")}</Label>
+        <Label htmlFor="orderNumber">Order Number</Label>
         <Input
           id="orderNumber"
           value={formData.orderNumber}
           onChange={handleInputChange}
-          placeholder={t("warranty.form.order_number_placeholder")}
+          placeholder="Enter your order number"
           required
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="purchaseDate">{t("warranty.form.purchase_date")}</Label>
+        <Label htmlFor="purchaseDate">Purchase Date</Label>
         <Input
           id="purchaseDate"
           type="date"
@@ -91,48 +88,48 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="purchaseSource">{t("warranty.form.purchase_source")}</Label>
+        <Label htmlFor="purchaseSource">Source of Purchase</Label>
         <Input
           id="purchaseSource"
           value={formData.purchaseSource}
           onChange={handleInputChange}
-          placeholder={t("warranty.form.purchase_source_placeholder")}
+          placeholder="Where did you purchase the product?"
           required
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="fullName">{t("warranty.form.full_name")}</Label>
+        <Label htmlFor="fullName">Full Name</Label>
         <Input
           id="fullName"
           value={formData.fullName}
           onChange={handleInputChange}
-          placeholder={t("warranty.form.full_name_placeholder")}
+          placeholder="Enter your full name"
           required
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="email">{t("warranty.form.email")}</Label>
+        <Label htmlFor="email">Email</Label>
         <Input
           id="email"
           type="email"
           value={formData.email}
           onChange={handleInputChange}
-          placeholder={t("warranty.form.email_placeholder")}
+          placeholder="Enter your email address"
           required
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="phoneNumber">{t("warranty.form.phone_number")}</Label>
+        <Label htmlFor="phoneNumber">Phone Number</Label>
         <Input
           id="phoneNumber"
           value={formData.phoneNumber}
           onChange={handleInputChange}
-          placeholder={t("warranty.form.phone_number_placeholder")}
+          placeholder="Enter your phone number"
           required
         />
       </div>
       <Button type="submit" className="w-full">
-        {t("warranty.form.submit")}
+        Submit Warranty Registration
       </Button>
     </form>
   );

@@ -3,23 +3,15 @@ import Navigation from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Footerdemo } from "@/components/ui/footer-section";
 import { Mail, Phone, MessageSquare } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import ChatDialog from "@/components/ui/chat-dialog";
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 const Support = () => {
   const [showChatDialog, setShowChatDialog] = useState(false);
-  const { t, language } = useLanguage();
 
-  // Placeholders in both languages
-  const placeholders = language === 'th' ? [
-    "ฉันจะติดตามคำสั่งซื้อของฉันได้อย่างไร?",
-    "คุณรับวิธีการชำระเงินแบบใดบ้าง?",
-    "ฉันจะคืนสินค้าได้อย่างไร?",
-    "บอกฉันเกี่ยวกับนโยบายการรับประกันของคุณ",
-    "ศูนย์บริการที่ใกล้ฉันที่สุดอยู่ที่ไหน?"
-  ] : [
+  const placeholders = [
     "How can I track my order?",
     "What payment methods do you accept?",
     "How do I return a product?",
@@ -41,16 +33,16 @@ const Support = () => {
       <Navigation />
       
       <div className="pt-24 pb-16 px-4 max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-white">{t("support.title")}</h1>
+        <h1 className="text-4xl font-bold mb-8 text-white">Support Center</h1>
 
         <Card className="bg-black border-white/10 mb-12">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-white">
               <MessageSquare className="h-5 w-5" />
-              {t("support.ai_chat")}
+              AI Chat Support
             </CardTitle>
             <CardDescription className="text-gray-200">
-              {t("support.ai_chat_description")}
+              Get instant answers to your questions
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -67,16 +59,16 @@ const Support = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <Mail className="h-5 w-5" />
-                {t("support.email_support")}
+                Email Support
               </CardTitle>
               <CardDescription className="text-gray-200">
-                {t("support.email_support_description")}
+                Get in touch via email
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-gray-100">
                 support@siamtechonline.com<br />
-                {t("support.response_time")}
+                Response within 24 hours
               </p>
             </CardContent>
           </Card>
@@ -85,16 +77,16 @@ const Support = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <Phone className="h-5 w-5" />
-                {t("support.phone_support")}
+                Phone Support
               </CardTitle>
               <CardDescription className="text-gray-200">
-                {t("support.phone_support_description")}
+                Talk to our support team
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-gray-100">
-                +(66) 99 999 9999 <span className="text-red-400 font-medium">{t("support.unavailable")}</span><br />
-                {t("support.business_hours")}
+                +(66) 99 999 9999 <span className="text-red-400 font-medium">(Unavailable)</span><br />
+                Mon-Fri: 9AM-6PM EST
               </p>
             </CardContent>
           </Card>

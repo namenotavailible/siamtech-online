@@ -9,13 +9,11 @@ import { Link } from "react-router-dom";
 import FloatingChat from "@/components/ui/floating-chat";
 import { TopBar } from "@/components/ui/top-bar";
 import { Helmet } from "react-helmet";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 const Index = () => {
-  const { t, language } = useLanguage();
-  const [heroTitle] = useState("");
-  const [heroSubtitle] = useState("");
-  const [welcomeText] = useState("");
+  const [heroTitle] = useState("Professional Equipment for Every Need");
+  const [heroSubtitle] = useState("Discover our premium selection of accessories and audio gear, crafted for professionals and enthusiasts alike.");
+  const [welcomeText] = useState("WELCOME TO SIAMTECH ONLINE GROUP");
 
   useEffect(() => {
     // Add structured data for organization and website
@@ -57,7 +55,6 @@ const Index = () => {
         <meta name="twitter:title" content="SIAMTECH Online | Premium Gaming & Audio Equipment Store" />
         <meta name="twitter:description" content="Discover premium gaming peripherals and professional audio equipment at SIAMTECH Online." />
         <meta name="twitter:image" content="/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png" />
-        <meta name="language" content={language} />
         <link rel="canonical" href={window.location.origin} />
       </Helmet>
 
@@ -72,13 +69,13 @@ const Index = () => {
           className="text-center max-w-4xl mx-auto"
         >
           <span className="text-sm uppercase tracking-wider text-gray-400">
-            {t("home.welcome")}
+            {welcomeText}
           </span>
           <h1 className="mt-6 text-4xl sm:text-6xl font-bold leading-tight">
-            {t("home.hero_title")}
+            {heroTitle}
           </h1>
           <p className="mt-6 text-xl text-gray-300 max-w-2xl mx-auto">
-            {t("home.hero_subtitle")}
+            {heroSubtitle}
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link 
@@ -86,13 +83,13 @@ const Index = () => {
               className="px-8 py-3 bg-white text-black rounded-md hover:bg-gray-200 transition-colors"
               aria-label="Browse our product catalog"
             >
-              {t("home.shop_now")}
+              Shop Now
             </Link>
             <button 
               className="px-8 py-3 border border-white/20 rounded-md hover:bg-white/10 transition-colors"
               aria-label="Learn more about our products and services"
             >
-              {t("home.learn_more")}
+              Learn More
             </button>
           </div>
         </motion.div>

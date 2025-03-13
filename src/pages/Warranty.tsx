@@ -17,10 +17,29 @@ import EmailLinkAuth from "@/components/EmailLinkAuth";
 import { GoogleLogo } from "@/components/ui/google-logo";
 import WarrantyRegistrationForm from "@/components/warranty/WarrantyRegistrationForm";
 import WarrantyFAQ from "@/components/warranty/WarrantyFAQ";
-import { useLanguage } from "@/contexts/LanguageContext";
+
+const features = [
+  {
+    step: "Step 1",
+    title: "Create an Account",
+    content: "Sign up for a SIAMTECH account to access warranty registration.",
+    image: "/placeholder.svg"
+  },
+  {
+    step: "Step 2",
+    title: "Register Your Product",
+    content: "Enter your product details and proof of purchase information.",
+    image: "/placeholder.svg"
+  },
+  {
+    step: "Step 3",
+    title: "Activate Warranty",
+    content: "Complete the registration to activate your 1-year warranty coverage.",
+    image: "/placeholder.svg"
+  }
+];
 
 const Warranty = () => {
-  const { t } = useLanguage();
   const navigate = useNavigate();
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [showWarrantyForm, setShowWarrantyForm] = useState(false);
@@ -30,27 +49,6 @@ const Warranty = () => {
     email: "",
     password: "",
   });
-
-  const features = [
-    {
-      step: t("warranty.steps.step1.title"),
-      title: t("warranty.steps.step1.heading"),
-      content: t("warranty.steps.step1.content"),
-      image: "/placeholder.svg"
-    },
-    {
-      step: t("warranty.steps.step2.title"),
-      title: t("warranty.steps.step2.heading"),
-      content: t("warranty.steps.step2.content"),
-      image: "/placeholder.svg"
-    },
-    {
-      step: t("warranty.steps.step3.title"),
-      title: t("warranty.steps.step3.heading"),
-      content: t("warranty.steps.step3.content"),
-      image: "/placeholder.svg"
-    }
-  ];
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -71,24 +69,24 @@ const Warranty = () => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-      toast.success(t("auth.success_message"));
+      toast.success("Account created successfully!");
       setShowAuthDialog(false);
       setShowWarrantyForm(true);
     } catch (error) {
       console.error("Error signing up:", error);
-      toast.error(t("auth.error_message"));
+      toast.error("Failed to create account. Please try again.");
     }
   };
 
   const handleGoogleSignIn = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      toast.success(t("auth.google_success"));
+      toast.success("Signed in with Google successfully!");
       setShowAuthDialog(false);
       setShowWarrantyForm(true);
     } catch (error) {
       console.error("Error signing in with Google:", error);
-      toast.error(t("auth.google_error"));
+      toast.error("Failed to sign in with Google. Please try again.");
     }
   };
 
@@ -111,22 +109,22 @@ const Warranty = () => {
           className="space-y-12"
         >
           <section id="overview" className="space-y-6">
-            <h1 className="text-4xl font-bold">{t("warranty.title")}</h1>
+            <h1 className="text-4xl font-bold">Warranty Information</h1>
             
             <div className="space-y-4">
-              <h2 className="text-2xl font-semibold">{t("warranty.policy.title")}</h2>
+              <h2 className="text-2xl font-semibold">Our Warranty Policy</h2>
               <p className="text-gray-300">
-                {t("warranty.policy.description")}
+                At SIAMTECH, we stand behind the quality of our products. All our equipment comes with a 1-year standard warranty that covers manufacturing defects and malfunctions.
               </p>
             </div>
 
             <div className="space-y-4">
-              <h2 className="text-2xl font-semibold">{t("warranty.coverage.title")}</h2>
+              <h2 className="text-2xl font-semibold">Coverage Details</h2>
               <ul className="list-disc list-inside text-gray-300 space-y-2">
-                <li>{t("warranty.coverage.item1")}</li>
-                <li>{t("warranty.coverage.item2")}</li>
-                <li>{t("warranty.coverage.item3")}</li>
-                <li>{t("warranty.coverage.item4")}</li>
+                <li>All Products: 1-year comprehensive warranty</li>
+                <li>Coverage includes manufacturing defects and malfunctions</li>
+                <li>Free repair or replacement of defective parts</li>
+                <li>Technical support throughout the warranty period</li>
               </ul>
             </div>
           </section>
@@ -134,40 +132,40 @@ const Warranty = () => {
           <section id="registration" className="space-y-6">
             <FeatureSteps 
               features={features}
-              title={t("warranty.registration.title")}
+              title="How to Activate Your Warranty"
               autoPlayInterval={4000}
               className="bg-gray-900/50 rounded-lg backdrop-blur-sm"
             />
 
             <div className="mt-8 p-6 bg-gray-900/50 rounded-lg backdrop-blur-sm">
-              <h2 className="text-2xl font-semibold mb-4">{t("warranty.activate.title")}</h2>
+              <h2 className="text-2xl font-semibold mb-4">Activate Your Warranty</h2>
               <p className="text-gray-300 mb-4">
-                {t("warranty.activate.description")}
+                Ready to activate your warranty? Sign in to your account and register your product to get started.
               </p>
               <Button
                 onClick={handleActivateWarranty}
                 className="bg-white text-black hover:bg-gray-200 transition-colors"
               >
-                {t("warranty.activate.button")}
+                Activate Warranty
               </Button>
             </div>
           </section>
 
           <section id="policy" className="space-y-6">
-            <h2 className="text-2xl font-semibold">{t("warranty.extended.title")}</h2>
+            <h2 className="text-2xl font-semibold">Extended Warranty Options</h2>
             <p className="text-gray-300">
-              {t("warranty.extended.description")}
+              Protect your investment further with our extended warranty plans:
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="p-6 bg-gray-900/50 rounded-lg backdrop-blur-sm">
-                <h3 className="text-xl font-semibold mb-2">{t("warranty.extended.premium.title")}</h3>
-                <p className="text-gray-300 mb-4">{t("warranty.extended.premium.description")}</p>
-                <p className="text-lg font-semibold">{t("warranty.extended.premium.price")}</p>
+                <h3 className="text-xl font-semibold mb-2">Premium Protection</h3>
+                <p className="text-gray-300 mb-4">Extends coverage to 2 years with priority service</p>
+                <p className="text-lg font-semibold">750 ฿</p>
               </div>
               <div className="p-6 bg-gray-900/50 rounded-lg backdrop-blur-sm">
-                <h3 className="text-xl font-semibold mb-2">{t("warranty.extended.complete.title")}</h3>
-                <p className="text-gray-300 mb-4">{t("warranty.extended.complete.description")}</p>
-                <p className="text-lg font-semibold">{t("warranty.extended.complete.price")}</p>
+                <h3 className="text-xl font-semibold mb-2">Complete Care</h3>
+                <p className="text-gray-300 mb-4">3-year coverage including accidental damage protection</p>
+                <p className="text-lg font-semibold">1,250 ฿</p>
               </div>
             </div>
           </section>
@@ -185,9 +183,9 @@ const Warranty = () => {
               <User className="h-5 w-5 text-white" />
             </div>
             <DialogHeader className="space-y-1">
-              <DialogTitle className="text-center">{t("auth.sign_up")}</DialogTitle>
+              <DialogTitle className="text-center">Sign up to SIAMTECH</DialogTitle>
               <DialogDescription className="text-center">
-                {t("auth.create_account")}
+                Create an account to activate your warranty
               </DialogDescription>
             </DialogHeader>
           </div>
@@ -195,10 +193,10 @@ const Warranty = () => {
           <form onSubmit={handleEmailSignUp} className="space-y-4">
             <div className="space-y-3">
               <div className="space-y-1">
-                <Label htmlFor="signup-name">{t("auth.full_name")}</Label>
+                <Label htmlFor="signup-name">Full name</Label>
                 <Input
                   id="signup-name"
-                  placeholder={t("auth.name_placeholder")}
+                  placeholder="John Doe"
                   value={formData.name}
                   onChange={handleInputChange}
                   required
@@ -206,11 +204,11 @@ const Warranty = () => {
                 />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="signup-email">{t("auth.email")}</Label>
+                <Label htmlFor="signup-email">Email</Label>
                 <Input
                   id="signup-email"
                   type="email"
-                  placeholder={t("auth.email_placeholder")}
+                  placeholder="john@example.com"
                   value={formData.email}
                   onChange={handleInputChange}
                   required
@@ -218,11 +216,11 @@ const Warranty = () => {
                 />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="signup-password">{t("auth.password")}</Label>
+                <Label htmlFor="signup-password">Password</Label>
                 <Input
                   id="signup-password"
                   type="password"
-                  placeholder={t("auth.password_placeholder")}
+                  placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleInputChange}
                   required
@@ -231,29 +229,29 @@ const Warranty = () => {
               </div>
             </div>
             <Button type="submit" className="w-full h-8 text-sm">
-              {t("auth.sign_up_button")}
+              Sign up
             </Button>
           </form>
 
           <div className="flex items-center gap-2 my-2 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
-            <span className="text-xs text-gray-400">{t("auth.or")}</span>
+            <span className="text-xs text-gray-400">Or</span>
           </div>
 
           <div className="space-y-2">
             <Button variant="outline" onClick={handleGoogleSignIn} className="w-full h-8 text-sm">
               <GoogleLogo />
-              {t("auth.continue_with_google")}
+              Continue with Google
             </Button>
             
             <EmailLinkAuth />
           </div>
 
           <p className="text-center text-xs text-gray-400 mt-2">
-            {t("auth.terms_agreement")}{" "}
+            By signing up you agree to our{" "}
             <a href="/privacy" className="underline hover:no-underline">
-              {t("auth.terms")}
+              Terms
             </a>
-            {t("auth.of_ours")}
+            .
           </p>
         </DialogContent>
       </Dialog>
@@ -261,9 +259,9 @@ const Warranty = () => {
       <Dialog open={showWarrantyForm} onOpenChange={setShowWarrantyForm}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>{t("warranty.form.title")}</DialogTitle>
+            <DialogTitle>Warranty Registration</DialogTitle>
             <DialogDescription>
-              {t("warranty.form.description")}
+              Please fill in your product details to activate the warranty
             </DialogDescription>
           </DialogHeader>
 
