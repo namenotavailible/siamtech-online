@@ -146,21 +146,21 @@ const Navigation = () => {
       </div>
       
       {/* Mobile menu */}
-      <div className={`md:hidden ${mobileMenuOpen ? 'block' : 'hidden'} bg-black/95 backdrop-blur-md border-t border-white/10`}>
+      <div className={`md:hidden ${mobileMenuOpen ? 'block' : 'hidden'} bg-white dark:bg-black/95 backdrop-blur-md border-t border-gray-200 dark:border-white/10`}>
         <div className="px-4 pt-2 pb-4 space-y-1">
-          <Link to="/" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
+          <Link to="/" className="block text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 rounded-md transition-colors">
             {t("home")}
           </Link>
-          <Link to="/about" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
+          <Link to="/about" className="block text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 rounded-md transition-colors">
             {t("about")}
           </Link>
-          <Link to="/products" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
+          <Link to="/products" className="block text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 rounded-md transition-colors">
             {t("products")}
           </Link>
-          <Link to="/warranty" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
+          <Link to="/warranty" className="block text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 rounded-md transition-colors">
             {t("warranty")}
           </Link>
-          <Link to="/support" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
+          <Link to="/support" className="block text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 rounded-md transition-colors">
             {t("contact")}
           </Link>
         </div>
