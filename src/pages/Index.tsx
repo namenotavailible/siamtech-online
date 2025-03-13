@@ -77,7 +77,7 @@ const Index = () => {
             บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด
           </span>
           <h1 className="mt-6 text-4xl sm:text-6xl font-bold leading-tight">
-            {t("hero_title")}
+            ตอบโจทย์ทุกความต้องการ
           </h1>
           <p className="mt-6 text-xl text-gray-300 max-w-2xl mx-auto">
             {t("hero_subtitle")}
