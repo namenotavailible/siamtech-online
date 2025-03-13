@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
@@ -105,6 +104,9 @@ const Navigation = () => {
               {t("products")}
             </a>
             <a href="/warranty" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
+              {t("warranty")}
+            </a>
+            <a href="/contact" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
               {t("contact")}
             </a>
           </nav>
@@ -133,6 +135,9 @@ const Navigation = () => {
             {t("products")}
           </a>
           <a href="/warranty" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
+            {t("warranty")}
+          </a>
+          <a href="/contact" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
             {t("contact")}
           </a>
         </div>
