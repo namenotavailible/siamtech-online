@@ -1,4 +1,3 @@
-
 import { Vortex } from "@/components/ui/vortex";
 import Navigation from "@/components/Navigation";
 import FeaturedProducts from "@/components/FeaturedProducts";
@@ -15,7 +14,6 @@ const Index = () => {
   const { t, language } = useLanguage();
   
   useEffect(() => {
-    // Add structured data for organization and website
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "Organization",
@@ -69,7 +67,7 @@ const Index = () => {
           className="text-center max-w-4xl mx-auto"
         >
           <span className="text-sm uppercase tracking-wider text-gray-400">
-            บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด
+            {t("company_name")}
           </span>
           <h1 className="mt-6 text-4xl sm:text-6xl font-bold leading-tight">
             {t("hero_heading")}
