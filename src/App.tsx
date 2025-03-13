@@ -21,7 +21,7 @@ import "./App.css";
 function App() {
   return (
     <Router>
-      <LanguageProvider>
+      <LanguageProvider defaultLanguage="th">
         <CartProvider>
           <Routes>
             <Route path="/" element={<Index />} />
