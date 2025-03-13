@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
@@ -19,6 +20,7 @@ interface ToolbarIconsProps {
 
 const ToolbarIcons: React.FC<ToolbarIconsProps> = ({ openAuthDialog, openSearchPanel, openCartPanel }) => {
   const { cartCount, updateCartCount } = useCart();
+  const { language } = useLanguage();
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -34,11 +36,19 @@ const ToolbarIcons: React.FC<ToolbarIconsProps> = ({ openAuthDialog, openSearchP
 
   return (
     <div className="flex items-center space-x-4">
-      <button onClick={openSearchPanel} className="text-gray-300 hover:text-white transition-colors">
-        <Search className="h-5 w-5" aria-label="Open search panel" />
+      <button 
+        onClick={openSearchPanel} 
+        className="text-gray-300 hover:text-white transition-colors"
+        aria-label={language === "en" ? "Open search panel" : "เปิดแผงค้นหา"}
+      >
+        <Search className="h-5 w-5" />
       </button>
-      <button onClick={openCartPanel} className="text-gray-300 hover:text-white transition-colors relative">
-        <ShoppingCart className="h-5 w-5" aria-label="Open cart panel" />
+      <button 
+        onClick={openCartPanel} 
+        className="text-gray-300 hover:text-white transition-colors relative"
+        aria-label={language === "en" ? "Open cart panel" : "เปิดแผงตะกร้าสินค้า"}
+      >
+        <ShoppingCart className="h-5 w-5" />
         {cartCount > 0 && (
           <span className="absolute -top-2 -right-2 bg-primary text-white text-xs px-1 rounded-full">
             {cartCount}
@@ -46,12 +56,21 @@ const ToolbarIcons: React.FC<ToolbarIconsProps> = ({ openAuthDialog, openSearchP
         )}
       </button>
       {user ? (
-        <Link to="/profile" className="text-gray-300 hover:text-white transition-colors">
-          <User className="h-5 w-5" aria-label="Go to profile" />
+        <Link 
+          to="/profile" 
+          className="text-gray-300 hover:text-white transition-colors"
+          aria-label={language === "en" ? "Go to profile" : "ไปที่โปรไฟล์"}
+        >
+          <User className="h-5 w-5" />
         </Link>
       ) : (
-        <button onClick={openAuthDialog} className="text-gray-300 hover:text-white transition-colors" data-auth-trigger>
-          <User className="h-5 w-5" aria-label="Open authentication dialog" />
+        <button 
+          onClick={openAuthDialog} 
+          className="text-gray-300 hover:text-white transition-colors" 
+          data-auth-trigger
+          aria-label={language === "en" ? "Open authentication dialog" : "เปิดหน้าต่างยืนยันตัวตน"}
+        >
+          <User className="h-5 w-5" />
         </button>
       )}
     </div>
@@ -59,7 +78,7 @@ const ToolbarIcons: React.FC<ToolbarIconsProps> = ({ openAuthDialog, openSearchP
 };
 
 const Navigation = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isSearchPanelOpen, setIsSearchPanelOpen] = useState(false);
@@ -81,34 +100,27 @@ const Navigation = () => {
     setIsCartPanelOpen(true);
   };
 
-  const closeAllPanels = () => {
-    setMobileMenuOpen(false);
-    setIsAuthDialogOpen(false);
-    setIsSearchPanelOpen(false);
-    setIsCartPanelOpen(false);
-  };
-
   return (
     <header className="fixed top-0 left-0 w-full z-50 border-b border-white/10 backdrop-blur-md bg-black/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
         <div className="flex items-center">
           <Logo />
           <nav className="hidden md:flex ml-10 space-x-6">
-            <a href="/" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
+            <Link to="/" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
               {t("home")}
-            </a>
-            <a href="/about" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
+            </Link>
+            <Link to="/about" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
               {t("about")}
-            </a>
-            <a href="/products" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
+            </Link>
+            <Link to="/products" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
               {t("products")}
-            </a>
-            <a href="/warranty" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
+            </Link>
+            <Link to="/warranty" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
               {t("warranty")}
-            </a>
-            <a href="/contact" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
+            </Link>
+            <Link to="/support" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
               {t("contact")}
-            </a>
+            </Link>
           </nav>
         </div>
         
@@ -119,27 +131,38 @@ const Navigation = () => {
             openSearchPanel={openSearchPanel} 
             openCartPanel={openCartPanel} 
           />
+          <button
+            className="md:hidden text-gray-300 hover:text-white"
+            onClick={toggleMobileMenu}
+            aria-label={language === "en" ? "Toggle mobile menu" : "สลับเมนูมือถือ"}
+          >
+            {mobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </button>
         </div>
       </div>
       
       {/* Mobile menu */}
       <div className={`md:hidden ${mobileMenuOpen ? 'block' : 'hidden'} bg-black/95 backdrop-blur-md border-t border-white/10`}>
         <div className="px-4 pt-2 pb-4 space-y-1">
-          <a href="/" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
+          <Link to="/" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
             {t("home")}
-          </a>
-          <a href="/about" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
+          </Link>
+          <Link to="/about" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
             {t("about")}
-          </a>
-          <a href="/products" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
+          </Link>
+          <Link to="/products" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
             {t("products")}
-          </a>
-          <a href="/warranty" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
+          </Link>
+          <Link to="/warranty" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
             {t("warranty")}
-          </a>
-          <a href="/contact" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
+          </Link>
+          <Link to="/support" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md transition-colors">
             {t("contact")}
-          </a>
+          </Link>
         </div>
       </div>
 

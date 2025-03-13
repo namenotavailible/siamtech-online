@@ -1,5 +1,5 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { getCookie, setCookie } from "@/utils/cookies";
 
 // Define the available languages
 export type Language = "en" | "th";
@@ -42,15 +42,19 @@ export const loadTranslations = async (lang: Language) => {
 
 // Provider component
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
-  // Try to get language from localStorage or use browser language, default to Thai
+  // Get browser language and filter to only supported languages
   const getBrowserLanguage = (): Language => {
-    const browserLang = navigator.language.split("-")[0];
-    return browserLang === "th" ? "th" : "en";
+    const browserLang = navigator.language.toLowerCase();
+    return browserLang.startsWith("th") ? "th" : "en";
   };
 
   const [language, setLanguageState] = useState<Language>(() => {
-    const savedLanguage = localStorage.getItem("language") as Language;
-    return savedLanguage || getBrowserLanguage() || "th";
+    // First check cookie
+    const cookieLang = getCookie("lang") as Language;
+    // Then check localStorage as fallback
+    const savedLanguage = cookieLang || localStorage.getItem("language") as Language;
+    // Finally fall back to browser language or default to English
+    return savedLanguage || getBrowserLanguage();
   });
   
   // Track whether translations are loaded
@@ -69,9 +73,13 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     loadAllTranslations();
   }, []);
 
-  // Update localStorage when language changes
+  // Update localStorage and cookies when language changes
   useEffect(() => {
     localStorage.setItem("language", language);
+    setCookie("lang", language, 365); // Set cookie to last for a year
+    
+    // Also update the lang attribute on the html element
+    document.documentElement.lang = language;
   }, [language]);
 
   // Function to set language
@@ -81,13 +89,27 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
 
   // Translation function
   const t = (key: string): string => {
+    // Return if translations haven't loaded yet
     if (!translations[language]) return key;
-    return translations[language][key] || translations["en"][key] || key;
+    
+    // Try to get the translation in the current language
+    const translation = translations[language][key];
+    
+    // If translation exists, return it
+    if (translation) return translation;
+    
+    // Otherwise, try to get the English version as fallback
+    const fallback = translations["en"][key];
+    
+    // Return the fallback or the original key if nothing is found
+    return fallback || key;
   };
 
   // Show a loading state while translations are being loaded
   if (!isLoaded) {
-    return null; // Or a loading spinner component
+    return <div className="flex h-screen w-full items-center justify-center bg-black text-white">
+      <div className="animate-pulse">Loading translations...</div>
+    </div>;
   }
 
   return (

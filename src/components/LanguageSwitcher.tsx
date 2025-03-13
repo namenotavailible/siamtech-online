@@ -1,21 +1,38 @@
 
 import React from "react";
 import { useLanguage, Language } from "@/contexts/LanguageContext";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage();
 
   const toggleLanguage = () => {
-    setLanguage(language === "en" ? "th" : "en");
+    const newLang: Language = language === "en" ? "th" : "en";
+    setLanguage(newLang);
+    
+    // Show a toast notification when language is changed
+    const message = newLang === "en" 
+      ? "Switched to English" 
+      : "เปลี่ยนเป็นภาษาไทย";
+    
+    toast.success(message, {
+      duration: 2000,
+      position: "top-center"
+    });
   };
 
   return (
-    <button
+    <Button
       onClick={toggleLanguage}
-      className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-sm"
-      aria-label="Switch Language"
+      variant="outline"
+      size="sm"
+      className="flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors text-sm px-3 py-1 h-auto border-none"
+      aria-label={language === "en" ? "Switch to Thai language" : "เปลี่ยนเป็นภาษาอังกฤษ"}
     >
-      {language === "en" ? "TH" : "EN"}
-    </button>
+      <span className="font-medium">
+        {language === "en" ? "TH" : "EN"}
+      </span>
+    </Button>
   );
 }

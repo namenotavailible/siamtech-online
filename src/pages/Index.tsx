@@ -1,9 +1,10 @@
+
 import { Vortex } from "@/components/ui/vortex";
 import Navigation from "@/components/Navigation";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import { Footerdemo } from "@/components/ui/footer-section";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import FloatingChat from "@/components/ui/floating-chat";
 import { TopBar } from "@/components/ui/top-bar";
@@ -17,7 +18,7 @@ const Index = () => {
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "SIAMTECH Online Group",
+      "name": t("company_name"),
       "url": window.location.origin,
       "logo": `${window.location.origin}/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png`,
       "description": "Premium gaming and audio equipment retailer specializing in professional microphones and gaming peripherals.",
@@ -36,21 +37,30 @@ const Index = () => {
     return () => {
       document.head.removeChild(script);
     };
-  }, []);
+  }, [t]); // Add t as a dependency to recreate when language changes
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
       <Helmet>
-        <title>SIAMTECH Online | Premium Gaming & Audio Equipment Store</title>
-        <meta name="description" content="Discover premium gaming peripherals and professional audio equipment at SIAMTECH Online. Shop our collection of high-quality microphones, gaming mice, and streaming gear." />
-        <meta name="keywords" content="gaming equipment, professional microphones, gaming mice, streaming gear, FIFINE, VXE, VGN, gaming peripherals" />
-        <meta property="og:title" content="SIAMTECH Online | Premium Gaming & Audio Equipment Store" />
-        <meta property="og:description" content="Discover premium gaming peripherals and professional audio equipment at SIAMTECH Online. Shop our collection of high-quality microphones, gaming mice, and streaming gear." />
+        <title>{language === "en" ? "SIAMTECH Online | Premium Gaming & Audio Equipment Store" : "SIAMTECH ออนไลน์ | ร้านอุปกรณ์เกมและเครื่องเสียงระดับพรีเมียม"}</title>
+        <meta name="description" content={language === "en" 
+          ? "Discover premium gaming peripherals and professional audio equipment at SIAMTECH Online. Shop our collection of high-quality microphones, gaming mice, and streaming gear." 
+          : "ค้นพบอุปกรณ์เกมมิ่งและอุปกรณ์เสียงระดับมืออาชีพที่ SIAMTECH ออนไลน์ เลือกซื้อไมโครโฟนคุณภาพสูง เมาส์เกมมิ่ง และอุปกรณ์สตรีมมิ่งของเรา"} />
+        <meta property="og:title" content={language === "en" 
+          ? "SIAMTECH Online | Premium Gaming & Audio Equipment Store" 
+          : "SIAMTECH ออนไลน์ | ร้านอุปกรณ์เกมและเครื่องเสียงระดับพรีเมียม"} />
+        <meta property="og:description" content={language === "en" 
+          ? "Discover premium gaming peripherals and professional audio equipment at SIAMTECH Online. Shop our collection of high-quality microphones, gaming mice, and streaming gear."
+          : "ค้นพบอุปกรณ์เกมมิ่งและอุปกรณ์เสียงระดับมืออาชีพที่ SIAMTECH ออนไลน์"} />
         <meta property="og:image" content="/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="SIAMTECH Online | Premium Gaming & Audio Equipment Store" />
-        <meta name="twitter:description" content="Discover premium gaming peripherals and professional audio equipment at SIAMTECH Online." />
+        <meta name="twitter:title" content={language === "en" 
+          ? "SIAMTECH Online | Premium Gaming & Audio Equipment Store" 
+          : "SIAMTECH ออนไลน์ | ร้านอุปกรณ์เกมและเครื่องเสียงระดับพรีเมียม"} />
+        <meta name="twitter:description" content={language === "en" 
+          ? "Discover premium gaming peripherals and professional audio equipment at SIAMTECH Online."
+          : "ค้นพบอุปกรณ์เกมมิ่งและอุปกรณ์เสียงระดับมืออาชีพที่ SIAMTECH ออนไลน์"} />
         <meta name="twitter:image" content="/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png" />
         <meta name="canonical" content={window.location.origin} />
         <html lang={language} />
@@ -79,13 +89,13 @@ const Index = () => {
             <Link 
               to="/products" 
               className="px-8 py-3 bg-white text-black rounded-md hover:bg-gray-200 transition-colors"
-              aria-label="Browse our product catalog"
+              aria-label={language === "en" ? "Browse our product catalog" : "เรียกดูแคตตาล็อกสินค้าของเรา"}
             >
               {t("shop_now")}
             </Link>
             <button 
               className="px-8 py-3 border border-white/20 rounded-md hover:bg-white/10 transition-colors"
-              aria-label="Learn more about our products and services"
+              aria-label={language === "en" ? "Learn more about our products and services" : "เรียนรู้เพิ่มเติมเกี่ยวกับสินค้าและบริการของเรา"}
             >
               {t("learn_more")}
             </button>

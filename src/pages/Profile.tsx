@@ -10,9 +10,12 @@ import Navigation from '@/components/Navigation';
 import { Footerdemo } from '@/components/ui/footer-section';
 import { ChevronLeft } from "lucide-react";
 import { isSignInWithEmailLink, signInWithEmailLink } from 'firebase/auth';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { Helmet } from 'react-helmet';
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { t, language } = useLanguage();
   const [profile, setProfile] = useState({
     displayName: '',
     email: '',
@@ -26,11 +29,11 @@ const Profile = () => {
         signInWithEmailLink(auth, emailFromStorage, window.location.href)
           .then(() => {
             window.localStorage.removeItem('emailForSignIn');
-            toast.success('Successfully signed in!');
+            toast.success(language === "en" ? 'Successfully signed in!' : 'เข้าสู่ระบบสำเร็จ!');
           })
           .catch((error) => {
             console.error('Error signing in with email link:', error);
-            toast.error('Failed to sign in. Please try again.');
+            toast.error(language === "en" ? 'Failed to sign in. Please try again.' : 'ไม่สามารถเข้าสู่ระบบได้ โปรดลองอีกครั้ง');
             navigate('/');
           });
       }
@@ -47,37 +50,49 @@ const Profile = () => {
       displayName: user.displayName || '',
       email: user.email || '',
     });
-  }, [navigate]);
+  }, [navigate, language]);
 
   const handleSignOut = async () => {
     try {
       await auth.signOut();
-      toast.success('Signed out successfully');
+      toast.success(language === "en" ? 'Signed out successfully' : 'ออกจากระบบสำเร็จ');
       navigate('/');
     } catch (error) {
-      toast.error('Failed to sign out');
+      toast.error(language === "en" ? 'Failed to sign out' : 'ไม่สามารถออกจากระบบได้');
     }
   };
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <Helmet>
+        <title>{language === "en" ? "My Profile - SIAMTECH Online" : "โปรไฟล์ของฉัน - SIAMTECH ออนไลน์"}</title>
+        <meta name="description" content={language === "en" 
+          ? "Manage your SIAMTECH profile and account settings" 
+          : "จัดการโปรไฟล์และการตั้งค่าบัญชี SIAMTECH ของคุณ"} />
+        <html lang={language} />
+      </Helmet>
+      
       <Navigation />
       
       <div className="pt-24 pb-16 relative">
         <div className="absolute top-4 left-4 z-10">
           <Button variant="link" onClick={() => navigate('/')} className="text-white">
             <ChevronLeft className="me-1 opacity-60" size={16} strokeWidth={2} aria-hidden="true" />
-            Go back
+            {language === "en" ? "Go back" : "ย้อนกลับ"}
           </Button>
         </div>
 
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gray-900/50 backdrop-blur-sm rounded-lg p-8 border border-white/10">
-            <h1 className="text-2xl font-bold mb-8">Profile Settings</h1>
+            <h1 className="text-2xl font-bold mb-8">
+              {language === "en" ? "Profile Settings" : "การตั้งค่าโปรไฟล์"}
+            </h1>
             
             <div className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="displayName">Display Name</Label>
+                <Label htmlFor="displayName">
+                  {language === "en" ? "Display Name" : "ชื่อที่แสดง"}
+                </Label>
                 <Input
                   id="displayName"
                   value={profile.displayName}
@@ -87,7 +102,9 @@ const Profile = () => {
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">
+                  {language === "en" ? "Email" : "อีเมล"}
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -102,7 +119,7 @@ const Profile = () => {
                 onClick={handleSignOut}
                 className="w-full mt-6"
               >
-                Sign Out
+                {language === "en" ? "Sign Out" : "ออกจากระบบ"}
               </Button>
             </div>
           </div>

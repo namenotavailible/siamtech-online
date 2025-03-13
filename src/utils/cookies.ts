@@ -8,7 +8,7 @@ export const setCookie = (name: string, value: string, days: number = 7) => {
   const date = new Date();
   date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
   const expires = `expires=${date.toUTCString()}`;
-  document.cookie = `${name}=${value};${expires};path=/`;
+  document.cookie = `${name}=${value};${expires};path=/;SameSite=Lax`;
 };
 
 // Get a cookie value by name
@@ -31,7 +31,10 @@ export const deleteCookie = (name: string) => {
   document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
 };
 
-// Example usage:
-// setCookie('myCookie', 'exampleValue', 7); // Set cookie for 7 days
-// const value = getCookie('myCookie'); // Get cookie value
-// deleteCookie('myCookie'); // Delete cookie
+// Check if cookies are enabled in the browser
+export const areCookiesEnabled = (): boolean => {
+  setCookie('testcookie', 'testvalue', 1);
+  const cookieEnabled = getCookie('testcookie') !== null;
+  deleteCookie('testcookie');
+  return cookieEnabled;
+};

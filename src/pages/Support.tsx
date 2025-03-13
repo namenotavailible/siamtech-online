@@ -7,17 +7,30 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import ChatDialog from "@/components/ui/chat-dialog";
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Helmet } from "react-helmet";
 
 const Support = () => {
+  const { t, language } = useLanguage();
   const [showChatDialog, setShowChatDialog] = useState(false);
 
-  const placeholders = [
+  const placeholdersTH = [
+    "ฉันสามารถติดตามคำสั่งซื้อของฉันได้อย่างไร?",
+    "คุณรับวิธีการชำระเงินอะไรบ้าง?",
+    "ฉันจะคืนสินค้าได้อย่างไร?",
+    "ข้อมูลเกี่ยวกับนโยบายการรับประกันของคุณ",
+    "ศูนย์บริการที่ใกล้ฉันที่สุดอยู่ที่ไหน?"
+  ];
+
+  const placeholdersEN = [
     "How can I track my order?",
     "What payment methods do you accept?",
     "How do I return a product?",
     "Tell me about your warranty policy",
     "Where is my nearest service center?"
   ];
+
+  const placeholders = language === "th" ? placeholdersTH : placeholdersEN;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("Input changed:", e.target.value);
@@ -30,19 +43,29 @@ const Support = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <Helmet>
+        <title>{language === "en" ? "Support - SIAMTECH Online" : "บริการช่วยเหลือ - SIAMTECH ออนไลน์"}</title>
+        <meta name="description" content={language === "en" 
+          ? "Get help with your SIAMTECH products, track orders, and access customer support." 
+          : "รับความช่วยเหลือเกี่ยวกับสินค้า SIAMTECH ติดตามคำสั่งซื้อ และเข้าถึงฝ่ายบริการลูกค้า"} />
+        <html lang={language} />
+      </Helmet>
+      
       <Navigation />
       
       <div className="pt-24 pb-16 px-4 max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-white">Support Center</h1>
+        <h1 className="text-4xl font-bold mb-8 text-white">
+          {language === "en" ? "Support Center" : "ศูนย์ช่วยเหลือ"}
+        </h1>
 
         <Card className="bg-black border-white/10 mb-12">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-white">
               <MessageSquare className="h-5 w-5" />
-              AI Chat Support
+              {language === "en" ? "AI Chat Support" : "บริการแชทอัจฉริยะ"}
             </CardTitle>
             <CardDescription className="text-gray-200">
-              Get instant answers to your questions
+              {language === "en" ? "Get instant answers to your questions" : "รับคำตอบทันทีสำหรับคำถามของคุณ"}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -59,16 +82,16 @@ const Support = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <Mail className="h-5 w-5" />
-                Email Support
+                {language === "en" ? "Email Support" : "สนับสนุนทางอีเมล"}
               </CardTitle>
               <CardDescription className="text-gray-200">
-                Get in touch via email
+                {language === "en" ? "Get in touch via email" : "ติดต่อทางอีเมล"}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-gray-100">
                 support@siamtechonline.com<br />
-                Response within 24 hours
+                {language === "en" ? "Response within 24 hours" : "ตอบกลับภายใน 24 ชั่วโมง"}
               </p>
             </CardContent>
           </Card>
@@ -77,16 +100,18 @@ const Support = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <Phone className="h-5 w-5" />
-                Phone Support
+                {language === "en" ? "Phone Support" : "สนับสนุนทางโทรศัพท์"}
               </CardTitle>
               <CardDescription className="text-gray-200">
-                Talk to our support team
+                {language === "en" ? "Talk to our support team" : "พูดคุยกับทีมสนับสนุนของเรา"}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-gray-100">
-                +(66) 99 999 9999 <span className="text-red-400 font-medium">(Unavailable)</span><br />
-                Mon-Fri: 9AM-6PM EST
+                +(66) 99 999 9999 <span className="text-red-400 font-medium">
+                  {language === "en" ? "(Unavailable)" : "(ไม่พร้อมให้บริการ)"}
+                </span><br />
+                {language === "en" ? "Mon-Fri: 9AM-6PM EST" : "จันทร์-ศุกร์: 9.00-18.00 น."}
               </p>
             </CardContent>
           </Card>
