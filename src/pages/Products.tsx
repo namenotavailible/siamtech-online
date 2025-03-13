@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import { Footerdemo } from "@/components/ui/footer-section";
@@ -8,11 +9,13 @@ import { toast } from "sonner";
 import { useCart } from '@/contexts/CartContext';
 import { Helmet } from "react-helmet";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const Products = () => {
   const navigate = useNavigate();
   const { updateCartCount } = useCart();
   const { t, language } = useLanguage();
+  const { theme } = useTheme();
   
   const [products] = useState([
     {
@@ -124,7 +127,7 @@ const Products = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
       <Helmet>
         <title>Gaming Peripherals & Audio Equipment | SIAMTECH Online Store</title>
         <meta name="description" content="Shop premium gaming mice and professional microphones. Find the perfect audio and gaming equipment for streaming, content creation, and competitive gaming." />
@@ -142,7 +145,7 @@ const Products = () => {
           className="text-center mb-16"
         >
           <h1 className="text-4xl font-bold">{t("our_products")}</h1>
-          <p className="mt-4 text-gray-400">{t("products_description")}</p>
+          <p className={`mt-4 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{t("products_description")}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -152,7 +155,10 @@ const Products = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="group relative bg-gray-900/50 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/20 transition-all"
+                className={`group relative ${theme === 'dark' 
+                  ? 'bg-gray-900/50 backdrop-blur-sm border border-white/10 hover:border-white/20' 
+                  : 'bg-gray-100 backdrop-blur-sm border border-gray-200 hover:border-gray-300'} 
+                  rounded-lg overflow-hidden transition-all`}
               >
                 <div className="aspect-square overflow-hidden">
                   <img
@@ -163,12 +169,14 @@ const Products = () => {
                   />
                 </div>
                 <div className="p-6">
-                  <span className="text-sm text-gray-400">{product.category}</span>
-                  <h2 className="mt-1 text-xl font-semibold text-white">{product.name}</h2>
-                  <p className="mt-2 text-gray-300">{product.price}</p>
+                  <span className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{product.category}</span>
+                  <h2 className={`mt-1 text-xl font-semibold ${theme === 'dark' ? 'text-white' : 'text-black'}`}>{product.name}</h2>
+                  <p className={`mt-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>{product.price}</p>
                   <button 
                     onClick={(e) => handleAddToCart(product, e)}
-                    className="mt-4 w-full bg-white text-black py-2 rounded-md hover:bg-gray-200 transition-colors"
+                    className={`mt-4 w-full py-2 rounded-md transition-colors ${theme === 'dark' 
+                      ? 'bg-white text-black hover:bg-gray-200' 
+                      : 'bg-black text-white hover:bg-gray-800'}`}
                     aria-label={`Add ${product.name} to cart`}
                   >
                     {t("add_to_cart")}
