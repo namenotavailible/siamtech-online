@@ -1,4 +1,3 @@
-
 import { Vortex } from "@/components/ui/vortex";
 import Navigation from "@/components/Navigation";
 import FeaturedProducts from "@/components/FeaturedProducts";
@@ -93,7 +92,7 @@ const Index = () => {
           {t("shop_now")}
         </Link>
         <button 
-          className={`px-8 py-3 border ${theme === "dark" ? "border-white/20 hover:bg-white/10" : "border-black/20 hover:bg-black/10"} rounded-md transition-colors`}
+          className={`px-8 py-3 border ${theme === "dark" ? "border-white/20 hover:bg-white/10 text-black" : "border-black/20 hover:bg-black/10 text-black"} rounded-md transition-colors`}
           aria-label={language === "en" ? "Learn more about our products and services" : "เรียนรู้เพิ่มเติมเกี่ยวกับสินค้าและบริการของเรา"}
         >
           {t("learn_more")}
