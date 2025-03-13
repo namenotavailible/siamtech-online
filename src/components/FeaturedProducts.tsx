@@ -13,6 +13,7 @@ import { User, ShieldCheck } from "lucide-react";
 import { useCart } from '@/contexts/CartContext';
 import { ButtonColorful } from "@/components/ui/button-colorful";
 import { GoogleLogo } from "@/components/ui/google-logo";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const products = [{
   id: 1,
@@ -41,6 +42,7 @@ const products = [{
 }];
 
 const FeaturedProducts = () => {
+  const { t } = useLanguage();
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [pendingProduct, setPendingProduct] = useState<any>(null);
   const [formData, setFormData] = useState({
@@ -135,9 +137,9 @@ const FeaturedProducts = () => {
         delay: 0.2
       }} className="text-center mb-24">
           <ShieldCheck className="w-16 h-16 mx-auto mb-6 text-purple-500" />
-          <h2 className="font-bold mb-6 text-4xl text-center">Warranty Activation</h2>
-          <p className="text-gray-400 mb-8 max-w-2xl mx-auto text-lg text-center">Protect your investment with our comprehensive warranty. Activate today for peace of mind and reliable support.</p>
-          <ButtonColorful label="Activate Your Warranty" onClick={() => window.location.href = '/warranty'} className="mx-auto" />
+          <h2 className="font-bold mb-6 text-4xl text-center">{t("warranty_info")}</h2>
+          <p className="text-gray-400 mb-8 max-w-2xl mx-auto text-lg text-center">{t("warranty_policy_description")}</p>
+          <ButtonColorful label={t("activate_warranty_button")} onClick={() => window.location.href = '/warranty'} className="mx-auto" />
         </motion.div>
 
         <motion.div initial={{
@@ -147,8 +149,8 @@ const FeaturedProducts = () => {
         opacity: 1,
         y: 0
       }} className="text-center mb-16">
-          <h2 className="text-3xl font-bold">Featured Products</h2>
-          <p className="mt-4 text-gray-400">Our most popular products</p>
+          <h2 className="text-3xl font-bold">{t("our_products")}</h2>
+          <p className="mt-4 text-gray-400">{t("products_description")}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -170,7 +172,7 @@ const FeaturedProducts = () => {
                   <h3 className="mt-1 text-xl font-semibold text-white">{product.name}</h3>
                   <p className="mt-2 text-gray-300">{product.price}</p>
                   <button onClick={e => handleAddToCart(product, e)} className="mt-4 w-full bg-white text-black py-2 rounded-md hover:bg-gray-200 transition-colors">
-                    Add to Cart
+                    {t("add_to_cart")}
                   </button>
                 </div>
               </motion.div>
@@ -179,7 +181,7 @@ const FeaturedProducts = () => {
 
         <div className="mt-16 text-center">
           <Link to="/products" className="inline-flex items-center justify-center px-8 py-3 border border-white/20 rounded-md hover:bg-white/10 transition-colors">
-            View All Products
+            {t("products")}
           </Link>
         </div>
       </div>
@@ -191,9 +193,9 @@ const FeaturedProducts = () => {
               <User className="h-5 w-5 text-white" />
             </div>
             <DialogHeader className="space-y-1">
-              <DialogTitle className="text-center text-base">Sign up to SIAMTECH</DialogTitle>
+              <DialogTitle className="text-center text-base">{t("signup_title")}</DialogTitle>
               <DialogDescription className="text-center text-sm">
-                Create an account to access your cart
+                {t("signup_warranty_description")}
               </DialogDescription>
             </DialogHeader>
           </div>
@@ -201,35 +203,35 @@ const FeaturedProducts = () => {
           <form onSubmit={handleEmailSignUp} className="space-y-4 mt-2">
             <div className="space-y-3">
               <div className="space-y-1">
-                <Label htmlFor="signup-name">Full name</Label>
-                <Input id="signup-name" placeholder="John Doe" value={formData.name} onChange={handleInputChange} required />
+                <Label htmlFor="signup-name">{t("full_name")}</Label>
+                <Input id="signup-name" placeholder={t("full_name_placeholder")} value={formData.name} onChange={handleInputChange} required />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="signup-email">Email</Label>
-                <Input id="signup-email" type="email" placeholder="john@example.com" value={formData.email} onChange={handleInputChange} required />
+                <Label htmlFor="signup-email">{t("email")}</Label>
+                <Input id="signup-email" type="email" placeholder={t("email_placeholder")} value={formData.email} onChange={handleInputChange} required />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="signup-password">Password</Label>
-                <Input id="signup-password" type="password" placeholder="Enter your password" value={formData.password} onChange={handleInputChange} required />
+                <Label htmlFor="signup-password">{t("password")}</Label>
+                <Input id="signup-password" type="password" placeholder={t("password_placeholder")} value={formData.password} onChange={handleInputChange} required />
               </div>
             </div>
             <Button type="submit" className="w-full">
-              Sign up
+              {t("signup_button")}
             </Button>
           </form>
 
           <div className="flex items-center gap-2 my-2 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
-            <span className="text-xs text-gray-400">Or</span>
+            <span className="text-xs text-gray-400">{t("or")}</span>
           </div>
 
           <Button variant="outline" onClick={handleGoogleSignIn} className="w-full">
-            Continue with Google
+            {t("continue_with_google")}
           </Button>
 
           <p className="text-center text-xs text-gray-400">
-            By signing up you agree to our{" "}
+            {t("terms_agreement")}{" "}
             <a href="/privacy" className="underline hover:no-underline">
-              Terms
+              {t("terms")}
             </a>
             .
           </p>
