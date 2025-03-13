@@ -6,9 +6,9 @@ export function BottomSection() {
   const { t } = useLanguage();
   
   return (
-    <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-800 pt-8 text-center md:flex-row">
+    <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t dark:border-gray-800 border-gray-300 pt-8 text-center md:flex-row">
       <p 
-        className="text-sm text-gray-400" 
+        className="text-sm dark:text-gray-400 text-black" 
         contentEditable 
         suppressContentEditableWarning
       >
@@ -17,7 +17,7 @@ export function BottomSection() {
       <nav className="flex gap-6 text-sm">
         <Link 
           to="/privacy" 
-          className="text-gray-400 transition-colors hover:text-white" 
+          className="dark:text-gray-400 text-black hover:text-gray-800 dark:hover:text-white transition-colors" 
           contentEditable 
           suppressContentEditableWarning
         >
@@ -25,7 +25,7 @@ export function BottomSection() {
         </Link>
         <Link 
           to="/terms" 
-          className="text-gray-400 transition-colors hover:text-white" 
+          className="dark:text-gray-400 text-black hover:text-gray-800 dark:hover:text-white transition-colors" 
           contentEditable 
           suppressContentEditableWarning
         >
@@ -33,7 +33,7 @@ export function BottomSection() {
         </Link>
         <Link 
           to="/cookies" 
-          className="text-gray-400 transition-colors hover:text-white" 
+          className="dark:text-gray-400 text-black hover:text-gray-800 dark:hover:text-white transition-colors" 
           contentEditable 
           suppressContentEditableWarning
         >

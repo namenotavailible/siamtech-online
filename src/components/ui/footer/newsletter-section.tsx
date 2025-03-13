@@ -10,14 +10,14 @@ export function NewsletterSection() {
   return (
     <div className="relative space-y-4">
       <h2 
-        className="text-2xl font-bold tracking-tight text-white"
+        className="text-2xl font-bold tracking-tight dark:text-white text-black"
         contentEditable
         suppressContentEditableWarning
       >
         {t("stay_connected")}
       </h2>
       <p 
-        className="text-sm text-gray-400"
+        className="text-sm dark:text-gray-400 text-black"
         contentEditable
         suppressContentEditableWarning
       >
@@ -27,7 +27,7 @@ export function NewsletterSection() {
         <Input 
           type="email" 
           placeholder={t("enter_email")}
-          className="w-full bg-gray-900/50 border-gray-800 text-white placeholder:text-gray-500 focus:border-gray-700 focus:ring-gray-700"
+          className="w-full dark:bg-gray-900/50 bg-white/90 dark:border-gray-800 border-gray-300 dark:text-white text-black placeholder:dark:text-gray-500 placeholder:text-gray-600 dark:focus:border-gray-700 focus:border-gray-400 dark:focus:ring-gray-700 focus:ring-gray-400"
         />
         <Button 
           type="submit" 

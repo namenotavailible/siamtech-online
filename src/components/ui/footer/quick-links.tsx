@@ -8,7 +8,7 @@ export function QuickLinks() {
   return (
     <div className="space-y-4">
       <h3 
-        className="text-lg font-semibold text-white"
+        className="text-lg font-semibold dark:text-white text-black"
         contentEditable
         suppressContentEditableWarning
       >
@@ -17,7 +17,7 @@ export function QuickLinks() {
       <nav className="flex flex-col space-y-3 text-sm">
         <Link 
           to="/" 
-          className="text-gray-400 transition-colors hover:text-white"
+          className="dark:text-gray-400 text-black hover:text-gray-800 dark:hover:text-white transition-colors"
           contentEditable
           suppressContentEditableWarning
         >
@@ -25,7 +25,7 @@ export function QuickLinks() {
         </Link>
         <Link 
           to="/about" 
-          className="text-gray-400 transition-colors hover:text-white"
+          className="dark:text-gray-400 text-black hover:text-gray-800 dark:hover:text-white transition-colors"
           contentEditable
           suppressContentEditableWarning
         >
@@ -33,7 +33,7 @@ export function QuickLinks() {
         </Link>
         <Link 
           to="/products" 
-          className="text-gray-400 transition-colors hover:text-white"
+          className="dark:text-gray-400 text-black hover:text-gray-800 dark:hover:text-white transition-colors"
           contentEditable
           suppressContentEditableWarning
         >
@@ -41,7 +41,7 @@ export function QuickLinks() {
         </Link>
         <Link 
           to="/contact" 
-          className="text-gray-400 transition-colors hover:text-white"
+          className="dark:text-gray-400 text-black hover:text-gray-800 dark:hover:text-white transition-colors"
           contentEditable
           suppressContentEditableWarning
         >

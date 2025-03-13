@@ -13,7 +13,7 @@ function Footerdemo() {
   const { theme, toggleTheme } = useTheme();
   
   return (
-    <footer className="relative border-t border-gray-800 dark:bg-black bg-gray-100 dark:text-white text-gray-800">
+    <footer className="relative border-t border-gray-800 dark:bg-black bg-gray-100">
       <div className="mx-auto w-full max-w-[85rem] px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <NewsletterSection />
