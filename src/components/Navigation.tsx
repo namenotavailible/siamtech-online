@@ -37,14 +37,14 @@ const ToolbarIcons: React.FC<ToolbarIconsProps> = ({ openAuthDialog, openSearchP
     <div className="flex items-center space-x-4">
       <button 
         onClick={openSearchPanel} 
-        className="text-gray-300 hover:text-white transition-colors"
+        className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
         aria-label={language === "en" ? "Open search panel" : "เปิดแผงค้นหา"}
       >
         <Search className="h-5 w-5" />
       </button>
       <button 
         onClick={openCartPanel} 
-        className="text-gray-300 hover:text-white transition-colors relative"
+        className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors relative"
         aria-label={language === "en" ? "Open cart panel" : "เปิดแผงตะกร้าสินค้า"}
       >
         <ShoppingCart className="h-5 w-5" />
@@ -57,7 +57,7 @@ const ToolbarIcons: React.FC<ToolbarIconsProps> = ({ openAuthDialog, openSearchP
       {user ? (
         <Link 
           to="/profile" 
-          className="text-gray-300 hover:text-white transition-colors"
+          className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
           aria-label={language === "en" ? "Go to profile" : "ไปที่โปรไฟล์"}
         >
           <User className="h-5 w-5" />
@@ -65,7 +65,7 @@ const ToolbarIcons: React.FC<ToolbarIconsProps> = ({ openAuthDialog, openSearchP
       ) : (
         <button 
           onClick={openAuthDialog} 
-          className="text-gray-300 hover:text-white transition-colors" 
+          className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors" 
           data-auth-trigger
           aria-label={language === "en" ? "Open authentication dialog" : "เปิดหน้าต่างยืนยันตัวตน"}
         >
@@ -105,19 +105,19 @@ const Navigation = () => {
         <div className="flex items-center">
           <Logo />
           <nav className="hidden md:flex ml-10 space-x-6">
-            <Link to="/" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
+            <Link to="/" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 transition-colors">
               {t("home")}
             </Link>
-            <Link to="/about" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
+            <Link to="/about" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 transition-colors">
               {t("about")}
             </Link>
-            <Link to="/products" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
+            <Link to="/products" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 transition-colors">
               {t("products")}
             </Link>
-            <Link to="/warranty" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
+            <Link to="/warranty" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 transition-colors">
               {t("warranty")}
             </Link>
-            <Link to="/support" className="text-gray-300 hover:text-white px-3 py-2 transition-colors">
+            <Link to="/support" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 transition-colors">
               {t("contact")}
             </Link>
           </nav>
@@ -131,7 +131,7 @@ const Navigation = () => {
             openCartPanel={openCartPanel} 
           />
           <button
-            className="md:hidden text-gray-300 hover:text-white"
+            className="md:hidden text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white"
             onClick={toggleMobileMenu}
             aria-label={language === "en" ? "Toggle mobile menu" : "สลับเมนูมือถือ"}
           >
