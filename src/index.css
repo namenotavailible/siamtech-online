@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -30,8 +30,15 @@
   }
 
   body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', 'Noto Sans Thai', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Thai text specific styling for consistent modern look */
+  [lang="th"] {
+    font-family: 'Noto Sans Thai', sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
   }
 }
