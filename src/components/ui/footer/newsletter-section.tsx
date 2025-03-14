@@ -9,18 +9,10 @@ export function NewsletterSection() {
   
   return (
     <div className="relative space-y-4">
-      <h2 
-        className="text-2xl font-bold tracking-tight dark:text-white text-black"
-        contentEditable
-        suppressContentEditableWarning
-      >
+      <h2 className="text-2xl font-bold tracking-tight dark:text-white text-black">
         {t("stay_connected")}
       </h2>
-      <p 
-        className="text-sm dark:text-gray-400 text-black"
-        contentEditable
-        suppressContentEditableWarning
-      >
+      <p className="text-sm dark:text-gray-400 text-black">
         {t("newsletter_description")}
       </p>
       <form className="relative mt-6">
