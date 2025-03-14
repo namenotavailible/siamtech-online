@@ -110,19 +110,19 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
             <SidebarProvider>
               <Sidebar variant="floating" side="right" className={`${isDark ? 'bg-black/95' : 'bg-white/95'} backdrop-blur-md`}>
                 <SidebarHeader className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
-                  <div className="flex items-center gap-2">
+                  <button 
+                    onClick={onClose} 
+                    className={`absolute left-4 top-4 p-1.5 rounded-full ${isDark ? 'bg-white/10 text-gray-400 hover:text-white' : 'bg-gray-100 text-gray-500 hover:text-gray-900'} transition-colors`}
+                    aria-label="Close cart"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                  <div className="flex items-center gap-2 mx-auto">
                     <ShoppingCart className={`h-5 w-5 ${isDark ? 'text-white' : 'text-gray-900'}`} />
                     <h2 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                       Your Cart
                     </h2>
                   </div>
-                  <button 
-                    onClick={onClose} 
-                    className={`p-2 rounded-full ${isDark ? 'bg-white/10 text-gray-400 hover:text-white' : 'bg-gray-100 text-gray-500 hover:text-gray-900'} transition-colors`}
-                    aria-label="Close cart"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
                 </SidebarHeader>
 
                 <SidebarContent className="flex-1 overflow-hidden">
