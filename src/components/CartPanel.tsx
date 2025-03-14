@@ -85,26 +85,60 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
 
   if (!isOpen) return null;
 
+  // Improved animation variants with synchronous loading
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        duration: 0.3,
+        when: "beforeChildren",
+        staggerChildren: 0, // No staggering - all children animate simultaneously
+      }
+    },
+    exit: { 
+      opacity: 0,
+      transition: { duration: 0.2 }
+    }
+  };
+
+  const panelVariants = {
+    hidden: { x: "100%" },
+    visible: { 
+      x: 0,
+      transition: { 
+        type: "spring", 
+        damping: 25,
+        stiffness: 300,
+      }
+    },
+    exit: { 
+      x: "100%",
+      transition: { type: "spring", damping: 30, stiffness: 400 }
+    }
+  };
+
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isOpen && (
         <>
           {/* Backdrop overlay */}
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300"
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={containerVariants}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
             onClick={onClose} 
             aria-hidden="true"
           />
           
           {/* Cart panel */}
           <motion.div 
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 25 }}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={panelVariants}
             className="fixed right-0 top-0 h-full w-full max-w-md z-50 overflow-hidden"
           >
             <SidebarProvider>
