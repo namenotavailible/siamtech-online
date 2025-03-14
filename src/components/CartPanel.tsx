@@ -133,13 +133,13 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
             aria-hidden="true"
           />
           
-          {/* Cart panel */}
+          {/* Cart panel - increased max-width from md to lg (32rem) */}
           <motion.div 
             initial="hidden"
             animate="visible"
             exit="exit"
             variants={panelVariants}
-            className="fixed right-0 top-0 h-full w-full max-w-md z-50 overflow-hidden"
+            className="fixed right-0 top-0 h-full w-full max-w-lg z-50 overflow-hidden"
           >
             <SidebarProvider>
               <Sidebar variant="floating" side="right" className={`${isDark ? 'bg-black/95' : 'bg-white/95'} backdrop-blur-md`}>
@@ -189,7 +189,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                             </div>
                             <div className="flex-1">
                               <div className="flex justify-between">
-                                <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-medium line-clamp-2`}>
+                                <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-medium break-words`}>
                                   {item.name}
                                 </h3>
                                 <button
@@ -198,7 +198,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                                     isDark 
                                       ? 'hover:bg-white/10 text-gray-400 hover:text-white' 
                                       : 'hover:bg-gray-200 text-gray-500 hover:text-gray-900'
-                                  } transition-colors`}
+                                  } transition-colors flex-shrink-0`}
                                   aria-label="Remove item"
                                 >
                                   <X className="h-4 w-4" />
