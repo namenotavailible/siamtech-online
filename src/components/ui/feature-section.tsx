@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface Feature {
   step: string;
@@ -27,6 +28,7 @@ export function FeatureSteps({
 }: FeatureStepsProps) {
   const [currentFeature, setCurrentFeature] = useState(0);
   const [progress, setProgress] = useState(0);
+  const { theme } = useTheme();
 
   // Map the default placeholder image to the actual uploaded images
   const updatedFeatures = features.map((feature, index) => {
@@ -121,7 +123,7 @@ export function FeatureSteps({
                         alt={feature.step}
                         className="w-full h-full object-cover transition-transform transform"
                       />
-                      <div className="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-background via-background/50 to-transparent" />
+                      {/* Removed the gradient overlay completely */}
                     </motion.div>
                   )
               )}
