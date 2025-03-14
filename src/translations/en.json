@@ -37,7 +37,7 @@
   
   "warranty_info": "Warranty Information",
   "our_warranty_policy": "Our Warranty Policy",
-  "warranty_policy_description": "At SIAMTECH, we provide a one-year limited warranty for all our products, covering manufacturing defects in materials and workmanship under normal use. The warranty period begins from the date of purchase.",
+  "warranty_policy_description": "Siamtech Online Group CO., LTD. (\"Company\") provides a one-year limited warranty for all its products, covering manufacturing defects in materials and workmanship under normal use. The warranty period begins from the date of purchase.",
   "coverage_details": "Coverage Details",
   "coverage_details_list_1": "One-year limited warranty for all products",
   "coverage_details_list_2": "Covers manufacturing defects in materials and workmanship",
@@ -112,25 +112,25 @@
   "faq_period_question": "How long is the warranty period?",
   "faq_period_answer": "All SIAMTECH products come with a one-year limited warranty from the date of purchase. Extended warranty options may be available for select products.",
   "faq_claim_question": "How do I make a warranty claim?",
-  "faq_claim_answer": "To make a warranty claim, please contact our support team at support@siamtechonline.com with your proof of purchase (receipt or invoice). Provide a detailed description of the issue, including photos or videos if applicable. You will then need to ship the product to our designated service center (shipping costs are borne by the customer).",
+  "faq_claim_answer": "To claim the warranty, you must: 1) Contact our support team at support@siamtechonline.com with proof of purchase (receipt or invoice), 2) Provide a detailed description of the issue, including photos or videos if applicable, 3) Ship the product to our designated service center (shipping costs are borne by the customer).",
   "faq_void_question": "What voids the warranty?",
-  "faq_void_answer": "The warranty is voided by physical damage from misuse, negligence, accidents, or unauthorized modifications. It also doesn't cover normal wear and tear, damage due to improper installation or maintenance, products serviced by unauthorized personnel, loss or theft, or accessories and parts subject to regular replacement.",
+  "faq_void_answer": "The warranty is voided by: damage from misuse, negligence, accidents, or unauthorized modifications; normal wear and tear, including cosmetic damage; damage due to improper installation, operation, or maintenance; products repaired by unauthorized personnel; loss or theft of the product; and accessories, consumables, or parts subject to regular replacement (e.g., batteries, cables).",
   "faq_transfer_question": "Is my warranty transferable?",
   "faq_transfer_answer": "No, our warranty is non-transferable and applies only to the original purchaser with valid proof of purchase.",
   "faq_international_question": "Do you offer international warranty?",
   "faq_international_answer": "Yes, our warranty is valid internationally. However, shipping costs for warranty service may vary depending on your location.",
   
   "warranty_exclusions_title": "Warranty Exclusions",
-  "warranty_exclusions": "This warranty does not cover damage caused by misuse, negligence, accidents, or unauthorized modifications; normal wear and tear; damage due to improper installation or maintenance; products repaired by unauthorized personnel; loss or theft; or accessories and consumable parts.",
+  "warranty_exclusions": "This warranty does not cover: damage caused by misuse, negligence, accidents, or unauthorized modifications; normal wear and tear, including cosmetic damage; damage due to improper installation, operation, or maintenance; products that have been repaired or serviced by unauthorized personnel; loss or theft of the product; accessories, consumables, or parts subject to regular replacement (e.g., batteries, cables).",
   
   "warranty_claim_title": "Warranty Claim Process",
-  "warranty_claim_process": "To claim warranty, contact our support team at support@siamtechonline.com with proof of purchase, provide details of the issue, and ship the product to our service center (shipping costs borne by customer).",
+  "warranty_claim_process": "To claim the warranty, the customer must: 1) Contact our support team at support@siamtechonline.com with proof of purchase (receipt or invoice), 2) Provide a detailed description of the issue, including photos or videos if applicable, 3) Ship the product to our designated service center (shipping costs are borne by the customer).",
   
   "warranty_resolution_title": "Warranty Resolution",
-  "warranty_resolution": "Upon inspection, if approved, we will either repair the product at no cost, replace it with an identical or equivalent model, or provide a partial or full refund if repair or replacement is not possible.",
+  "warranty_resolution": "Upon receiving the defective product, the Company will inspect and determine the warranty eligibility. If approved, we will, at our discretion: repair the product at no cost, replace the product with an identical or equivalent model, or provide a partial or full refund if repair or replacement is not possible.",
   
   "limitation_liability_title": "Limitation of Liability",
-  "limitation_liability": "We shall not be liable for indirect, incidental, or consequential damages arising from the use of our products. This warranty is the sole and exclusive remedy available to customers.",
+  "limitation_liability": "The Company shall not be liable for indirect, incidental, or consequential damages arising from the use of its products. This warranty is the sole and exclusive remedy available to customers.",
   
   "governing_law_title": "Governing Law",
   "governing_law": "This warranty policy is governed by the laws of Thailand. Any disputes shall be resolved in the jurisdiction where the Company is registered."
