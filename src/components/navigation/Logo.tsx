@@ -1,9 +1,19 @@
 
+import { useTheme } from "@/contexts/ThemeContext";
+
 export function Logo() {
+  const { theme } = useTheme();
+  
   return (
-    <a href="/" className="flex flex-col items-start -space-y-1 pl-0">
-      <span className="text-white font-medium tracking-wide text-base">SIAMTECH</span>
-      <span className="text-gray-400 text-[0.65rem] font-light tracking-widest uppercase">online</span>
+    <a href="/" className="flex items-center pl-0">
+      <img 
+        src={theme === "dark" 
+          ? "/lovable-uploads/9f7f3e91-1510-4ec4-8391-68411a8131e6.png" 
+          : "/lovable-uploads/0f82fd40-daa0-40de-9205-97344aaafee5.png"
+        } 
+        alt="SIAMTECH online"
+        className="h-10 w-auto"
+      />
     </a>
   );
 }
