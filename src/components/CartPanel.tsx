@@ -76,66 +76,76 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
     return total + (price * item.quantity);
   }, 0);
 
+  // Use framer-motion for smooth animations
   return (
     <>
+      {/* Backdrop overlay when the cart is open */}
       {isOpen && (
         <div 
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300"
           onClick={onClose} 
+          aria-hidden="true"
         />
       )}
+      
+      {/* Cart panel */}
       <motion.div
         initial={{ x: "100%" }}
         animate={{ x: isOpen ? 0 : "100%" }}
         transition={{ type: "spring", damping: 20 }}
-        className={`fixed right-0 top-0 h-full w-full max-w-sm ${
+        className={`fixed right-0 top-0 h-full w-full max-w-md z-50 overflow-hidden ${
           isDark 
             ? 'bg-black/80 backdrop-blur-xl border-l border-white/10' 
             : 'bg-white/90 backdrop-blur-xl border-l border-gray-200'
-        } shadow-xl z-50`}
+        } shadow-xl`}
       >
-        <div className="p-4 h-full flex flex-col">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+        <div className="p-6 h-full flex flex-col">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6">
+            <h2 className={`text-2xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
               Your Cart
             </h2>
             <button 
               onClick={onClose} 
-              className={`p-1 rounded-full ${isDark ? 'bg-white/10 text-gray-400 hover:text-white' : 'bg-gray-100 text-gray-500 hover:text-gray-900'} transition-colors`}
+              className={`p-2 rounded-full ${isDark ? 'bg-white/10 text-gray-400 hover:text-white' : 'bg-gray-100 text-gray-500 hover:text-gray-900'} transition-colors`}
+              aria-label="Close cart"
             >
               <X className="h-5 w-5" />
             </button>
           </div>
 
+          {/* Cart content */}
           {cartItems.length === 0 ? (
             <div className="flex-1 flex items-center justify-center">
-              <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} text-sm`}>
+              <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} text-lg`}>
                 Your cart is empty
               </p>
             </div>
           ) : (
             <>
+              {/* Scrollable cart items */}
               <ScrollArea className="flex-1 pr-4 -mr-4">
-                <div className="space-y-4">
+                <div className="space-y-5">
                   {cartItems.map((item) => (
                     <div 
                       key={item.id} 
-                      className={`flex gap-3 ${
+                      className={`flex gap-4 ${
                         isDark 
                           ? 'bg-white/5 hover:bg-white/10' 
                           : 'bg-gray-50 hover:bg-gray-100'
                       } p-4 rounded-lg transition-colors`}
                     >
-                      <div className="relative h-20 w-20 overflow-hidden rounded-md bg-gradient-to-tr from-gray-100 to-gray-50 flex-shrink-0">
+                      <div className="relative h-24 w-24 overflow-hidden rounded-md bg-gradient-to-tr from-gray-100 to-gray-50 flex-shrink-0">
                         <img 
                           src={item.image} 
                           alt={item.name} 
                           className="h-full w-full object-cover" 
+                          loading="lazy"
                         />
                       </div>
                       <div className="flex-1">
                         <div className="flex justify-between">
-                          <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} text-sm font-medium line-clamp-2`}>
+                          <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-medium line-clamp-2`}>
                             {item.name}
                           </h3>
                           <button
@@ -150,22 +160,22 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                             <X className="h-4 w-4" />
                           </button>
                         </div>
-                        <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} text-sm mt-1`}>
+                        <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} mt-1`}>
                           {item.price}
                         </p>
-                        <div className="flex items-center gap-2 mt-2">
+                        <div className="flex items-center gap-3 mt-3">
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
                             className={`p-1 ${
                               isDark 
                                 ? 'bg-white/10 hover:bg-white/20' 
                                 : 'bg-gray-200 hover:bg-gray-300'
-                            } rounded transition-colors`}
+                            } rounded transition-colors w-8 h-8 flex items-center justify-center`}
                             aria-label="Decrease quantity"
                           >
-                            <span className="text-xs w-4 h-4 flex items-center justify-center">-</span>
+                            <span className="text-lg">-</span>
                           </button>
-                          <span className={`${isDark ? 'text-white' : 'text-gray-900'} text-sm min-w-[20px] text-center`}>
+                          <span className={`${isDark ? 'text-white' : 'text-gray-900'} text-lg min-w-[24px] text-center`}>
                             {item.quantity}
                           </span>
                           <button
@@ -174,10 +184,10 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                               isDark 
                                 ? 'bg-white/10 hover:bg-white/20' 
                                 : 'bg-gray-200 hover:bg-gray-300'
-                            } rounded transition-colors`}
+                            } rounded transition-colors w-8 h-8 flex items-center justify-center`}
                             aria-label="Increase quantity"
                           >
-                            <span className="text-xs w-4 h-4 flex items-center justify-center">+</span>
+                            <span className="text-lg">+</span>
                           </button>
                         </div>
                       </div>
@@ -185,20 +195,22 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                   ))}
                 </div>
               </ScrollArea>
+              
+              {/* Cart total and checkout */}
               <div className={`mt-6 pt-4 ${isDark ? 'border-t border-white/10' : 'border-t border-gray-200'}`}>
-                <div className="flex justify-between mb-4">
-                  <span className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Total</span>
-                  <span className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <div className="flex justify-between mb-6">
+                  <span className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Total</span>
+                  <span className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     ฿{totalAmount.toFixed(2)}
                   </span>
                 </div>
                 <button 
                   onClick={handleCheckout}
-                  className={`w-full py-3 rounded-md transition-colors ${
+                  className={`w-full py-4 rounded-lg transition-colors ${
                     isDark 
                       ? 'bg-white text-black hover:bg-gray-200' 
                       : 'bg-black text-white hover:bg-gray-800'
-                  } font-medium`}
+                  } font-medium text-lg`}
                 >
                   Checkout
                 </button>
