@@ -41,8 +41,8 @@ export function ButtonColorful({
 
             {/* Content */}
             <div className="relative flex items-center justify-center gap-2">
-                <span className={isDark ? "text-white" : "text-white"}>{label}</span>
-                <ArrowUpRight className={isDark ? "w-3.5 h-3.5 text-white/90" : "w-3.5 h-3.5 text-white/90"} />
+                <span className={isDark ? "text-black" : "text-white"}>{label}</span>
+                <ArrowUpRight className={isDark ? "w-3.5 h-3.5 text-black" : "w-3.5 h-3.5 text-white/90"} />
             </div>
         </Button>
     );
