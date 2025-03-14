@@ -28,6 +28,20 @@ export function FeatureSteps({
   const [currentFeature, setCurrentFeature] = useState(0);
   const [progress, setProgress] = useState(0);
 
+  // Map the default placeholder image to the actual uploaded images
+  const updatedFeatures = features.map((feature, index) => {
+    if (feature.image === "/placeholder.svg") {
+      if (index === 0) {
+        return { ...feature, image: "/lovable-uploads/53213377-4bca-4414-92ab-d261aaf2a84a.png" };
+      } else if (index === 1) {
+        return { ...feature, image: "/lovable-uploads/3cdd087c-645e-4a74-a9e9-59680079c17f.png" };
+      } else if (index === 2) {
+        return { ...feature, image: "/lovable-uploads/c3c23368-ed7d-4264-a5be-e2767c592def.png" };
+      }
+    }
+    return feature;
+  });
+
   useEffect(() => {
     const timer = setInterval(() => {
       if (progress < 100) {
@@ -91,7 +105,7 @@ export function FeatureSteps({
             )}
           >
             <AnimatePresence mode="wait">
-              {features.map(
+              {updatedFeatures.map(
                 (feature, index) =>
                   index === currentFeature && (
                     <motion.div
