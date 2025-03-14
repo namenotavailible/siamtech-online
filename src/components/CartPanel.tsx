@@ -108,8 +108,8 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
             className="fixed right-0 top-0 h-full w-full max-w-md z-50 overflow-hidden"
           >
             <SidebarProvider>
-              <Sidebar variant="floating" side="right">
-                <SidebarHeader className="flex items-center justify-between p-4 border-b">
+              <Sidebar variant="floating" side="right" className={`${isDark ? 'bg-black/95' : 'bg-white/95'} backdrop-blur-md`}>
+                <SidebarHeader className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
                   <div className="flex items-center gap-2">
                     <ShoppingCart className={`h-5 w-5 ${isDark ? 'text-white' : 'text-gray-900'}`} />
                     <h2 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -125,7 +125,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                   </button>
                 </SidebarHeader>
 
-                <SidebarContent className="p-4">
+                <SidebarContent className="flex-1 overflow-hidden">
                   {cartItems.length === 0 ? (
                     <div className="flex-1 flex flex-col items-center justify-center py-8">
                       <ShoppingCart className={`h-12 w-12 ${isDark ? 'text-gray-600' : 'text-gray-300'} mb-4`} />
@@ -134,7 +134,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                       </p>
                     </div>
                   ) : (
-                    <ScrollArea className="h-[calc(100vh-200px)]">
+                    <ScrollArea className="h-[calc(100vh-200px)] px-4 py-4">
                       <div className="space-y-4">
                         {cartItems.map((item) => (
                           <div 
@@ -208,7 +208,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                   )}
                 </SidebarContent>
                 
-                <SidebarFooter className="border-t p-4">
+                <SidebarFooter className="border-t border-gray-200 dark:border-gray-800 p-4">
                   <div className="flex justify-between mb-4">
                     <span className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Total</span>
                     <span className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
