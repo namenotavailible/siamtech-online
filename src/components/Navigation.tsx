@@ -5,7 +5,7 @@ import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { SignUpDialog } from "@/components/auth/signup-dialog";
 import { SearchPanel } from "@/components/ui/search-panel";
-import { CartPanel } from "@/components/CartPanel";
+import CartPanel from "@/components/CartPanel"; // Fixed import to use default import
 import { auth } from "@/lib/firebase";
 import { useCart } from '@/contexts/CartContext';
 import { useEffect } from "react";
