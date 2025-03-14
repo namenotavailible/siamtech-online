@@ -38,17 +38,27 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // Preload both logo images on component mount
+  // Preload both logo images immediately when the app starts
   useEffect(() => {
+    // Create link preload elements for both logos
+    const createPreloadLink = (path: string) => {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = path;
+      document.head.appendChild(link);
+    };
+
+    // Preload both logos immediately
+    createPreloadLink(DARK_LOGO_PATH);
+    createPreloadLink(LIGHT_LOGO_PATH);
+
+    // Also create Image objects to force browser to cache them
     const darkLogoImage = new Image();
     darkLogoImage.src = DARK_LOGO_PATH;
     
     const lightLogoImage = new Image();
     lightLogoImage.src = LIGHT_LOGO_PATH;
-
-    // Optional: add loading event listeners if needed
-    // darkLogoImage.onload = () => console.log("Dark logo preloaded");
-    // lightLogoImage.onload = () => console.log("Light logo preloaded");
   }, []);
 
   const toggleTheme = () => {
