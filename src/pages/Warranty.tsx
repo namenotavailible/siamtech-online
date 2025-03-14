@@ -132,6 +132,41 @@ const Warranty = () => {
                 <li>{t("coverage_details_list_4")}</li>
               </ul>
             </div>
+
+            <div className="space-y-4">
+              <h2 className="text-2xl font-semibold">{t("warranty_exclusions_title")}</h2>
+              <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                {t("warranty_exclusions")}
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h2 className="text-2xl font-semibold">{t("warranty_claim_title")}</h2>
+              <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                {t("warranty_claim_process")}
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h2 className="text-2xl font-semibold">{t("warranty_resolution_title")}</h2>
+              <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                {t("warranty_resolution")}
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h2 className="text-2xl font-semibold">{t("limitation_liability_title")}</h2>
+              <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                {t("limitation_liability")}
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h2 className="text-2xl font-semibold">{t("governing_law_title")}</h2>
+              <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                {t("governing_law")}
+              </p>
+            </div>
           </section>
 
           <section id="registration" className="space-y-6">
