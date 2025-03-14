@@ -12,7 +12,7 @@ export function Logo() {
           : "/lovable-uploads/9f7f3e91-1510-4ec4-8391-68411a8131e6.png"
         } 
         alt="SIAMTECH online"
-        className="h-10 w-auto object-contain"
+        className="h-20 w-auto object-contain"
       />
     </a>
   );
