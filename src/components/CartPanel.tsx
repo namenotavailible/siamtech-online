@@ -1,13 +1,18 @@
 
-import { motion } from "framer-motion";
-import { X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Minus, Plus, ShoppingCart, X } from "lucide-react";
 import { auth } from "@/lib/firebase";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { useCart } from '@/contexts/CartContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+} from "@/components/ui/sidebar";
 
 export interface CartItem {
   id: number;
@@ -76,35 +81,27 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
     return total + (price * item.quantity);
   }, 0);
 
-  // Use framer-motion for smooth animations
+  if (!isOpen) return null;
+
   return (
     <>
-      {/* Backdrop overlay when the cart is open */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300"
-          onClick={onClose} 
-          aria-hidden="true"
-        />
-      )}
+      {/* Backdrop overlay */}
+      <div 
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300"
+        onClick={onClose} 
+        aria-hidden="true"
+      />
       
-      {/* Cart panel */}
-      <motion.div
-        initial={{ x: "100%" }}
-        animate={{ x: isOpen ? 0 : "100%" }}
-        transition={{ type: "spring", damping: 20 }}
-        className={`fixed right-0 top-0 h-full w-full max-w-md z-50 overflow-hidden ${
-          isDark 
-            ? 'bg-black/80 backdrop-blur-xl border-l border-white/10' 
-            : 'bg-white/90 backdrop-blur-xl border-l border-gray-200'
-        } shadow-xl`}
-      >
-        <div className="p-6 h-full flex flex-col">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-6">
-            <h2 className={`text-2xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-              Your Cart
-            </h2>
+      {/* Cart sidebar */}
+      <div className="fixed right-0 top-0 h-full w-full max-w-md z-50 overflow-hidden">
+        <Sidebar variant="floating" side="right">
+          <SidebarHeader className="flex items-center justify-between p-4 border-b">
+            <div className="flex items-center gap-2">
+              <ShoppingCart className={`h-5 w-5 ${isDark ? 'text-white' : 'text-gray-900'}`} />
+              <h2 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                Your Cart
+              </h2>
+            </div>
             <button 
               onClick={onClose} 
               className={`p-2 rounded-full ${isDark ? 'bg-white/10 text-gray-400 hover:text-white' : 'bg-gray-100 text-gray-500 hover:text-gray-900'} transition-colors`}
@@ -112,20 +109,19 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
             >
               <X className="h-5 w-5" />
             </button>
-          </div>
+          </SidebarHeader>
 
-          {/* Cart content */}
-          {cartItems.length === 0 ? (
-            <div className="flex-1 flex items-center justify-center">
-              <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} text-lg`}>
-                Your cart is empty
-              </p>
-            </div>
-          ) : (
-            <>
-              {/* Scrollable cart items */}
-              <ScrollArea className="flex-1 pr-4 -mr-4">
-                <div className="space-y-5">
+          <SidebarContent className="p-4">
+            {cartItems.length === 0 ? (
+              <div className="flex-1 flex flex-col items-center justify-center py-8">
+                <ShoppingCart className={`h-12 w-12 ${isDark ? 'text-gray-600' : 'text-gray-300'} mb-4`} />
+                <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} text-lg`}>
+                  Your cart is empty
+                </p>
+              </div>
+            ) : (
+              <ScrollArea className="h-[calc(100vh-200px)]">
+                <div className="space-y-4">
                   {cartItems.map((item) => (
                     <div 
                       key={item.id} 
@@ -173,7 +169,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                             } rounded transition-colors w-8 h-8 flex items-center justify-center`}
                             aria-label="Decrease quantity"
                           >
-                            <span className="text-lg">-</span>
+                            <Minus className="h-3 w-3" />
                           </button>
                           <span className={`${isDark ? 'text-white' : 'text-gray-900'} text-lg min-w-[24px] text-center`}>
                             {item.quantity}
@@ -187,7 +183,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                             } rounded transition-colors w-8 h-8 flex items-center justify-center`}
                             aria-label="Increase quantity"
                           >
-                            <span className="text-lg">+</span>
+                            <Plus className="h-3 w-3" />
                           </button>
                         </div>
                       </div>
@@ -195,30 +191,30 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                   ))}
                 </div>
               </ScrollArea>
-              
-              {/* Cart total and checkout */}
-              <div className={`mt-6 pt-4 ${isDark ? 'border-t border-white/10' : 'border-t border-gray-200'}`}>
-                <div className="flex justify-between mb-6">
-                  <span className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Total</span>
-                  <span className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                    ฿{totalAmount.toFixed(2)}
-                  </span>
-                </div>
-                <button 
-                  onClick={handleCheckout}
-                  className={`w-full py-4 rounded-lg transition-colors ${
-                    isDark 
-                      ? 'bg-white text-black hover:bg-gray-200' 
-                      : 'bg-black text-white hover:bg-gray-800'
-                  } font-medium text-lg`}
-                >
-                  Checkout
-                </button>
-              </div>
-            </>
-          )}
-        </div>
-      </motion.div>
+            )}
+          </SidebarContent>
+          
+          <SidebarFooter className="border-t p-4">
+            <div className="flex justify-between mb-4">
+              <span className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Total</span>
+              <span className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                ฿{totalAmount.toFixed(2)}
+              </span>
+            </div>
+            <button 
+              onClick={handleCheckout}
+              className={`w-full py-4 rounded-lg transition-colors ${
+                isDark 
+                  ? 'bg-white text-black hover:bg-gray-200' 
+                  : 'bg-black text-white hover:bg-gray-800'
+              } font-medium text-lg`}
+              disabled={cartItems.length === 0}
+            >
+              Checkout
+            </button>
+          </SidebarFooter>
+        </Sidebar>
+      </div>
     </>
   );
 };

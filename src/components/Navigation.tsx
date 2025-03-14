@@ -1,10 +1,11 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { SignUpDialog } from "@/components/auth/signup-dialog";
 import { SearchPanel } from "@/components/ui/search-panel";
-import { CartPanel } from "@/components/ui/cart-panel";
+import { CartPanel } from "@/components/CartPanel";
 import { auth } from "@/lib/firebase";
 import { useCart } from '@/contexts/CartContext';
 import { useEffect } from "react";
@@ -168,7 +169,7 @@ const Navigation = () => {
       
       <SearchPanel open={isSearchPanelOpen} setOpen={setIsSearchPanelOpen} />
       
-      <CartPanel open={isCartPanelOpen} setOpen={setIsCartPanelOpen} />
+      <CartPanel isOpen={isCartPanelOpen} onClose={() => setIsCartPanelOpen(false)} />
     </header>
   );
 };
