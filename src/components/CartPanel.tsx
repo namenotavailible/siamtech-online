@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Minus, Plus, ShoppingCart, X } from "lucide-react";
 import { auth } from "@/lib/firebase";
@@ -36,7 +35,6 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  // Load cart items from localStorage when auth state changes
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -52,7 +50,6 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
     return () => unsubscribe();
   }, []);
 
-  // Save cart items to localStorage whenever they change
   useEffect(() => {
     const user = auth.currentUser;
     if (user && cartItems.length > 0) {
@@ -85,7 +82,6 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
 
   if (!isOpen) return null;
 
-  // Improved animation variants with synchronous loading
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -93,7 +89,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
       transition: { 
         duration: 0.3,
         when: "beforeChildren",
-        staggerChildren: 0, // No staggering - all children animate simultaneously
+        staggerChildren: 0,
       }
     },
     exit: { 
@@ -122,7 +118,6 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
     <AnimatePresence mode="wait">
       {isOpen && (
         <>
-          {/* Backdrop overlay */}
           <motion.div 
             initial="hidden"
             animate="visible"
@@ -133,13 +128,12 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
             aria-hidden="true"
           />
           
-          {/* Cart panel - increased max-width from md to lg (32rem) */}
           <motion.div 
             initial="hidden"
             animate="visible"
             exit="exit"
             variants={panelVariants}
-            className="fixed right-0 top-0 h-full w-full max-w-lg z-50 overflow-hidden"
+            className="fixed right-0 top-0 h-full w-full max-w-[20vw] min-w-80 z-50 overflow-hidden"
           >
             <SidebarProvider>
               <Sidebar variant="floating" side="right" className={`${isDark ? 'bg-black/95' : 'bg-white/95'} backdrop-blur-md`}>
