@@ -204,6 +204,7 @@ export function PlaceholdersAndVanishInput({
         ref={inputRef}
         value={value}
         type="text"
+        autoFocus={false}
         className={cn(
           "w-full relative text-sm sm:text-base z-50 border-none",
           theme === 'dark' ? "text-white" : "text-black",
@@ -280,4 +281,3 @@ export function PlaceholdersAndVanishInput({
     </form>
   );
 }
-

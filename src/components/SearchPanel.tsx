@@ -76,7 +76,7 @@ const SearchPanel = ({ isOpen, onClose }: SearchPanelProps) => {
               className="flex-1 bg-transparent border-none text-white text-sm focus:outline-none"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              autoFocus
+              autoFocus={isOpen}
             />
             <button onClick={onClose} className="text-gray-400 hover:text-white">
               <X className="h-4 w-4" />
@@ -112,6 +112,6 @@ const SearchPanel = ({ isOpen, onClose }: SearchPanelProps) => {
       </motion.div>
     </>
   );
-};
+}
 
 export default SearchPanel;

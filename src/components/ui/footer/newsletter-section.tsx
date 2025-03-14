@@ -20,6 +20,7 @@ export function NewsletterSection() {
           type="email" 
           placeholder={t("enter_email")}
           className="w-full dark:bg-gray-900/50 bg-white/90 dark:border-gray-800 border-gray-300 dark:text-white text-black placeholder:dark:text-gray-500 placeholder:text-gray-600 dark:focus:border-gray-700 focus:border-gray-400 dark:focus:ring-gray-700 focus:ring-gray-400"
+          autoFocus={false}
         />
         <Button 
           type="submit" 

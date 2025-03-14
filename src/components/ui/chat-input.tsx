@@ -17,6 +17,7 @@ interface ChatInputContextValue {
   onStop?: () => void;
   variant?: "default" | "unstyled";
   rows?: number;
+  autoFocus?: boolean;
 }
 
 const ChatInputContext = createContext<ChatInputContextValue>({});
@@ -26,6 +27,7 @@ interface ChatInputProps extends Omit<ChatInputContextValue, "variant"> {
   className?: string;
   variant?: "default" | "unstyled";
   rows?: number;
+  autoFocus?: boolean;
 }
 
 function ChatInput({
@@ -38,6 +40,7 @@ function ChatInput({
   loading,
   onStop,
   rows = 1,
+  autoFocus = false,
 }: ChatInputProps) {
   const contextValue: ChatInputContextValue = {
     value,
@@ -47,6 +50,7 @@ function ChatInput({
     onStop,
     variant,
     rows,
+    autoFocus,
   };
 
   return (
@@ -72,6 +76,7 @@ interface ChatInputTextAreaProps extends React.ComponentProps<typeof Textarea> {
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
   onSubmit?: () => void;
   variant?: "default" | "unstyled";
+  autoFocus?: boolean;
 }
 
 function ChatInputTextArea({
@@ -80,6 +85,7 @@ function ChatInputTextArea({
   onChange: onChangeProp,
   className,
   variant: variantProp,
+  autoFocus: autoFocusProp,
   ...props
 }: ChatInputTextAreaProps) {
   const context = useContext(ChatInputContext);
@@ -87,6 +93,7 @@ function ChatInputTextArea({
   const onChange = onChangeProp ?? context.onChange;
   const onSubmit = onSubmitProp ?? context.onSubmit;
   const rows = context.rows ?? 1;
+  const autoFocus = autoFocusProp ?? context.autoFocus ?? false;
 
   // Convert parent variant to textarea variant unless explicitly overridden
   const variant =
@@ -113,6 +120,7 @@ function ChatInputTextArea({
       value={value}
       onChange={onChange}
       onKeyDown={handleKeyDown}
+      autoFocus={autoFocus}
       className={cn(
         "max-h-[400px] min-h-0 resize-none overflow-x-hidden",
         variant === "unstyled" &&

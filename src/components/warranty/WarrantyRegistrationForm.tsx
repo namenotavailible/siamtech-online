@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -75,6 +74,7 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
           onChange={handleInputChange}
           placeholder="Enter your order number"
           required
+          autoFocus={false}
         />
       </div>
       <div className="space-y-2">
