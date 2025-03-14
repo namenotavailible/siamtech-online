@@ -36,7 +36,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  // Load cart items from localStorage when auth state changes
+  // Load cart items when component mounts or auth changes
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -89,116 +89,116 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop overlay */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300"
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
             onClick={onClose} 
-            aria-hidden="true"
           />
           
-          {/* Cart panel */}
           <motion.div 
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 25 }}
-            className="fixed right-0 top-0 h-full w-full max-w-md z-50 overflow-hidden"
+            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            className="fixed right-0 top-0 h-full w-full max-w-md z-50"
           >
             <SidebarProvider>
-              <Sidebar variant="floating" side="right" className={`${isDark ? 'bg-black/95' : 'bg-white/95'} backdrop-blur-md`}>
+              <Sidebar 
+                variant="floating" 
+                side="right" 
+                className={`${isDark ? 'bg-black/90' : 'bg-white/90'} backdrop-blur-md h-full`}
+              >
                 <SidebarHeader className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
-                  <div className="flex items-center gap-2">
-                    <ShoppingCart className={`h-5 w-5 ${isDark ? 'text-white' : 'text-gray-900'}`} />
-                    <h2 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                      Your Cart
-                    </h2>
-                  </div>
+                  <h2 className={`text-lg font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                    Your Cart ({cartItems.length})
+                  </h2>
                   <button 
                     onClick={onClose} 
-                    className={`p-2 rounded-full ${isDark ? 'bg-white/10 text-gray-400 hover:text-white' : 'bg-gray-100 text-gray-500 hover:text-gray-900'} transition-colors`}
+                    className="rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                     aria-label="Close cart"
                   >
-                    <X className="h-5 w-5" />
+                    <X className="h-4 w-4" />
                   </button>
                 </SidebarHeader>
 
-                <SidebarContent className="flex-1 overflow-hidden">
+                <SidebarContent>
                   {cartItems.length === 0 ? (
-                    <div className="flex-1 flex flex-col items-center justify-center py-8">
-                      <ShoppingCart className={`h-12 w-12 ${isDark ? 'text-gray-600' : 'text-gray-300'} mb-4`} />
-                      <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} text-lg`}>
+                    <div className="flex flex-col items-center justify-center py-12 px-4">
+                      <ShoppingCart className={`h-10 w-10 ${isDark ? 'text-gray-600' : 'text-gray-300'} mb-3`} />
+                      <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                         Your cart is empty
                       </p>
                     </div>
                   ) : (
-                    <ScrollArea className="h-[calc(100vh-200px)] px-4 py-4">
-                      <div className="space-y-4">
+                    <ScrollArea className="h-[calc(100vh-180px)]">
+                      <div className="p-4 space-y-3">
                         {cartItems.map((item) => (
                           <div 
                             key={item.id} 
-                            className={`flex gap-4 ${
+                            className={`flex items-center gap-3 p-3 rounded-lg ${
                               isDark 
                                 ? 'bg-white/5 hover:bg-white/10' 
                                 : 'bg-gray-50 hover:bg-gray-100'
-                            } p-4 rounded-lg transition-colors`}
+                            } transition-colors`}
                           >
-                            <div className="relative h-24 w-24 overflow-hidden rounded-md bg-gradient-to-tr from-gray-100 to-gray-50 flex-shrink-0">
-                              <img 
-                                src={item.image} 
-                                alt={item.name} 
-                                className="h-full w-full object-cover" 
-                                loading="lazy"
-                              />
-                            </div>
-                            <div className="flex-1">
-                              <div className="flex justify-between">
-                                <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-medium line-clamp-2`}>
+                            <img 
+                              src={item.image} 
+                              alt={item.name} 
+                              className="h-16 w-16 object-cover rounded-md flex-shrink-0" 
+                              loading="lazy"
+                            />
+                            
+                            <div className="flex-1 min-w-0">
+                              <div className="flex justify-between items-start gap-2">
+                                <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-medium text-sm line-clamp-2`}>
                                   {item.name}
                                 </h3>
                                 <button
                                   onClick={() => removeFromCart(item.id)}
-                                  className={`ml-2 p-1 rounded-full ${
-                                    isDark 
-                                      ? 'hover:bg-white/10 text-gray-400 hover:text-white' 
-                                      : 'hover:bg-gray-200 text-gray-500 hover:text-gray-900'
-                                  } transition-colors`}
+                                  className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1"
                                   aria-label="Remove item"
                                 >
-                                  <X className="h-4 w-4" />
+                                  <X className="h-3 w-3" />
                                 </button>
                               </div>
-                              <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} mt-1`}>
-                                {item.price}
-                              </p>
-                              <div className="flex items-center gap-3 mt-3">
-                                <button
-                                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                  className={`p-1 ${
-                                    isDark 
-                                      ? 'bg-white/10 hover:bg-white/20' 
-                                      : 'bg-gray-200 hover:bg-gray-300'
-                                  } rounded transition-colors w-8 h-8 flex items-center justify-center`}
-                                  aria-label="Decrease quantity"
-                                >
-                                  <Minus className="h-3 w-3" />
-                                </button>
-                                <span className={`${isDark ? 'text-white' : 'text-gray-900'} text-lg min-w-[24px] text-center`}>
-                                  {item.quantity}
-                                </span>
-                                <button
-                                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                  className={`p-1 ${
-                                    isDark 
-                                      ? 'bg-white/10 hover:bg-white/20' 
-                                      : 'bg-gray-200 hover:bg-gray-300'
-                                  } rounded transition-colors w-8 h-8 flex items-center justify-center`}
-                                  aria-label="Increase quantity"
-                                >
-                                  <Plus className="h-3 w-3" />
-                                </button>
+                              
+                              <div className="flex items-center justify-between mt-2">
+                                <p className={`${isDark ? 'text-gray-300' : 'text-gray-700'} text-sm`}>
+                                  {item.price}
+                                </p>
+                                
+                                <div className="flex items-center gap-2">
+                                  <button
+                                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                    className={`${
+                                      isDark 
+                                        ? 'bg-white/10 hover:bg-white/20' 
+                                        : 'bg-gray-200 hover:bg-gray-300'
+                                    } rounded p-1 flex items-center justify-center`}
+                                    aria-label="Decrease quantity"
+                                  >
+                                    <Minus className="h-3 w-3" />
+                                  </button>
+                                  
+                                  <span className={`${isDark ? 'text-white' : 'text-gray-900'} text-sm mx-1`}>
+                                    {item.quantity}
+                                  </span>
+                                  
+                                  <button
+                                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                    className={`${
+                                      isDark 
+                                        ? 'bg-white/10 hover:bg-white/20' 
+                                        : 'bg-gray-200 hover:bg-gray-300'
+                                    } rounded p-1 flex items-center justify-center`}
+                                    aria-label="Increase quantity"
+                                  >
+                                    <Plus className="h-3 w-3" />
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -209,19 +209,20 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                 </SidebarContent>
                 
                 <SidebarFooter className="border-t border-gray-200 dark:border-gray-800 p-4">
-                  <div className="flex justify-between mb-4">
-                    <span className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Total</span>
-                    <span className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <div className="flex justify-between items-center mb-4">
+                    <span className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Total</span>
+                    <span className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                       ฿{totalAmount.toFixed(2)}
                     </span>
                   </div>
+                  
                   <button 
                     onClick={handleCheckout}
-                    className={`w-full py-4 rounded-lg transition-colors ${
+                    className={`w-full py-3 rounded-lg transition-colors ${
                       isDark 
                         ? 'bg-white text-black hover:bg-gray-200' 
                         : 'bg-black text-white hover:bg-gray-800'
-                    } font-medium text-lg`}
+                    } font-medium disabled:opacity-50 disabled:cursor-not-allowed`}
                     disabled={cartItems.length === 0}
                   >
                     Checkout
