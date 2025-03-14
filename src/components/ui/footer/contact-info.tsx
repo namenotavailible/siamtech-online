@@ -6,19 +6,15 @@ export function ContactInfo() {
   
   return (
     <div className="space-y-4">
-      <h3 
-        className="text-lg font-semibold dark:text-white text-black"
-        contentEditable
-        suppressContentEditableWarning
-      >
+      <h3 className="text-lg font-semibold dark:text-white text-black">
         {t("contact_us")}
       </h3>
       <address className="space-y-3 text-sm dark:text-gray-400 text-black not-italic">
-        <p contentEditable suppressContentEditableWarning>{t("address_line1")}</p>
-        <p contentEditable suppressContentEditableWarning>{t("address_line2")}</p>
-        <p contentEditable suppressContentEditableWarning>{t("address_line3")}</p>
-        <p contentEditable suppressContentEditableWarning>{t("phone")}</p>
-        <p contentEditable suppressContentEditableWarning>{t("email")}</p>
+        <p>{t("address_line1")}</p>
+        <p>{t("address_line2")}</p>
+        <p>{t("address_line3")}</p>
+        <p>{t("phone")}</p>
+        <p>{t("email")}</p>
       </address>
     </div>
   );
