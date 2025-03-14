@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { auth, googleProvider } from "@/lib/firebase";
@@ -139,10 +140,10 @@ const FeaturedProducts = () => {
       }} transition={{
         delay: 0.2
       }} className="text-center mb-24">
-          <ShieldCheck className={`w-16 h-16 mx-auto mb-6 ${isDark ? 'text-purple-500' : 'text-black'}`} />
+          <ShieldCheck className={`w-16 h-16 mx-auto mb-6 ${isDark ? 'text-white' : 'text-black'}`} />
           <h2 className={`font-bold mb-6 text-4xl text-center ${isDark ? 'text-white' : 'text-gray-800'}`}>{t("warranty_info")}</h2>
           <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} mb-8 max-w-2xl mx-auto text-lg text-center`}>{t("warranty_policy_description")}</p>
-          <ButtonColorful label={t("activate_warranty_button")} onClick={() => window.location.href = '/warranty'} className={`mx-auto ${!isDark && 'bg-black text-white hover:bg-gray-800'}`} />
+          <ButtonColorful label={t("activate_warranty_button")} onClick={() => window.location.href = '/warranty'} className={`mx-auto ${isDark ? 'bg-white text-black hover:bg-gray-100' : 'bg-black text-white hover:bg-gray-800'}`} />
         </motion.div>
 
         <motion.div initial={{
@@ -183,7 +184,7 @@ const FeaturedProducts = () => {
         </div>
 
         <div className="mt-16 text-center">
-          <Link to="/products" className={`inline-flex items-center justify-center px-8 py-3 ${isDark ? 'border border-white/20 hover:bg-white/10' : 'border border-gray-300 hover:bg-gray-100'} rounded-md transition-colors`}>
+          <Link to="/products" className={`inline-flex items-center justify-center px-8 py-3 ${isDark ? 'bg-white text-black hover:bg-gray-100' : 'border border-gray-300 hover:bg-gray-100'} rounded-md transition-colors`}>
             {t("products")}
           </Link>
         </div>
