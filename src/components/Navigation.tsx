@@ -104,7 +104,7 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
         <div className="flex items-center">
           <Logo />
-          <nav className="hidden md:flex ml-10 space-x-6">
+          <nav className="hidden md:flex ml-4 space-x-4">
             <Link to="/" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 transition-colors">
               {t("home")}
             </Link>
@@ -144,7 +144,6 @@ const Navigation = () => {
         </div>
       </div>
       
-      {/* Mobile menu */}
       <div className={`md:hidden ${mobileMenuOpen ? 'block' : 'hidden'} bg-white dark:bg-black/95 backdrop-blur-md border-t border-gray-200 dark:border-white/10`}>
         <div className="px-4 pt-2 pb-4 space-y-1">
           <Link to="/" className="block text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 rounded-md transition-colors">
@@ -165,13 +164,10 @@ const Navigation = () => {
         </div>
       </div>
 
-      {/* Auth Dialog */}
       <SignUpDialog open={isAuthDialogOpen} setOpen={setIsAuthDialogOpen} />
       
-      {/* Search Panel */}
       <SearchPanel open={isSearchPanelOpen} setOpen={setIsSearchPanelOpen} />
       
-      {/* Cart Panel */}
       <CartPanel open={isCartPanelOpen} setOpen={setIsCartPanelOpen} />
     </header>
   );
