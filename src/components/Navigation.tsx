@@ -108,7 +108,7 @@ const Navigation = () => {
           <Logo />
           <div className="hidden md:block">
             <Menu setActive={setActive}>
-              <MenuItem setActive={setActive} active={active} item={t("home")}>
+              <MenuItem setActive={setActive} active={active} item={t("home")} to="/">
                 <div className="flex flex-col space-y-4 text-sm p-2">
                   <HoveredLink to="/">{language === "en" ? "Homepage" : "หน้าหลัก"}</HoveredLink>
                   <HoveredLink to="/featured">{language === "en" ? "Featured" : "แนะนำ"}</HoveredLink>
@@ -116,14 +116,14 @@ const Navigation = () => {
                 </div>
               </MenuItem>
               
-              <MenuItem setActive={setActive} active={active} item={t("about")}>
+              <MenuItem setActive={setActive} active={active} item={t("about")} to="/about">
                 <div className="flex flex-col space-y-4 text-sm p-2">
                   <HoveredLink to="/about">{language === "en" ? "Our Story" : "เรื่องราวของเรา"}</HoveredLink>
                   <HoveredLink to="/team">{language === "en" ? "Our Team" : "ทีมงานของเรา"}</HoveredLink>
                 </div>
               </MenuItem>
               
-              <MenuItem setActive={setActive} active={active} item={t("products")}>
+              <MenuItem setActive={setActive} active={active} item={t("products")} to="/products">
                 <div className="text-sm grid grid-cols-2 gap-10 p-4 w-[400px]">
                   <ProductItem
                     title={language === "en" ? "FIFINE Ampligame AM8" : "FIFINE Ampligame AM8"}
@@ -152,7 +152,7 @@ const Navigation = () => {
                 </div>
               </MenuItem>
               
-              <MenuItem setActive={setActive} active={active} item={language === "en" ? "Blog" : "บทความ"}>
+              <MenuItem setActive={setActive} active={active} item={language === "en" ? "Blog" : "บทความ"} to="/blog">
                 <div className="flex flex-col space-y-4 text-sm p-2">
                   <HoveredLink to="/blog">{language === "en" ? "All Articles" : "บทความทั้งหมด"}</HoveredLink>
                   <HoveredLink to="/blog/tech">{language === "en" ? "Tech News" : "ข่าวเทคโนโลยี"}</HoveredLink>
@@ -160,7 +160,7 @@ const Navigation = () => {
                 </div>
               </MenuItem>
               
-              <MenuItem setActive={setActive} active={active} item={t("warranty")}>
+              <MenuItem setActive={setActive} active={active} item={t("warranty")} to="/warranty">
                 <div className="flex flex-col space-y-4 text-sm p-2">
                   <HoveredLink to="/warranty">{language === "en" ? "Warranty Info" : "ข้อมูลการรับประกัน"}</HoveredLink>
                   <HoveredLink to="/warranty/register">{language === "en" ? "Register Product" : "ลงทะเบียนสินค้า"}</HoveredLink>
@@ -168,7 +168,7 @@ const Navigation = () => {
                 </div>
               </MenuItem>
               
-              <MenuItem setActive={setActive} active={active} item={t("contact")}>
+              <MenuItem setActive={setActive} active={active} item={t("contact")} to="/support">
                 <div className="flex flex-col space-y-4 text-sm p-2">
                   <HoveredLink to="/support">{language === "en" ? "Customer Support" : "ฝ่ายสนับสนุนลูกค้า"}</HoveredLink>
                   <HoveredLink to="/support/faq">{language === "en" ? "FAQ" : "คำถามที่พบบ่อย"}</HoveredLink>

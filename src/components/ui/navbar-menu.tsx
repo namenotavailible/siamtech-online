@@ -17,20 +17,33 @@ export const MenuItem = ({
   active,
   item,
   children,
+  to = "", // Added link destination prop
 }: {
   setActive: (item: string) => void;
   active: string | null;
   item: string;
   children?: React.ReactNode;
+  to?: string; // Optional prop for navigation
 }) => {
   return (
     <div onMouseEnter={() => setActive(item)} className="relative">
-      <motion.p
-        transition={{ duration: 0.3 }}
-        className="cursor-pointer text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white px-3 py-2 transition-colors"
-      >
-        {item}
-      </motion.p>
+      {to ? (
+        <Link to={to}>
+          <motion.p
+            transition={{ duration: 0.3 }}
+            className="cursor-pointer text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white px-3 py-2 transition-colors"
+          >
+            {item}
+          </motion.p>
+        </Link>
+      ) : (
+        <motion.p
+          transition={{ duration: 0.3 }}
+          className="cursor-pointer text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white px-3 py-2 transition-colors"
+        >
+          {item}
+        </motion.p>
+      )}
       {active !== null && (
         <motion.div
           initial={{ opacity: 0, scale: 0.85, y: 10 }}
