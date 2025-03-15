@@ -113,8 +113,10 @@ const Warranty = () => {
           animate={{ opacity: 1, y: 0 }}
           className="space-y-12"
         >
-          <section id="overview" className="space-y-6">
-            <h1 className="text-4xl font-bold">{t("warranty_info")}</h1>
+          <section id="overview" className="space-y-6 text-left">
+            <h1 className="text-4xl font-bold">
+              {t("warranty_info")}
+            </h1>
             
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold">{t("our_warranty_policy")}</h2>
@@ -169,7 +171,7 @@ const Warranty = () => {
             </div>
           </section>
 
-          <section id="registration" className="space-y-6">
+          <section id="registration" className="space-y-6 text-left">
             <FeatureSteps 
               features={features}
               title={t("how_to_activate_warranty")}
@@ -191,7 +193,7 @@ const Warranty = () => {
             </div>
           </section>
 
-          <section id="policy" className="space-y-6">
+          <section id="policy" className="space-y-6 text-left">
             <h2 className="text-2xl font-semibold">{t("extended_warranty_options")}</h2>
             <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
               {t("extended_warranty_description")}
@@ -210,7 +212,7 @@ const Warranty = () => {
             </div>
           </section>
 
-          <section id="faqs" className="space-y-6">
+          <section id="faqs" className="space-y-6 text-left">
             <WarrantyFAQ />
           </section>
         </motion.div>
