@@ -10,7 +10,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useId, useState, useEffect } from "react";
-import { User } from "lucide-react";
 import { auth, googleProvider } from "@/lib/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged, sendEmailVerification } from "firebase/auth";
 import { toast } from "sonner";
@@ -19,7 +18,6 @@ import { GoogleLogo } from "@/components/ui/google-logo";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Checkbox } from "@/components/ui/checkbox";
 
 export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
   const id = useId();
@@ -33,7 +31,6 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showSignedInAlert, setShowSignedInAlert] = useState(false);
-  const [useMFA, setUseMFA] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -77,15 +74,8 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
       setOpen(false);
       console.log("User signed up:", userCredential.user);
       
-      // Redirect to MFA page if MFA is enabled
-      if (useMFA) {
-        // Store email for MFA page
-        localStorage.setItem('emailForSignIn', formData.email);
-        navigate('/mfa');
-      } else {
-        // Redirect directly to profile if MFA is disabled
-        navigate('/profile');
-      }
+      // Redirect directly to profile
+      navigate('/profile');
     } catch (error: any) {
       console.error("Error signing up:", error);
       let errorMessage = t("account_created_error");
@@ -113,17 +103,8 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
       setOpen(false);
       console.log("Google sign in result:", result.user);
       
-      // Redirect to MFA page if MFA is enabled
-      if (useMFA) {
-        // Store email for MFA page
-        if (result.user.email) {
-          localStorage.setItem('emailForSignIn', result.user.email);
-        }
-        navigate('/mfa');
-      } else {
-        // Redirect directly to profile if MFA is disabled
-        navigate('/profile');
-      }
+      // Redirect directly to profile
+      navigate('/profile');
     } catch (error: any) {
       console.error("Error signing in with Google:", error);
       let errorMessage = t("google_signin_error");
@@ -215,19 +196,6 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
                     value={formData.password}
                     onChange={handleInputChange}
                   />
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="use-mfa" 
-                    checked={useMFA} 
-                    onCheckedChange={(checked) => setUseMFA(!!checked)} 
-                  />
-                  <label
-                    htmlFor="use-mfa"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    {t("enable_two_factor_authentication") || "Enable two-factor authentication"}
-                  </label>
                 </div>
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
