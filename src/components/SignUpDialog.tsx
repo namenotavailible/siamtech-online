@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,6 +15,8 @@ import { auth, googleProvider } from "@/lib/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged } from "firebase/auth";
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { CheckCircle } from "lucide-react";
 
 function SignUpDialog() {
   const id = useId();
@@ -28,6 +29,7 @@ function SignUpDialog() {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showSignedInAlert, setShowSignedInAlert] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -46,7 +48,10 @@ function SignUpDialog() {
 
   const handleOpenChange = (open: boolean) => {
     if (open && isAuthenticated) {
-      toast.info(t("already_signed_in"));
+      setShowSignedInAlert(true);
+      setTimeout(() => {
+        setShowSignedInAlert(false);
+      }, 3000);
       return;
     }
     setIsOpen(open);
@@ -86,6 +91,23 @@ function SignUpDialog() {
       setIsLoading(false);
     }
   };
+
+  if (isAuthenticated) {
+    return (
+      <>
+        {showSignedInAlert && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/30 backdrop-blur-sm">
+            <Alert className="w-80 bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-800 dark:text-green-300 shadow-lg">
+              <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
+              <AlertDescription>
+                {t("already_signed_in")}
+              </AlertDescription>
+            </Alert>
+          </div>
+        )}
+      </>
+    );
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
