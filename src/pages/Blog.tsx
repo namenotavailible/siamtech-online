@@ -2,7 +2,7 @@
 import React from "react";
 import Navigation from "@/components/Navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Footer } from "@/components/ui/footer-section";
+import { Footerdemo } from "@/components/ui/footer-section";
 import { BookOpen, Calendar, User } from "lucide-react";
 
 const BlogCard = ({ 
@@ -139,7 +139,7 @@ const Blog = () => {
           ))}
         </div>
       </div>
-      <Footer />
+      <Footerdemo />
     </div>
   );
 };
