@@ -126,28 +126,28 @@ const Navigation = () => {
               <MenuItem setActive={setActive} active={active} item={t("products")}>
                 <div className="text-sm grid grid-cols-2 gap-10 p-4 w-[400px]">
                   <ProductItem
-                    title={language === "en" ? "Headphones" : "หูฟัง"}
-                    href="/products/headphones"
-                    src="/placeholder.svg"
-                    description={language === "en" ? "Premium audio experience" : "ประสบการณ์เสียงระดับพรีเมียม"}
+                    title={language === "en" ? "AirBass Pro" : "แอร์เบส โปร"}
+                    href="/products/airbass-pro"
+                    src="/lovable-uploads/0bb46080-e4f4-4402-a40d-ecd94be8eade.png"
+                    description={language === "en" ? "Noise-cancelling premium earbuds" : "หูฟังตัดเสียงรบกวนระดับพรีเมียม"}
                   />
                   <ProductItem
-                    title={language === "en" ? "Speakers" : "ลำโพง"}
-                    href="/products/speakers"
-                    src="/placeholder.svg"
-                    description={language === "en" ? "Room-filling sound" : "เสียงเต็มห้อง"}
+                    title={language === "en" ? "SoundSphere X3" : "ซาวด์สเฟียร์ X3"}
+                    href="/products/soundsphere-x3"
+                    src="/lovable-uploads/53213377-4bca-4414-92ab-d261aaf2a84a.png"
+                    description={language === "en" ? "360° surround sound speaker" : "ลำโพงเสียงรอบทิศทาง 360°"}
                   />
                   <ProductItem
-                    title={language === "en" ? "Earbuds" : "หูฟังไร้สาย"}
-                    href="/products/earbuds"
-                    src="/placeholder.svg"
-                    description={language === "en" ? "Wireless freedom" : "อิสระไร้สาย"}
+                    title={language === "en" ? "BassWave Headphones" : "หูฟังเบสเวฟ"}
+                    href="/products/basswave"
+                    src="/lovable-uploads/895e0863-a00d-4ccd-9f78-21e1181817a3.png"
+                    description={language === "en" ? "Deep bass, crystal clear highs" : "เสียงเบสลึก เสียงแหลมชัดเจน"}
                   />
                   <ProductItem
-                    title={language === "en" ? "Accessories" : "อุปกรณ์เสริม"}
-                    href="/products/accessories"
-                    src="/placeholder.svg"
-                    description={language === "en" ? "Complete your setup" : "เติมเต็มชุดอุปกรณ์ของคุณ"}
+                    title={language === "en" ? "ProStudio Monitor" : "มอนิเตอร์โปรสตูดิโอ"}
+                    href="/products/prostudio"
+                    src="/lovable-uploads/9f7f3e91-1510-4ec4-8391-68411a8131e6.png"
+                    description={language === "en" ? "Professional studio reference" : "เสียงอ้างอิงระดับสตูดิโอมืออาชีพ"}
                   />
                 </div>
               </MenuItem>
