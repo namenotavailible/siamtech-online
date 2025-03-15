@@ -27,7 +27,7 @@ export const MenuItem = ({
     <div onMouseEnter={() => setActive(item)} className="relative">
       <motion.p
         transition={{ duration: 0.3 }}
-        className="cursor-pointer text-black hover:opacity-[0.9] dark:text-white"
+        className="cursor-pointer text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white px-3 py-2 transition-colors"
       >
         {item}
       </motion.p>
@@ -42,11 +42,11 @@ export const MenuItem = ({
               <motion.div
                 transition={transition}
                 layoutId="active"
-                className="bg-black/80 backdrop-blur-lg rounded-2xl overflow-hidden border border-white/10 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.3)]"
+                className="bg-white dark:bg-black/90 backdrop-blur-lg rounded-2xl overflow-hidden border border-gray-200 dark:border-white/10 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.3)]"
               >
                 <motion.div
                   layout
-                  className="w-max h-full p-6 flex flex-col items-center"
+                  className="w-max h-full"
                 >
                   {children}
                 </motion.div>
@@ -69,7 +69,7 @@ export const Menu = ({
   return (
     <nav
       onMouseLeave={() => setActive(null)}
-      className="relative flex justify-center items-center space-x-8 px-8 py-6"
+      className="relative flex items-center space-x-1"
     >
       {children}
     </nav>
@@ -88,22 +88,20 @@ export const ProductItem = ({
   src: string;
 }) => {
   return (
-    <Link to={href} className="flex space-x-2 items-center justify-center w-full">
+    <Link to={href} className="flex space-x-2 items-start p-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg transition-colors">
       <img
         src={src}
-        width={140}
-        height={70}
+        width={60}
+        height={60}
         alt={title}
         loading="eager"
-        fetchPriority="high"
-        decoding="sync"
-        className="flex-shrink-0 rounded-md shadow-2xl"
+        className="flex-shrink-0 rounded-md shadow-md object-cover"
       />
       <div>
-        <h4 className="text-xl font-bold mb-1 text-black dark:text-white">
+        <h4 className="text-sm font-bold mb-1 text-black dark:text-white">
           {title}
         </h4>
-        <p className="text-neutral-700 text-sm max-w-[10rem] dark:text-neutral-300">
+        <p className="text-gray-600 text-xs max-w-[10rem] dark:text-gray-300">
           {description}
         </p>
       </div>
@@ -115,7 +113,7 @@ export const HoveredLink = ({ children, ...rest }: any) => {
   return (
     <Link
       {...rest}
-      className="text-neutral-700 dark:text-neutral-200 hover:text-black text-center w-full"
+      className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 text-sm block rounded-md hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
     >
       {children}
     </Link>

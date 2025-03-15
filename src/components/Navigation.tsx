@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
+import { Search, ShoppingCart, User, Menu as MenuIcon, X } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { SignUpDialog } from "@/components/auth/signup-dialog";
 import { SearchPanel } from "@/components/ui/search-panel";
 import CartPanel from "@/components/CartPanel";
 import { auth } from "@/lib/firebase";
 import { useCart } from '@/contexts/CartContext';
-import { useEffect } from "react";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Menu, MenuItem, ProductItem, HoveredLink } from "@/components/ui/navbar-menu";
 
 interface ToolbarIconsProps {
   openAuthDialog: () => void;
@@ -82,6 +83,7 @@ const Navigation = () => {
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isSearchPanelOpen, setIsSearchPanelOpen] = useState(false);
   const [isCartPanelOpen, setIsCartPanelOpen] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -104,26 +106,77 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
         <div className="flex items-center">
           <Logo />
-          <nav className="hidden md:flex ml-4 space-x-4">
-            <Link to="/" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 transition-colors">
-              {t("home")}
-            </Link>
-            <Link to="/about" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 transition-colors">
-              {t("about")}
-            </Link>
-            <Link to="/products" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 transition-colors">
-              {t("products")}
-            </Link>
-            <Link to="/blog" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 transition-colors">
-              {language === "en" ? "Blog" : "บทความ"}
-            </Link>
-            <Link to="/warranty" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 transition-colors">
-              {t("warranty")}
-            </Link>
-            <Link to="/support" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 transition-colors">
-              {t("contact")}
-            </Link>
-          </nav>
+          <div className="hidden md:block">
+            <Menu setActive={setActive}>
+              <MenuItem setActive={setActive} active={active} item={t("home")}>
+                <div className="flex flex-col space-y-4 text-sm p-2">
+                  <HoveredLink to="/">{language === "en" ? "Homepage" : "หน้าหลัก"}</HoveredLink>
+                  <HoveredLink to="/featured">{language === "en" ? "Featured" : "แนะนำ"}</HoveredLink>
+                  <HoveredLink to="/new-arrivals">{language === "en" ? "New Arrivals" : "สินค้ามาใหม่"}</HoveredLink>
+                </div>
+              </MenuItem>
+              
+              <MenuItem setActive={setActive} active={active} item={t("about")}>
+                <div className="flex flex-col space-y-4 text-sm p-2">
+                  <HoveredLink to="/about">{language === "en" ? "Our Story" : "เรื่องราวของเรา"}</HoveredLink>
+                  <HoveredLink to="/team">{language === "en" ? "Our Team" : "ทีมงานของเรา"}</HoveredLink>
+                </div>
+              </MenuItem>
+              
+              <MenuItem setActive={setActive} active={active} item={t("products")}>
+                <div className="text-sm grid grid-cols-2 gap-10 p-4 w-[400px]">
+                  <ProductItem
+                    title={language === "en" ? "Headphones" : "หูฟัง"}
+                    href="/products/headphones"
+                    src="/placeholder.svg"
+                    description={language === "en" ? "Premium audio experience" : "ประสบการณ์เสียงระดับพรีเมียม"}
+                  />
+                  <ProductItem
+                    title={language === "en" ? "Speakers" : "ลำโพง"}
+                    href="/products/speakers"
+                    src="/placeholder.svg"
+                    description={language === "en" ? "Room-filling sound" : "เสียงเต็มห้อง"}
+                  />
+                  <ProductItem
+                    title={language === "en" ? "Earbuds" : "หูฟังไร้สาย"}
+                    href="/products/earbuds"
+                    src="/placeholder.svg"
+                    description={language === "en" ? "Wireless freedom" : "อิสระไร้สาย"}
+                  />
+                  <ProductItem
+                    title={language === "en" ? "Accessories" : "อุปกรณ์เสริม"}
+                    href="/products/accessories"
+                    src="/placeholder.svg"
+                    description={language === "en" ? "Complete your setup" : "เติมเต็มชุดอุปกรณ์ของคุณ"}
+                  />
+                </div>
+              </MenuItem>
+              
+              <MenuItem setActive={setActive} active={active} item={language === "en" ? "Blog" : "บทความ"}>
+                <div className="flex flex-col space-y-4 text-sm p-2">
+                  <HoveredLink to="/blog">{language === "en" ? "All Articles" : "บทความทั้งหมด"}</HoveredLink>
+                  <HoveredLink to="/blog/tech">{language === "en" ? "Tech News" : "ข่าวเทคโนโลยี"}</HoveredLink>
+                  <HoveredLink to="/blog/reviews">{language === "en" ? "Reviews" : "รีวิว"}</HoveredLink>
+                </div>
+              </MenuItem>
+              
+              <MenuItem setActive={setActive} active={active} item={t("warranty")}>
+                <div className="flex flex-col space-y-4 text-sm p-2">
+                  <HoveredLink to="/warranty">{language === "en" ? "Warranty Info" : "ข้อมูลการรับประกัน"}</HoveredLink>
+                  <HoveredLink to="/warranty/register">{language === "en" ? "Register Product" : "ลงทะเบียนสินค้า"}</HoveredLink>
+                  <HoveredLink to="/warranty/claim">{language === "en" ? "File a Claim" : "ส่งเรื่องเคลม"}</HoveredLink>
+                </div>
+              </MenuItem>
+              
+              <MenuItem setActive={setActive} active={active} item={t("contact")}>
+                <div className="flex flex-col space-y-4 text-sm p-2">
+                  <HoveredLink to="/support">{language === "en" ? "Customer Support" : "ฝ่ายสนับสนุนลูกค้า"}</HoveredLink>
+                  <HoveredLink to="/support/faq">{language === "en" ? "FAQ" : "คำถามที่พบบ่อย"}</HoveredLink>
+                  <HoveredLink to="/support/contact">{language === "en" ? "Contact Us" : "ติดต่อเรา"}</HoveredLink>
+                </div>
+              </MenuItem>
+            </Menu>
+          </div>
         </div>
         
         <div className="flex items-center space-x-4">
@@ -141,7 +194,7 @@ const Navigation = () => {
             {mobileMenuOpen ? (
               <X className="h-6 w-6" />
             ) : (
-              <Menu className="h-6 w-6" />
+              <MenuIcon className="h-6 w-6" />
             )}
           </button>
         </div>
