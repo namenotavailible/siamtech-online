@@ -25,11 +25,12 @@ export type CookiePreferences = {
 
 export function CookiePreferences({ open, onOpenChange }: { open: boolean, onOpenChange: (open: boolean) => void }) {
   const { t, language } = useLanguage();
+  // Set all cookies enabled by default
   const [preferences, setPreferences] = useState<CookiePreferences>({
     necessary: true, // Necessary cookies cannot be disabled
-    analytics: false,
-    marketing: false,
-    personalization: false
+    analytics: true,
+    marketing: true,
+    personalization: true
   });
 
   useEffect(() => {
@@ -46,6 +47,13 @@ export function CookiePreferences({ open, onOpenChange }: { open: boolean, onOpe
       } catch (e) {
         console.error("Failed to parse cookie preferences", e);
       }
+    } else {
+      // If no preferences are saved, save the default preferences (all enabled)
+      setCookie("cookie-preferences", JSON.stringify({
+        analytics: true,
+        marketing: true,
+        personalization: true,
+      }), 365); // Store for a year
     }
   }, [open]);
 

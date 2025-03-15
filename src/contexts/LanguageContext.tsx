@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { getCookie, setCookie } from "@/utils/cookies";
 
@@ -42,16 +43,22 @@ export const loadTranslations = async (lang: Language) => {
 
 // Provider component
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
-  // Force Thai as the initial language
+  // Get initial language from localStorage or cookie, default to Thai
   const [language, setLanguageState] = useState<Language>("th");
   
   // Track whether translations are loaded
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Force Thai language and save to localStorage and cookie on initial load
+  // Load saved language preference on initial load if available
   useEffect(() => {
-    localStorage.setItem("language", "th");
-    setCookie("lang", "th", 365);
+    const savedLang = localStorage.getItem("language") || getCookie("lang");
+    if (savedLang === "en" || savedLang === "th") {
+      setLanguageState(savedLang as Language);
+    } else {
+      // Force Thai language as default and save to localStorage and cookie
+      localStorage.setItem("language", "th");
+      setCookie("lang", "th", 365);
+    }
   }, []);
 
   // Load translations when the component mounts or language changes
