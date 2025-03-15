@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import { Footerdemo } from "@/components/ui/footer-section";
 import { motion } from "framer-motion";
@@ -19,57 +18,57 @@ import WarrantyRegistrationForm from "@/components/warranty/WarrantyRegistration
 import WarrantyFAQ from "@/components/warranty/WarrantyFAQ";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
-
 const Warranty = () => {
   const navigate = useNavigate();
-  const { t, language } = useLanguage();
-  const { theme } = useTheme();
+  const {
+    t,
+    language
+  } = useLanguage();
+  const {
+    theme
+  } = useTheme();
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [showWarrantyForm, setShowWarrantyForm] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: "",
+    password: ""
   });
 
   // Define features with translations
-  const features = [
-    {
-      step: t("step_1"),
-      title: t("create_account"),
-      content: t("create_account_description"),
-      image: "/placeholder.svg"
-    },
-    {
-      step: t("step_2"),
-      title: t("register_product"),
-      content: t("register_product_description"),
-      image: "/placeholder.svg"
-    },
-    {
-      step: t("step_3"),
-      title: t("activate_warranty_step"),
-      content: t("activate_warranty_step_description"),
-      image: "/placeholder.svg"
-    }
-  ];
-
+  const features = [{
+    step: t("step_1"),
+    title: t("create_account"),
+    content: t("create_account_description"),
+    image: "/placeholder.svg"
+  }, {
+    step: t("step_2"),
+    title: t("register_product"),
+    content: t("register_product_description"),
+    image: "/placeholder.svg"
+  }, {
+    step: t("step_3"),
+    title: t("activate_warranty_step"),
+    content: t("activate_warranty_step_description"),
+    image: "/placeholder.svg"
+  }];
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
       setIsAuthenticated(!!user);
     });
     return () => unsubscribe();
   }, []);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
+    const {
+      id,
+      value
+    } = e.target;
     setFormData(prev => ({
       ...prev,
       [id.split('-')[1]]: value
     }));
   };
-
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -82,7 +81,6 @@ const Warranty = () => {
       toast.error(t("account_created_error"));
     }
   };
-
   const handleGoogleSignIn = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
@@ -94,7 +92,6 @@ const Warranty = () => {
       toast.error(t("google_signin_error"));
     }
   };
-
   const handleActivateWarranty = () => {
     if (!isAuthenticated) {
       setShowAuthDialog(true);
@@ -102,19 +99,19 @@ const Warranty = () => {
       setShowWarrantyForm(true);
     }
   };
-
-  return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
+  return <div className={`min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
       <Navigation />
       
       <main className="max-w-4xl mx-auto px-4 pt-24 pb-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-12"
-        >
+        <motion.div initial={{
+        opacity: 0,
+        y: 20
+      }} animate={{
+        opacity: 1,
+        y: 0
+      }} className="space-y-12">
           <section id="overview" className="space-y-6 text-left">
-            <h1 className="text-4xl font-bold">
+            <h1 className="text-4xl font-bold text-center">
               {t("warranty_info")}
             </h1>
             
@@ -172,22 +169,14 @@ const Warranty = () => {
           </section>
 
           <section id="registration" className="space-y-6 text-left">
-            <FeatureSteps 
-              features={features}
-              title={t("how_to_activate_warranty")}
-              autoPlayInterval={4000}
-              className={`${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/80'} rounded-lg backdrop-blur-sm`}
-            />
+            <FeatureSteps features={features} title={t("how_to_activate_warranty")} autoPlayInterval={4000} className={`${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/80'} rounded-lg backdrop-blur-sm`} />
 
             <div className={`mt-8 p-6 ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/80'} rounded-lg backdrop-blur-sm`}>
               <h2 className="text-2xl font-semibold mb-4">{t("activate_warranty")}</h2>
               <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} mb-4`}>
                 {t("activate_warranty_description")}
               </p>
-              <Button
-                onClick={handleActivateWarranty}
-                className={`${theme === 'dark' ? 'bg-white text-black hover:bg-gray-200' : 'bg-black text-white hover:bg-gray-800'} transition-colors`}
-              >
+              <Button onClick={handleActivateWarranty} className={`${theme === 'dark' ? 'bg-white text-black hover:bg-gray-200' : 'bg-black text-white hover:bg-gray-800'} transition-colors`}>
                 {t("activate_warranty_button")}
               </Button>
             </div>
@@ -236,38 +225,15 @@ const Warranty = () => {
             <div className="space-y-3">
               <div className="space-y-1">
                 <Label htmlFor="signup-name">{t("full_name")}</Label>
-                <Input
-                  id="signup-name"
-                  placeholder={t("full_name_placeholder")}
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                  className="h-8"
-                />
+                <Input id="signup-name" placeholder={t("full_name_placeholder")} value={formData.name} onChange={handleInputChange} required className="h-8" />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="signup-email">{t("email")}</Label>
-                <Input
-                  id="signup-email"
-                  type="email"
-                  placeholder={t("email_placeholder")}
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  className="h-8"
-                />
+                <Input id="signup-email" type="email" placeholder={t("email_placeholder")} value={formData.email} onChange={handleInputChange} required className="h-8" />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="signup-password">{t("password")}</Label>
-                <Input
-                  id="signup-password"
-                  type="password"
-                  placeholder={t("password_placeholder")}
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  required
-                  className="h-8"
-                />
+                <Input id="signup-password" type="password" placeholder={t("password_placeholder")} value={formData.password} onChange={handleInputChange} required className="h-8" />
               </div>
             </div>
             <Button type="submit" className="w-full h-8 text-sm">
@@ -312,8 +278,6 @@ const Warranty = () => {
       </Dialog>
 
       <Footerdemo />
-    </div>
-  );
+    </div>;
 };
-
 export default Warranty;
