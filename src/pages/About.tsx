@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import { Footerdemo } from "@/components/ui/footer-section";
 import { motion } from "framer-motion";
@@ -10,7 +9,7 @@ import {
   Clock, 
   Globe, 
   Lightbulb, 
-  HeadphonesMic, 
+  Headphones, 
   ShieldCheck, 
   TrendingUp 
 } from "lucide-react";
@@ -123,7 +122,7 @@ const About = () => {
               <Card className={`${theme === 'dark' ? 'bg-white/5 border-white/10' : 'bg-white'} transition-all hover:shadow-md`}>
                 <CardContent className="p-6 text-center">
                   <div className="mb-4 flex justify-center">
-                    <HeadphonesMic className="h-8 w-8 text-primary" />
+                    <Headphones className="h-8 w-8 text-primary" />
                   </div>
                   <h3 className="font-semibold mb-2">Quality Products</h3>
                   <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
