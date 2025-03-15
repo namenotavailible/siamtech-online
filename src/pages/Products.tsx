@@ -57,6 +57,7 @@ const Products = () => {
   ]);
 
   useEffect(() => {
+    const companyName = language === "th" ? "บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด" : "SIAMTECH Online Group Co.,Ltd.";
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "ItemList",
@@ -69,11 +70,19 @@ const Products = () => {
           "description": product.description,
           "image": window.location.origin + product.image,
           "category": product.category,
+          "brand": {
+            "@type": "Brand",
+            "name": companyName
+          },
           "offers": {
             "@type": "Offer",
             "price": product.price.replace(/[^\d.]/g, ''),
             "priceCurrency": "THB",
-            "availability": "https://schema.org/InStock"
+            "availability": "https://schema.org/InStock",
+            "seller": {
+              "@type": "Organization",
+              "name": companyName
+            }
           }
         }
       }))
@@ -87,7 +96,7 @@ const Products = () => {
     return () => {
       document.head.removeChild(script);
     };
-  }, [products]);
+  }, [products, language]);
 
   const handleAddToCart = (product: any, e: React.MouseEvent) => {
     e.preventDefault();
@@ -129,9 +138,23 @@ const Products = () => {
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
       <Helmet>
-        <title>Gaming Peripherals & Audio Equipment | SIAMTECH Online Store</title>
-        <meta name="description" content="Shop premium gaming mice and professional microphones. Find the perfect audio and gaming equipment for streaming, content creation, and competitive gaming." />
-        <meta name="keywords" content="gaming mouse, microphone, streaming equipment, gaming peripherals, FIFINE, VXE, VGN, Dragonfly" />
+        <title>{language === "en" 
+          ? "Gaming Peripherals & Audio Equipment | SIAMTECH Online Store" 
+          : "อุปกรณ์เกมและเครื่องเสียง | บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด"}
+        </title>
+        <meta name="description" content={language === "en" 
+          ? "Shop premium gaming mice and professional microphones from SIAMTECH Online. Find the perfect audio and gaming equipment for streaming, content creation, and competitive gaming." 
+          : "เลือกซื้อเมาส์เกมมิ่งและไมโครโฟนระดับมืออาชีพจาก บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด ค้นหาอุปกรณ์เสียงและเกมที่เหมาะสำหรับการสตรีม การสร้างคอนเทนต์ และการเล่นเกมแข่งขัน"} />
+        <meta name="keywords" content={language === "en"
+          ? "gaming mouse, microphone, streaming equipment, gaming peripherals, FIFINE, VXE, VGN, Dragonfly, SIAMTECH"
+          : "เมาส์เกมมิ่ง, ไมโครโฟน, อุปกรณ์สตรีมมิ่ง, อุปกรณ์เกม, บริษัท สยามเทค ออนไลน์ กรุ๊ป, FIFINE, VXE, VGN, Dragonfly"} />
+        <meta property="og:title" content={language === "en" 
+          ? "Gaming Peripherals & Audio Equipment | SIAMTECH Online Store" 
+          : "อุปกรณ์เกมและเครื่องเสียง | บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด"} />
+        <meta property="og:description" content={language === "en"
+          ? "Shop premium gaming mice and professional microphones from SIAMTECH Online."
+          : "เลือกซื้อเมาส์เกมมิ่งและไมโครโฟนระดับมืออาชีพจาก บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด"} />
+        <meta property="og:type" content="website" />
         <link rel="canonical" href={window.location.href} />
         <html lang={language} />
       </Helmet>

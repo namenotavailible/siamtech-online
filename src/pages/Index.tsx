@@ -18,18 +18,36 @@ const Index = () => {
   const { theme } = useTheme();
   
   useEffect(() => {
+    const companyName = language === "th" ? "บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด" : "SIAMTECH Online Group Co.,Ltd.";
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": t("company_name"),
+      "name": companyName,
+      "alternateName": language === "th" ? "SIAMTECH Online Group Co.,Ltd." : "บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด",
       "url": window.location.origin,
       "logo": `${window.location.origin}/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png`,
-      "description": "Premium gaming and audio equipment retailer specializing in professional microphones and gaming peripherals.",
+      "description": language === "th" 
+        ? "บริษัทผู้จำหน่ายอุปกรณ์เกมและเครื่องเสียงระดับพรีเมียม เชี่ยวชาญในด้านไมโครโฟนระดับมืออาชีพและอุปกรณ์เกมมิ่ง"
+        : "Premium gaming and audio equipment retailer specializing in professional microphones and gaming peripherals.",
       "sameAs": [
         "https://facebook.com/siamtechonline",
         "https://twitter.com/siamtechonline",
         "https://instagram.com/siamtechonline"
-      ]
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1444/97 Nakhon Chaisi Road, Thanon Nakhon Chaisi Subdistrict",
+        "addressLocality": "Dusit District",
+        "addressRegion": "Bangkok",
+        "postalCode": "10300",
+        "addressCountry": "TH"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+6699-999-9999",
+        "contactType": "customer service",
+        "availableLanguage": ["Thai", "English"]
+      }
     };
 
     const script = document.createElement('script');
@@ -40,7 +58,7 @@ const Index = () => {
     return () => {
       document.head.removeChild(script);
     };
-  }, [t]);
+  }, [t, language]);
 
   const BackgroundComponent = () => {
     if (theme === "dark") {
@@ -105,25 +123,32 @@ const Index = () => {
   return (
     <div className={`min-h-screen ${theme === "dark" ? "bg-black" : "bg-white"} text-white overflow-x-hidden`}>
       <Helmet>
-        <title>{language === "en" ? "SIAMTECH Online | Premium Gaming & Audio Equipment Store" : "SIAMTECH ออนไลน์ | ร้านอุปกรณ์เกมและเครื่องเสียงระดับพรีเมียม"}</title>
+        <title>{language === "en" 
+          ? "SIAMTECH Online | Premium Gaming & Audio Equipment Store" 
+          : "บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด | ร้านอุปกรณ์เกมและเครื่องเสียงระดับพรีเมียม"}
+        </title>
         <meta name="description" content={language === "en" 
           ? "Discover premium gaming peripherals and professional audio equipment at SIAMTECH Online. Shop our collection of high-quality microphones, gaming mice, and streaming gear." 
-          : "ค้นพบอุปกรณ์เกมมิ่งและอุปกรณ์เสียงระดับมืออาชีพที่ SIAMTECH ออนไลน์ เลือกซื้อไมโครโฟนคุณภาพสูง เมาส์เกมมิ่ง และอุปกรณ์สตรีมมิ่งของเรา"} />
+          : "ค้นพบอุปกรณ์เกมมิ่งและอุปกรณ์เสียงระดับมืออาชีพที่ บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด เลือกซื้อไมโครโฟนคุณภาพสูง เมาส์เกมมิ่ง และอุปกรณ์สตรีมมิ่งของเรา"} />
+        <meta name="keywords" content={language === "en"
+          ? "SIAMTECH, gaming equipment, audio equipment, microphones, gaming mice, streaming gear"
+          : "บริษัท สยามเทค ออนไลน์ กรุ๊ป, บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด, อุปกรณ์เกม, เครื่องเสียง, ไมโครโฟน, เมาส์เกมมิ่ง"} />
         <meta property="og:title" content={language === "en" 
           ? "SIAMTECH Online | Premium Gaming & Audio Equipment Store" 
-          : "SIAMTECH ออนไลน์ | ร้านอุปกรณ์เกมและเครื่องเสียงระดับพรีเมียม"} />
+          : "บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด | ร้านอุปกรณ์เกมและเครื่องเสียงระดับพรีเมียม"} />
         <meta property="og:description" content={language === "en" 
           ? "Discover premium gaming peripherals and professional audio equipment at SIAMTECH Online. Shop our collection of high-quality microphones, gaming mice, and streaming gear."
-          : "ค้นพบอุปกรณ์เกมมิ่งและอุปกรณ์เสียงระดับมืออาชีพที่ SIAMTECH ออนไลน์"} />
+          : "ค้นพบอุปกรณ์เกมมิ่งและอุปกรณ์เสียงระดับมืออาชีพที่ บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด เลือกซื้อไมโครโฟนคุณภาพสูง เมาส์เกมมิ่ง และอุปกรณ์สตรีมมิ่งของเรา"} />
         <meta property="og:image" content="/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png" />
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content={language === "en" ? "SIAMTECH Online" : "บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด"} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={language === "en" 
           ? "SIAMTECH Online | Premium Gaming & Audio Equipment Store" 
-          : "SIAMTECH ออนไลน์ | ร้านอุปกรณ์เกมและเครื่องเสียงระดับพรีเมียม"} />
+          : "บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด | ร้านอุปกรณ์เกมและเครื่องเสียงระดับพรีเมียม"} />
         <meta name="twitter:description" content={language === "en" 
           ? "Discover premium gaming peripherals and professional audio equipment at SIAMTECH Online."
-          : "ค้นพบอุปกรณ์เกมมิ่งและอุปกรณ์เสียงระดับมืออาชีพที่ SIAMTECH ออนไลน์"} />
+          : "ค้นพบอุปกรณ์เกมมิ่งและอุปกรณ์เสียงระดับมืออาชีพที่ บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด"} />
         <meta name="twitter:image" content="/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png" />
         <meta name="canonical" content={window.location.origin} />
         <html lang={language} />
