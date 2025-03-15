@@ -406,7 +406,7 @@ const BlogPost = () => {
               </span>
             ))}
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">{post.title}</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-left">{post.title}</h1>
           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
             <div className="flex items-center" aria-label="Published date">
               <Calendar className="w-4 h-4 mr-1" aria-hidden="true" />
@@ -428,9 +428,9 @@ const BlogPost = () => {
           />
         </div>
         
-        {/* Post content */}
+        {/* Post content with improved readability */}
         <article 
-          className="prose dark:prose-invert max-w-none" 
+          className="prose dark:prose-invert max-w-none text-left [&>p]:text-base [&>p]:leading-relaxed [&>p]:mb-6 [&>h2]:text-2xl [&>h2]:font-semibold [&>h2]:mt-8 [&>h2]:mb-4 [&>ul]:my-4 [&>ul]:pl-5 [&>ul>li]:mb-2 [&>ul>li]:text-base" 
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
       </main>
