@@ -7,7 +7,7 @@ export function BottomSection() {
   
   return (
     <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t dark:border-gray-800 border-gray-300 pt-8 text-center md:flex-row">
-      <p className="text-sm dark:text-gray-400 text-black">
+      <p className="text-xs dark:text-gray-400 text-black">
         {t("copyright")}
       </p>
       <nav className="flex gap-6 text-sm">
