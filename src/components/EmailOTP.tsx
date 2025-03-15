@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,7 +38,7 @@ const EmailOTP = ({ defaultEmail = '' }: { defaultEmail?: string }) => {
   // Create an array of characters for OTP input visualization
   const [chars, setChars] = useState<Char[]>(
     Array(OTP_LENGTH).fill('').map((_, index) => ({
-      index, // Ensuring the index property is included
+      index,
       char: '',
       isActive: index === 0,
       hasFakeCaret: index === 0,
@@ -89,8 +90,19 @@ const EmailOTP = ({ defaultEmail = '' }: { defaultEmail?: string }) => {
       // Check if user is authenticated
       const user = auth.currentUser;
       if (user) {
-        // Send email verification
-        await sendEmailVerification(user, actionCodeSettings);
+        // For this demo, we'll simulate sending an OTP instead of a verification link
+        // In a real implementation, you would use a proper OTP service
+        
+        // Simulating OTP sending
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Store the "OTP" in localStorage (in a real app, this would be sent to the user's email)
+        // This is just for demo purposes - in a real app, the OTP would be generated on the server
+        const mockOTP = Math.floor(100000 + Math.random() * 900000).toString();
+        localStorage.setItem('tempOTP', mockOTP);
+        
+        console.log('OTP code generated:', mockOTP);
+        
         toast.success(t('verification_code_sent') || 'Verification code sent to your email');
         setOtpSent(true);
       } else {
@@ -115,7 +127,7 @@ const EmailOTP = ({ defaultEmail = '' }: { defaultEmail?: string }) => {
       
       // Update the visualization
       const newChars = chars.map((char, index) => ({
-        index, // Ensuring the index property is included
+        index,
         char: value[index] || '',
         isActive: index === value.length,
         hasFakeCaret: index === value.length,
@@ -138,17 +150,22 @@ const EmailOTP = ({ defaultEmail = '' }: { defaultEmail?: string }) => {
     
     try {
       // In a real implementation, we would verify the OTP here
-      // For this demo, we'll just simulate a successful verification
-      // and redirect to the profile page
+      // For this demo, we'll just check if it matches our mock OTP
+      const mockOTP = localStorage.getItem('tempOTP');
       
-      // Simulating verification delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Clean up storage
-      localStorage.removeItem('emailForSignIn');
-      
-      toast.success(t('verification_successful') || 'Verification successful');
-      navigate('/profile');
+      if (otp === mockOTP) {
+        // Simulating verification delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Clean up storage
+        localStorage.removeItem('emailForSignIn');
+        localStorage.removeItem('tempOTP');
+        
+        toast.success(t('verification_successful') || 'Verification successful');
+        navigate('/profile');
+      } else {
+        toast.error(t('verification_failed') || 'Verification failed. Please try again.');
+      }
     } catch (error) {
       console.error('Error verifying OTP:', error);
       toast.error(t('verification_failed') || 'Verification failed. Please try again.');
@@ -165,6 +182,7 @@ const EmailOTP = ({ defaultEmail = '' }: { defaultEmail?: string }) => {
 
   const handleSkip = () => {
     localStorage.removeItem('emailForSignIn');
+    localStorage.removeItem('tempOTP');
     navigate('/profile');
   };
 
@@ -251,7 +269,7 @@ const EmailOTP = ({ defaultEmail = '' }: { defaultEmail?: string }) => {
               />
               
               <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-2">
-                {t('enter_code_sent_to_email', { email }) || `Enter the code sent to ${email}`}
+                {t('enter_code_sent_to_email') || `Enter the code sent to ${email}`}
               </p>
             </div>
           </div>

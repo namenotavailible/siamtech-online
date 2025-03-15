@@ -132,5 +132,26 @@
   "limitation_liability": "The Company shall not be liable for indirect, incidental, or consequential damages arising from the use of its products. This warranty is the sole and exclusive remedy available to customers.",
   
   "governing_law_title": "Governing Law",
-  "governing_law": "This warranty policy is governed by the laws of Thailand. Any disputes shall be resolved in the jurisdiction where the Company is registered."
+  "governing_law": "This warranty policy is governed by the laws of Thailand. Any disputes shall be resolved in the jurisdiction where the Company is registered.",
+  
+  "two_factor_authentication": "Two Factor Authentication",
+  "verify_with_email_otp": "Verify your identity with an email verification code",
+  "email_address": "Email Address",
+  "email_placeholder": "Enter your email",
+  "send_verification_code": "Send Verification Code",
+  "verification_code": "Verification Code",
+  "enter_code_sent_to_email": "Enter the code sent to your email",
+  "verify_code": "Verify Code",
+  "resend_code": "Resend code",
+  "resend_code_in": "Resend code in",
+  "skip_for_now": "Skip for now",
+  "sending": "Sending...",
+  "verifying": "Verifying...",
+  "please_enter_email": "Please enter your email",
+  "verification_code_sent": "Verification code sent to your email",
+  "authentication_required": "Authentication required",
+  "error_sending_code": "Error sending verification code",
+  "enter_complete_code": "Please enter the complete verification code",
+  "verification_successful": "Verification successful",
+  "verification_failed": "Verification failed. Please try again."
 }

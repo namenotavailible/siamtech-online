@@ -1,13 +1,12 @@
 
 import { useEffect, useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import EmailOTP from '@/components/EmailOTP';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '@/lib/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Button } from '@/components/ui/button';
 import { Helmet } from 'react-helmet';
 
 const MFAPage = () => {
@@ -15,7 +14,7 @@ const MFAPage = () => {
   const [userEmail, setUserEmail] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const { theme } = useTheme();
 
   useEffect(() => {
@@ -47,11 +46,6 @@ const MFAPage = () => {
   // Apply theme-based styles
   const isDarkMode = theme === 'dark';
   
-  const handleSkip = () => {
-    localStorage.removeItem('emailForSignIn');
-    navigate('/profile');
-  };
-
   if (isLoading) {
     return (
       <div className={`min-h-screen flex items-center justify-center ${isDarkMode ? 'bg-gradient-to-b from-gray-900 to-black text-white' : 'bg-gradient-to-b from-gray-100 to-white text-gray-900'}`}>
@@ -63,7 +57,7 @@ const MFAPage = () => {
   return (
     <div className={`min-h-screen flex flex-col ${isDarkMode ? 'bg-gradient-to-b from-gray-900 to-black text-white' : 'bg-gradient-to-b from-gray-100 to-white text-gray-900'}`}>
       <Helmet>
-        <title>{t('two_factor_authentication') || 'Two-Factor Authentication'}</title>
+        <title>{t('two_factor_authentication') || 'Two Factor Authentication'}</title>
       </Helmet>
       
       <main className="flex-1 container mx-auto px-4 py-12">
@@ -74,7 +68,7 @@ const MFAPage = () => {
           }>
             <CardHeader>
               <CardTitle className="text-center">
-                {t('two_factor_authentication') || 'Two-Factor Authentication'}
+                {t('two_factor_authentication') || 'Two Factor Authentication'}
               </CardTitle>
               <CardDescription className={`text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                 {t('verify_with_email_otp') || 'Verify your identity with an email verification code'}
@@ -83,15 +77,6 @@ const MFAPage = () => {
             <CardContent>
               <EmailOTP defaultEmail={userEmail} />
             </CardContent>
-            <CardFooter className="flex justify-between">
-              <Button 
-                variant="outline" 
-                onClick={handleSkip}
-                className="w-full"
-              >
-                {t('skip_for_now') || 'Skip for now'}
-              </Button>
-            </CardFooter>
           </Card>
         </div>
       </main>
