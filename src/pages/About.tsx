@@ -56,7 +56,7 @@ const About = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="grid md:grid-cols-2 gap-12 mb-16"
+            className="grid md:grid-cols-2 gap-12 mb-16 text-left"
           >
             <div>
               <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
