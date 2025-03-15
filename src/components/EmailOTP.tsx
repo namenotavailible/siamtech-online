@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { auth } from '@/lib/firebase';
-import { sendSignInLinkToEmail, fetchSignInMethodsForEmail } from 'firebase/auth';
+import { sendSignInLinkToEmail } from 'firebase/auth';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -10,6 +10,8 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { useLanguage } from '@/contexts/LanguageContext';
+import { ChevronLeft, Send, RefreshCw } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 type EmailAuthPhase = 'request' | 'verify';
 
@@ -18,6 +20,7 @@ const EmailOTP = ({ defaultEmail = '' }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [phase, setPhase] = useState<EmailAuthPhase>('request');
   const [otp, setOtp] = useState('');
+  const [countdown, setCountdown] = useState(0);
   const navigate = useNavigate();
   const { t } = useLanguage();
   
@@ -27,11 +30,28 @@ const EmailOTP = ({ defaultEmail = '' }) => {
     },
   });
 
+  // Handle countdown for resending OTP
   useEffect(() => {
-    // If defaultEmail is provided (from Google auth), automatically send OTP
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [countdown]);
+
+  useEffect(() => {
+    // If defaultEmail is provided, automatically start OTP flow
     if (defaultEmail) {
       setEmail(defaultEmail);
-      handleSendOTP();
+      
+      // Don't auto-send when coming from login flow
+      // Check if OTP for this email was previously sent
+      const lastSentTime = localStorage.getItem(`otp_sent_time_${defaultEmail}`);
+      if (lastSentTime && (Date.now() - parseInt(lastSentTime)) < 60000) {
+        // If OTP was sent less than a minute ago, go straight to verify
+        setPhase('verify');
+        const remainingTime = Math.floor((60000 - (Date.now() - parseInt(lastSentTime))) / 1000);
+        setCountdown(remainingTime > 0 ? remainingTime : 0);
+      }
     }
   }, [defaultEmail]);
 
@@ -52,6 +72,10 @@ const EmailOTP = ({ defaultEmail = '' }) => {
       
       // Store OTP in localStorage (in a real app, this would be handled more securely)
       localStorage.setItem(`otp_for_${email}`, generatedOTP);
+      localStorage.setItem(`otp_sent_time_${email}`, Date.now().toString());
+      
+      // Set countdown for resending
+      setCountdown(60);
       
       // In a real implementation, you would send this via a secure email service
       // Here we're using Firebase's email link as a temporary solution
@@ -64,7 +88,13 @@ const EmailOTP = ({ defaultEmail = '' }) => {
       await sendSignInLinkToEmail(auth, email, actionCodeSettings);
       
       // Show OTP in a toast for demo purposes (in production this would be sent via email only)
-      toast.info(`For demo purposes, your OTP is: ${generatedOTP}`);
+      toast.info(
+        <div className="font-mono">
+          {t("demo_otp_message") || "For demo purposes, your OTP is:"} 
+          <div className="text-lg font-bold mt-2 text-center">{generatedOTP}</div>
+        </div>, 
+        { duration: 10000 }
+      );
       
       // Move to verification phase
       setPhase('verify');
@@ -91,11 +121,14 @@ const EmailOTP = ({ defaultEmail = '' }) => {
       if (otp === storedOTP) {
         // OTP is correct
         localStorage.removeItem(`otp_for_${email}`); // Clear the OTP
+        localStorage.removeItem(`otp_sent_time_${email}`); // Clear the sent time
+        localStorage.removeItem('emailForSignIn'); // Clear the email
+        
         toast.success(t("verification_successful") || "Verification successful!");
         navigate('/profile');
       } else {
         // OTP is incorrect
-        toast.error(t("invalid_otp") || "Invalid OTP. Please try again.");
+        toast.error(t("invalid_otp") || "Invalid verification code. Please try again.");
       }
     } catch (error) {
       console.error('Error verifying OTP:', error);
@@ -128,7 +161,17 @@ const EmailOTP = ({ defaultEmail = '' }) => {
             disabled={isLoading}
             className="w-full"
           >
-            {isLoading ? (t("sending") || 'Sending...') : (t("send_verification_code") || 'Send Verification Code')}
+            {isLoading ? (
+              <span className="flex items-center">
+                <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                {t("sending") || 'Sending...'}
+              </span>
+            ) : (
+              <span className="flex items-center">
+                <Send className="mr-2 h-4 w-4" />
+                {t("send_verification_code") || 'Send Verification Code'}
+              </span>
+            )}
           </Button>
         </form>
       </div>
@@ -167,22 +210,56 @@ const EmailOTP = ({ defaultEmail = '' }) => {
             disabled={isLoading || otp.length !== 6}
             className="w-full"
           >
-            {isLoading ? (t("verifying") || 'Verifying...') : (t("verify") || 'Verify')}
+            {isLoading ? (
+              <span className="flex items-center">
+                <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                {t("verifying") || 'Verifying...'}
+              </span>
+            ) : (
+              t("verify") || 'Verify'
+            )}
           </Button>
           
-          <Button 
-            type="button" 
-            variant="outline" 
-            onClick={() => {
-              setPhase('request');
-              setOtp('');
-            }}
-            className="w-full"
-          >
-            {t("back") || 'Back'}
-          </Button>
+          <div className="flex justify-between">
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={() => {
+                setPhase('request');
+                setOtp('');
+              }}
+              size="sm"
+              className="w-1/2 mr-1"
+            >
+              <ChevronLeft className="h-4 w-4 mr-1" />
+              {t("back") || 'Back'}
+            </Button>
+            
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={handleSendOTP}
+              disabled={countdown > 0 || isLoading}
+              size="sm"
+              className="w-1/2 ml-1"
+            >
+              {countdown > 0 ? (
+                `${t("resend_in") || 'Resend in'} ${countdown}s`
+              ) : (
+                t("resend_code") || 'Resend Code'
+              )}
+            </Button>
+          </div>
         </div>
       </form>
+      
+      {!localStorage.getItem(`otp_for_${email}`) && (
+        <Alert className="mt-4">
+          <AlertDescription>
+            {t("otp_expired") || "This verification code may have expired. Please request a new one if needed."}
+          </AlertDescription>
+        </Alert>
+      )}
     </div>
   );
 };

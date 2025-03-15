@@ -1,12 +1,13 @@
 
 import { useEffect, useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import EmailOTP from '@/components/EmailOTP';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '@/lib/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
+import { Button } from '@/components/ui/button';
 
 const MFAPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -16,6 +17,12 @@ const MFAPage = () => {
   const { theme } = useTheme();
 
   useEffect(() => {
+    // Check if email was passed from sign-in
+    const emailFromStorage = localStorage.getItem('emailForSignIn');
+    if (emailFromStorage) {
+      setUserEmail(emailFromStorage);
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsAuthenticated(true);
@@ -24,7 +31,10 @@ const MFAPage = () => {
         }
       } else {
         setIsAuthenticated(false);
-        navigate('/');
+        if (!emailFromStorage) {
+          // Only redirect if we don't have an email from storage
+          navigate('/');
+        }
       }
     });
 
@@ -34,6 +44,11 @@ const MFAPage = () => {
   // Apply theme-based styles
   const isDarkMode = theme === 'dark';
   
+  const handleSkip = () => {
+    localStorage.removeItem('emailForSignIn');
+    navigate('/profile');
+  };
+
   return (
     <div className={`min-h-screen flex flex-col ${isDarkMode ? 'bg-gradient-to-b from-gray-900 to-black text-white' : 'bg-gradient-to-b from-gray-100 to-white text-gray-900'}`}>
       <main className="flex-1 container mx-auto px-4 py-12">
@@ -53,6 +68,15 @@ const MFAPage = () => {
             <CardContent>
               <EmailOTP defaultEmail={userEmail} />
             </CardContent>
+            <CardFooter className="flex justify-between">
+              <Button 
+                variant="outline" 
+                onClick={handleSkip}
+                className="w-full"
+              >
+                {t('skip_for_now') || 'Skip for now'}
+              </Button>
+            </CardFooter>
           </Card>
         </div>
       </main>
