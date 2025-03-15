@@ -183,7 +183,7 @@ const Warranty = () => {
           </section>
 
           <section id="policy" className="space-y-6">
-            <h2 className="text-2xl font-semibold text-left">{t("extended_warranty_options")}</h2>
+            <h2 className="text-2xl font-semibold text-center">{t("extended_warranty_options")}</h2>
             <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
               {t("extended_warranty_description")}
             </p>
