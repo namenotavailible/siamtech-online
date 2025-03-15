@@ -22,7 +22,7 @@ interface Char {
 }
 
 const EmailOTP = ({ defaultEmail = '' }: { defaultEmail?: string }) => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const { theme } = useTheme();
   const navigate = useNavigate();
   const isDarkMode = theme === 'dark';
@@ -38,7 +38,7 @@ const EmailOTP = ({ defaultEmail = '' }: { defaultEmail?: string }) => {
   // Create an array of characters for OTP input visualization
   const [chars, setChars] = useState<Char[]>(
     Array(OTP_LENGTH).fill('').map((_, index) => ({
-      index,
+      index, // Ensuring the index property is included
       char: '',
       isActive: index === 0,
       hasFakeCaret: index === 0,
@@ -116,7 +116,7 @@ const EmailOTP = ({ defaultEmail = '' }: { defaultEmail?: string }) => {
       
       // Update the visualization
       const newChars = chars.map((char, index) => ({
-        index,
+        index, // Ensuring the index property is included
         char: value[index] || '',
         isActive: index === value.length,
         hasFakeCaret: index === value.length,
@@ -285,7 +285,7 @@ const EmailOTP = ({ defaultEmail = '' }: { defaultEmail?: string }) => {
                   </button>
                 ) : (
                   <>
-                    {t('resend_code_in', { seconds: countdown }) || `Resend code in ${countdown}s`}
+                    {t('resend_code_in', { countdown }) || `Resend code in ${countdown}s`}
                   </>
                 )}
               </p>
