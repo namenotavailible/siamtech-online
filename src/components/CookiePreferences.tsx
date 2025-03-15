@@ -24,7 +24,7 @@ export type CookiePreferences = {
 }
 
 export function CookiePreferences({ open, onOpenChange }: { open: boolean, onOpenChange: (open: boolean) => void }) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [preferences, setPreferences] = useState<CookiePreferences>({
     necessary: true, // Necessary cookies cannot be disabled
     analytics: false,

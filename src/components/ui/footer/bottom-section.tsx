@@ -5,7 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { CookiePreferences } from "@/components/CookiePreferences";
 
 export function BottomSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [cookiePreferencesOpen, setCookiePreferencesOpen] = useState(false);
   
   return (
