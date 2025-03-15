@@ -13,6 +13,7 @@ import ProductLearnMore from "./pages/ProductLearnMore";
 import Checkout from "./pages/Checkout";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import MFAPage from "./pages/MFAPage";
 
 import { Toaster } from "@/components/ui/sonner"
 import { CartProvider } from "./contexts/CartContext";
@@ -41,6 +42,7 @@ function App() {
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/product/:id/learn-more" element={<ProductLearnMore />} />
                 <Route path="/checkout" element={<Checkout />} />
+                <Route path="/mfa" element={<MFAPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               <Toaster />
