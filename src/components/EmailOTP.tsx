@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -285,7 +284,7 @@ const EmailOTP = ({ defaultEmail = '' }: { defaultEmail?: string }) => {
                   </button>
                 ) : (
                   <>
-                    {t('resend_code_in', { countdown }) || `Resend code in ${countdown}s`}
+                    {t('resend_code_in') || `Resend code in ${countdown}s`}
                   </>
                 )}
               </p>
