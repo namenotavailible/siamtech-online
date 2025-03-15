@@ -10,7 +10,6 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { useLanguage } from '@/contexts/LanguageContext';
-import { supabase } from '@/integrations/supabase/client';
 
 type EmailAuthPhase = 'request' | 'verify';
 
@@ -35,22 +34,6 @@ const EmailOTP = ({ defaultEmail = '' }) => {
       handleSendOTP();
     }
   }, [defaultEmail]);
-
-  // Log the 2FA attempt to security_logs
-  const logSecurityEvent = async (eventType: string, details: any) => {
-    try {
-      const { error } = await supabase.rpc('log_security_event', {
-        _event_type: eventType,
-        _details: details
-      });
-      
-      if (error) {
-        console.error('Error logging security event:', error);
-      }
-    } catch (err) {
-      console.error('Failed to log security event:', err);
-    }
-  };
 
   // Send OTP to user's email
   const handleSendOTP = async (e?: React.FormEvent) => {
@@ -80,9 +63,6 @@ const EmailOTP = ({ defaultEmail = '' }) => {
       // Send email with OTP
       await sendSignInLinkToEmail(auth, email, actionCodeSettings);
       
-      // Log 2FA initiation to security_logs
-      await logSecurityEvent('mfa_otp_sent', { email });
-      
       // Show OTP in a toast for demo purposes (in production this would be sent via email only)
       toast.info(`For demo purposes, your OTP is: ${generatedOTP}`);
       
@@ -94,12 +74,6 @@ const EmailOTP = ({ defaultEmail = '' }) => {
     } catch (error) {
       console.error('Error sending OTP:', error);
       toast.error(t("failed_to_send_otp") || "Failed to send OTP. Please try again.");
-      
-      // Log the failure
-      await logSecurityEvent('mfa_otp_send_failed', { 
-        email, 
-        error: error instanceof Error ? error.message : 'Unknown error' 
-      });
     }
 
     setIsLoading(false);
@@ -117,47 +91,15 @@ const EmailOTP = ({ defaultEmail = '' }) => {
       if (otp === storedOTP) {
         // OTP is correct
         localStorage.removeItem(`otp_for_${email}`); // Clear the OTP
-        
-        // Log successful verification
-        await logSecurityEvent('mfa_completed', { email });
-        
-        // Update the user's profile to mark them as verified
-        if (auth.currentUser) {
-          const { data, error } = await supabase
-            .from('profiles')
-            .update({ 
-              is_email_verified: true,
-              last_login: new Date().toISOString(),
-              last_ip: 'client-ip-unavailable' // In a real app, this would come from the server
-            })
-            .eq('id', auth.currentUser.uid);
-            
-          if (error) {
-            console.error('Error updating profile:', error);
-          }
-        }
-        
         toast.success(t("verification_successful") || "Verification successful!");
         navigate('/profile');
       } else {
         // OTP is incorrect
-        // Log failed attempt
-        await logSecurityEvent('mfa_failed', { 
-          email, 
-          reason: 'Invalid OTP' 
-        });
-        
         toast.error(t("invalid_otp") || "Invalid OTP. Please try again.");
       }
     } catch (error) {
       console.error('Error verifying OTP:', error);
       toast.error(t("verification_failed") || "Verification failed. Please try again.");
-      
-      // Log error
-      await logSecurityEvent('mfa_error', { 
-        email, 
-        error: error instanceof Error ? error.message : 'Unknown error' 
-      });
     }
 
     setIsLoading(false);
@@ -210,8 +152,8 @@ const EmailOTP = ({ defaultEmail = '' }) => {
               onChange={setOtp}
               render={({ slots }) => (
                 <InputOTPGroup>
-                  {slots.map((slot, i) => (
-                    <InputOTPSlot key={i} {...slot} index={i} />
+                  {slots.map((slot, index) => (
+                    <InputOTPSlot key={index} {...slot} />
                   ))}
                 </InputOTPGroup>
               )}

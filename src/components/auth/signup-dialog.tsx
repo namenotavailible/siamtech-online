@@ -17,8 +17,9 @@ import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { GoogleLogo } from "@/components/ui/google-logo";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CheckCircle, AlertTriangle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
   const id = useId();
@@ -32,7 +33,7 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showSignedInAlert, setShowSignedInAlert] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [useMFA, setUseMFA] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -62,10 +63,7 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setErrorMessage(null);
-    
     try {
-      console.log("Starting email sign-up process...");
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         formData.email,
@@ -79,29 +77,15 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
       setOpen(false);
       console.log("User signed up:", userCredential.user);
       
-      // Go directly to profile - no MFA
-      navigate('/profile');
+      // Redirect to MFA page if MFA is enabled
+      if (useMFA) {
+        // Store email for MFA page
+        localStorage.setItem('emailForSignIn', formData.email);
+        navigate('/mfa');
+      }
     } catch (error) {
       console.error("Error signing up:", error);
-      
-      // Provide more specific error messages
-      if (error instanceof Error) {
-        const errorCode = error.message;
-        
-        if (errorCode.includes("email-already-in-use")) {
-          setErrorMessage(t("error_email_already_in_use") || "This email is already in use. Please try logging in instead.");
-        } else if (errorCode.includes("weak-password")) {
-          setErrorMessage(t("error_weak_password") || "Password is too weak. Please use a stronger password.");
-        } else if (errorCode.includes("invalid-email")) {
-          setErrorMessage(t("error_invalid_email") || "Invalid email address format.");
-        } else {
-          setErrorMessage(t("account_created_error") || "Failed to create account. Please try again later.");
-        }
-      } else {
-        setErrorMessage(t("account_created_error") || "Failed to create account. Please try again later.");
-      }
-      
-      toast.error(errorMessage || t("account_created_error"));
+      toast.error(t("account_created_error"));
     } finally {
       setIsLoading(false);
     }
@@ -109,47 +93,23 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
 
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
-    setErrorMessage(null);
-    
     try {
-      // Clear any existing errors
-      console.log("Attempting Google sign in...");
-      
-      // Make sure we're using the latest configuration
-      googleProvider.setCustomParameters({
-        prompt: 'select_account'
-      });
-      
       const result = await signInWithPopup(auth, googleProvider);
-      
-      console.log("Google sign in successful:", result.user);
       toast.success(t("google_signin_success"));
       setOpen(false);
+      console.log("Google sign in result:", result.user);
       
-      // Go directly to profile
-      navigate('/profile');
+      // Redirect to MFA page if MFA is enabled
+      if (useMFA) {
+        // Store email for MFA page
+        if (result.user.email) {
+          localStorage.setItem('emailForSignIn', result.user.email);
+        }
+        navigate('/mfa');
+      }
     } catch (error) {
       console.error("Error signing in with Google:", error);
-      
-      // Provide more specific error messages
-      if (error instanceof Error) {
-        const errorMessage = error.message;
-        console.log("Google sign-in error details:", errorMessage);
-        
-        if (errorMessage.includes("popup-closed-by-user")) {
-          setErrorMessage(t("error_popup_closed") || "Sign-in popup was closed. Please try again.");
-        } else if (errorMessage.includes("popup-blocked")) {
-          setErrorMessage(t("error_popup_blocked") || "Pop-up was blocked by your browser. Please allow pop-ups for this site.");
-        } else if (errorMessage.includes("account-exists-with-different-credential")) {
-          setErrorMessage(t("error_account_exists") || "An account already exists with the same email but different sign-in credentials.");
-        } else {
-          setErrorMessage(t("google_signin_error") || "Failed to sign in with Google. Please try again later.");
-        }
-      } else {
-        setErrorMessage(t("google_signin_error") || "Failed to sign in with Google. Please try again later.");
-      }
-      
-      toast.error(errorMessage || t("google_signin_error"));
+      toast.error(t("google_signin_error"));
     } finally {
       setIsLoading(false);
     }
@@ -195,13 +155,6 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
               </DialogHeader>
             </div>
 
-            {errorMessage && (
-              <Alert variant="destructive" className="mb-4">
-                <AlertTriangle className="h-4 w-4" />
-                <AlertDescription>{errorMessage}</AlertDescription>
-              </Alert>
-            )}
-
             <form onSubmit={handleEmailSignUp} className="space-y-5">
               <div className="space-y-4">
                 <div className="space-y-2">
@@ -236,6 +189,19 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
                     value={formData.password}
                     onChange={handleInputChange}
                   />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox 
+                    id="use-mfa" 
+                    checked={useMFA} 
+                    onCheckedChange={(checked) => setUseMFA(!!checked)} 
+                  />
+                  <label
+                    htmlFor="use-mfa"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    {t("enable_two_factor_authentication") || "Enable two-factor authentication"}
+                  </label>
                 </div>
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>

@@ -1,3 +1,4 @@
+
 import { Vortex } from "@/components/ui/vortex";
 import Navigation from "@/components/Navigation";
 import FeaturedProducts from "@/components/FeaturedProducts";
@@ -126,13 +127,6 @@ const Index = () => {
           ? "SIAMTECH Online | Premium Gaming & Audio Equipment Store" 
           : "บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด | ร้านอุปกรณ์เกมและเครื่องเสียงระดับพรีเมียม"}
         </title>
-        <meta httpEquiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload" />
-        <meta httpEquiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'" />
-        <meta httpEquiv="X-Frame-Options" content="SAMEORIGIN" />
-        <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
-        <meta httpEquiv="Referrer-Policy" content="no-referrer-when-downgrade" />
-        <meta httpEquiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()" />
-        
         <meta name="description" content={language === "en" 
           ? "Discover premium gaming peripherals and professional audio equipment at SIAMTECH Online. Shop our collection of high-quality microphones, gaming mice, and streaming gear." 
           : "ค้นพบอุปกรณ์เกมมิ่งและอุปกรณ์เสียงระดับมืออาชีพที่ บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด เลือกซื้อไมโครโฟนคุณภาพสูง เมาส์เกมมิ่ง และอุปกรณ์สตรีมมิ่งของเรา"} />
@@ -143,8 +137,8 @@ const Index = () => {
           ? "SIAMTECH Online | Premium Gaming & Audio Equipment Store" 
           : "บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด | ร้านอุปกรณ์เกมและเครื่องเสียงระดับพรีเมียม"} />
         <meta property="og:description" content={language === "en" 
-          ? "Discover premium gaming peripherals and professional audio equipment at SIAMTECH Online."
-          : "ค้นพบอุปกรณ์เกมมิ่งและอุปกรณ์เสียงระดับมืออาชีพที่ บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด"} />
+          ? "Discover premium gaming peripherals and professional audio equipment at SIAMTECH Online. Shop our collection of high-quality microphones, gaming mice, and streaming gear."
+          : "ค้นพบอุปกรณ์เกมมิ่งและอุปกรณ์เสียงระดับมืออาชีพที่ บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด เลือกซื้อไมโครโฟนคุณภาพสูง เมาส์เกมมิ่ง และอุปกรณ์สตรีมมิ่งของเรา"} />
         <meta property="og:image" content="/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content={language === "en" ? "SIAMTECH Online" : "บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด"} />
