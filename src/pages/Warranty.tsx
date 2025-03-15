@@ -18,6 +18,7 @@ import WarrantyRegistrationForm from "@/components/warranty/WarrantyRegistration
 import WarrantyFAQ from "@/components/warranty/WarrantyFAQ";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
+
 const Warranty = () => {
   const navigate = useNavigate();
   const {
@@ -53,12 +54,14 @@ const Warranty = () => {
     content: t("activate_warranty_step_description"),
     image: "/placeholder.svg"
   }];
+  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       setIsAuthenticated(!!user);
     });
     return () => unsubscribe();
   }, []);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       id,
@@ -69,6 +72,7 @@ const Warranty = () => {
       [id.split('-')[1]]: value
     }));
   };
+
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -81,6 +85,7 @@ const Warranty = () => {
       toast.error(t("account_created_error"));
     }
   };
+
   const handleGoogleSignIn = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
@@ -92,6 +97,7 @@ const Warranty = () => {
       toast.error(t("google_signin_error"));
     }
   };
+
   const handleActivateWarranty = () => {
     if (!isAuthenticated) {
       setShowAuthDialog(true);
@@ -99,6 +105,7 @@ const Warranty = () => {
       setShowWarrantyForm(true);
     }
   };
+
   return <div className={`min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
       <Navigation />
       
@@ -110,8 +117,8 @@ const Warranty = () => {
         opacity: 1,
         y: 0
       }} className="space-y-12">
-          <section id="overview" className="space-y-6 text-left">
-            <h1 className="text-4xl font-bold text-center">
+          <section id="overview" className="space-y-6">
+            <h1 className="text-4xl font-bold text-left">
               {t("warranty_info")}
             </h1>
             
@@ -168,11 +175,11 @@ const Warranty = () => {
             </div>
           </section>
 
-          <section id="registration" className="space-y-6 text-left">
+          <section id="registration" className="space-y-6">
             <FeatureSteps features={features} title={t("how_to_activate_warranty")} autoPlayInterval={4000} className={`${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/80'} rounded-lg backdrop-blur-sm`} />
 
             <div className={`mt-8 p-6 ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/80'} rounded-lg backdrop-blur-sm`}>
-              <h2 className="text-2xl font-semibold mb-4">{t("activate_warranty")}</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-left">{t("activate_warranty")}</h2>
               <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} mb-4`}>
                 {t("activate_warranty_description")}
               </p>
@@ -182,8 +189,8 @@ const Warranty = () => {
             </div>
           </section>
 
-          <section id="policy" className="space-y-6 text-left">
-            <h2 className="text-2xl font-semibold">{t("extended_warranty_options")}</h2>
+          <section id="policy" className="space-y-6">
+            <h2 className="text-2xl font-semibold text-left">{t("extended_warranty_options")}</h2>
             <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
               {t("extended_warranty_description")}
             </p>
@@ -201,7 +208,7 @@ const Warranty = () => {
             </div>
           </section>
 
-          <section id="faqs" className="space-y-6 text-left">
+          <section id="faqs" className="space-y-6">
             <WarrantyFAQ />
           </section>
         </motion.div>
@@ -280,4 +287,5 @@ const Warranty = () => {
       <Footerdemo />
     </div>;
 };
+
 export default Warranty;
