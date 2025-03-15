@@ -10,10 +10,10 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useId, useState } from "react";
+import { useId, useState, useEffect } from "react";
 import { User } from "lucide-react";
 import { auth, googleProvider } from "@/lib/firebase";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged } from "firebase/auth";
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -26,6 +26,15 @@ function SignUpDialog() {
     password: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(!!user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -33,6 +42,14 @@ function SignUpDialog() {
       ...prev,
       [id.split('-')[1]]: value
     }));
+  };
+
+  const handleOpenChange = (open: boolean) => {
+    if (open && isAuthenticated) {
+      toast.info(t("already_signed_in"));
+      return;
+    }
+    setIsOpen(open);
   };
 
   const handleEmailSignUp = async (e: React.FormEvent) => {
@@ -45,6 +62,7 @@ function SignUpDialog() {
         formData.password
       );
       toast.success(t("account_created_success"));
+      setIsOpen(false);
       console.log("User signed up:", userCredential.user);
     } catch (error) {
       console.error("Error signing up:", error);
@@ -59,6 +77,7 @@ function SignUpDialog() {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       toast.success(t("google_signin_success"));
+      setIsOpen(false);
       console.log("Google sign in result:", result.user);
     } catch (error) {
       console.error("Error signing in with Google:", error);
@@ -69,7 +88,7 @@ function SignUpDialog() {
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <button className="text-gray-300 hover:text-white transition-colors">
           <User className="h-5 w-5" />
