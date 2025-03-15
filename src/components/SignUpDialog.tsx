@@ -15,9 +15,11 @@ import { User } from "lucide-react";
 import { auth, googleProvider } from "@/lib/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 function SignUpDialog() {
   const id = useId();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -42,11 +44,11 @@ function SignUpDialog() {
         formData.email,
         formData.password
       );
-      toast.success("Account created successfully!");
+      toast.success(t("account_created_success"));
       console.log("User signed up:", userCredential.user);
     } catch (error) {
       console.error("Error signing up:", error);
-      toast.error("Failed to create account. Please try again.");
+      toast.error(t("account_created_error"));
     } finally {
       setIsLoading(false);
     }
@@ -56,11 +58,11 @@ function SignUpDialog() {
     setIsLoading(true);
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      toast.success("Signed in with Google successfully!");
+      toast.success(t("google_signin_success"));
       console.log("Google sign in result:", result.user);
     } catch (error) {
       console.error("Error signing in with Google:", error);
-      toast.error("Failed to sign in with Google. Please try again.");
+      toast.error(t("google_signin_error"));
     } finally {
       setIsLoading(false);
     }
@@ -91,9 +93,9 @@ function SignUpDialog() {
             </svg>
           </div>
           <DialogHeader>
-            <DialogTitle className="sm:text-center">Sign up to SIAMTECH</DialogTitle>
+            <DialogTitle className="sm:text-center">{t("signup_title")}</DialogTitle>
             <DialogDescription className="sm:text-center">
-              Create an account to manage your orders and profile.
+              {t("signup_warranty_description")}
             </DialogDescription>
           </DialogHeader>
         </div>
@@ -101,10 +103,10 @@ function SignUpDialog() {
         <form onSubmit={handleEmailSignUp} className="space-y-5">
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor={`${id}-name`}>Full name</Label>
+              <Label htmlFor={`${id}-name`}>{t("full_name")}</Label>
               <Input 
                 id={`${id}-name`} 
-                placeholder="John Doe" 
+                placeholder={t("full_name_placeholder")} 
                 type="text" 
                 required 
                 value={formData.name}
@@ -112,10 +114,10 @@ function SignUpDialog() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor={`${id}-email`}>Email</Label>
+              <Label htmlFor={`${id}-email`}>{t("email")}</Label>
               <Input 
                 id={`${id}-email`} 
-                placeholder="john@example.com" 
+                placeholder={t("email_placeholder")} 
                 type="email" 
                 required 
                 value={formData.email}
@@ -123,10 +125,10 @@ function SignUpDialog() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor={`${id}-password`}>Password</Label>
+              <Label htmlFor={`${id}-password`}>{t("password")}</Label>
               <Input
                 id={`${id}-password`}
-                placeholder="Enter your password"
+                placeholder={t("password_placeholder")}
                 type="password"
                 required
                 value={formData.password}
@@ -135,12 +137,12 @@ function SignUpDialog() {
             </div>
           </div>
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? "Creating account..." : "Sign up"}
+            {isLoading ? `${t("signup_button")}...` : t("signup_button")}
           </Button>
         </form>
 
         <div className="flex items-center gap-3 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
-          <span className="text-xs text-gray-400">Or</span>
+          <span className="text-xs text-gray-400">{t("or")}</span>
         </div>
 
         <Button 
@@ -149,13 +151,13 @@ function SignUpDialog() {
           onClick={handleGoogleSignIn}
           disabled={isLoading}
         >
-          Continue with Google
+          {t("continue_with_google")}
         </Button>
 
         <p className="text-center text-xs text-gray-400">
-          By signing up you agree to our{" "}
+          {t("terms_agreement")}{" "}
           <a className="underline hover:no-underline" href="#">
-            Terms
+            {t("terms")}
           </a>
           .
         </p>
