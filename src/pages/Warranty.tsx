@@ -172,7 +172,7 @@ const Warranty = () => {
             <FeatureSteps features={features} title={t("how_to_activate_warranty")} autoPlayInterval={4000} className={`${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/80'} rounded-lg backdrop-blur-sm`} />
 
             <div className={`mt-8 p-6 ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/80'} rounded-lg backdrop-blur-sm`}>
-              <h2 className="text-2xl font-semibold mb-4 text-left">{t("activate_warranty")}</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-center">{t("activate_warranty")}</h2>
               <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} mb-4`}>
                 {t("activate_warranty_description")}
               </p>
