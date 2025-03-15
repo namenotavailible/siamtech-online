@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -85,6 +84,9 @@ function SignUpDialog() {
         // Pass the email to localStorage for the MFA page
         localStorage.setItem('emailForSignIn', formData.email);
         navigate('/mfa');
+      } else {
+        // Skip MFA and go directly to profile
+        navigate('/profile');
       }
     } catch (error) {
       console.error("Error signing up:", error);
@@ -102,14 +104,8 @@ function SignUpDialog() {
       setIsOpen(false);
       console.log("Google sign in result:", result.user);
       
-      // Redirect to MFA page if MFA is enabled
-      if (useMFA) {
-        // Store email for MFA page
-        if (result.user.email) {
-          localStorage.setItem('emailForSignIn', result.user.email);
-        }
-        navigate('/mfa');
-      }
+      // For Google sign-in, bypass MFA and go directly to profile
+      navigate('/profile');
     } catch (error) {
       console.error("Error signing in with Google:", error);
       toast.error(t("google_signin_error"));
