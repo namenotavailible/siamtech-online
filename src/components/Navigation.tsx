@@ -126,28 +126,28 @@ const Navigation = () => {
               <MenuItem setActive={setActive} active={active} item={t("products")}>
                 <div className="text-sm grid grid-cols-2 gap-10 p-4 w-[400px]">
                   <ProductItem
-                    title={language === "en" ? "AirBass Pro" : "แอร์เบส โปร"}
-                    href="/products/airbass-pro"
-                    src="/lovable-uploads/0bb46080-e4f4-4402-a40d-ecd94be8eade.png"
-                    description={language === "en" ? "Noise-cancelling premium earbuds" : "หูฟังตัดเสียงรบกวนระดับพรีเมียม"}
-                  />
-                  <ProductItem
-                    title={language === "en" ? "SoundSphere X3" : "ซาวด์สเฟียร์ X3"}
-                    href="/products/soundsphere-x3"
-                    src="/lovable-uploads/53213377-4bca-4414-92ab-d261aaf2a84a.png"
-                    description={language === "en" ? "360° surround sound speaker" : "ลำโพงเสียงรอบทิศทาง 360°"}
-                  />
-                  <ProductItem
-                    title={language === "en" ? "BassWave Headphones" : "หูฟังเบสเวฟ"}
-                    href="/products/basswave"
+                    title={language === "en" ? "FIFINE Ampligame AM8" : "FIFINE Ampligame AM8"}
+                    href="/products/1"
                     src="/lovable-uploads/895e0863-a00d-4ccd-9f78-21e1181817a3.png"
-                    description={language === "en" ? "Deep bass, crystal clear highs" : "เสียงเบสลึก เสียงแหลมชัดเจน"}
+                    description={language === "en" ? "Professional dynamic microphone" : "ไมโครโฟนไดนามิกระดับมืออาชีพ"}
                   />
                   <ProductItem
-                    title={language === "en" ? "ProStudio Monitor" : "มอนิเตอร์โปรสตูดิโอ"}
-                    href="/products/prostudio"
-                    src="/lovable-uploads/9f7f3e91-1510-4ec4-8391-68411a8131e6.png"
-                    description={language === "en" ? "Professional studio reference" : "เสียงอ้างอิงระดับสตูดิโอมืออาชีพ"}
+                    title={language === "en" ? "FIFINE Ampligame A8" : "FIFINE Ampligame A8"}
+                    href="/products/2"
+                    src="/lovable-uploads/0bdd554b-e74a-4fe7-8d87-867680dd35bb.png"
+                    description={language === "en" ? "Condenser microphone with RGB" : "ไมโครโฟนคอนเดนเซอร์พร้อม RGB"}
+                  />
+                  <ProductItem
+                    title={language === "en" ? "VXE Dragonfly R1" : "VXE Dragonfly R1"}
+                    href="/products/5"
+                    src="/lovable-uploads/e4346941-0357-4549-8e1e-77ef2c16e8ed.png"
+                    description={language === "en" ? "High-performance gaming mouse" : "เมาส์เกมมิ่งประสิทธิภาพสูง"}
+                  />
+                  <ProductItem
+                    title={language === "en" ? "VGN Dragonfly F1" : "VGN Dragonfly F1"}
+                    href="/products/6"
+                    src="/lovable-uploads/eb227e57-8859-4673-9eda-54e1deb03124.png"
+                    description={language === "en" ? "Premium gaming mouse" : "เมาส์เกมมิ่งระดับพรีเมียม"}
                   />
                 </div>
               </MenuItem>
