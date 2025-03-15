@@ -110,12 +110,13 @@ const Index = () => {
         >
           {t("shop_now")}
         </Link>
-        <button 
+        <Link 
+          to="/about" 
           className={`px-8 py-3 border ${theme === "dark" ? "border-white/20 hover:bg-white/10 text-white" : "border-black/20 hover:bg-black/10 text-black"} rounded-md transition-colors`}
           aria-label={language === "en" ? "Learn more about our products and services" : "เรียนรู้เพิ่มเติมเกี่ยวกับสินค้าและบริการของเรา"}
         >
           {t("learn_more")}
-        </button>
+        </Link>
       </div>
     </motion.div>
   );
