@@ -82,10 +82,24 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
         // Store email for MFA page
         localStorage.setItem('emailForSignIn', formData.email);
         navigate('/mfa');
+      } else {
+        // Redirect directly to profile if MFA is disabled
+        navigate('/profile');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error signing up:", error);
-      toast.error(t("account_created_error"));
+      let errorMessage = t("account_created_error");
+      
+      // Handle specific Firebase errors
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = t("email_already_in_use") || "Email is already in use";
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = t("invalid_email") || "Invalid email format";
+      } else if (error.code === 'auth/weak-password') {
+        errorMessage = t("weak_password") || "Password is too weak";
+      }
+      
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -106,10 +120,22 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
           localStorage.setItem('emailForSignIn', result.user.email);
         }
         navigate('/mfa');
+      } else {
+        // Redirect directly to profile if MFA is disabled
+        navigate('/profile');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error signing in with Google:", error);
-      toast.error(t("google_signin_error"));
+      let errorMessage = t("google_signin_error");
+      
+      // Handle specific Firebase errors
+      if (error.code === 'auth/unauthorized-domain') {
+        errorMessage = t("unauthorized_domain") || "This domain is not authorized for Google sign-in. Please contact the administrator.";
+      } else if (error.code === 'auth/popup-closed-by-user') {
+        errorMessage = t("popup_closed") || "Sign-in popup was closed before completing the process";
+      }
+      
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }

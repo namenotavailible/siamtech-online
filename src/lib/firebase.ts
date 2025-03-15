@@ -21,3 +21,8 @@ export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
   prompt: 'select_account'
 });
+
+// Add additional scopes for Google provider
+googleProvider.addScope('email');
+googleProvider.addScope('profile');
+

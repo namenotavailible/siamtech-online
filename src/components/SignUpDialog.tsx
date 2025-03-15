@@ -85,10 +85,24 @@ function SignUpDialog() {
         // Pass the email to localStorage for the MFA page
         localStorage.setItem('emailForSignIn', formData.email);
         navigate('/mfa');
+      } else {
+        // Redirect directly to profile if MFA is disabled
+        navigate('/profile');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error signing up:", error);
-      toast.error(t("account_created_error"));
+      let errorMessage = t("account_created_error");
+      
+      // Handle specific Firebase errors
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = t("email_already_in_use") || "Email is already in use";
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = t("invalid_email") || "Invalid email format";
+      } else if (error.code === 'auth/weak-password') {
+        errorMessage = t("weak_password") || "Password is too weak";
+      }
+      
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -109,31 +123,26 @@ function SignUpDialog() {
           localStorage.setItem('emailForSignIn', result.user.email);
         }
         navigate('/mfa');
+      } else {
+        // Redirect directly to profile if MFA is disabled
+        navigate('/profile');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error signing in with Google:", error);
-      toast.error(t("google_signin_error"));
+      let errorMessage = t("google_signin_error");
+      
+      // Handle specific Firebase errors
+      if (error.code === 'auth/unauthorized-domain') {
+        errorMessage = t("unauthorized_domain") || "This domain is not authorized for Google sign-in. Please contact the administrator.";
+      } else if (error.code === 'auth/popup-closed-by-user') {
+        errorMessage = t("popup_closed") || "Sign-in popup was closed before completing the process";
+      }
+      
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
   };
-
-  if (isAuthenticated) {
-    return (
-      <>
-        {showSignedInAlert && (
-          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/30 backdrop-blur-sm">
-            <Alert className="w-80 bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-800 dark:text-green-300 shadow-lg">
-              <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-              <AlertDescription>
-                {t("already_signed_in")}
-              </AlertDescription>
-            </Alert>
-          </div>
-        )}
-      </>
-    );
-  }
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
@@ -243,6 +252,17 @@ function SignUpDialog() {
           .
         </p>
       </DialogContent>
+      
+      {showSignedInAlert && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/30 backdrop-blur-sm">
+          <Alert className="w-80 bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-800 dark:text-green-300 shadow-lg">
+            <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
+            <AlertDescription>
+              {t("already_signed_in")}
+            </AlertDescription>
+          </Alert>
+        </div>
+      )}
     </Dialog>
   );
 }

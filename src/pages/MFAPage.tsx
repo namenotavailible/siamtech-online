@@ -8,12 +8,14 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Button } from '@/components/ui/button';
+import { Helmet } from 'react-helmet';
 
 const MFAPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { theme } = useTheme();
 
   useEffect(() => {
@@ -24,6 +26,7 @@ const MFAPage = () => {
     }
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsLoading(false);
       if (user) {
         setIsAuthenticated(true);
         if (user.email) {
@@ -49,8 +52,20 @@ const MFAPage = () => {
     navigate('/profile');
   };
 
+  if (isLoading) {
+    return (
+      <div className={`min-h-screen flex items-center justify-center ${isDarkMode ? 'bg-gradient-to-b from-gray-900 to-black text-white' : 'bg-gradient-to-b from-gray-100 to-white text-gray-900'}`}>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
   return (
     <div className={`min-h-screen flex flex-col ${isDarkMode ? 'bg-gradient-to-b from-gray-900 to-black text-white' : 'bg-gradient-to-b from-gray-100 to-white text-gray-900'}`}>
+      <Helmet>
+        <title>{t('two_factor_authentication') || 'Two-Factor Authentication'}</title>
+      </Helmet>
+      
       <main className="flex-1 container mx-auto px-4 py-12">
         <div className="max-w-md mx-auto">
           <Card className={isDarkMode ? 
