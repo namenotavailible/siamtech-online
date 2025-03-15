@@ -14,7 +14,7 @@ export function ContactInfo() {
         <p>{t("address_line2")}</p>
         <p>{t("address_line3")}</p>
         <p>{t("phone")}</p>
-        <p>{t("email")}</p>
+        <p>Email: support@siamtechonline.com</p>
       </address>
     </div>
   );
