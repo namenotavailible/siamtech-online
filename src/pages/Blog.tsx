@@ -3,7 +3,7 @@ import React from "react";
 import Navigation from "@/components/Navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Footerdemo } from "@/components/ui/footer-section";
-import { BookOpen, Calendar, User } from "lucide-react";
+import { Calendar, User } from "lucide-react";
 
 const BlogCard = ({ 
   title, 
@@ -21,11 +21,11 @@ const BlogCard = ({
   tags?: string[];
 }) => {
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+    <article className="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
       <div className="h-48 overflow-hidden">
         <img 
           src={image} 
-          alt={title} 
+          alt={title}
           className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
         />
       </div>
@@ -35,25 +35,26 @@ const BlogCard = ({
             <span 
               key={index} 
               className="text-xs font-medium bg-primary/10 text-primary px-2 py-1 rounded-full"
+              role="note"
             >
               {tag}
             </span>
           ))}
         </div>
-        <h3 className="text-xl font-bold mb-2">{title}</h3>
+        <h2 className="text-xl font-bold mb-2">{title}</h2>
         <p className="text-gray-600 dark:text-gray-300 mb-4">{excerpt}</p>
         <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-          <div className="flex items-center">
-            <Calendar className="w-4 h-4 mr-1" />
-            <span>{date}</span>
+          <div className="flex items-center" aria-label="Published date">
+            <Calendar className="w-4 h-4 mr-1" aria-hidden="true" />
+            <time dateTime={date}>{date}</time>
           </div>
-          <div className="flex items-center">
-            <User className="w-4 h-4 mr-1" />
+          <div className="flex items-center" aria-label="Author">
+            <User className="w-4 h-4 mr-1" aria-hidden="true" />
             <span>{author}</span>
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 
@@ -116,12 +117,9 @@ const Blog = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-950">
       <Navigation />
-      <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full flex-grow">
+      <main className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full flex-grow">
         {/* Page Header */}
-        <div className="text-center mb-12">
-          <div className="flex justify-center mb-2">
-            <BookOpen className="h-8 w-8 text-primary" />
-          </div>
+        <header className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">
             {language === "en" ? "Our Blog" : "บทความของเรา"}
           </h1>
@@ -130,7 +128,7 @@ const Blog = () => {
               ? "Latest news, insights, and guides about audio equipment and the sound industry." 
               : "ข่าวสาร, ข้อมูลเชิงลึก, และคู่มือล่าสุดเกี่ยวกับอุปกรณ์เสียงและอุตสาหกรรมเสียง"}
           </p>
-        </div>
+        </header>
 
         {/* Blog Posts Grid */}
         <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -138,7 +136,7 @@ const Blog = () => {
             <BlogCard key={index} {...post} />
           ))}
         </div>
-      </div>
+      </main>
       <Footerdemo />
     </div>
   );
