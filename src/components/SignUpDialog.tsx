@@ -17,7 +17,7 @@ import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged, se
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, AlertTriangle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogo } from "@/components/ui/google-logo";
 
@@ -34,6 +34,7 @@ function SignUpDialog() {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showSignedInAlert, setShowSignedInAlert] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -64,6 +65,8 @@ function SignUpDialog() {
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setErrorMessage(null);
+    
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -82,7 +85,24 @@ function SignUpDialog() {
       navigate('/profile');
     } catch (error) {
       console.error("Error signing up:", error);
-      toast.error(t("account_created_error"));
+      
+      if (error instanceof Error) {
+        const errorCode = error.message;
+        
+        if (errorCode.includes("email-already-in-use")) {
+          setErrorMessage(t("error_email_already_in_use") || "This email is already in use. Please try logging in instead.");
+        } else if (errorCode.includes("weak-password")) {
+          setErrorMessage(t("error_weak_password") || "Password is too weak. Please use a stronger password.");
+        } else if (errorCode.includes("invalid-email")) {
+          setErrorMessage(t("error_invalid_email") || "Invalid email address format.");
+        } else {
+          setErrorMessage(t("account_created_error") || "Failed to create account. Please try again later.");
+        }
+      } else {
+        setErrorMessage(t("account_created_error") || "Failed to create account. Please try again later.");
+      }
+      
+      toast.error(errorMessage || t("account_created_error"));
     } finally {
       setIsLoading(false);
     }
@@ -90,22 +110,46 @@ function SignUpDialog() {
 
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
+    setErrorMessage(null);
+    
     try {
-      // Configure Google provider
+      console.log("Starting Google sign-in process...");
+      
+      // Reset custom parameters to ensure a fresh authentication attempt
       googleProvider.setCustomParameters({
         prompt: 'select_account'
       });
       
       const result = await signInWithPopup(auth, googleProvider);
+      console.log("Google sign-in successful:", result.user);
+      
       toast.success(t("google_signin_success"));
       setIsOpen(false);
-      console.log("Google sign in result:", result.user);
       
-      // Go directly to profile
+      // Go directly to profile - no MFA
       navigate('/profile');
     } catch (error) {
       console.error("Error signing in with Google:", error);
-      toast.error(t("google_signin_error"));
+      
+      // More specific error handling
+      if (error instanceof Error) {
+        const errorMessage = error.message;
+        console.log("Google sign-in error details:", errorMessage);
+        
+        if (errorMessage.includes("popup-closed-by-user")) {
+          setErrorMessage(t("error_popup_closed") || "Sign-in popup was closed. Please try again.");
+        } else if (errorMessage.includes("popup-blocked")) {
+          setErrorMessage(t("error_popup_blocked") || "Pop-up was blocked by your browser. Please allow pop-ups for this site.");
+        } else if (errorMessage.includes("account-exists-with-different-credential")) {
+          setErrorMessage(t("error_account_exists") || "An account already exists with the same email but different sign-in credentials.");
+        } else {
+          setErrorMessage(t("google_signin_error") || "Failed to sign in with Google. Please try again later.");
+        }
+      } else {
+        setErrorMessage(t("google_signin_error") || "Failed to sign in with Google. Please try again later.");
+      }
+      
+      toast.error(errorMessage || t("google_signin_error"));
     } finally {
       setIsLoading(false);
     }
@@ -159,6 +203,13 @@ function SignUpDialog() {
             </DialogDescription>
           </DialogHeader>
         </div>
+
+        {errorMessage && (
+          <Alert variant="destructive" className="mb-4">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription>{errorMessage}</AlertDescription>
+          </Alert>
+        )}
 
         <form onSubmit={handleEmailSignUp} className="space-y-5">
           <div className="space-y-4">

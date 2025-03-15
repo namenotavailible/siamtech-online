@@ -6,7 +6,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyDVvRFbYunXAenLAoctEJNUAvzLpY8ngg4",
   authDomain: "account-siamtech.firebaseapp.com",
   projectId: "account-siamtech",
-  storageBucket: "account-siamtech.firebasestorage.app",
+  storageBucket: "account-siamtech.appspot.com",
   messagingSenderId: "572082007637",
   appId: "1:572082007637:web:7f11066334bce13f852edc"
 };
@@ -18,5 +18,6 @@ auth.useDeviceLanguage(); // Use the device's default language
 
 // Configure Google provider
 export const googleProvider = new GoogleAuthProvider();
-googleProvider.addScope('https://www.googleapis.com/auth/userinfo.email');
-googleProvider.addScope('https://www.googleapis.com/auth/userinfo.profile');
+// Add the required scopes
+googleProvider.addScope('email');
+googleProvider.addScope('profile');

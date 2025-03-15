@@ -63,7 +63,9 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
     e.preventDefault();
     setIsLoading(true);
     setErrorMessage(null);
+    
     try {
+      console.log("Starting email sign-up process...");
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         formData.email,
@@ -108,6 +110,7 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
     setErrorMessage(null);
+    
     try {
       // Clear any existing errors
       console.log("Attempting Google sign in...");
@@ -131,6 +134,7 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
       // Provide more specific error messages
       if (error instanceof Error) {
         const errorMessage = error.message;
+        console.log("Google sign-in error details:", errorMessage);
         
         if (errorMessage.includes("popup-closed-by-user")) {
           setErrorMessage(t("error_popup_closed") || "Sign-in popup was closed. Please try again.");
