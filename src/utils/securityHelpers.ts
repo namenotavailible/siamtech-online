@@ -128,6 +128,21 @@ export const setSecureCookie = (name: string, value: string, options = {}) => {
 };
 
 /**
+ * Function to get Helmet security headers for React components
+ * This provides consistent security headers across all pages
+ */
+export const getSecurityHeaders = () => {
+  return {
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'",
+    "X-Frame-Options": "SAMEORIGIN",
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "no-referrer-when-downgrade",
+    "Permissions-Policy": "geolocation=(), microphone=(), camera=()"
+  };
+};
+
+/**
  * Implementation Checklist for Security Enhancements
  */
 export const securityChecklist = [
