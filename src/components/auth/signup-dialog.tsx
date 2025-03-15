@@ -15,6 +15,7 @@ import { auth, googleProvider } from "@/lib/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { GoogleLogo } from "@/components/ui/google-logo";
 
 export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
   const id = useId();
@@ -145,7 +146,8 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
           onClick={handleGoogleSignIn}
           disabled={isLoading}
         >
-          {t("continue_with_google")}
+          <GoogleLogo />
+          <span>{t("continue_with_google")}</span>
         </Button>
 
         <p className="text-center text-xs text-gray-400">
