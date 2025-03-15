@@ -16,10 +16,7 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0
 export const auth = getAuth(app);
 auth.useDeviceLanguage(); // Use the device's default language
 
-// Configure Google provider with proper scopes
+// Configure Google provider
 export const googleProvider = new GoogleAuthProvider();
 googleProvider.addScope('https://www.googleapis.com/auth/userinfo.email');
 googleProvider.addScope('https://www.googleapis.com/auth/userinfo.profile');
-googleProvider.setCustomParameters({
-  prompt: 'select_account'
-});

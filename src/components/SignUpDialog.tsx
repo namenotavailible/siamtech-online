@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,7 +19,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Checkbox } from "@/components/ui/checkbox";
 import { GoogleLogo } from "@/components/ui/google-logo";
 
 function SignUpDialog() {
@@ -34,7 +34,6 @@ function SignUpDialog() {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showSignedInAlert, setShowSignedInAlert] = useState(false);
-  const [useMFA, setUseMFA] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -79,15 +78,8 @@ function SignUpDialog() {
       setIsOpen(false);
       console.log("User signed up:", userCredential.user);
       
-      // Redirect to MFA page if MFA is enabled
-      if (useMFA) {
-        // Pass the email to localStorage for the MFA page
-        localStorage.setItem('emailForSignIn', formData.email);
-        navigate('/mfa');
-      } else {
-        // Skip MFA and go directly to profile
-        navigate('/profile');
-      }
+      // Go directly to profile - no MFA
+      navigate('/profile');
     } catch (error) {
       console.error("Error signing up:", error);
       toast.error(t("account_created_error"));
@@ -99,12 +91,17 @@ function SignUpDialog() {
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
     try {
+      // Configure Google provider
+      googleProvider.setCustomParameters({
+        prompt: 'select_account'
+      });
+      
       const result = await signInWithPopup(auth, googleProvider);
       toast.success(t("google_signin_success"));
       setIsOpen(false);
       console.log("Google sign in result:", result.user);
       
-      // For Google sign-in, bypass MFA and go directly to profile
+      // Go directly to profile
       navigate('/profile');
     } catch (error) {
       console.error("Error signing in with Google:", error);
@@ -197,19 +194,6 @@ function SignUpDialog() {
                 value={formData.password}
                 onChange={handleInputChange}
               />
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox 
-                id="use-mfa" 
-                checked={useMFA} 
-                onCheckedChange={(checked) => setUseMFA(!!checked)} 
-              />
-              <label
-                htmlFor="use-mfa"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                {t("enable_two_factor_authentication") || "Enable two-factor authentication"}
-              </label>
             </div>
           </div>
           <Button type="submit" className="w-full" disabled={isLoading}>

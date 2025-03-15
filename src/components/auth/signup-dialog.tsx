@@ -19,7 +19,6 @@ import { GoogleLogo } from "@/components/ui/google-logo";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle, AlertTriangle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Checkbox } from "@/components/ui/checkbox";
 
 export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
   const id = useId();
@@ -33,7 +32,6 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showSignedInAlert, setShowSignedInAlert] = useState(false);
-  const [useMFA, setUseMFA] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -79,15 +77,8 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
       setOpen(false);
       console.log("User signed up:", userCredential.user);
       
-      // Redirect to MFA page if MFA is enabled
-      if (useMFA) {
-        // Store email for MFA page
-        localStorage.setItem('emailForSignIn', formData.email);
-        navigate('/mfa');
-      } else {
-        // Skip MFA and go directly to profile
-        navigate('/profile');
-      }
+      // Go directly to profile - no MFA
+      navigate('/profile');
     } catch (error) {
       console.error("Error signing up:", error);
       
@@ -132,7 +123,7 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
       toast.success(t("google_signin_success"));
       setOpen(false);
       
-      // For Google sign-in, bypass MFA and go directly to profile
+      // Go directly to profile
       navigate('/profile');
     } catch (error) {
       console.error("Error signing in with Google:", error);
@@ -241,19 +232,6 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
                     value={formData.password}
                     onChange={handleInputChange}
                   />
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="use-mfa" 
-                    checked={useMFA} 
-                    onCheckedChange={(checked) => setUseMFA(!!checked)} 
-                  />
-                  <label
-                    htmlFor="use-mfa"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    {t("enable_two_factor_authentication") || "Enable two-factor authentication"}
-                  </label>
                 </div>
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
