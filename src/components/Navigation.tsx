@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
+import { Search, ShoppingCart, User, Menu, X, BookOpen } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { SignUpDialog } from "@/components/auth/signup-dialog";
 import { SearchPanel } from "@/components/ui/search-panel";
@@ -115,6 +115,10 @@ const Navigation = () => {
             <Link to="/products" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 transition-colors">
               {t("products")}
             </Link>
+            <Link to="/blog" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 transition-colors flex items-center gap-1">
+              <BookOpen className="h-4 w-4" />
+              {language === "en" ? "Blog" : "บทความ"}
+            </Link>
             <Link to="/warranty" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 transition-colors">
               {t("warranty")}
             </Link>
@@ -155,6 +159,10 @@ const Navigation = () => {
           </Link>
           <Link to="/products" className="block text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 rounded-md transition-colors">
             {t("products")}
+          </Link>
+          <Link to="/blog" className="block text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 rounded-md transition-colors flex items-center gap-1">
+            <BookOpen className="h-4 w-4" />
+            {language === "en" ? "Blog" : "บทความ"}
           </Link>
           <Link to="/warranty" className="block text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 rounded-md transition-colors">
             {t("warranty")}

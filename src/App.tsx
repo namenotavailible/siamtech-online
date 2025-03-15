@@ -11,6 +11,7 @@ import Privacy from "./pages/Privacy";
 import ProductDetail from "./pages/ProductDetail";
 import ProductLearnMore from "./pages/ProductLearnMore";
 import Checkout from "./pages/Checkout";
+import Blog from "./pages/Blog";
 
 import { Toaster } from "@/components/ui/sonner"
 import { CartProvider } from "./contexts/CartContext";
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/privacy" element={<Privacy />} />
+                <Route path="/blog" element={<Blog />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/product/:id/learn-more" element={<ProductLearnMore />} />
                 <Route path="/checkout" element={<Checkout />} />
