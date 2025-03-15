@@ -82,6 +82,8 @@ function SignUpDialog() {
       
       // Redirect to MFA page if MFA is enabled
       if (useMFA) {
+        // Pass the email to localStorage for the MFA page
+        localStorage.setItem('emailForSignIn', formData.email);
         navigate('/mfa');
       }
     } catch (error) {
@@ -102,6 +104,10 @@ function SignUpDialog() {
       
       // Redirect to MFA page if MFA is enabled
       if (useMFA) {
+        // Store email for MFA page
+        if (result.user.email) {
+          localStorage.setItem('emailForSignIn', result.user.email);
+        }
         navigate('/mfa');
       }
     } catch (error) {

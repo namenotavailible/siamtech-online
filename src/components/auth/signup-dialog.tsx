@@ -79,6 +79,8 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
       
       // Redirect to MFA page if MFA is enabled
       if (useMFA) {
+        // Store email for MFA page
+        localStorage.setItem('emailForSignIn', formData.email);
         navigate('/mfa');
       }
     } catch (error) {
@@ -99,6 +101,10 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
       
       // Redirect to MFA page if MFA is enabled
       if (useMFA) {
+        // Store email for MFA page
+        if (result.user.email) {
+          localStorage.setItem('emailForSignIn', result.user.email);
+        }
         navigate('/mfa');
       }
     } catch (error) {
