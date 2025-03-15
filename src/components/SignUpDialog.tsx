@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -103,12 +102,25 @@ function SignUpDialog() {
     setIsLoading(true);
     try {
       const result = await signInWithPopup(auth, googleProvider);
+      
+      // Generate a 6-digit OTP
+      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+      
+      // Store OTP and email in localStorage (in a real app, this would be server-side)
+      localStorage.setItem('tempOTP', otp);
+      localStorage.setItem('emailForSignIn', result.user.email || '');
+      
+      // Show the OTP in the console for testing purposes
+      console.log('Generated OTP:', otp);
+      
       toast.success(t("google_signin_success"));
       setIsOpen(false);
-      console.log("Google sign in result:", result.user);
       
-      // Redirect directly to profile
-      navigate('/profile');
+      // In a real app, here we would send the email with the OTP
+      // For now, we're just displaying it in the console
+      
+      // Navigate to MFA page
+      navigate('/mfa');
     } catch (error: any) {
       console.error("Error signing in with Google:", error);
       let errorMessage = t("google_signin_error");
