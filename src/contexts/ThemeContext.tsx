@@ -20,8 +20,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const savedTheme = localStorage.getItem("theme") as Theme;
     if (savedTheme) return savedTheme;
     
-    // Default to dark theme
-    return "dark";
+    // Default to light theme
+    return "light";
   });
 
   useEffect(() => {

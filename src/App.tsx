@@ -23,7 +23,7 @@ function App() {
   return (
     <LanguageProvider>
       <ThemeProvider>
-        <Suspense fallback={<div className="flex h-screen w-full items-center justify-center bg-black text-white">Loading...</div>}>
+        <Suspense fallback={<div className="flex h-screen w-full items-center justify-center bg-white text-black">Loading...</div>}>
           <Router>
             <CartProvider>
               <Routes>

@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { getCookie, setCookie } from "@/utils/cookies";
 
@@ -53,8 +54,8 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     const cookieLang = getCookie("lang") as Language;
     // Then check localStorage as fallback
     const savedLanguage = cookieLang || localStorage.getItem("language") as Language;
-    // Finally fall back to browser language or default to English
-    return savedLanguage || getBrowserLanguage();
+    // Finally fall back to Thai as default language
+    return savedLanguage || "th";
   });
   
   // Track whether translations are loaded
