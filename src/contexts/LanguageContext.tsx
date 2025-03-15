@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { getCookie, setCookie } from "@/utils/cookies";
 
@@ -14,7 +13,7 @@ type LanguageContextType = {
 
 // Create the context with default values
 const LanguageContext = createContext<LanguageContextType>({
-  language: "en",
+  language: "th", // Default to Thai
   setLanguage: () => {},
   t: (key) => key,
 });
@@ -43,23 +42,17 @@ export const loadTranslations = async (lang: Language) => {
 
 // Provider component
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
-  // Get browser language and filter to only supported languages
-  const getBrowserLanguage = (): Language => {
-    const browserLang = navigator.language.toLowerCase();
-    return browserLang.startsWith("th") ? "th" : "en";
-  };
-
-  const [language, setLanguageState] = useState<Language>(() => {
-    // First check cookie
-    const cookieLang = getCookie("lang") as Language;
-    // Then check localStorage as fallback
-    const savedLanguage = cookieLang || localStorage.getItem("language") as Language;
-    // Finally fall back to Thai as default language
-    return savedLanguage || "th";
-  });
+  // Force Thai as the initial language
+  const [language, setLanguageState] = useState<Language>("th");
   
   // Track whether translations are loaded
   const [isLoaded, setIsLoaded] = useState(false);
+
+  // Force Thai language and save to localStorage and cookie on initial load
+  useEffect(() => {
+    localStorage.setItem("language", "th");
+    setCookie("lang", "th", 365);
+  }, []);
 
   // Load translations when the component mounts or language changes
   useEffect(() => {
@@ -108,8 +101,8 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
 
   // Show a loading state while translations are being loaded
   if (!isLoaded) {
-    return <div className="flex h-screen w-full items-center justify-center bg-black text-white">
-      <div className="animate-pulse">Loading translations...</div>
+    return <div className="flex h-screen w-full items-center justify-center bg-white text-black">
+      <div className="animate-pulse">กำลังโหลด...</div>
     </div>;
   }
 
