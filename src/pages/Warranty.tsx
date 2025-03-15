@@ -18,7 +18,6 @@ import WarrantyRegistrationForm from "@/components/warranty/WarrantyRegistration
 import WarrantyFAQ from "@/components/warranty/WarrantyFAQ";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
-
 const Warranty = () => {
   const navigate = useNavigate();
   const {
@@ -54,14 +53,12 @@ const Warranty = () => {
     content: t("activate_warranty_step_description"),
     image: "/placeholder.svg"
   }];
-  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       setIsAuthenticated(!!user);
     });
     return () => unsubscribe();
   }, []);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       id,
@@ -72,7 +69,6 @@ const Warranty = () => {
       [id.split('-')[1]]: value
     }));
   };
-
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -85,7 +81,6 @@ const Warranty = () => {
       toast.error(t("account_created_error"));
     }
   };
-
   const handleGoogleSignIn = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
@@ -97,7 +92,6 @@ const Warranty = () => {
       toast.error(t("google_signin_error"));
     }
   };
-
   const handleActivateWarranty = () => {
     if (!isAuthenticated) {
       setShowAuthDialog(true);
@@ -105,7 +99,6 @@ const Warranty = () => {
       setShowWarrantyForm(true);
     }
   };
-
   return <div className={`min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
       <Navigation />
       
@@ -118,7 +111,7 @@ const Warranty = () => {
         y: 0
       }} className="space-y-12">
           <section id="overview" className="space-y-6">
-            <h1 className="text-4xl font-bold text-left">
+            <h1 className="text-4xl font-bold text-center">
               {t("warranty_info")}
             </h1>
             
@@ -287,5 +280,4 @@ const Warranty = () => {
       <Footerdemo />
     </div>;
 };
-
 export default Warranty;
