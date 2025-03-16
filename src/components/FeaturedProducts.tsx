@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { auth, googleProvider } from "@/lib/firebase";
@@ -156,7 +155,7 @@ const FeaturedProducts = () => {
         y: 0
       }} className="text-center mb-16">
           <h2 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>{t("our_products")}</h2>
-          <p className={`mt-4 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{t("products_description")}</p>
+          <p className={`mt-4 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>ค้นหาอุปกรณ์ระดับพรีเมี่ยมของคุณ</p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
