@@ -11,6 +11,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export interface Gallery4Item {
   id: string;
@@ -75,8 +76,8 @@ const defaultItems = [
 ];
 
 const Gallery4 = ({
-  title = "Case Studies",
-  description = "Discover how leading companies and developers are leveraging modern web technologies to build exceptional digital experiences. These case studies showcase real-world applications and success stories.",
+  title = "บทความ",
+  description = "ค้นพบเทคโนโลยีและนวัตกรรมใหม่ล่าสุดในวงการเครื่องเสียงและอุปกรณ์อิเล็กทรอนิกส์ บทความของเราครอบคลุมเรื่องราวล่าสุดเกี่ยวกับผลิตภัณฑ์และเทคโนโลยีคุณภาพสูง",
   items = defaultItems,
 }: Gallery4Props) => {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
@@ -85,6 +86,7 @@ const Gallery4 = ({
   const [currentSlide, setCurrentSlide] = useState(0);
   const { theme } = useTheme();
   const isDark = theme === "dark";
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (!carouselApi) {
