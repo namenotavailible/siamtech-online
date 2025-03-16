@@ -159,7 +159,7 @@ const FeaturedProducts = () => {
           <p className={`mt-4 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>ค้นหาอุปกรณ์ระดับพรีเมี่ยมของคุณ</p>
         </motion.div>
 
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {products.map((product, index) => <Link to={`/product/${product.id}`} key={product.id}>
               <motion.div initial={{
             opacity: 0,
