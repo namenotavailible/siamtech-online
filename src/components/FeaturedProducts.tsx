@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { auth, googleProvider } from "@/lib/firebase";
@@ -158,7 +159,7 @@ const FeaturedProducts = () => {
           <p className={`mt-4 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>ค้นหาอุปกรณ์ระดับพรีเมี่ยมของคุณ</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {products.map((product, index) => <Link to={`/product/${product.id}`} key={product.id}>
               <motion.div initial={{
             opacity: 0,
