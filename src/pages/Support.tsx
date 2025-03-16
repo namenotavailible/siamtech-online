@@ -56,12 +56,12 @@ const Support = () => {
       <Navigation />
       
       <div className="pt-24 pb-16 px-4 max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8">
+        <h1 className="text-4xl font-bold mb-8 text-left">
           {language === "en" ? "Support Center" : "ศูนย์ช่วยเหลือ"}
         </h1>
 
-        <div className="mb-12 flex flex-col md:flex-row gap-8 items-center">
-          <div className="flex-1">
+        <div className="mb-12 flex flex-col md:flex-row gap-8 items-start">
+          <div className="flex-1 text-left">
             <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
               <Users className="h-6 w-6 text-primary" />
               {language === "en" ? "Meet Our Support Team" : "พบกับทีมสนับสนุนของเรา"}
@@ -92,7 +92,7 @@ const Support = () => {
         </div>
 
         <Card className={`${theme === 'dark' ? 'bg-black border-white/10' : 'bg-white border-gray-200'} mb-12`}>
-          <CardHeader>
+          <CardHeader className="text-left">
             <CardTitle className="flex items-center gap-2">
               <MessageSquare className="h-5 w-5" />
               {language === "en" ? "AI Chat Support" : "บริการแชทอัจฉริยะ"}
@@ -112,7 +112,7 @@ const Support = () => {
         
         <div className="grid md:grid-cols-2 gap-6">
           <Card className={`${theme === 'dark' ? 'bg-white/5 border-white/10' : 'bg-gray-50 border-gray-200'}`}>
-            <CardHeader>
+            <CardHeader className="text-left">
               <CardTitle className="flex items-center gap-2">
                 <Mail className="h-5 w-5" />
                 {language === "en" ? "Email Support" : "สนับสนุนทางอีเมล"}
@@ -130,7 +130,7 @@ const Support = () => {
           </Card>
 
           <Card className={`${theme === 'dark' ? 'bg-white/5 border-white/10' : 'bg-gray-50 border-gray-200'}`}>
-            <CardHeader>
+            <CardHeader className="text-left">
               <CardTitle className="flex items-center gap-2">
                 <Phone className="h-5 w-5" />
                 {language === "en" ? "Phone Support" : "สนับสนุนทางโทรศัพท์"}
