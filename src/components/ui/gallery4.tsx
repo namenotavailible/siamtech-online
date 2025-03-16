@@ -23,10 +23,10 @@ export interface Gallery4Item {
 export interface Gallery4Props {
   title?: string;
   description?: string;
-  items: Gallery4Item[];
+  items?: Gallery4Item[]; // Making items optional
 }
 
-const data = [
+const defaultItems = [
   {
     id: "shadcn-ui",
     title: "shadcn/ui: Building a Modern Component Library",
@@ -77,7 +77,7 @@ const data = [
 const Gallery4 = ({
   title = "Case Studies",
   description = "Discover how leading companies and developers are leveraging modern web technologies to build exceptional digital experiences. These case studies showcase real-world applications and success stories.",
-  items = data,
+  items = defaultItems, // Set default value for items here
 }: Gallery4Props) => {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
   const [canScrollPrev, setCanScrollPrev] = useState(false);
