@@ -1,4 +1,3 @@
-
 "use client";
 
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -24,7 +23,7 @@ export interface Gallery4Item {
 export interface Gallery4Props {
   title?: string;
   description?: string;
-  items?: Gallery4Item[]; // Making items optional
+  items?: Gallery4Item[];
 }
 
 const defaultItems = [
@@ -78,7 +77,7 @@ const defaultItems = [
 const Gallery4 = ({
   title = "Case Studies",
   description = "Discover how leading companies and developers are leveraging modern web technologies to build exceptional digital experiences. These case studies showcase real-world applications and success stories.",
-  items = defaultItems, // Set default value for items here
+  items = defaultItems,
 }: Gallery4Props) => {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
   const [canScrollPrev, setCanScrollPrev] = useState(false);
@@ -104,7 +103,7 @@ const Gallery4 = ({
   }, [carouselApi]);
 
   return (
-    <section className="py-32">
+    <section className="py-16">
       <div className="container mx-auto">
         <div className="mb-8 flex items-end justify-between md:mb-14 lg:mb-16">
           <div className="flex flex-col gap-4 text-left">
