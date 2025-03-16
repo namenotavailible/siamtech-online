@@ -14,6 +14,11 @@ import Checkout from "./pages/Checkout";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import MFAPage from "./pages/MFAPage";
+import Featured from "./pages/Featured";
+import NewArrivals from "./pages/NewArrivals";
+import Team from "./pages/Team";
+import BlogTech from "./pages/BlogTech";
+import BlogReviews from "./pages/BlogReviews";
 
 import { Toaster } from "@/components/ui/sonner"
 import { CartProvider } from "./contexts/CartContext";
@@ -36,9 +41,14 @@ function App() {
                 <Route path="/warranty" element={<Warranty />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/team" element={<Team />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/tech" element={<BlogTech />} />
+                <Route path="/blog/reviews" element={<BlogReviews />} />
                 <Route path="/blog/:id" element={<BlogPost />} />
+                <Route path="/featured" element={<Featured />} />
+                <Route path="/new-arrivals" element={<NewArrivals />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/product/:id/learn-more" element={<ProductLearnMore />} />
                 <Route path="/checkout" element={<Checkout />} />
