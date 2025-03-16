@@ -1,7 +1,8 @@
+
 import Navigation from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Footerdemo } from "@/components/ui/footer-section";
-import { Mail, Phone, MessageSquare } from "lucide-react";
+import { Mail, Phone, MessageSquare, Coffee, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import ChatDialog from "@/components/ui/chat-dialog";
@@ -9,29 +10,46 @@ import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-van
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Helmet } from "react-helmet";
 import { useTheme } from "@/contexts/ThemeContext";
+
 const Support = () => {
-  const {
-    t,
-    language
-  } = useLanguage();
-  const {
-    theme
-  } = useTheme();
+  const { t, language } = useLanguage();
+  const { theme } = useTheme();
   const [showChatDialog, setShowChatDialog] = useState(false);
-  const placeholdersTH = ["ฉันสามารถติดตามคำสั่งซื้อของฉันได้อย่างไร?", "คุณรับวิธีการชำระเงินอะไรบ้าง?", "ฉันจะคืนสินค้าได้อย่างไร?", "ข้อมูลเกี่ยวกับนโยบายการรับประกันของคุณ", "ศูนย์บริการที่ใกล้ฉันที่สุดอยู่ที่ไหน?"];
-  const placeholdersEN = ["How can I track my order?", "What payment methods do you accept?", "How do I return a product?", "Tell me about your warranty policy", "Where is my nearest service center?"];
+
+  const placeholdersTH = [
+    "ฉันสามารถติดตามคำสั่งซื้อของฉันได้อย่างไร?",
+    "คุณรับวิธีการชำระเงินอะไรบ้าง?",
+    "ฉันจะคืนสินค้าได้อย่างไร?",
+    "ข้อมูลเกี่ยวกับนโยบายการรับประกันของคุณ",
+    "ศูนย์บริการที่ใกล้ฉันที่สุดอยู่ที่ไหน?"
+  ];
+
+  const placeholdersEN = [
+    "How can I track my order?",
+    "What payment methods do you accept?",
+    "How do I return a product?",
+    "Tell me about your warranty policy",
+    "Where is my nearest service center?"
+  ];
+
   const placeholders = language === "th" ? placeholdersTH : placeholdersEN;
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("Input changed:", e.target.value);
   };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowChatDialog(true);
   };
-  return <div className={`min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
+
+  return (
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
       <Helmet>
         <title>{language === "en" ? "Support - SIAMTECH Online" : "บริการช่วยเหลือ - SIAMTECH ออนไลน์"}</title>
-        <meta name="description" content={language === "en" ? "Get help with your SIAMTECH products, track orders, and access customer support." : "รับความช่วยเหลือเกี่ยวกับสินค้า SIAMTECH ติดตามคำสั่งซื้อ และเข้าถึงฝ่ายบริการลูกค้า"} />
+        <meta name="description" content={language === "en" 
+          ? "Get help with your SIAMTECH products, track orders, and access customer support." 
+          : "รับความช่วยเหลือเกี่ยวกับสินค้า SIAMTECH ติดตามคำสั่งซื้อ และเข้าถึงฝ่ายบริการลูกค้า"} />
         <html lang={language} />
       </Helmet>
       
@@ -41,6 +59,37 @@ const Support = () => {
         <h1 className="text-4xl font-bold mb-8">
           {language === "en" ? "Support Center" : "ศูนย์ช่วยเหลือ"}
         </h1>
+
+        <div className="mb-12 flex flex-col md:flex-row gap-8 items-center">
+          <div className="flex-1">
+            <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
+              <Users className="h-6 w-6 text-primary" />
+              {language === "en" ? "Meet Our Support Team" : "พบกับทีมสนับสนุนของเรา"}
+            </h2>
+            <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} mb-4`}>
+              {language === "en" 
+                ? "Our dedicated support team is available to assist you with any questions or issues you may have. With extensive knowledge of our products and services, our team is committed to providing prompt and helpful solutions to ensure your complete satisfaction." 
+                : "ทีมสนับสนุนที่ทุ่มเทของเรามีพร้อมให้ความช่วยเหลือคุณในเรื่องคำถามหรือปัญหาต่างๆ ที่คุณอาจมี ด้วยความรู้ที่กว้างขวางเกี่ยวกับสินค้าและบริการของเรา ทีมของเรามุ่งมั่นที่จะให้วิธีแก้ปัญหาที่รวดเร็วและเป็นประโยชน์เพื่อความพึงพอใจอย่างสมบูรณ์ของคุณ"}
+            </p>
+            <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+              {language === "en" 
+                ? "Available Monday to Friday from 9:00 AM to 6:00 PM (Thailand time), our specialists are ready to help you through chat, email, or phone support channels." 
+                : "ให้บริการวันจันทร์ถึงวันศุกร์ตั้งแต่ 9.00 น. ถึง 18.00 น. (เวลาประเทศไทย) ผู้เชี่ยวชาญของเราพร้อมช่วยเหลือคุณผ่านช่องทางการสนับสนุนทางแชท อีเมล หรือโทรศัพท์"}
+            </p>
+          </div>
+          <div className="md:w-1/3">
+            <div className="rounded-lg overflow-hidden">
+              <img 
+                src="/lovable-uploads/bcdf99dc-db14-4a07-8243-6a3174617963.png" 
+                alt={language === "en" ? "Support team mascot" : "มาสคอตทีมสนับสนุน"} 
+                className="w-full h-auto"
+              />
+              <p className={`text-xs italic text-center mt-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+                {language === "en" ? "Image credit: Grok AI" : "เครดิตภาพ: Grok AI"}
+              </p>
+            </div>
+          </div>
+        </div>
 
         <Card className={`${theme === 'dark' ? 'bg-black border-white/10' : 'bg-white border-gray-200'} mb-12`}>
           <CardHeader>
@@ -53,7 +102,11 @@ const Support = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <PlaceholdersAndVanishInput placeholders={placeholders} onChange={handleChange} onSubmit={handleSubmit} className="text-left" />
+            <PlaceholdersAndVanishInput
+              placeholders={placeholders}
+              onChange={handleChange}
+              onSubmit={handleSubmit}
+            />
           </CardContent>
         </Card>
         
@@ -100,6 +153,8 @@ const Support = () => {
 
       <Footerdemo />
       <ChatDialog open={showChatDialog} onOpenChange={setShowChatDialog} />
-    </div>;
+    </div>
+  );
 };
+
 export default Support;
