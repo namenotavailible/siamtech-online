@@ -1,3 +1,4 @@
+
 import Navigation from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Footerdemo } from "@/components/ui/footer-section";
@@ -67,8 +68,8 @@ const Support = () => {
             </h2>
             <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} mb-4`}>
               {language === "en" 
-                ? "Our dedicated support team is available to assist you with any questions or issues you may have. With extensive knowledge of our products and services, our team is committed to providing prompt and helpful solutions to ensure your complete satisfaction." 
-                : "ทีมสนับสนุนที่ทุ่มเทของเรามีพร้อมให้ความช่วยเหลือคุณในเรื่องคำถามหรือปัญหาต่างๆ ที่คุณอาจมี ด้วยความรู้ที่กว้างขวางเกี่ยวกับสินค้าและบริการของเรา ทีมของเรามุ่งมั่นที่จะให้วิธีแก้ปัญหาที่รวดเร็วและเป็นประโยชน์เพื่อความพึงพอใจอย่างสมบูรณ์ของคุณ"}
+                ? "Our dedicated support team is available to assist you with any questions or issues you may have. With extensive knowledge of our products and services, our team is committed to providing prompt and helpful solutions to ensure your complete satisfaction. Our specialists have years of experience in technical support and customer service, ensuring that you receive expert assistance for all your inquiries. We pride ourselves on our ability to resolve complex issues efficiently and effectively." 
+                : "ทีมสนับสนุนที่ทุ่มเทของเรามีพร้อมให้ความช่วยเหลือคุณในเรื่องคำถามหรือปัญหาต่างๆ ที่คุณอาจมี ด้วยความรู้ที่กว้างขวางเกี่ยวกับสินค้าและบริการของเรา ทีมของเรามุ่งมั่นที่จะให้วิธีแก้ปัญหาที่รวดเร็วและเป็นประโยชน์เพื่อความพึงพอใจอย่างสมบูรณ์ของคุณ ผู้เชี่ยวชาญของเรามีประสบการณ์หลายปีในด้านการสนับสนุนทางเทคนิคและการบริการลูกค้า ทำให้มั่นใจได้ว่าคุณจะได้รับความช่วยเหลือจากผู้เชี่ยวชาญสำหรับทุกคำถามของคุณ เรามีความภาคภูมิใจในความสามารถของเราในการแก้ไขปัญหาที่ซับซ้อนอย่างมีประสิทธิภาพและประสิทธิผล"}
             </p>
             <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
               {language === "en" 
