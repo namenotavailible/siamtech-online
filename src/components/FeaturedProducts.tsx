@@ -159,7 +159,7 @@ const FeaturedProducts = () => {
           <p className={`mt-4 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>ค้นหาอุปกรณ์ระดับพรีเมี่ยมของคุณ</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8">
           {products.map((product, index) => <Link to={`/product/${product.id}`} key={product.id}>
               <motion.div initial={{
             opacity: 0,
@@ -173,9 +173,9 @@ const FeaturedProducts = () => {
                 <div className="aspect-square overflow-hidden">
                   <img src={product.image} alt={product.name} className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-300" />
                 </div>
-                <div className="p-6">
+                <div className="p-4 sm:p-6">
                   <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{product.category}</span>
-                  <h3 className={`mt-1 text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{product.name}</h3>
+                  <h3 className={`mt-1 text-base sm:text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{product.name}</h3>
                   <p className={`mt-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{product.price}</p>
                   <button onClick={e => handleAddToCart(product, e)} className={`mt-4 w-full ${isDark ? 'bg-white text-black hover:bg-gray-200' : 'bg-gray-900 text-white hover:bg-gray-800'} py-2 rounded-md transition-colors`}>
                     {t("add_to_cart")}
