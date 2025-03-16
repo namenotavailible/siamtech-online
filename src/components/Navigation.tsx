@@ -127,25 +127,25 @@ const Navigation = () => {
                 <div className="text-sm grid grid-cols-2 gap-10 p-4 w-[400px]">
                   <ProductItem
                     title={language === "en" ? "FIFINE Ampligame AM8" : "FIFINE Ampligame AM8"}
-                    href="/products/1"
+                    href="/product/1"
                     src="/lovable-uploads/895e0863-a00d-4ccd-9f78-21e1181817a3.png"
                     description={language === "en" ? "Professional dynamic microphone" : "ไมโครโฟนไดนามิกระดับมืออาชีพ"}
                   />
                   <ProductItem
                     title={language === "en" ? "FIFINE Ampligame A8" : "FIFINE Ampligame A8"}
-                    href="/products/2"
+                    href="/product/2"
                     src="/lovable-uploads/0bdd554b-e74a-4fe7-8d87-867680dd35bb.png"
                     description={language === "en" ? "Condenser microphone with RGB" : "ไมโครโฟนคอนเดนเซอร์พร้อม RGB"}
                   />
                   <ProductItem
                     title={language === "en" ? "VXE Dragonfly R1" : "VXE Dragonfly R1"}
-                    href="/products/5"
+                    href="/product/5"
                     src="/lovable-uploads/e4346941-0357-4549-8e1e-77ef2c16e8ed.png"
                     description={language === "en" ? "High-performance gaming mouse" : "เมาส์เกมมิ่งประสิทธิภาพสูง"}
                   />
                   <ProductItem
                     title={language === "en" ? "VGN Dragonfly F1" : "VGN Dragonfly F1"}
-                    href="/products/6"
+                    href="/product/6"
                     src="/lovable-uploads/eb227e57-8859-4673-9eda-54e1deb03124.png"
                     description={language === "en" ? "Premium gaming mouse" : "เมาส์เกมมิ่งระดับพรีเมียม"}
                   />
