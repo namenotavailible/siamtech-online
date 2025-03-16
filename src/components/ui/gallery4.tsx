@@ -1,3 +1,4 @@
+
 "use client";
 
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -12,6 +13,7 @@ import {
 } from "@/components/ui/carousel";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Link } from "react-router-dom";
 
 export interface Gallery4Item {
   id: string;
@@ -27,6 +29,7 @@ export interface Gallery4Props {
   items?: Gallery4Item[];
 }
 
+// Default items are kept as a fallback
 const defaultItems = [
   {
     id: "shadcn-ui",
@@ -86,7 +89,43 @@ const Gallery4 = ({
   const [currentSlide, setCurrentSlide] = useState(0);
   const { theme } = useTheme();
   const isDark = theme === "dark";
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+
+  // Generate blog posts based on language
+  const blogPosts = language === "en" ? [
+    {
+      id: "dynamic-vs-condenser",
+      title: "Dynamic vs Condenser Microphones: Which One Is Right for You?",
+      description: "Understanding the differences between dynamic and condenser microphones is crucial for selecting the right tool for your recording or performance needs.",
+      href: "/blog/dynamic-vs-condenser",
+      image: "/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png",
+    },
+    {
+      id: "microphone-selection-guide",
+      title: "How to Choose the Right Microphone for Your Needs",
+      description: "Selecting the appropriate microphone is crucial whether you're a content creator, gamer, podcaster, or musician. This guide helps you consider important factors for choosing the perfect microphone.",
+      href: "/blog/microphone-selection-guide",
+      image: "/lovable-uploads/7ad1289c-87c2-4ad4-8225-58052b5431be.png",
+    }
+  ] : [
+    {
+      id: "dynamic-vs-condenser",
+      title: "ไมโครโฟนไดนามิกกับคอนเดนเซอร์: การเลือกที่เหมาะสมกับการใช้งานของคุณ",
+      description: "การเข้าใจความแตกต่างระหว่างไมโครโฟนไดนามิกและคอนเดนเซอร์มีความสำคัญอย่างยิ่งในการเลือกเครื่องมือที่เหมาะสมสำหรับการบันทึกหรือการแสดงของคุณ",
+      href: "/blog/dynamic-vs-condenser",
+      image: "/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png",
+    },
+    {
+      id: "microphone-selection-guide",
+      title: "วิธีเลือกไมโครโฟนที่เหมาะสมกับความต้องการของคุณ",
+      description: "การเลือกไมโครโฟนที่เหมาะสมเป็นสิ่งสำคัญ ไม่ว่าคุณจะเป็นนักสร้างคอนเทนต์ เกมเมอร์ พอดแคสเตอร์ หรือแม้แต่นักดนตรี บทความนี้จะช่วยคุณพิจารณาปัจจัยสำคัญในการเลือกไมโครโฟน",
+      href: "/blog/microphone-selection-guide",
+      image: "/lovable-uploads/7ad1289c-87c2-4ad4-8225-58052b5431be.png",
+    }
+  ];
+
+  // Use blog posts if no items provided
+  const displayItems = items.length > 0 ? items : blogPosts;
 
   useEffect(() => {
     if (!carouselApi) {
@@ -110,9 +149,11 @@ const Gallery4 = ({
         <div className="mb-8 flex items-end justify-between md:mb-14 lg:mb-16">
           <div className="flex flex-col gap-4 text-left">
             <h2 className={`text-3xl font-medium md:text-4xl lg:text-5xl ${!isDark ? "text-black" : ""}`}>
-              {title}
+              {language === "en" ? "Latest Blog Posts" : title}
             </h2>
-            <p className="max-w-lg text-muted-foreground">{description}</p>
+            <p className="max-w-lg text-muted-foreground">
+              {language === "en" ? "Discover the latest technology and innovations in the audio industry with our comprehensive guides and articles." : description}
+            </p>
           </div>
           <div className="hidden shrink-0 gap-2 md:flex">
             <Button
@@ -152,12 +193,12 @@ const Gallery4 = ({
           }}
         >
           <CarouselContent className="ml-0 2xl:ml-[max(8rem,calc(50vw-700px))] 2xl:mr-[max(0rem,calc(50vw-700px))]">
-            {items.map((item) => (
+            {displayItems.map((item) => (
               <CarouselItem
                 key={item.id}
                 className="max-w-[320px] pl-[20px] lg:max-w-[360px]"
               >
-                <a href={item.href} className="group rounded-xl">
+                <Link to={item.href} className="group rounded-xl">
                   <div className="group relative h-full min-h-[27rem] max-w-full overflow-hidden rounded-xl md:aspect-[5/4] lg:aspect-[16/9]">
                     <img
                       src={item.image}
@@ -173,18 +214,18 @@ const Gallery4 = ({
                         {item.description}
                       </div>
                       <div className="flex items-center text-sm">
-                        Read more{" "}
+                        {language === "en" ? "Read more" : "อ่านเพิ่มเติม"}{" "}
                         <ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
                       </div>
                     </div>
                   </div>
-                </a>
+                </Link>
               </CarouselItem>
             ))}
           </CarouselContent>
         </Carousel>
         <div className="mt-8 flex justify-center gap-2">
-          {items.map((_, index) => (
+          {displayItems.map((_, index) => (
             <button
               key={index}
               className={`h-2 w-2 rounded-full transition-colors ${
