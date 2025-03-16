@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
@@ -537,4 +538,13 @@ const BlogPost = () => {
         
         {/* Post content with improved readability */}
         <article 
-          className="prose dark:prose-invert max-w-none text-left [&>p]:text-base [&>p]:leading-relaxed [&>p]:mb-6 [&>h2]:text-2xl [&>h2]:font-semibold [&>
+          className="prose dark:prose-invert max-w-none text-left [&>p]:text-base [&>p]:leading-relaxed [&>p]:mb-6 [&>h2]:text-2xl [&>h2]:font-semibold [&>h2]:mt-8 [&>h2]:mb-4 [&>ul]:mb-6 [&>ul]:list-disc [&>ul]:pl-6"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
+      </main>
+      <Footerdemo />
+    </div>
+  );
+};
+
+export default BlogPost;
