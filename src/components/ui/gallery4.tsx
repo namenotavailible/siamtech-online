@@ -11,6 +11,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export interface Gallery4Item {
   id: string;
@@ -83,6 +84,8 @@ const Gallery4 = ({
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   useEffect(() => {
     if (!carouselApi) {
@@ -118,7 +121,7 @@ const Gallery4 = ({
                 carouselApi?.scrollPrev();
               }}
               disabled={!canScrollPrev}
-              className="disabled:pointer-events-auto"
+              className={`disabled:pointer-events-auto ${!isDark ? "text-black hover:bg-gray-100 hover:text-black" : ""}`}
             >
               <ArrowLeft className="size-5" />
             </Button>
@@ -129,7 +132,7 @@ const Gallery4 = ({
                 carouselApi?.scrollNext();
               }}
               disabled={!canScrollNext}
-              className="disabled:pointer-events-auto"
+              className={`disabled:pointer-events-auto ${!isDark ? "text-black hover:bg-gray-100 hover:text-black" : ""}`}
             >
               <ArrowRight className="size-5" />
             </Button>
