@@ -1,7 +1,7 @@
 import Navigation from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Footerdemo } from "@/components/ui/footer-section";
-import { Mail, Phone, MessageSquare, Coffee, Users } from "lucide-react";
+import { Mail, Phone, MessageSquare, Coffee, Users, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import ChatDialog from "@/components/ui/chat-dialog";
@@ -9,6 +9,12 @@ import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-van
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Helmet } from "react-helmet";
 import { useTheme } from "@/contexts/ThemeContext";
+import { 
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const Support = () => {
   const { t, language } = useLanguage();
@@ -32,6 +38,52 @@ const Support = () => {
   ];
 
   const placeholders = language === "th" ? placeholdersTH : placeholdersEN;
+
+  const faqItemsEN = [
+    {
+      question: "How can I track my order?",
+      answer: "You can track your order by logging into your account and navigating to the 'My Orders' section. Alternatively, you can use the tracking number provided in your shipping confirmation email."
+    },
+    {
+      question: "What payment methods do you accept?",
+      answer: "We accept all major credit and debit cards, PayPal, bank transfers, and various digital wallets. All transactions are secured with industry-standard encryption."
+    },
+    {
+      question: "How do I return a product?",
+      answer: "To return a product, please contact our support team within 14 days of receiving your order. We'll provide you with a return authorization and instructions for shipping the item back to us."
+    },
+    {
+      question: "What is your warranty policy?",
+      answer: "All SIAMTECH products come with a one-year limited warranty from the date of purchase, covering manufacturing defects in materials and workmanship under normal use conditions."
+    },
+    {
+      question: "How do I contact technical support?",
+      answer: "You can reach our technical support team via email at support@siamtechonline.com, through our live chat service, or by using the contact form on this page."
+    }
+  ];
+  
+  const faqItemsTH = [
+    {
+      question: "ฉันสามารถติดตามคำสั่งซื้อของฉันได้อย่างไร?",
+      answer: "คุณสามารถติดตามคำสั่งซื้อได้โดยเข้าสู่ระบบบัญชีของคุณและไปที่ส่วน 'คำสั่งซื้อของฉัน' หรือคุณสามารถใช้เลขติดตามที่ให้ไว้ในอีเมลยืนยันการจัดส่งของคุณ"
+    },
+    {
+      question: "คุณรับวิธีการชำระเงินอะไรบ้าง?",
+      answer: "เรารับบัตรเครดิตและเดบิตหลัก PayPal การโอนเงินผ่านธนาคาร และกระเป๋าเงินดิจิทัลต่างๆ ธุรกรรมทั้งหมดได้รับการรักษาความปลอดภัยด้วยการเข้ารหัสตามมาตรฐานอุตสาหกรรม"
+    },
+    {
+      question: "ฉันจะคืนสินค้าได้อย่างไร?",
+      answer: "เพื่อคืนสินค้า กรุณาติดต่อทีมสนับสนุนของเราภายใน 14 วันหลังจากได้รับคำสั่งซื้อของคุณ เราจะให้การอนุญาตการคืนสินค้าและคำแนะนำสำหรับการส่งสินค้ากลับมายังเรา"
+    },
+    {
+      question: "นโยบายการรับประกันของคุณคืออะไร?",
+      answer: "สินค้า SIAMTECH ทุกชิ้นมาพร้อมกับการรับประกันแบบจำกัดหนึ่งปีนับจากวันที่ซื้อ ครอบคลุมข้อบกพร่องในการผลิตในวัสดุและฝีมือภายใต้สภาวะการใช้งานปกติ"
+    },
+    {
+      question: "ฉันจะติดต่อฝ่ายสนับสนุนทางเทคนิคได้อย่างไร?",
+      answer: "คุณสามารถติดต่อทีมสนับสนุนทางเทคนิคของเราทางอีเมลที่ support@siamtechonline.com ผ่านบริการแชทสด หรือโดยใช้แบบฟอร์มติดต่อในหน้านี้"
+    }
+  ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("Input changed:", e.target.value);
@@ -109,7 +161,7 @@ const Support = () => {
           </CardContent>
         </Card>
         
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
           <Card className={`${theme === 'dark' ? 'bg-white/5 border-white/10' : 'bg-gray-50 border-gray-200'}`}>
             <CardHeader className="text-left">
               <CardTitle className="flex items-center gap-2">
@@ -147,6 +199,26 @@ const Support = () => {
               </p>
             </CardContent>
           </Card>
+        </div>
+
+        <div className="mb-8">
+          <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
+            <HelpCircle className="h-6 w-6 text-primary" />
+            {language === "en" ? "Frequently Asked Questions" : "คำถามที่พบบ่อย"}
+          </h2>
+          
+          <Accordion type="single" collapsible className="w-full">
+            {(language === "en" ? faqItemsEN : faqItemsTH).map((item, index) => (
+              <AccordionItem key={index} value={`item-${index}`}>
+                <AccordionTrigger className="text-left">
+                  {item.question}
+                </AccordionTrigger>
+                <AccordionContent className={theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}>
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </div>
 
