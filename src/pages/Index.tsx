@@ -1,4 +1,3 @@
-
 import { Vortex } from "@/components/ui/vortex";
 import Navigation from "@/components/Navigation";
 import FeaturedProducts from "@/components/FeaturedProducts";
@@ -123,7 +122,7 @@ const Index = () => {
   );
 
   return (
-    <div className={`min-h-screen ${theme === "dark" ? "bg-black" : "bg-white"} text-white overflow-x-hidden`}>
+    <div className={`min-h-screen ${theme === "dark" ? "bg-black" : "bg-white"} overflow-x-hidden`}>
       <Helmet>
         <title>{language === "en" 
           ? "SIAMTECH Online | Premium Gaming & Audio Equipment Store" 
@@ -165,10 +164,10 @@ const Index = () => {
       <FeaturedProducts />
       
       <Gallery4 
-        title={language === "th" ? "กรณีศึกษา" : "Case Studies"}
+        title={language === "th" ? "บทความล่าสุด" : "Latest Blog Posts"}
         description={language === "th" 
-          ? "ค้นพบวิธีที่บริษัทชั้นนำและนักพัฒนาใช้เทคโนโลยีเว็บสมัยใหม่เพื่อสร้างประสบการณ์ดิจิทัลที่ยอดเยี่ยม กรณีศึกษาเหล่านี้แสดงให้เห็นถึงการประยุกต์ใช้และความสำเร็จในโลกจริง" 
-          : "Discover how leading companies and developers are leveraging modern web technologies to build exceptional digital experiences. These case studies showcase real-world applications and success stories."}
+          ? "ค้นพบเทคโนโลยีและนวัตกรรมใหม่ล่าสุดในวงการเครื่องเสียงและอุปกรณ์อิเล็กทรอนิกส์ บทความของเราครอบคลุมเรื่องราวล่าสุดเกี่ยวกับผลิตภัณฑ์และเทคโนโลยีคุณภาพสูง" 
+          : "Discover the latest technology and innovations in the audio industry with our comprehensive guides and articles."}
       />
       
       <Footerdemo />
