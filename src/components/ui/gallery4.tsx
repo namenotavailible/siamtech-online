@@ -107,7 +107,7 @@ const Gallery4 = ({
     <section className="py-32">
       <div className="container mx-auto">
         <div className="mb-8 flex items-end justify-between md:mb-14 lg:mb-16">
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 text-left">
             <h2 className={`text-3xl font-medium md:text-4xl lg:text-5xl ${!isDark ? "text-black" : ""}`}>
               {title}
             </h2>
