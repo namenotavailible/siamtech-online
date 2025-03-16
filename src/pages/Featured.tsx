@@ -4,7 +4,7 @@ import { Footerdemo } from "@/components/ui/footer-section";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Helmet } from "react-helmet";
-import { FeaturedProducts } from "@/components/FeaturedProducts";
+import FeaturedProducts from "@/components/FeaturedProducts";
 
 const Featured = () => {
   const { language } = useLanguage();
