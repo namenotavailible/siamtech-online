@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
@@ -231,6 +230,81 @@ const BlogPost = () => {
       author: "Michael Wong",
       image: "/lovable-uploads/3cdd087c-645e-4a74-a9e9-59680079c17f.png",
       tags: ["Maintenance", "Equipment Care", "Audio Gear"]
+    },
+    "dynamic-vs-condenser": {
+      title: "Dynamic vs Condenser Microphones: Which One Is Right for You?",
+      content: `
+        <p>Microphones are essential tools for recording and live performances. When selecting a microphone, understanding the differences between dynamic and condenser microphones is crucial for achieving the best results for your specific needs.</p>
+        
+        <img src="/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png" alt="Dynamic and Condenser Microphones" class="my-8 rounded-lg shadow-md w-full max-w-2xl mx-auto" />
+        
+        <h2>Dynamic Microphones: Robust Workhorses</h2>
+        <p>Dynamic microphones work on the principle of electromagnetic induction. Inside the microphone, a diaphragm connected to a coil moves within a magnetic field when sound waves hit it, generating an electrical signal.</p>
+        
+        <h3>Advantages of Dynamic Microphones:</h3>
+        <ul>
+          <li>Highly durable and rugged, ideal for demanding environments</li>
+          <li>No external power required</li>
+          <li>Excellent at handling high sound pressure levels, making them perfect for loud instruments like drums or electric guitars</li>
+          <li>Less susceptible to environmental conditions like humidity</li>
+          <li>Generally more affordable than condenser microphones</li>
+        </ul>
+        
+        <h3>Limitations of Dynamic Microphones:</h3>
+        <ul>
+          <li>Lower sensitivity, which means they don't capture subtle sounds as well</li>
+          <li>Limited frequency response, especially in higher frequencies</li>
+          <li>May not capture the full detail of acoustic instruments or vocals where nuance is important</li>
+        </ul>
+        
+        <h2>Condenser Microphones: Detail-Oriented Precision</h2>
+        <p>Condenser microphones operate using the principles of capacitance. They contain a thin conductive diaphragm positioned close to a metal backplate. When sound waves hit the diaphragm, the distance between the diaphragm and backplate changes, causing variations in capacitance that create an electrical signal.</p>
+        
+        <h3>Advantages of Condenser Microphones:</h3>
+        <ul>
+          <li>High sensitivity, capturing subtle nuances and details in sound</li>
+          <li>Wide frequency response, particularly excellent in high frequencies</li>
+          <li>Superior transient response, capturing quick sounds accurately</li>
+          <li>Ideal for studio recording, vocals, acoustic instruments, and ambient sounds</li>
+        </ul>
+        
+        <h3>Limitations of Condenser Microphones:</h3>
+        <ul>
+          <li>Require external power (phantom power) to operate</li>
+          <li>More fragile and less durable than dynamic microphones</li>
+          <li>Can easily pick up unwanted environmental noise</li>
+          <li>Not ideal for extremely loud sound sources as they can distort</li>
+          <li>Generally more expensive than dynamic microphones</li>
+        </ul>
+        
+        <h2>Choosing the Right Microphone</h2>
+        <p>The choice between dynamic and condenser microphones should be based on your specific application and environment:</p>
+        
+        <h3>Choose a Dynamic Microphone When:</h3>
+        <ul>
+          <li>Recording loud sound sources (drums, guitar amps)</li>
+          <li>Performing live where durability is essential</li>
+          <li>Working in environments with significant background noise</li>
+          <li>Needing a microphone that can withstand rough handling</li>
+          <li>Operating with limited equipment (no phantom power available)</li>
+        </ul>
+        
+        <h3>Choose a Condenser Microphone When:</h3>
+        <ul>
+          <li>Recording in a controlled studio environment</li>
+          <li>Capturing vocals with detail and presence</li>
+          <li>Recording acoustic instruments where nuance matters</li>
+          <li>Needing to capture subtle sounds or ambient audio</li>
+          <li>Having access to phantom power</li>
+        </ul>
+        
+        <h2>Conclusion</h2>
+        <p>Both dynamic and condenser microphones have their place in audio recording and performance. Understanding their strengths and limitations will help you make an informed decision about which type is best suited for your specific needs. Many audio professionals maintain a collection of both types to ensure they have the right tool for every recording situation.</p>
+      `,
+      date: "August 15, 2023",
+      author: "Michael Wong",
+      image: "/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png",
+      tags: ["Microphones", "Audio Equipment", "Recording"]
     }
   } : {
     "microphone-selection-guide": {
@@ -288,7 +362,7 @@ const BlogPost = () => {
       tags: ["อุปกรณ์เสียง", "ไมโครโฟน", "คู่มือการซื้อ"]
     },
     "audio-equipment-guide": {
-      title: "วิธีเลือกอุปกรณ์เสียงที่เหมาะสำหรับสตูดิโอของคุณ",
+      title: "วิธีเลือกอุปกรณ์เสียงที่เหมาะสมสำหรับสตูดิโอของคุณ",
       content: `
         <p>การตั้งค่าสตูดิโอบันทึกเสียงมืออาชีพต้องพิจารณาอุปกรณ์เสียงต่างๆ อย่างรอบคอบ คุณภาพของการบันทึกของคุณขึ้นอยู่กับเครื่องมือที่คุณใช้อย่างมาก ดังนั้นจึงจำเป็นต้องตัดสินใจอย่างมีข้อมูลเมื่อลงทุนในอุปกรณ์เสียง</p>
         
@@ -319,7 +393,7 @@ const BlogPost = () => {
         </ul>
         
         <h2>หูฟัง: สำหรับงานที่ต้องการความละเอียด</h2>
-        <p>หูฟังคุณภาพดีเป็นสิ่งจำเป็นสำหรับการฟังอย่างละเอียดและเซสชันการบันทึก พิจารณา:</p>
+        <p>หูฟังคุณภาพดีเป็���สิ่งจำเป็นสำหรับการฟังอย่างละเอียดและเซสชันการบันทึก พิจารณา:</p>
         <ul>
           <li><strong>หูฟังแบบปิด</strong> สำหรับการบันทึก (เพื่อป้องกันเสียงรั่วไหล)</li>
           <li><strong>หูฟังแบบเปิด</strong> สำหรับการมิกซ์ (เพื่อให้มี soundstage ที่กว้างขึ้น)</li>
@@ -428,7 +502,7 @@ const BlogPost = () => {
         </ul>
         
         <h2>การทดสอบและการปรับเทียบเป็นประจำ</h2>
-        <p>การทดสอบเป็นระยะช่วยให้มั่นใจว่าอุปกรณ์ของคุณทำงานอย่างถูกต้อง:</p>
+        <p>การทดสอบเป็���ระยะช่วยให้มั่นใจว่าอุปกรณ์ของคุณทำงานอย่างถูกต้อง:</p>
         <ul>
           <li>ทดสอบทุกช่องและฟังก์ชันเป็นประจำ</li>
           <li>ปรับเทียบมอนิเตอร์และอุปกรณ์อื่นๆ ตามความจำเป็น</li>
@@ -451,6 +525,81 @@ const BlogPost = () => {
       author: "ไมเคิล หว่อง",
       image: "/lovable-uploads/3cdd087c-645e-4a74-a9e9-59680079c17f.png",
       tags: ["การบำรุงรักษา", "การดูแลอุปกรณ์", "อุปกรณ์เสียง"]
+    },
+    "dynamic-vs-condenser": {
+      title: "ไมโครโฟนไดนามิกกับคอนเดนเซอร์: การเลือกที่เหมาะสมกับการใช้งานของคุณ",
+      content: `
+        <p>ไมโครโฟนเป็นอุปกรณ์ที่สำคัญในการบันทึกเสียงและการแสดงสด โดยทั่วไปแล้วไมโครโฟนสามารถแบ่งออกเป็นสองประเภทหลัก ๆ คือ ไมโครโฟนไดนามิก (Dynamic Microphone) และไมโครโฟนคอนเดนเซอร์ (Condenser Microphone) ซึ่งแต่ละประเภทมีคุณสมบัติและการใช้งานที่แตกต่างกัน</p>
+        
+        <img src="/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png" alt="ไมโครโฟนไดนามิกและคอนเดนเซอร์" class="my-8 rounded-lg shadow-md w-full max-w-2xl mx-auto" />
+        
+        <h2>ไมโครโฟนไดนามิก (Dynamic Microphone)</h2>
+        <p>ไมโครโฟนไดนามิกทำงานโดยใช้หลักการของการเหนี่ยวนำแม่เหล็กไฟฟ้า ภายในไมโครโฟนจะมีแผ่นไดอะแฟรมที่เชื่อมต่อกับขดลวด เมื่อเสียงมากระทบแผ่นไดอะแฟรม จะทำให้ขดลวดเคลื่อนที่ในสนามแม่เหล็ก เกิดเป็นสัญญาณไฟฟ้า</p>
+        
+        <h3>ข้อดีของไมโครโฟนไดนามิก:</h3>
+        <ul>
+          <li>มีความทนทานสูง เหมาะสำหรับการใช้งานที่ต้องการความแข็งแรง</li>
+          <li>ไม่ต้องการพลังงานภายนอกในการทำงาน</li>
+          <li>สามารถรับระดับความดันเสียงสูงได้ดี เหมาะสำหรับการบันทึกเสียงเครื่องดนตรีที่มีความดัง เช่น กลอง หรือกีตาร์��ฟฟ้า</li>
+          <li>ทนทานต่อสภาพแวดล้อมต่างๆ เช่น ความชื้น</li>
+          <li>ราคาไม่สูงมากเมื่อเทียบกับไมโครโฟนคอนเดนเซอร์</li>
+        </ul>
+        
+        <h3>ข้อเสียของไมโครโฟนไดนามิก:</h3>
+        <ul>
+          <li>ความไวต่อเสียงต่ำ ไม่เหมาะสำหรับการบันทึกเสียงที่ต้องการรายละเอียดสูง</li>
+          <li>ตอบสนองต่อความถี่เสียงได้จำกัด โดยเฉพาะในย่านความถี่สูง</li>
+          <li>อาจไม่สามารถบันทึกรายละเอียดเล็กๆ น้อยๆ ของเสียงดนตรีหรือเสียงร้องได้ครบถ้วน</li>
+        </ul>
+        
+        <h2>ไมโครโฟนคอนเดนเซอร์ (Condenser Microphone)</h2>
+        <p>ไมโครโฟนคอนเดนเซอร์ใช้หลักการทำงานของตัวเก็บประจุ โดยมีแผ่นไดอะแฟรมบาง ๆ ที่อยู่ใกล้กับแผ่นโลหะคงที่ เมื่อเสียงมากระทบแผ่นไดอะแฟรม จะทำให้ระยะห่างระหว่างแผ่นเปลี่ยนแปลง ส่งผลให้ความจุไฟฟ้าเปลี่ยนแปลงและเกิดเป็นสัญญาณไฟฟ้า</p>
+        
+        <h3>ข้อดีของไมโครโฟนคอนเดนเซอร์:</h3>
+        <ul>
+          <li>มีความไวต่อเสียงสูง สามารถบันทึกรายละเอียดของเสียงได้ดี</li>
+          <li>ตอบสนองต่อความถี่เสียงได้กว้าง เหมาะสำหรับการบันทึกเสียงร้องและเครื่องดนตรีที่ต้องการความละเอียด</li>
+          <li>สามารถจับเสียงที่มีการเปลี่ยนแปลงอย่างรวดเร็วได้ดี</li>
+          <li>เหมาะอย่างยิ่งสำหรับการบันทึกในสตูดิโอที่ควบคุมเสียงที่ดี</li>
+        </ul>
+        
+        <h3>ข้อเสียของไมโครโฟนคอนเดนเซอร์:</h3>
+        <ul>
+          <li>ต้องการพลังงานภายนอกในการทำงาน เช่น แหล่งจ่ายไฟ Phantom Power</li>
+          <li>มีความเปราะบาง ไม่ทนทานเท่าไมโครโฟนไดนามิก</li>
+          <li>อาจรับเสียงรบกวนจากสภาพแวดล้อมได้ง่าย ไม่เหมาะสำหรับการใช้งานในสถานที่ที่มีเสียงรบกวนสูง</li>
+          <li>อาจเกิดเสียงแตกเมื���อบันทึกเสียงที่มีความดังมาก</li>
+          <li>ราคาสูงกว่าไมโครโฟนไดนามิกโดยทั่วไป</li>
+        </ul>
+        
+        <h2>การเลือกใช้ไมโครโฟน</h2>
+        <p>การเลือกใช้ไมโครโฟนควรพิจารณาจากลักษณะการใช้งานและสภาพแวดล้อม:</p>
+        
+        <h3>เลือกใช้ไมโครโฟนไดนามิกเมื่อ:</h3>
+        <ul>
+          <li>ต้องการบันทึกเสียงเครื่องดนตรีที่มีความดังสูง (กลอง แอมป์กีตาร์)</li>
+          <li>ใช้งานในการแสดงสดที่ต้องการความทนทาน</li>
+          <li>ทำงานในสภาพแวดล้อมที่มีเสียงรบกวนมาก</li>
+          <li>ต้องการไมโครโฟนที่ทนต่อการใช้งานหนัก</li>
+          <li>ไม่มีแหล่งจ่ายไฟ Phantom Power</li>
+        </ul>
+        
+        <h3>เลือกใช้ไมโครโฟนคอนเดนเซอร์เมื่อ:</h3>
+        <ul>
+          <li>บันทึกเสียงในสตูดิโอที่มีการควบคุมเสียงที่ดี</li>
+          <li>ต้องการบันทึกเสียงร้องที่มีรายละเอียดและความชัดเจนสูง</li>
+          <li>บันทึกเครื่องดนตรีอะคูสติกที่ต้องการความละเอียดของเสียง</li>
+          <li>ต้องการจับเสียงที่มีความละเอียดหรือเสียงแวดล้อม</li>
+          <li>มีแหล่งจ่ายไฟ Phantom Power</li>
+        </ul>
+        
+        <h2>บทสรุป</h2>
+        <p>ทั้งไมโครโฟนไดนามิกและคอนเดนเซอร์ต่างมีจุดเด่นและข้อจำกัดของตัวเอง การเข้าใจคุณสมบัติและข้อจำกัดเหล่านี้จะช่วยให้คุณตัดสินใจเลือกประเภทที่เหมาะสมกับความต้องการเฉพาะของคุณได้ดียิ่งขึ้น นักเสียงมืออาชีพหลายคนมักมีไมโครโฟนทั้งสองประเภทเพื่อให้มั่นใจว่ามีเครื่องมือที่เหมาะสมสำหรับทุกสถานการณ์การบันทึกเสียง</p>
+      `,
+      date: "15 สิงหาคม 2566",
+      author: "ไมเคิล หว่อง",
+      image: "/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png",
+      tags: ["ไมโครโฟน", "อุปกรณ์เสียง", "การบันทึกเสียง"]
     }
   };
 
@@ -504,7 +653,7 @@ const BlogPost = () => {
         {/* Post header */}
         <header className="mb-8">
           <div className="flex flex-wrap gap-2 mb-4">
-            {post.tags.map((tag: string, index: number) => (
+            {post?.tags.map((tag: string, index: number) => (
               <span 
                 key={index} 
                 className="text-xs font-medium bg-primary/10 text-primary px-2 py-1 rounded-full"
@@ -514,15 +663,15 @@ const BlogPost = () => {
               </span>
             ))}
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-left">{post.title}</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-left">{post?.title}</h1>
           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
             <div className="flex items-center" aria-label="Published date">
               <Calendar className="w-4 h-4 mr-1" aria-hidden="true" />
-              <time dateTime={post.date}>{post.date}</time>
+              <time dateTime={post?.date}>{post?.date}</time>
             </div>
             <div className="flex items-center" aria-label="Author">
               <User className="w-4 h-4 mr-1" aria-hidden="true" />
-              <span>{post.author}</span>
+              <span>{post?.author}</span>
             </div>
           </div>
         </header>
@@ -530,8 +679,8 @@ const BlogPost = () => {
         {/* Featured image */}
         <div className="mb-8 rounded-lg overflow-hidden">
           <img
-            src={post.image}
-            alt={post.title}
+            src={post?.image}
+            alt={post?.title}
             className="w-full h-auto object-cover"
           />
         </div>
@@ -539,7 +688,7 @@ const BlogPost = () => {
         {/* Post content with improved readability */}
         <article 
           className="prose dark:prose-invert max-w-none text-left [&>p]:text-base [&>p]:leading-relaxed [&>p]:mb-6 [&>h2]:text-2xl [&>h2]:font-semibold [&>h2]:mt-8 [&>h2]:mb-4 [&>ul]:mb-6 [&>ul]:list-disc [&>ul]:pl-6"
-          dangerouslySetInnerHTML={{ __html: post.content }}
+          dangerouslySetInnerHTML={{ __html: post?.content }}
         />
       </main>
       <Footerdemo />
@@ -548,3 +697,4 @@ const BlogPost = () => {
 };
 
 export default BlogPost;
+

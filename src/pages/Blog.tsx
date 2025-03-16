@@ -73,6 +73,15 @@ const Blog = () => {
   // Sample blog posts with added id field
   const blogPosts = language === "en" ? [
     {
+      id: "dynamic-vs-condenser",
+      title: "Dynamic vs Condenser Microphones: Which One Is Right for You?",
+      excerpt: "Understanding the differences between dynamic and condenser microphones is crucial for selecting the right tool for your recording or performance needs.",
+      date: "August 15, 2023",
+      author: "Michael Wong",
+      image: "/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png",
+      tags: ["Microphones", "Audio Equipment", "Recording"]
+    },
+    {
       id: "microphone-selection-guide",
       title: "How to Choose the Right Microphone for Your Needs",
       excerpt: "Selecting the appropriate microphone is crucial whether you're a content creator, gamer, podcaster, or musician. This guide helps you consider important factors for choosing the perfect microphone.",
@@ -109,6 +118,15 @@ const Blog = () => {
       tags: ["Maintenance", "Equipment Care", "Audio Gear"]
     }
   ] : [
+    {
+      id: "dynamic-vs-condenser",
+      title: "ไมโครโฟนไดนามิกกับคอนเดนเซอร์: การเลือกที่เหมาะกับการใช้งานของคุณ",
+      excerpt: "การเข้าใจความแตกต่างระหว่างไมโครโฟนไดนามิกและคอนเดนเซอร์มีความสำคัญอย่างยิ่งในการเลือกเครื่องมือที่เหมาะสมสำหรับการบันทึกหรือการแสดงของคุณ",
+      date: "15 สิงหาคม 2566",
+      author: "ไมเคิล หว่อง",
+      image: "/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png",
+      tags: ["ไมโครโฟน", "อุปกรณ์เสียง", "การบันทึกเสียง"]
+    },
     {
       id: "microphone-selection-guide",
       title: "วิธีเลือกไมโครโฟนที่เหมาะสมกับความต้องการของคุณ",
