@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
@@ -13,6 +12,60 @@ const BlogPost = () => {
 
   // Sample blog posts data with full content - in a real app this would come from an API
   const blogPosts = language === "en" ? {
+    "microphone-selection-guide": {
+      title: "How to Choose the Right Microphone for Your Needs",
+      content: `
+        <p>Choosing the right microphone is crucial whether you're a content creator, gamer, podcaster, or musician. With so many options on the market, selecting a microphone that meets your needs can be challenging. This article will help you consider important factors when choosing a microphone, along with reasons why Fifine might be an interesting option for you.</p>
+        
+        <img src="/lovable-uploads/7ad1289c-87c2-4ad4-8225-58052b5431be.png" alt="Fifine Microphone" class="my-8 rounded-lg shadow-md w-full max-w-2xl mx-auto" />
+        
+        <h2>1. Choose a Microphone Based on Your Use Case</h2>
+        <p>Before deciding to buy a microphone, you should ask yourself what you need it for, as different types of microphones are suitable for different uses.</p>
+        <ul>
+          <li><strong>Streaming & Gaming</strong> – USB microphones that can be plugged in and used immediately without complex setup</li>
+          <li><strong>Podcasts & Voice Recording</strong> – Condenser microphones with a cardioid pickup pattern to reduce surrounding noise</li>
+          <li><strong>Music & Instrument Recording</strong> – Microphones that provide crisp sound with high detail</li>
+          <li><strong>Online Meetings & Video Calls</strong> – Easy-to-use microphones that provide clear sound</li>
+        </ul>
+        
+        <h2>2. Choose Your Connection: USB or XLR</h2>
+        <p>Connection type is a crucial factor when selecting a microphone:</p>
+        <ul>
+          <li><strong>USB Microphones</strong>: Easy to use, just plug into your computer and you're ready to go. Ideal for beginners and professionals who need convenience.</li>
+          <li><strong>XLR Microphones</strong>: Provide better sound quality but require additional mixers or audio interfaces.</li>
+        </ul>
+        <p>Most Fifine microphones are USB models, making them a great choice for streamers, podcasters, and those who want good sound quality without additional equipment.</p>
+        
+        <h2>3. Choose the Right Pickup Pattern</h2>
+        <p>The pickup pattern determines which directions the microphone captures sound from:</p>
+        <ul>
+          <li><strong>Cardioid</strong> – Captures sound primarily from the front and reduces background noise (ideal for solo speaking or streaming)</li>
+          <li><strong>Omnidirectional</strong> – Captures sound from all directions (ideal for group meetings or recording ambient sounds)</li>
+          <li><strong>Bidirectional</strong> – Captures sound from the front and back (ideal for two-person interviews)</li>
+        </ul>
+        <p>Fifine microphones like the <strong>Fifine AM8</strong> use a cardioid pattern, ensuring clear sound without unnecessary noise.</p>
+        
+        <h2>4. Sound Quality and Features to Look For</h2>
+        <p>When choosing a good microphone, look at the Sample Rate, Bit Depth, and Frequency Response for clear sound. Fifine is known for:</p>
+        <ul>
+          <li>Providing studio-quality sound without distortion</li>
+          <li>Built-in volume control and mute buttons for ease of use</li>
+          <li>Durable design that looks professional and is suitable for all uses</li>
+        </ul>
+        
+        <h2>5. Good Quality at an Affordable Price</h2>
+        <p>Unlike other high-end brands, Fifine offers quality microphones at friendly prices. Whether you're a beginner or looking to upgrade your microphone, Fifine provides truly great value.</p>
+        
+        <h2>Conclusion</h2>
+        <p>Choosing the right microphone is key to creating quality sound, and Fifine is an excellent choice for those seeking balance between price and performance. Whether you're a streamer, podcaster, or artist, Fifine microphones will help you get the best sound.</p>
+        
+        <p>If you're looking for a microphone that's right for you, check out the various Fifine models and choose the one that suits you.</p>
+      `,
+      date: "June 10, 2023",
+      author: "Alex Thompson",
+      image: "/lovable-uploads/7ad1289c-87c2-4ad4-8225-58052b5431be.png",
+      tags: ["Audio Equipment", "Microphones", "Buying Guide"]
+    },
     "audio-equipment-guide": {
       title: "How to Choose the Right Audio Equipment for Your Studio",
       content: `
@@ -179,6 +232,60 @@ const BlogPost = () => {
       tags: ["Maintenance", "Equipment Care", "Audio Gear"]
     }
   } : {
+    "microphone-selection-guide": {
+      title: "วิธีเลือกไมโครโฟนที่เหมาะสมกับความต้องการของคุณ",
+      content: `
+        <p>การเลือกไมโครโฟนที่เหมาะสมเป็นสิ่งสำคัญ ไม่ว่าคุณจะเป็นนักสร้างคอนเทนต์ เกมเมอร์ พอดแคสเตอร์ หรือแม้แต่นักดนตรี ด้วยตัวเลือกมากมายในตลาด การเลือกไมโครโฟนที่ตรงกับความต้องการอาจเป็นเรื่องยาก บทความนี้จะช่วยคุณพิจารณาสิ่งสำคัญต่าง ๆ ในการเลือกไมโครโฟน พร้อมเหตุผลว่าทำไม Fifine จึงเป็นตัวเลือกที่น่าสนใจสำหรับคุณ</p>
+        
+        <img src="/lovable-uploads/7ad1289c-87c2-4ad4-8225-58052b5431be.png" alt="ไมโครโฟน Fifine" class="my-8 rounded-lg shadow-md w-full max-w-2xl mx-auto" />
+        
+        <h2>1. เลือกไมโครโฟนตามการใช้งานของคุณ</h2>
+        <p>ก่อนตัดสินใจซื้อไมโครโฟน คุณควรถามตัวเองก่อนว่าคุณต้องการใช้ไมโครโฟนเพื่ออะไร เพราะไมโครโฟนแต่ละประเภทเหมาะกับการใช้งานที่แตกต่างกัน</p>
+        <ul>
+          <li><strong>สตรีมมิ่ง & เกมมิ่ง</strong> – ไมโครโฟนแบบ USB ที่เสียบใช้งานได้ทันทีโดยไม่ต้องตั้งค่าซับซ้อน</li>
+          <li><strong>พอดแคสต์ & การบันทึกเสียงพูด</strong> – ไมโครโฟนคอนเดนเซอร์ที่มีรูปแบบรับเสียงแบบ Cardioid ช่วยลดเสียงรบกวนรอบข้าง</li>
+          <li><strong>บันทึกเพลง & ดนตรี</strong> – ไมโครโฟนที่ให้เสียงคมชัดและมีความละเอียดสูง</li>
+          <li><strong>ประชุมออนไลน์ & คอลวิดีโอ</strong> – ไมโครโฟนที่ใช้งานง่ายและให้เสียงชัดเจน</li>
+        </ul>
+        
+        <h2>2. เลือกการเชื่อมต่อ: USB หรือ XLR</h2>
+        <p>ประเภทการเชื่อมต่อเป็นปัจจัยสำคัญในการเลือกไมโครโฟน:</p>
+        <ul>
+          <li><strong>USB ไมโครโฟน</strong>: ใช้งานง่าย เพียงเสียบเข้ากับคอมพิวเตอร์ก็ใช้งานได้เลย เหมาะสำหรับผู้เริ่มต้นและมืออาชีพที่ต้องการความสะดวก</li>
+          <li><strong>XLR ไมโครโฟน</strong>: ให้คุณภาพเสียงที่ดีกว่า แต่ต้องใช้กับมิกเซอร์หรืออินเตอร์เฟซเสียงเพิ่มเติม</li>
+        </ul>
+        <p>ไมโครโฟนของ Fifine ส่วนใหญ่เป็นแบบ USB ทำให้เป็นตัวเลือกที่ดีสำหรับสตรีมเมอร์ พอดแคสเตอร์ และผู้ที่ต้องการคุณภาพเสียงที่ดีโดยไม่ต้องมีอุปกรณ์เสริมเพิ่มเติม</p>
+        
+        <h2>3. เลือกรูปแบบการรับเสียงที่เหมาะสม</h2>
+        <p>รูปแบบการรับเสียงกำหนดทิศทางที่ไมโครโฟนจะรับเสียง:</p>
+        <ul>
+          <li><strong>Cardioid</strong> – รับเสียงจากด้านหน้าเป็นหลักและลดเสียงรบกวนรอบข้าง (เหมาะสำหรับพูดคนเดียวหรือสตรีมมิ่ง)</li>
+          <li><strong>Omnidirectional</strong> – รับเสียงจากทุกทิศทาง (เหมาะสำหรับประชุมกลุ่มหรือบันทึกเสียงบรรยากาศ)</li>
+          <li><strong>Bidirectional</strong> – รับเสียงจากด้านหน้าและด้านหลัง (เหมาะสำหรับสัมภาษณ์สองคน)</li>
+        </ul>
+        <p>ไมโครโฟน Fifine อย่างรุ่น <strong>Fifine AM8</strong> ใช้รูปแบบ Cardioid ทำให้เสียงชัดเจนและไม่มีเสียงรบกวนเกินจำเป็น</p>
+        
+        <h2>4. คุณภาพเสียงและฟีเจอร์ที่ควรมองหา</h2>
+        <p>การเลือกไมโครโฟนที่ดีควรดูที่ค่า Sample Rate, Bit Depth และ Frequency Response เพื่อให้เสียงคมชัด ซึ่ง Fifine ขึ้นชื่อเรื่อง:</p>
+        <ul>
+          <li>ให้เสียงคุณภาพระดับสตูดิโอโดยไม่มีเสียงแตก</li>
+          <li>มีปุ่มควบคุมระดับเสียงและปิดเสียงในตัว ใช้งานสะดวก</li>
+          <li>ดีไซน์แข็งแรง ดูเป็นมืออาชีพ และเหมาะกับทุกการใช้งาน</li>
+        </ul>
+        
+        <h2>5. คุณภาพดี ในราคาที่จับต้องได้</h2>
+        <p>ต่างจากแบรนด์ไฮเอนด์อื่น ๆ Fifine นำเสนอไมโครโฟนคุณภาพดีในราคาที่เป็นมิตร ไม่ว่าคุณจะเป็นมือใหม่หรือกำลังมองหาไมโครโฟนอัปเกรด Fifine เป็นตัวเลือกที่ให้ความคุ้มค่าอย่างแท้จริง</p>
+        
+        <h2>บทสรุป</h2>
+        <p>การเลือกไมโครโฟนที่เหมาะสมเป็นกุญแจสำคัญในการสร้างเสียงที่มีคุณภาพ และ Fifine เป็นตัวเลือกที่ยอดเยี่ยมสำหรับผู้ที่ต้องการสมดุลระหว่างราคาและประสิทธิภาพ ไม่ว่าคุณจะเป็นสตรีมเมอร์ พอดแคสเตอร์ หรือศิลปิน ไมโครโฟน Fifine จะช่วยให้คุณได้เสียงที่ดีที่สุด</p>
+        
+        <p>หากคุณกำลังมองหาไมโครโฟนที่เหมาะกับคุณ ลองดูไมโครโฟน Fifine รุ่นต่าง ๆ และเลือกตัวที่ใช่ได้เลย</p>
+      `,
+      date: "10 มิถุนายน 2566",
+      author: "อเล็กซ์ ทอมป์สัน",
+      image: "/lovable-uploads/7ad1289c-87c2-4ad4-8225-58052b5431be.png",
+      tags: ["อุปกรณ์เสียง", "ไมโครโฟน", "คู่มือการซื้อ"]
+    },
     "audio-equipment-guide": {
       title: "วิธีเลือกอุปกรณ์เสียงที่เหมาะสำหรับสตูดิโอของคุณ",
       content: `
@@ -430,13 +537,4 @@ const BlogPost = () => {
         
         {/* Post content with improved readability */}
         <article 
-          className="prose dark:prose-invert max-w-none text-left [&>p]:text-base [&>p]:leading-relaxed [&>p]:mb-6 [&>h2]:text-2xl [&>h2]:font-semibold [&>h2]:mt-8 [&>h2]:mb-4 [&>ul]:my-4 [&>ul]:pl-5 [&>ul>li]:mb-2 [&>ul>li]:text-base" 
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
-      </main>
-      <Footerdemo />
-    </div>
-  );
-};
-
-export default BlogPost;
+          className="prose dark:prose-invert max-w-none text-left [&>p]:text-base [&>p]:leading-relaxed [&>p]:mb-6 [&>h2]:text-2xl [&>h2]:font-semibold [&>

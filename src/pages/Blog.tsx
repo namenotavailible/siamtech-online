@@ -73,6 +73,15 @@ const Blog = () => {
   // Sample blog posts with added id field
   const blogPosts = language === "en" ? [
     {
+      id: "microphone-selection-guide",
+      title: "How to Choose the Right Microphone for Your Needs",
+      excerpt: "Selecting the appropriate microphone is crucial whether you're a content creator, gamer, podcaster, or musician. This guide helps you consider important factors for choosing the perfect microphone.",
+      date: "June 10, 2023",
+      author: "Alex Thompson",
+      image: "/lovable-uploads/7ad1289c-87c2-4ad4-8225-58052b5431be.png",
+      tags: ["Audio Equipment", "Microphones", "Buying Guide"]
+    },
+    {
       id: "audio-equipment-guide",
       title: "How to Choose the Right Audio Equipment for Your Studio",
       excerpt: "A comprehensive guide to selecting the perfect audio gear for your professional recording studio setup.",
@@ -100,6 +109,15 @@ const Blog = () => {
       tags: ["Maintenance", "Equipment Care", "Audio Gear"]
     }
   ] : [
+    {
+      id: "microphone-selection-guide",
+      title: "วิธีเลือกไมโครโฟนที่เหมาะสมกับความต้องการของคุณ",
+      excerpt: "การเลือกไมโครโฟนที่เหมาะสมเป็นสิ่งสำคัญ ไม่ว่าคุณจะเป็นนักสร้างคอนเทนต์ เกมเมอร์ พอดแคสเตอร์ หรือแม้แต่นักดนตรี บทความนี้จะช่วยคุณพิจารณาปัจจัยสำคัญในการเลือกไมโครโฟน",
+      date: "10 มิถุนายน 2566",
+      author: "อเล็กซ์ ทอมป์สัน",
+      image: "/lovable-uploads/7ad1289c-87c2-4ad4-8225-58052b5431be.png",
+      tags: ["อุปกรณ์เสียง", "ไมโครโฟน", "คู่มือการซื้อ"]
+    },
     {
       id: "audio-equipment-guide",
       title: "วิธีเลือกอุปกรณ์เสียงที่เหมาะสำหรับสตูดิโอของคุณ",
