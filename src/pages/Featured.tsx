@@ -24,6 +24,7 @@ const Featured = () => {
               : "ค้นพบสินค้าเทคโนโลยีแนะนำและขายดีที่ SIAMTECH ออนไลน์"
           } 
         />
+        <link rel="icon" type="image/png" href="/lovable-uploads/8cb78da9-2dc4-4442-9bef-1c1424f43d37.png" />
       </Helmet>
       
       <Navigation />

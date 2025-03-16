@@ -25,7 +25,7 @@ const Index = () => {
       "name": companyName,
       "alternateName": language === "th" ? "SIAMTECH Online Group Co.,Ltd." : "บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด",
       "url": window.location.origin,
-      "logo": `${window.location.origin}/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png`,
+      "logo": `${window.location.origin}/lovable-uploads/8cb78da9-2dc4-4442-9bef-1c1424f43d37.png`,
       "description": language === "th" 
         ? "บริษัทผู้จำหน่ายอุปกรณ์เกมและเครื่องเสียงระดับพรีเมียม เชี่ยวชาญในด้านไมโครโฟนระดับมืออาชีพและอุปกรณ์เกมมิ่ง"
         : "Premium gaming and audio equipment retailer specializing in professional microphones and gaming peripherals.",
@@ -140,7 +140,7 @@ const Index = () => {
         <meta property="og:description" content={language === "en" 
           ? "Discover premium gaming peripherals and professional audio equipment at SIAMTECH Online. Shop our collection of high-quality microphones, gaming mice, and streaming gear."
           : "ค้นพบอุปกรณ์เกมมิ่งและอุปกรณ์เสียงระดับมืออาชีพที่ บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด เลือกซื้อไมโครโฟนคุณภาพสูง เมาส์เกมมิ่ง และอุปกรณ์สตรีมมิ่งของเรา"} />
-        <meta property="og:image" content="/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png" />
+        <meta property="og:image" content="/lovable-uploads/8cb78da9-2dc4-4442-9bef-1c1424f43d37.png" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content={language === "en" ? "SIAMTECH Online" : "บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด"} />
         <meta name="twitter:card" content="summary_large_image" />
@@ -150,8 +150,9 @@ const Index = () => {
         <meta name="twitter:description" content={language === "en" 
           ? "Discover premium gaming peripherals and professional audio equipment at SIAMTECH Online."
           : "ค้นพบอุปกรณ์เกมมิ่งและอุปกรณ์เสียงระดับมืออาชีพที่ บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด"} />
-        <meta name="twitter:image" content="/lovable-uploads/112d7d82-ab6b-4f9c-9ac7-69b9fb882a79.png" />
+        <meta name="twitter:image" content="/lovable-uploads/8cb78da9-2dc4-4442-9bef-1c1424f43d37.png" />
         <meta name="canonical" content={window.location.origin} />
+        <link rel="icon" type="image/png" href="/lovable-uploads/8cb78da9-2dc4-4442-9bef-1c1424f43d37.png" />
         <html lang={language} />
       </Helmet>
 
