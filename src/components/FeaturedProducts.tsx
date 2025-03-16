@@ -142,7 +142,9 @@ const FeaturedProducts = () => {
       }} className="text-center mb-24">
           <ShieldCheck className={`w-16 h-16 mx-auto mb-6 ${isDark ? 'text-white' : 'text-black'}`} />
           <h2 className={`font-bold mb-6 text-4xl text-center ${isDark ? 'text-white' : 'text-gray-800'}`}>{t("warranty_info")}</h2>
-          <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} mb-8 max-w-2xl mx-auto text-lg text-center`}>{t("warranty_policy_description")}</p>
+          <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} mb-8 max-w-2xl mx-auto text-lg text-center`}>
+            บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด ("บริษัท") ให้การรับประกันสินค้าแบบจำกัดเป็นระยะเวลาหนึ่งปีสำหรับสินค้าทั้งหมด ครอบคลุมข้อบกพร่องจากการผลิตในวัสดุและงานฝีมือภายใต้การใช้งานปกติ ระยะเวลารับประกันเริ่มต้นจากวันที่ชำระเงินและต้องลงทะเบียนรับประกันสินค้าภายใน 30 วันนับจากวันที่ชำระเงิน*
+          </p>
           <ButtonColorful label={t("activate_warranty_button")} onClick={() => window.location.href = '/warranty'} className={`mx-auto ${isDark ? 'bg-white text-black hover:bg-gray-100' : 'bg-black text-white hover:bg-gray-800'}`} />
         </motion.div>
 

@@ -36,12 +36,13 @@
   
   "warranty_info": "Warranty Information",
   "our_warranty_policy": "Our Warranty Policy",
-  "warranty_policy_description": "Siamtech Online Group CO., LTD. (\"Company\") provides a one-year limited warranty for all its products, covering manufacturing defects in materials and workmanship under normal use. The warranty period begins from the date of purchase.",
+  "warranty_policy_description": "Siamtech Online Group CO., LTD. (\"Company\") provides a one-year limited warranty for all its products, covering manufacturing defects in materials and workmanship under normal use. The warranty period begins from the date of payment and products must be registered for warranty within 30 days of payment*",
+  
   "coverage_details": "Coverage Details",
   "coverage_details_list_1": "One-year limited warranty for all products",
   "coverage_details_list_2": "Covers manufacturing defects in materials and workmanship",
   "coverage_details_list_3": "Valid only under normal use conditions",
-  "coverage_details_list_4": "Warranty period begins from the date of purchase",
+  "coverage_details_list_4": "Warranty period begins from the date of payment",
   "activate_warranty": "Activate Your Warranty",
   "activate_warranty_description": "Ready to activate your warranty? Sign in to your account and register your product to get started.",
   "activate_warranty_button": "Activate Warranty",
