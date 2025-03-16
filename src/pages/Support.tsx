@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Footerdemo } from "@/components/ui/footer-section";
@@ -56,7 +55,7 @@ const Support = () => {
       <Navigation />
       
       <div className="pt-24 pb-16 px-4 max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-left">
+        <h1 className="text-4xl font-bold mb-12 text-left">
           {language === "en" ? "Support Center" : "ศูนย์ช่วยเหลือ"}
         </h1>
 
