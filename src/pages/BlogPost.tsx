@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
@@ -13,6 +12,95 @@ const BlogPost = () => {
 
   // Sample blog posts data with full content - in a real app this would come from an API
   const blogPosts = language === "en" ? {
+    "dynamic-vs-condenser-microphones": {
+      title: "Dynamic vs Condenser Microphones: Choosing the Right Type for Your Needs",
+      content: `
+        <p>Microphones are essential equipment for recording and live performances. Generally, microphones can be divided into two main categories: Dynamic Microphones and Condenser Microphones, each with unique characteristics and applications.</p>
+        
+        <img src="/lovable-uploads/53ecbb57-34c8-43db-9293-a6f4d14b29df.png" alt="Dynamic vs Condenser Microphones" class="my-8 rounded-lg shadow-md w-full max-w-2xl mx-auto" />
+        
+        <h2>Dynamic Microphones</h2>
+        <p>Dynamic microphones work on the principle of electromagnetic induction. Inside the microphone, there's a diaphragm connected to a coil. When sound waves hit the diaphragm, it causes the coil to move within a magnetic field, generating an electrical signal.</p>
+        
+        <h2>Advantages of Dynamic Microphones:</h2>
+        <ul>
+          <li>Highly durable, suitable for applications requiring robustness</li>
+          <li>Don't require external power to operate</li>
+          <li>Handle high sound pressure levels well, making them ideal for recording loud instruments like drums or electric guitars</li>
+          <li>Better at rejecting off-axis sounds, which reduces feedback in live settings</li>
+          <li>Generally more affordable than condenser microphones</li>
+        </ul>
+        
+        <h2>Disadvantages of Dynamic Microphones:</h2>
+        <ul>
+          <li>Lower sensitivity to sound, not ideal for recording that requires high detail</li>
+          <li>Limited frequency response, especially in the higher frequencies</li>
+          <li>May not capture subtle nuances in quiet performances</li>
+        </ul>
+        
+        <h2>Popular Dynamic Microphone Models:</h2>
+        <ul>
+          <li>Shure SM58 - An industry standard for vocals in live performances</li>
+          <li>Shure SM57 - Widely used for instruments and amplifiers</li>
+          <li>Electro-Voice RE20 - Popular for broadcasting and podcasting</li>
+        </ul>
+        
+        <h2>Condenser Microphones</h2>
+        <p>Condenser microphones operate using the principle of capacitance. They have a thin diaphragm positioned close to a fixed backplate. When sound waves hit the diaphragm, the distance between the diaphragm and backplate changes, resulting in capacitance changes that create an electrical signal.</p>
+        
+        <h2>Advantages of Condenser Microphones:</h2>
+        <ul>
+          <li>High sensitivity to sound, capable of capturing detailed audio</li>
+          <li>Wide frequency response, ideal for recording vocals and acoustic instruments that require precision</li>
+          <li>Faster response to transients due to the lighter diaphragm</li>
+          <li>Available in various sizes for different applications</li>
+        </ul>
+        
+        <h2>Disadvantages of Condenser Microphones:</h2>
+        <ul>
+          <li>Require external power (phantom power) to operate</li>
+          <li>More fragile than dynamic microphones</li>
+          <li>Can easily pick up environmental noise, not ideal for noisy environments</li>
+          <li>May distort when recording very loud sound sources</li>
+          <li>Generally more expensive than dynamic microphones</li>
+        </ul>
+        
+        <h2>Popular Condenser Microphone Models:</h2>
+        <ul>
+          <li>Neumann U87 - An industry standard for studio vocals</li>
+          <li>AKG C414 - Versatile for various recording applications</li>
+          <li>Rode NT1-A - Popular affordable option for home studios</li>
+        </ul>
+        
+        <h2>Choosing the Right Microphone</h2>
+        <p>When selecting a microphone, consider your specific use case and environment:</p>
+        
+        <h3>Choose a Dynamic Microphone When:</h3>
+        <ul>
+          <li>Recording loud sound sources (drums, guitar amps)</li>
+          <li>Performing in live settings with potential for feedback</li>
+          <li>Working in less controlled, noisy environments</li>
+          <li>Durability is a priority (touring, outdoor use)</li>
+          <li>Operating on a tighter budget</li>
+        </ul>
+        
+        <h3>Choose a Condenser Microphone When:</h3>
+        <ul>
+          <li>Recording in a controlled studio environment</li>
+          <li>Capturing detailed vocals or acoustic instruments</li>
+          <li>Recording quiet sound sources that require high sensitivity</li>
+          <li>Needing a wide frequency response for accurate sound reproduction</li>
+          <li>Sound quality is the top priority</li>
+        </ul>
+        
+        <h2>Conclusion</h2>
+        <p>Understanding the differences between dynamic and condenser microphones helps you make informed decisions about which type is best suited for your specific recording or performance needs. Many professional studios and performers maintain a collection of both types to address various recording scenarios. If you're just starting out, consider your primary use case and choose accordingly—a dynamic microphone for versatility and durability, or a condenser microphone for detailed studio recordings.</p>
+      `,
+      date: "June 18, 2023",
+      author: "Michael Rodriguez",
+      image: "/lovable-uploads/53ecbb57-34c8-43db-9293-a6f4d14b29df.png",
+      tags: ["Audio Equipment", "Microphones", "Recording Guide"]
+    },
     "microphone-selection-guide": {
       title: "How to Choose the Right Microphone for Your Needs",
       content: `
@@ -233,6 +321,95 @@ const BlogPost = () => {
       tags: ["Maintenance", "Equipment Care", "Audio Gear"]
     }
   } : {
+    "dynamic-vs-condenser-microphones": {
+      title: "ไมโครโฟนไดนามิก vs ไมโครโฟนคอนเดนเซอร์: การเลือกประเภทที่เหมาะสมกับความต้องการของคุณ",
+      content: `
+        <p>ไมโครโฟนเป็นอุปกรณ์ที่สำคัญในการบันทึกเสียงและการแสดงสด โดยทั่วไปแล้วไมโครโฟนสามารถแบ่งออกเป็นสองประเภทหลัก ๆ คือ ไมโครโฟนไดนามิก (Dynamic Microphone) และไมโครโฟนคอนเดนเซอร์ (Condenser Microphone) ซึ่งแต่ละประเภทมีคุณสมบัติและการใช้งานที่แตกต่างกัน</p>
+        
+        <img src="/lovable-uploads/53ecbb57-34c8-43db-9293-a6f4d14b29df.png" alt="ไมโครโฟนไดนามิก vs ไมโครโฟนคอนเดนเซอร์" class="my-8 rounded-lg shadow-md w-full max-w-2xl mx-auto" />
+        
+        <h2>ไมโครโฟนไดนามิก (Dynamic Microphone)</h2>
+        <p>ไมโครโฟนไดนามิกทำงานโดยใช้หลักการของการเหนี่ยวนำแม่เหล็กไฟฟ้า ภายในไมโครโฟนจะมีแผ่นไดอะแฟรมที่เชื่อมต่อกับขดลวด เมื่อเสียงมากระทบแผ่นไดอะแฟรม จะทำให้ขดลวดเคลื่อนที่ในสนามแม่เหล็ก เกิดเป็นสัญญาณไฟฟ้า</p>
+        
+        <h2>ข้อดีของไมโครโฟนไดนามิก:</h2>
+        <ul>
+          <li>มีความทนทานสูง เหมาะสำหรับการใช้งานที่ต้องการความแข็งแรง</li>
+          <li>ไม่ต้องการพลังงานภายนอกในการทำงาน</li>
+          <li>สามารถรับระดับความดันเสียงสูงได้ดี เหมาะสำหรับการบันทึกเสียงเครื่องดนตรีที่มีความดัง เช่น กลอง หรือกีตาร์ไฟฟ้า</li>
+          <li>สามารถลดเสียงรบกวนจากด้านข้างได้ดี ลดปัญหาเสียงหอนในการแสดงสด</li>
+          <li>โดยทั่วไปมีราคาถูกกว่าไมโครโฟนคอนเดนเซอร์</li>
+        </ul>
+        
+        <h2>ข้อเสียของไมโครโฟนไดนามิก:</h2>
+        <ul>
+          <li>ความไวต่อเสียงต่ำ ไม่เหมาะสำหรับการบันทึกเสียงที่ต้องการรายละเอียดสูง</li>
+          <li>ตอบสนองต่อความถี่เสียงได้จำกัด โดยเฉพาะในช่วงความถี่สูง</li>
+          <li>อาจไม่สามารถจับความละเอียดของเสียงในการแสดงที่เบา</li>
+        </ul>
+        
+        <h2>ไมโครโฟนไดนามิกที่นิยมใช้:</h2>
+        <ul>
+          <li>Shure SM58 - มาตรฐานอุตสาหกรรมสำหรับร้องเพลงในการแสดงสด</li>
+          <li>Shure SM57 - ใช้กันอย่างแพร่หลายสำหรับเครื่องดนตรีและแอมป์</li>
+          <li>Electro-Voice RE20 - นิยมใช้ในการออกอากาศและพอดแคสต์</li>
+        </ul>
+        
+        <h2>ไมโครโฟนคอนเดนเซอร์ (Condenser Microphone)</h2>
+        <p>ไมโครโฟนคอนเดนเซอร์ใช้หลักการทำงานของตัวเก็บประจุ โดยมีแผ่นไดอะแฟรมบาง ๆ ที่อยู่ใกล้กับแผ่นโลหะคงที่ เมื่อเสียงมากระทบแผ่นไดอะแฟรม จะทำให้ระยะห่างระหว่างแผ่นเปลี่ยนแปลง ส่งผลให้ความจุไฟฟ้าเปลี่ยนแปลงและเกิดเป็นสัญญาณไฟฟ้า</p>
+        
+        <h2>ข้อดีของไมโครโฟนคอนเดนเซอร์:</h2>
+        <ul>
+          <li>มีความไวต่อเสียงสูง สามารถบันทึกรายละเอียดของเสียงได้ดี</li>
+          <li>ตอบสนองต่อความถี่เสียงได้กว้าง เหมาะสำหรับการบันทึกเสียงร้องและเครื่องดนตรีที่ต้องการความละเอียด</li>
+          <li>ตอบสนองต่อทรานเซียนต์ได้เร็วกว่าเนื่องจากไดอะแฟรมที่เบากว่า</li>
+          <li>มีให้เลือกหลายขนาดสำหรับการใช้งานที่แตกต่างกัน</li>
+        </ul>
+        
+        <h2>ข้อเสียของไมโครโฟนคอนเดนเซอร์:</h2>
+        <ul>
+          <li>ต้องการพลังงานภายนอกในการทำงาน เช่น แหล่งจ่ายไฟ Phantom Power</li>
+          <li>มีความเปราะบาง ไม่ทนทานเท่าไมโครโฟนไดนามิก</li>
+          <li>อาจรับเสียงรบกวนจากสภาพแวดล้อมได้ง่าย ไม่เหมาะสำหรับการใช้งานในสถานที่ที่มีเสียงรบกวนสูง</li>
+          <li>อาจเกิดเสียงแตกเมื่อบันทึกแหล่งเสียงที่ดังมาก</li>
+          <li>โดยทั่วไปมีราคาแพงกว่าไมโครโฟนไดนามิก</li>
+        </ul>
+        
+        <h2>ไมโครโฟนคอนเดนเซอร์ที่นิยมใช้:</h2>
+        <ul>
+          <li>Neumann U87 - มาตรฐานอุตสาหกรรมสำหรับการบันทึกเสียงร้องในสตูดิโอ</li>
+          <li>AKG C414 - หลากหลายการใช้งานสำหรับการบันทึกเสียงประเภทต่างๆ</li>
+          <li>Rode NT1-A - ตัวเลือกราคาประหยัดที่นิยมสำหรับโฮมสตูดิโอ</li>
+        </ul>
+        
+        <h2>การเลือกใช้ไมโครโฟน</h2>
+        <p>การเลือกใช้ไมโครโฟนควรพิจารณาจากลักษณะการใช้งานและสภาพแวดล้อม:</p>
+        
+        <h3>เลือกไมโครโฟนไดนามิกเมื่อ:</h3>
+        <ul>
+          <li>บันทึกเสียงจากแหล่งเสียงที่ดัง (กลอง, แอมป์กีตาร์)</li>
+          <li>แสดงในสภาพแวดล้อมการแสดงสดที่อาจเกิดเสียงหอน</li>
+          <li>ทำงานในสภาพแวดล้อมที่ควบคุมได้น้อยกว่า มีเสียงรบกวน</li>
+          <li>ความทนทานเป็นสิ่งสำคัญ (การทัวร์, การใช้งานกลางแจ้ง)</li>
+          <li>มีงบประมาณจำกัด</li>
+        </ul>
+        
+        <h3>เลือกไมโครโฟนคอนเดนเซอร์เมื่อ:</h3>
+        <ul>
+          <li>บันทึกเสียงในสภาพแวดล้อมสตูดิโอที่ควบคุมได้</li>
+          <li>ต้องการจับรายละเอียดของเสียงร้องหรือเครื่องดนตรีอะคูสติก</li>
+          <li>บันทึกแหล่งเสียงที่เบาซึ่งต้องการความไวสูง</li>
+          <li>ต้องการการตอบสนองความถี่ที่กว้างเพื่อการสร้างเสียงที่แม่นยำ</li>
+          <li>คุณภาพเสียงเป็นสิ่งสำคัญสูงสุด</li>
+        </ul>
+        
+        <h2>บทสรุป</h2>
+        <p>การเข้าใจความแตกต่างระหว่างไมโครโฟนไดนามิกและไมโครโฟนคอนเดนเซอร์ช่วยให้คุณตัดสินใจได้อย่างมีข้อมูลว่าประเภทใดเหมาะสมที่สุดสำหรับความต้องการในการบันทึกเสียงหรือการแสดงของคุณ สตูดิโอและนักแสดงมืออาชีพหลายรายมีไมโครโฟนทั้งสองประเภทเพื่อรองรับสถานการณ์การบันทึกที่หลากหลาย หากคุณเพิ่งเริ่มต้น ให้พิจารณาการใช้งานหลักของคุณและเลือกตามนั้น—ไมโครโฟนไดนามิกสำหรับความหลากหลายและความทนทาน หรือไมโครโฟนคอนเดนเซอร์สำหรับการบันทึกในสตูดิโอที่ต้องการรายละเอียดสูง</p>
+      `,
+      date: "18 มิถุนายน 2566",
+      author: "ไมเคิล โรดริเกซ",
+      image: "/lovable-uploads/53ecbb57-34c8-43db-9293-a6f4d14b29df.png",
+      tags: ["อุปกรณ์เสียง", "ไมโครโฟน", "คู่มือการบันทึกเสียง"]
+    },
     "microphone-selection-guide": {
       title: "วิธีเลือกไมโครโฟนที่เหมาะสมกับความต้องการของคุณ",
       content: `
@@ -347,204 +524,4 @@ const BlogPost = () => {
         <p>อุตสาหกรรมเสียงมีการพัฒนาอย่างต่อเนื่องด้วยเทคโนโลยีและวิธีการใหม่ๆ ที่กำลังเปลี่ยนรูปแบบการบันทึก การมิกซ์ และการกระจายเสียง นี่คือแนวโน้มที่กำลังเกิดขึ้นที่วิศวกรเสียงควรจับตามอง</p>
         
         <h2>รูปแบบเสียงแบบโอบล้อม</h2>
-        <p>เสียงเชิงพื้นที่และรูปแบบแบบโอบล้อมเช่น Dolby Atmos และ Sony 360 Reality Audio กำลังได้รับความนิยมมากขึ้น เทคโนโลยีเหล่านี้สร้างภูมิทัศน์เสียงสามมิติที่ห่อหุ้มผู้ฟัง มอบประสบการณ์ที่น่าสนใจมากกว่าระบบสเตอริโอแบบดั้งเดิม</p>
-        
-        <h2>เครื่องมือที่ขับเคลื่อนด้วย AI</h2>
-        <p>ปัญญาประดิษฐ์กำลังเข้ามามีบทบาทสำคัญในการผลิตเสียง เครื่องมือที่ขับเคลื่อนด้วย AI ตอนนี้สามารถ:</p>
-        <ul>
-          <li>มิกซ์และมาสเตอร์แทร็คโดยอัตโนมัติ</li>
-          <li>แยกสเต็มจากการบันทึกที่มิกซ์แล้ว</li>
-          <li>สร้างเสียงเครื่องดนตรีที่สมจริง</li>
-          <li>เพิ่มประสิทธิภาพการร้อง</li>
-          <li>ลดเสียงรบกวนและฟื้นฟูเสียง</li>
-        </ul>
-        
-        <h2>การทำงานร่วมกันเสมือนจริง</h2>
-        <p>เครื่องมือการทำงานร่วมกันระยะไกลได้กลายเป็นสิ่งจำเป็นในวิศวกรรมเสียงสมัยใหม่ แพลตฟอร์มที่อนุญาตให้มีการทำงานร่วมกันแบบเรียลไทม์ระหว่างศิลปินและวิศวกรในสถานที่ต่างๆ จะยังคงพัฒนาต่อไป โดยมีความหน่วงเวลาที่ต่ำลงและการผสานรวมกับ DAW ที่ดีขึ้น</p>
-        
-        <h2>บล็อกเชนสำหรับการจัดการสิทธิ์</h2>
-        <p>เทคโนโลยีบล็อกเชนกำลังเริ่มเปลี่ยนแปลงวิธีการจัดการสิทธิ์และค่าลิขสิทธิ์ในอุตสาหกรรมเสียง สัญญาอัจฉริยะสามารถรับประกันได้ว่าผู้สร้างจะได้รับค่าตอบแทนอย่างเหมาะสมสำหรับผลงานของพวกเขา ด้วยการติดตามการใช้งานอย่างโปร่งใสและการชำระเงินอัตโนมัติ</p>
-        
-        <h2>เทคโนโลยีเสมือนจริงและเสริมความเป็นจริง</h2>
-        <p>เทคโนโลยี VR และ AR กำลังเปิดพรมแดนใหม่สำหรับการออกแบบเสียงและวิศวกรรม การสร้างภูมิทัศน์เสียงที่น่าเชื่อถือสำหรับสภาพแวดล้อมเสมือนจริงต้องใช้ทักษะเฉพาะทางในด้านเสียงเชิงพื้นที่และการออกแบบเสียงแบบโต้ตอบ</p>
-        
-        <h2>แนวทางปฏิบัติที่ยั่งยืน</h2>
-        <p>ความยั่งยืนกำลังกลายเป็นสิ่งสำคัญในทุกอุตสาหกรรมรวมถึงการผลิตเสียง ซึ่งรวมถึง:</p>
-        <ul>
-          <li>อุปกรณ์ที่ประหยัดพลังงาน</li>
-          <li>โซลูชันบนคลาวด์ที่ลดความต้องการฮาร์ดแวร์</li>
-          <li>การผลิตและการจัดหาส่วนประกอบอย่างมีจริยธรรม</li>
-          <li>การกระจายแบบดิจิทัลลดขยะจากสื่อกายภาพ</li>
-        </ul>
-        
-        <h2>บทสรุป</h2>
-        <p>อนาคตของวิศวกรรมเสียงอยู่ที่จุดตัดของเทคโนโลยี ความคิดสร้างสรรค์ และการเข้าถึง วิศวกรที่ปรับตัวได้และเรียนรู้อย่างต่อเนื่องจะอยู่ในตำแหน่งที่ดีในการใช้ประโยชน์จากแนวโน้มและเทคโนโลยีที่กำลังเกิดขึ้นเหล่านี้</p>
-      `,
-      date: "22 เมษายน 2566",
-      author: "ซาร่า จอห์นสัน",
-      image: "/lovable-uploads/0f82fd40-daa0-40de-9205-97344aaafee5.png",
-      tags: ["เทคโนโลยี", "แนวโน้ม", "วิศวกรรมเสียง"]
-    },
-    "audio-maintenance": {
-      title: "การดูแลรักษาอุปกรณ์เสียงของคุณ: แนวทางปฏิบัติที่ดีที่สุด",
-      content: `
-        <p>อุปกรณ์เสียงมืออาชีพถือเป็นการลงทุนที่สำคัญ การบำรุงรักษาที่เหมาะสมไม่เพียงแต่ช่วยยืดอายุการใช้งานของอุปกรณ์เท่านั้น แต่ยังช่วยให้มั่นใจในประสิทธิภาพสูงสุดอีกด้วย นี่คือแนวทางปฏิบัติที่ดีที่สุดบางประการสำหรับการบำรุงรักษาอุปกรณ์เสียงของคุณ</p>
-        
-        <h2>การทำความสะอาดเป็นประจำ</h2>
-        <p>ฝุ่นและเศษขยะสามารถส่งผลกระทบต่อประสิทธิภาพของอุปกรณ์และอาจทำให้เกิดความเสียหายในระยะยาว กำหนดตารางการทำความสะอาดเป็นประจำ:</p>
-        <ul>
-          <li>ใช้ลมอัดเพื่อกำจัดฝุ่นออกจากปุ่มควบคุม เฟดเดอร์ และขั้วต่อ</li>
-          <li>ทำความสะอาดเฟดเดอร์และโพเทนชิโอมิเตอร์ด้วยน้ำยาทำความสะอาดหน้าสัมผัสเฉพาะทาง</li>
-          <li>เช็ดพื้นผิวด้วยน้ำยาทำความสะอาดที่เหมาะสม (หลีกเลี่ยงแอลกอฮอล์บนพื้นผิวบางชนิด)</li>
-          <li>ทำความสะอาดตะแกรงไมโครโฟนเพื่อป้องกันการสะสมที่อาจส่งผลต่อคุณภาพเสียง</li>
-        </ul>
-        
-        <h2>การจัดการสายสัญญาณ</h2>
-        <p>การจัดการสายสัญญาณที่เหมาะสมช่วยป้องกันความเสียหายและทำให้การแก้ไขปัญหาง่ายขึ้น:</p>
-        <ul>
-          <li>ม้วนสายให้ถูกต้องโดยใช้เทคนิค over-under</li>
-          <li>เก็บสายอย่างเป็นระเบียบ หลีกเลี่ยงการหักงอและการงอมุมแหลม</li>
-          <li>ติดป้ายสายเพื่อการระบุที่รวดเร็ว</li>
-          <li>ตรวจสอบสายเป็นประจำเพื่อหาการสึกหรอและความเสียหาย</li>
-          <li>เปลี่ยนสายที่เสียหายทันทีแทนที่จะใช้การแก้ไขชั่วคราว</li>
-        </ul>
-        
-        <h2>การจัดการพลังงาน</h2>
-        <p>ปัญหาพลังงานสามารถสร้างความเสียหายให้กับอุปกรณ์และส่งผลต่อคุณภาพเสียง:</p>
-        <ul>
-          <li>ใช้เครื่องป้องกันไฟกระชากหรือเครื่องปรับแต่งไฟฟ้าที่มีคุณภาพ</li>
-          <li>ปฏิบัติตามลำดับการเปิดและปิดเครื่องที่เหมาะสม</li>
-          <li>หลีกเลี่ยงการใช้วงจรเกินกำลัง</li>
-          <li>พิจารณาใช้เครื่องสำรองไฟฟ้า (UPS) สำหรับอุปกรณ์สำคัญ</li>
-        </ul>
-        
-        <h2>การควบคุมสภาพแวดล้อม</h2>
-        <p>สภาพแวดล้อมที่คุณเก็บและใช้อุปกรณ์มีความสำคัญ:</p>
-        <ul>
-          <li>รักษาระดับอุณหภูมิและความชื้นให้คงที่</li>
-          <li>หลีกเลี่ยงแสงแดดโดยตรงที่อุปกรณ์</li>
-          <li>เก็บอาหารและเครื่องดื่มให้ห่างจากอุปกรณ์เสียง</li>
-          <li>ใช้เครื่องลดความชื้นในสภาพแวดล้อมที่ชื้นเพื่อป้องกันการกัดกร่อน</li>
-        </ul>
-        
-        <h2>การทดสอบและการปรับเทียบเป็นประจำ</h2>
-        <p>การทดสอบเป็นระยะช่วยให้มั่นใจว่าอุปกรณ์ของคุณทำงานอย่างถูกต้อง:</p>
-        <ul>
-          <li>ทดสอบทุกช่องและฟังก์ชันเป็นประจำ</li>
-          <li>ปรับเทียบมอนิเตอร์และอุปกรณ์อื่นๆ ตามความจำเป็น</li>
-          <li>ติดตามตารางการบำรุงรักษาและประวัติ</li>
-        </ul>
-        
-        <h2>การเก็บรักษาที่เหมาะสม</h2>
-        <p>เมื่อไม่ใช้งาน ให้เก็บอุปกรณ์อย่างเหมาะสม:</p>
-        <ul>
-          <li>ใช้กล่องป้องกันสำหรับอุปกรณ์พกพา</li>
-          <li>คลุมอุปกรณ์ที่อยู่กับที่เพื่อป้องกันการสะสมของฝุ่น</li>
-          <li>เก็บไมโครโฟนในแนวตั้งเพื่อป้องกันความชื้นสะสมในแคปซูล</li>
-          <li>ถอดแบตเตอรี่ออกจากอุปกรณ์ระหว่างการเก็บรักษาระยะยาว</li>
-        </ul>
-        
-        <h2>บทสรุป</h2>
-        <p>การลงทุนเวลาในการบำรุงรักษาอย่างเหมาะสมช่วยประหยัดเงินในระยะยาวและช่วยให้มั่นใจว่าอุปกรณ์ของคุณทำงานได้ดีที่สุด พัฒนาตารางการบำรุงรักษาเป็นประจำและยึดมั่นในตารางนั้นเพื่อปกป้องการลงทุนด้านเสียงของคุณ</p>
-      `,
-      date: "10 มีนาคม 2566",
-      author: "ไมเคิล หว่อง",
-      image: "/lovable-uploads/3cdd087c-645e-4a74-a9e9-59680079c17f.png",
-      tags: ["การบำรุงรักษา", "การดูแลอุปกรณ์", "อุปกรณ์เสียง"]
-    }
-  };
-
-  const post = blogPosts[id as string];
-
-  if (!post) {
-    // Redirect to blog listing if post not found
-    return (
-      <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-950">
-        <Navigation />
-        <main className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto w-full flex-grow">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold mb-6">
-              {language === "en" ? "Post Not Found" : "ไม่พบบทความ"}
-            </h1>
-            <p className="mb-8">
-              {language === "en" 
-                ? "The blog post you're looking for doesn't exist or has been removed." 
-                : "ไม่พบบทความที่คุณกำลังมองหาหรือถูกลบออกไปแล้ว"}
-            </p>
-            <Link 
-              to="/blog" 
-              className="inline-flex items-center text-primary hover:underline"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              {language === "en" ? "Back to all posts" : "กลับไปยังบทความทั้งหมด"}
-            </Link>
-          </div>
-        </main>
-        <Footerdemo />
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-950">
-      <Navigation />
-      <main className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto w-full flex-grow">
-        {/* Back link */}
-        <div className="mb-8">
-          <button 
-            onClick={() => navigate('/blog')} 
-            className="inline-flex items-center text-primary hover:underline"
-            aria-label={language === "en" ? "Back to all posts" : "กลับไปยังบทความทั้งหมด"}
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            {language === "en" ? "Back to all posts" : "กลับไปยังบทความทั้งหมด"}
-          </button>
-        </div>
-        
-        {/* Post header */}
-        <header className="mb-8">
-          <div className="flex flex-wrap gap-2 mb-4">
-            {post.tags.map((tag: string, index: number) => (
-              <span 
-                key={index} 
-                className="text-xs font-medium bg-primary/10 text-primary px-2 py-1 rounded-full"
-                role="note"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-left">{post.title}</h1>
-          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-            <div className="flex items-center" aria-label="Published date">
-              <Calendar className="w-4 h-4 mr-1" aria-hidden="true" />
-              <time dateTime={post.date}>{post.date}</time>
-            </div>
-            <div className="flex items-center" aria-label="Author">
-              <User className="w-4 h-4 mr-1" aria-hidden="true" />
-              <span>{post.author}</span>
-            </div>
-          </div>
-        </header>
-        
-        {/* Featured image */}
-        <div className="mb-8 rounded-lg overflow-hidden">
-          <img
-            src={post.image}
-            alt={post.title}
-            className="w-full h-auto object-cover"
-          />
-        </div>
-        
-        {/* Post content with improved readability */}
-        <article 
-          className="prose dark:prose-invert max-w-none text-left [&>p]:text-base [&>p]:leading-relaxed [&>p]:mb-6 [&>h2]:text-2xl [&>h2]:font-semibold [&>h2]:mt-8 [&>h2]:mb-4 [&>ul]:mb-6 [&>ul]:list-disc [&>ul]:pl-6"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
-      </main>
-      <Footerdemo />
-    </div>
-  );
-};
-
-export default BlogPost;
+        <p>เสียงเชิงพื้นที่และรูปแบบแบบโอบล้อมเช่น Dolby Atmos และ Sony 360 Reality Audio กำลังได้รับความนิยมมากขึ้น เทคโนโลยีเหล่านี้สร้างภูมิทัศน์เสียงสามม
