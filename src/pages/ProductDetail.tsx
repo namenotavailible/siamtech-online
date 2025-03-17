@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loading } from "@/components/ui/loading";
@@ -24,8 +23,11 @@ const products = [
     image: "/lovable-uploads/895e0863-a00d-4ccd-9f78-21e1181817a3.png",
     gallery: [
       "/lovable-uploads/895e0863-a00d-4ccd-9f78-21e1181817a3.png",
-      "/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png",
-      "/lovable-uploads/7ad1289c-87c2-4ad4-8225-58052b5431be.png"
+      "/lovable-uploads/9a3c3a9c-b2c9-4953-a581-32e79e85cf73.png",
+      "/lovable-uploads/a4eefbee-12f4-4538-a894-35864e07fe99.png",
+      "/lovable-uploads/0c3ec78b-5e9e-472a-9c82-5217d1019e5e.png",
+      "/lovable-uploads/97e40566-5cee-4dee-9fc7-221e8a3a12e6.png",
+      "/lovable-uploads/30d59c91-0ea4-4ce3-8e4f-f233d15f429d.png"
     ],
     category: "Dynamic Microphone",
     category_th: "ไมโครโฟนไดนามิก",
