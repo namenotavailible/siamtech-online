@@ -124,8 +124,13 @@ const Gallery4 = ({
     }
   ];
 
-  // Use blog posts if no items provided
-  const displayItems = items.length > 0 ? items : blogPosts;
+  // Always use blog posts instead of default items or provided items
+  const displayItems = blogPosts;
+
+  const handleLinkClick = () => {
+    // Scroll to top when clicking links
+    window.scrollTo(0, 0);
+  };
 
   useEffect(() => {
     if (!carouselApi) {
@@ -198,7 +203,7 @@ const Gallery4 = ({
                 key={item.id}
                 className="max-w-[320px] pl-[20px] lg:max-w-[360px]"
               >
-                <Link to={item.href} className="group rounded-xl">
+                <Link to={item.href} className="group rounded-xl" onClick={handleLinkClick}>
                   <div className="group relative h-full min-h-[27rem] max-w-full overflow-hidden rounded-xl md:aspect-[5/4] lg:aspect-[16/9]">
                     <img
                       src={item.image}
