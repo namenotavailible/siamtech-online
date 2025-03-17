@@ -1,3 +1,4 @@
+
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loading } from "@/components/ui/loading";
@@ -585,3 +586,82 @@ const ProductDetail = () => {
                     </h3>
                     <p className={theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}>
                       {language === "en" ? feature.description : feature.description_th}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="specifications">
+              <div className={`rounded-xl overflow-hidden ${theme === 'dark' ? 'border border-white/10' : 'border border-gray-200'}`}>
+                <table className="w-full">
+                  <tbody>
+                    {product.specs.map((spec, index) => (
+                      <tr 
+                        key={index} 
+                        className={`${index % 2 === 0 
+                          ? (theme === 'dark' ? 'bg-white/5' : 'bg-gray-50') 
+                          : ''}`}
+                      >
+                        <td className="py-4 px-6 font-medium">{language === "en" ? spec.name : spec.name_th}</td>
+                        <td className="py-4 px-6">{language === "en" ? spec.value : spec.value_th}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="package">
+              <div className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-white/5' : 'bg-gray-50'}`}>
+                <h3 className="text-xl font-bold mb-4">
+                  {language === "en" ? "Package Contents" : "สิ่งที่มีในกล่อง"}
+                </h3>
+                <ul className="space-y-2">
+                  {product.inBox.map((item, index) => (
+                    <li key={index} className="flex items-center">
+                      <Check className="w-5 h-5 mr-2 text-green-500" />
+                      <span>{language === "en" ? item.name : item.name_th}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+        
+        {/* Call to Action Section */}
+        <div className="mt-16">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`p-8 rounded-xl text-center ${theme === 'dark' 
+              ? 'bg-gradient-to-br from-purple-900/50 to-blue-900/50 border border-white/10' 
+              : 'bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-100'}`}
+          >
+            <h3 className="text-2xl font-bold mb-4">
+              {language === "en" 
+                ? "Experience Premium Performance Today" 
+                : "สัมผัสประสิทธิภาพระดับพรีเมียมวันนี้"}
+            </h3>
+            <p className={`max-w-2xl mx-auto mb-6 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+              {language === "en" 
+                ? "Join thousands of satisfied customers who have upgraded their setup with our premium products."
+                : "เข้าร่วมกับลูกค้าที่พึงพอใจนับพันที่ได้อัพเกรดการตั้งค่าของพวกเขาด้วยผลิตภัณฑ์ระดับพรีเมียมของเรา"}
+            </p>
+            <Button 
+              size="lg" 
+              onClick={handleAddToCart}
+              className="px-8 py-6 h-auto text-lg font-medium"
+            >
+              {t("add_to_cart")}
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductDetail;
