@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import About from "./pages/About";
 import Privacy from "./pages/Privacy";
 import ProductDetail from "./pages/ProductDetail";
+import ProductLearnMore from "./pages/ProductLearnMore";
 import Checkout from "./pages/Checkout";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -49,6 +50,7 @@ function App() {
                 <Route path="/featured" element={<Featured />} />
                 <Route path="/new-arrivals" element={<NewArrivals />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
+                <Route path="/product/:id/learn-more" element={<ProductLearnMore />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/mfa" element={<MFAPage />} />
                 <Route path="*" element={<NotFound />} />

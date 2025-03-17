@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loading } from "@/components/ui/loading";
@@ -170,14 +169,12 @@ const ProductDetail = () => {
               >
                 {t("add_to_cart")}
               </button>
-              <a 
-                href={`https://www.fifine.com/products/${product.name.toLowerCase().replace(/\s+/g, '-')}`} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="block text-center w-full border border-white/20 py-3 rounded-md hover:bg-white/10 transition-colors"
+              <button 
+                onClick={() => navigate(`/product/${id}/learn-more`)}
+                className="w-full border border-white/20 py-3 rounded-md hover:bg-white/10 transition-colors"
               >
                 {t("learn_more")}
-              </a>
+              </button>
             </motion.div>
           </div>
         </motion.div>
