@@ -149,11 +149,14 @@ const Gallery4 = ({
   }, [carouselApi]);
 
   return (
-    <section className="py-16 relative bg-gray-50 dark:bg-gray-900">
+    <section className="py-16 relative bg-gray-50 dark:bg-gray-900" aria-labelledby="blog-section-heading">
       <div className="container mx-auto">
         <div className="mb-8 flex items-end justify-between md:mb-14 lg:mb-16">
           <div className="flex flex-col gap-4 text-left">
-            <h2 className={`text-3xl font-medium md:text-4xl lg:text-5xl ${!isDark ? "text-black" : ""}`}>
+            <h2 
+              id="blog-section-heading" 
+              className={`text-3xl font-medium md:text-4xl lg:text-5xl ${!isDark ? "text-black" : ""}`}
+            >
               {language === "en" ? "Latest Blog Posts" : title}
             </h2>
             <p className="max-w-lg text-muted-foreground">
@@ -169,6 +172,7 @@ const Gallery4 = ({
               }}
               disabled={!canScrollPrev}
               className={`disabled:pointer-events-auto ${!isDark ? "text-black hover:bg-gray-100 hover:text-black" : ""}`}
+              aria-label={language === "en" ? "Previous slide" : "สไลด์ก่อนหน้า"}
             >
               <ArrowLeft className="size-5" />
             </Button>
@@ -180,6 +184,7 @@ const Gallery4 = ({
               }}
               disabled={!canScrollNext}
               className={`disabled:pointer-events-auto ${!isDark ? "text-black hover:bg-gray-100 hover:text-black" : ""}`}
+              aria-label={language === "en" ? "Next slide" : "สไลด์ถัดไป"}
             >
               <ArrowRight className="size-5" />
             </Button>
@@ -203,12 +208,20 @@ const Gallery4 = ({
                 key={item.id}
                 className="max-w-[320px] pl-[20px] lg:max-w-[360px]"
               >
-                <Link to={item.href} className="group rounded-xl" onClick={handleLinkClick}>
+                <Link 
+                  to={item.href} 
+                  className="group rounded-xl" 
+                  onClick={handleLinkClick}
+                  aria-label={language === "en" ? `Read article: ${item.title}` : `อ่านบทความ: ${item.title}`}
+                >
                   <div className="group relative h-full min-h-[27rem] max-w-full overflow-hidden rounded-xl md:aspect-[5/4] lg:aspect-[16/9]">
                     <img
                       src={item.image}
                       alt={item.title}
                       className="absolute h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy"
+                      width="360" 
+                      height="240"
                     />
                     {/* Background overlay with reduced opacity for better image visibility */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
@@ -221,7 +234,7 @@ const Gallery4 = ({
                       </div>
                       <div className="flex items-center text-sm">
                         {language === "en" ? "Read more" : "อ่านเพิ่มเติม"}{" "}
-                        <ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
+                        <ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                       </div>
                     </div>
                   </div>
@@ -230,15 +243,17 @@ const Gallery4 = ({
             ))}
           </CarouselContent>
         </Carousel>
-        <div className="mt-8 flex justify-center gap-2">
-          {displayItems.map((_, index) => (
+        <div className="mt-8 flex justify-center gap-2" role="tablist" aria-label={language === "en" ? "Blog post navigation" : "การนำทางบทความ"}>
+          {displayItems.map((item, index) => (
             <button
               key={index}
               className={`h-2 w-2 rounded-full transition-colors ${
                 currentSlide === index ? "bg-primary" : "bg-primary/20"
               }`}
               onClick={() => carouselApi?.scrollTo(index)}
-              aria-label={`Go to slide ${index + 1}`}
+              aria-label={language === "en" ? `Go to article ${index + 1}: ${item.title}` : `ไปที่บทความ ${index + 1}: ${item.title}`}
+              aria-selected={currentSlide === index}
+              role="tab"
             />
           ))}
         </div>
