@@ -25,10 +25,15 @@ export const MenuItem = ({
   children?: React.ReactNode;
   to?: string; // Optional prop for navigation
 }) => {
+  const handleClick = () => {
+    // Scroll to top when navigating to a new page
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div onMouseEnter={() => setActive(item)} className="relative">
       {to ? (
-        <Link to={to}>
+        <Link to={to} onClick={handleClick}>
           <motion.p
             transition={{ duration: 0.3 }}
             className="cursor-pointer text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white px-3 py-2 transition-colors"
@@ -100,8 +105,13 @@ export const ProductItem = ({
   href: string;
   src: string;
 }) => {
+  const handleClick = () => {
+    // Scroll to top when clicking on product items
+    window.scrollTo(0, 0);
+  };
+
   return (
-    <Link to={href} className="flex space-x-2 items-start p-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg transition-colors">
+    <Link to={href} className="flex space-x-2 items-start p-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg transition-colors" onClick={handleClick}>
       <img
         src={src}
         width={60}
@@ -123,9 +133,15 @@ export const ProductItem = ({
 };
 
 export const HoveredLink = ({ children, ...rest }: any) => {
+  const handleClick = () => {
+    // Scroll to top when clicking on hovered links
+    window.scrollTo(0, 0);
+  };
+
   return (
     <Link
       {...rest}
+      onClick={handleClick}
       className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 text-sm block rounded-md hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
     >
       {children}
