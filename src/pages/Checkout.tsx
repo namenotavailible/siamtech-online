@@ -11,10 +11,13 @@ import { toast } from 'sonner';
 import { Helmet } from "react-helmet";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
+import { supabase } from "@/integrations/supabase/client";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const Checkout = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [total, setTotal] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { language } = useLanguage();
   const { theme } = useTheme();
@@ -47,7 +50,7 @@ const Checkout = () => {
     }
   }, [navigate]);
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     const user = auth.currentUser;
     if (!user) {
       navigate('/');
@@ -60,9 +63,85 @@ const Checkout = () => {
       return;
     }
 
-    toast.success("Order placed successfully!");
-    localStorage.removeItem(`cart_${user.uid}`);
-    navigate('/');
+    if (cartItems.length === 0) {
+      toast.error(language === "en" ? "Your cart is empty" : "ตะกร้าสินค้าของคุณว่างเปล่า");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Create the order in Supabase
+      const { data: order, error: orderError } = await supabase
+        .from('orders')
+        .insert({
+          user_id: user.uid,
+          total: total,
+          status: 'pending'
+        })
+        .select()
+        .single();
+
+      if (orderError) {
+        throw orderError;
+      }
+
+      // Create order items
+      const orderItems = cartItems.map(item => ({
+        order_id: order.id,
+        product_id: item.id,
+        product_name: item.name,
+        price: parseFloat(item.price.replace(/[^\d.]/g, '')),
+        quantity: item.quantity
+      }));
+
+      const { error: itemsError } = await supabase
+        .from('order_items')
+        .insert(orderItems);
+
+      if (itemsError) {
+        throw itemsError;
+      }
+      
+      // Send email notification
+      try {
+        const { error: emailError } = await supabase.functions.invoke("send-order-notification", {
+          body: {
+            orderId: order.id,
+            userEmail: user.email,
+            userName: user.displayName || user.email,
+            orderItems: orderItems,
+            total: total,
+            language: language
+          }
+        });
+        
+        if (emailError) {
+          console.error("Error sending order notification email:", emailError);
+          // Continue with order process even if email fails
+        }
+      } catch (emailSendError) {
+        console.error("Error invoking send-order-notification function:", emailSendError);
+        // Continue with order process even if email fails
+      }
+
+      // Clear the cart
+      localStorage.removeItem(`cart_${user.uid}`);
+      
+      toast.success(language === "en" 
+        ? "Order placed successfully!" 
+        : "สั่งซื้อสำเร็จ!");
+      
+      // Redirect to home page
+      navigate('/');
+    } catch (error) {
+      console.error('Error placing order:', error);
+      toast.error(language === "en" 
+        ? "Error placing order. Please try again." 
+        : "เกิดข้อผิดพลาดในการสั่งซื้อ โปรดลองอีกครั้ง");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // If not authenticated, don't render the page content
@@ -99,18 +178,36 @@ const Checkout = () => {
             <div className="md:col-span-2 space-y-6">
               <div className={`${theme === "dark" ? "bg-gray-900/50 backdrop-blur-sm border border-white/10" : "bg-gray-100 border border-gray-200"} rounded-lg p-6`}>
                 <h2 className="text-xl font-semibold mb-4">{language === "en" ? "Order Summary" : "สรุปคำสั่งซื้อ"}</h2>
-                <div className="space-y-4">
-                  {cartItems.map((item) => (
-                    <div key={item.id} className="flex gap-4 items-center">
-                      <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
-                      <div className="flex-1">
-                        <h3 className="font-medium">{item.name}</h3>
-                        <p className="text-sm text-gray-400">Quantity: {item.quantity}</p>
-                        <p className="text-sm">{item.price}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                
+                {cartItems.length > 0 ? (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>{language === "en" ? "Product" : "สินค้า"}</TableHead>
+                        <TableHead className="text-center">{language === "en" ? "Quantity" : "จำนวน"}</TableHead>
+                        <TableHead className="text-right">{language === "en" ? "Price" : "ราคา"}</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {cartItems.map((item) => (
+                        <TableRow key={item.id}>
+                          <TableCell className="flex items-center gap-3">
+                            <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded" />
+                            <span className="font-medium">{item.name}</span>
+                          </TableCell>
+                          <TableCell className="text-center">{item.quantity}</TableCell>
+                          <TableCell className="text-right">{item.price}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                ) : (
+                  <div className="text-center py-8">
+                    <p className="text-gray-500">
+                      {language === "en" ? "Your cart is empty" : "ตะกร้าสินค้าของคุณว่างเปล่า"}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -135,8 +232,11 @@ const Checkout = () => {
                   className="w-full" 
                   size="lg"
                   onClick={handlePlaceOrder}
+                  disabled={isSubmitting || cartItems.length === 0}
                 >
-                  {language === "en" ? "Place Order" : "สั่งซื้อ"}
+                  {isSubmitting 
+                    ? (language === "en" ? "Processing..." : "กำลังดำเนินการ...") 
+                    : (language === "en" ? "Place Order" : "สั่งซื้อ")}
                 </Button>
               </div>
             </div>

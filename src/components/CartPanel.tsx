@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Minus, Plus, ShoppingCart, X } from "lucide-react";
 import { auth } from "@/lib/firebase";
@@ -23,15 +24,10 @@ export interface CartItem {
   quantity: number;
 }
 
-interface CartPanelProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
+const CartPanel = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const navigate = useNavigate();
-  const { updateCartCount } = useCart();
+  const { updateCartCount, isCartOpen, closeCart } = useCart();
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
@@ -71,7 +67,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
   };
 
   const handleCheckout = () => {
-    onClose();
+    closeCart();
     navigate('/checkout');
   };
 
@@ -79,8 +75,6 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
     const price = parseFloat(item.price.replace(/[^0-9.]/g, ''));
     return total + (price * item.quantity);
   }, 0);
-
-  if (!isOpen) return null;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -116,7 +110,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
 
   return (
     <AnimatePresence mode="wait">
-      {isOpen && (
+      {isCartOpen && (
         <>
           <motion.div 
             initial="hidden"
@@ -124,7 +118,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
             exit="exit"
             variants={containerVariants}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
-            onClick={onClose} 
+            onClick={closeCart} 
             aria-hidden="true"
           />
           
@@ -139,7 +133,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
               <Sidebar variant="floating" side="right" className={`${isDark ? 'bg-black/95' : 'bg-white/95'} backdrop-blur-md`}>
                 <SidebarHeader className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
                   <button 
-                    onClick={onClose} 
+                    onClick={closeCart} 
                     className={`absolute left-4 top-4 p-1.5 rounded-full ${isDark ? 'bg-white/10 text-gray-400 hover:text-white' : 'bg-gray-100 text-gray-500 hover:text-gray-900'} transition-colors`}
                     aria-label="Close cart"
                   >
