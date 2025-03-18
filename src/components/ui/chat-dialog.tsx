@@ -1,10 +1,11 @@
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { ChatInput, ChatInputTextArea, ChatInputSubmit } from "@/components/ui/chat-input";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Message {
   role: "user" | "assistant";
@@ -20,6 +21,38 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+  
+  // Detect keyboard visibility on mobile
+  useEffect(() => {
+    if (!isMobile) return;
+    
+    const detectKeyboard = () => {
+      // Check if the viewport height has changed significantly
+      const viewportHeight = window.visualViewport?.height || window.innerHeight;
+      const windowHeight = window.innerHeight;
+      const heightDiff = windowHeight - viewportHeight;
+      
+      // If the difference is significant, we assume keyboard is visible
+      setKeyboardVisible(heightDiff > 150);
+    };
+    
+    // Listen to viewport and window size changes
+    window.visualViewport?.addEventListener('resize', detectKeyboard);
+    window.addEventListener('resize', detectKeyboard);
+    
+    return () => {
+      window.visualViewport?.removeEventListener('resize', detectKeyboard);
+      window.removeEventListener('resize', detectKeyboard);
+    };
+  }, [isMobile]);
+  
+  // Scroll to bottom when new messages arrive
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
@@ -46,9 +79,22 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="!fixed !bottom-0 !left-0 !right-0 !top-auto !translate-x-0 !translate-y-0 sm:!right-6 sm:!left-auto sm:!bottom-[88px] sm:max-w-[400px] h-[60vh] sm:h-[600px] flex flex-col p-0 rounded-t-2xl sm:rounded-2xl bg-black/40 backdrop-blur-xl border border-white/10">
+      <DialogContent 
+        className={`
+          !fixed !bottom-0 !left-0 !right-0 !top-auto !translate-x-0 !translate-y-0 
+          sm:!right-6 sm:!left-auto sm:!bottom-[88px] sm:max-w-[400px] 
+          ${keyboardVisible ? 'h-[40vh]' : 'h-[60vh]'} sm:h-[600px] 
+          flex flex-col p-0 rounded-t-2xl sm:rounded-2xl 
+          bg-black/40 backdrop-blur-xl border border-white/10
+          ${keyboardVisible ? 'keyboard-visible' : ''}
+        `}
+      >
         <DialogTitle className="sr-only">Chat Dialog</DialogTitle>
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-28 sm:pb-24 scrollbar-thin scrollbar-track-black/20 scrollbar-thumb-white/10 max-h-[calc(60vh-80px)] sm:max-h-[520px]">
+        <div 
+          className="flex-1 overflow-y-auto p-4 space-y-4 pb-28 sm:pb-24 
+                    scrollbar-thin scrollbar-track-black/20 scrollbar-thumb-white/10 
+                    max-h-[calc(60vh-80px)] sm:max-h-[520px]"
+        >
           {messages.map((message, index) => (
             <motion.div
               key={index}
@@ -78,6 +124,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
               </div>
             </motion.div>
           )}
+          <div ref={messagesEndRef} />
         </div>
 
         <div className="p-4 absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-xl border-t border-white/10">

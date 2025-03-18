@@ -1,13 +1,29 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MessageSquare, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import ChatDialog from "./chat-dialog";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const FloatingChat = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [showDialog, setShowDialog] = useState(false);
+  const isMobile = useIsMobile();
+
+  // Add effect to handle body scrolling when dialog is open on mobile
+  useEffect(() => {
+    if (isMobile && showDialog) {
+      // Prevent background scrolling when chat is open on mobile
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showDialog, isMobile]);
 
   if (!isVisible) return null;
 
