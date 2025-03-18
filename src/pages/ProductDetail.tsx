@@ -13,8 +13,6 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 
 const products = [
   {
@@ -365,63 +363,53 @@ const ProductDetail = () => {
   const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
 
   return (
-    <div className={`min-h-screen bg-background text-foreground`}>
-      {/* Navigation Controls */}
-      <div className="fixed top-4 left-4 z-10">
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          onClick={() => navigate(-1)} 
-          className="rounded-full"
-        >
-          <ChevronLeft className="h-5 w-5" />
+    <div className={`min-h-screen bg-gradient-to-b ${theme === 'dark' ? 'from-black to-gray-900 text-white' : 'from-white to-gray-50 text-gray-900'} relative`}>
+      <div className="absolute top-4 left-4 z-10 flex space-x-4">
+        <Button variant="link" onClick={() => navigate(-1)} className={theme === 'dark' ? 'text-white' : 'text-black'}>
+          <ChevronLeft className="me-1 opacity-60" size={16} strokeWidth={2} aria-hidden="true" />
+          {language === "en" ? "Go back" : "กลับไป"}
         </Button>
       </div>
       
-      <div className="fixed top-4 right-4 flex items-center space-x-2 z-10">
+      <div className="absolute top-4 right-4 flex items-center space-x-4 z-10">
         <LanguageSwitcher />
         <ThemeToggle />
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          onClick={() => navigate("/")} 
-          className="rounded-full"
+        <button 
+          onClick={() => navigate("/")}
+          className={`p-2 rounded-full ${theme === 'dark' ? 'bg-white/10 hover:bg-white/20' : 'bg-black/10 hover:bg-black/20'} transition-colors`}
         >
-          <X className="h-5 w-5" />
-        </Button>
+          <X className="w-6 h-6" />
+        </button>
       </div>
       
-      <div className="container max-w-6xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
           {/* Product Images Section */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             className="space-y-4"
           >
-            <div className={`aspect-square rounded-lg overflow-hidden ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+            <div className={`aspect-square overflow-hidden rounded-xl ${theme === 'dark' ? 'border border-white/10' : 'border border-gray-100 shadow-lg'}`}>
               <img
                 src={product.gallery[selectedImage]}
                 alt={language === "en" ? product.name : product.name_th}
-                className="w-full h-full object-contain mix-blend-multiply"
+                className="w-full h-full object-cover"
               />
             </div>
-            
             <div className="grid grid-cols-6 gap-2">
               {product.gallery.map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
-                  className={`aspect-square rounded-md overflow-hidden ${
-                    selectedImage === index 
-                      ? `ring-2 ${theme === 'dark' ? 'ring-primary' : 'ring-primary'} bg-primary/10` 
-                      : `${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`
-                  }`}
+                  className={`aspect-square overflow-hidden rounded-lg ${selectedImage === index 
+                    ? (theme === 'dark' ? 'ring-2 ring-white' : 'ring-2 ring-black') 
+                    : (theme === 'dark' ? 'border border-white/10' : 'border border-gray-200')}`}
                 >
                   <img
                     src={image}
                     alt={`${language === "en" ? product.name : product.name_th} - ${index + 1}`}
-                    className="w-full h-full object-contain mix-blend-multiply p-1"
+                    className="w-full h-full object-cover"
                   />
                 </button>
               ))}
@@ -432,191 +420,171 @@ const ProductDetail = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-8"
+            className="space-y-6"
           >
-            {/* Product Header */}
-            <div className="space-y-2">
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="outline" className="rounded-full">
+            <div>
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <Badge variant={theme === 'dark' ? "outline" : "secondary"} className="capitalize">
                   {language === "en" ? product.category : product.category_th}
                 </Badge>
                 {product.isNew && (
-                  <Badge variant="destructive" className="rounded-full">
-                    {language === "en" ? "New" : "ใหม่"}
+                  <Badge variant="destructive">
+                    {language === "en" ? "New Arrival" : "สินค้าใหม่"}
                   </Badge>
                 )}
                 {product.isBestSeller && (
-                  <Badge className="bg-amber-500 hover:bg-amber-600 rounded-full">
+                  <Badge variant="default" className="bg-amber-500 hover:bg-amber-600">
                     {language === "en" ? "Best Seller" : "ขายดี"}
                   </Badge>
                 )}
               </div>
               
-              <h1 className="text-3xl font-bold tracking-tight">
+              <h1 className="text-3xl md:text-4xl font-bold mt-2">
                 {language === "en" ? product.name : product.name_th}
               </h1>
               
-              <div className="flex items-center space-x-2">
-                <div className="flex">
+              <div className="flex items-center mt-2 space-x-4">
+                <div className="flex items-center">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className={`w-4 h-4 ${
-                        i < Math.floor(product.rating) 
-                          ? 'fill-amber-400 text-amber-400' 
-                          : 'text-gray-300'
-                      }`}
+                      className={`w-4 h-4 ${i < Math.floor(product.rating) 
+                        ? 'fill-amber-400 text-amber-400' 
+                        : 'text-gray-300'}`}
                     />
                   ))}
                 </div>
-                <span className="text-sm text-muted-foreground">
-                  {product.rating.toFixed(1)} ({product.reviews})
+                <span className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                  ({product.reviews} {language === "en" ? "reviews" : "รีวิว"})
                 </span>
               </div>
               
-              <div className="pt-2">
-                <div className="flex items-baseline space-x-2">
-                  <span className="text-3xl font-bold">{formatPrice(product.price)} ฿</span>
+              <div className="mt-4 space-y-1">
+                <div className="flex items-center space-x-2">
+                  <p className="text-3xl font-bold">{formatPrice(product.price)} ฿</p>
                   {product.originalPrice > product.price && (
-                    <span className="text-sm line-through text-muted-foreground">
+                    <p className={`text-lg line-through ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
                       {formatPrice(product.originalPrice)} ฿
-                    </span>
+                    </p>
                   )}
                 </div>
                 {product.originalPrice > product.price && (
-                  <p className="text-red-500 text-sm font-medium mt-1">
+                  <p className="text-red-500 font-medium">
                     {language === "en" 
-                      ? `${discount}% off` 
-                      : `ประหยัด ${discount}%`}
+                      ? `Save ${discount}% (${formatPrice(product.originalPrice - product.price)} ฿)` 
+                      : `ประหยัด ${discount}% (${formatPrice(product.originalPrice - product.price)} ฿)`}
                   </p>
                 )}
               </div>
             </div>
             
-            <p className="text-muted-foreground leading-relaxed">
+            <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
               {language === "en" ? product.description : product.description_th}
             </p>
             
-            <Separator />
-            
-            {/* Stock Information */}
-            <div className="flex items-center justify-between">
-              <span className="text-sm">
-                {language === "en" 
-                  ? `Stock: ${product.stock} units` 
-                  : `สินค้าคงเหลือ: ${product.stock} ชิ้น`}
-              </span>
-              <Badge variant={product.stock > 10 
-                ? "outline" 
-                : product.stock > 5 
-                  ? "secondary" 
-                  : "destructive"}
-                className="rounded-full"
-              >
-                {product.stock > 10 
-                  ? (language === "en" ? "In Stock" : "มีสินค้า") 
+            <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-white/5' : 'bg-gray-50'}`}>
+              <div className="flex justify-between items-center">
+                <span>
+                  {language === "en" 
+                    ? `Stock: ${product.stock} units` 
+                    : `สินค้าคงเหลือ: ${product.stock} ชิ้น`}
+                </span>
+                <span className={product.stock > 10 
+                  ? "text-green-500" 
                   : product.stock > 5 
-                    ? (language === "en" ? "Limited Stock" : "สินค้าเหลือน้อย") 
-                    : (language === "en" ? "Almost Sold Out" : "ใกล้หมด")}
-              </Badge>
+                    ? "text-amber-500" 
+                    : "text-red-500"}>
+                  {product.stock > 10 
+                    ? (language === "en" ? "In Stock" : "มีสินค้า") 
+                    : product.stock > 5 
+                      ? (language === "en" ? "Limited Stock" : "สินค้าเหลือน้อย") 
+                      : (language === "en" ? "Almost Sold Out" : "ใกล้หมด")}
+                </span>
+              </div>
             </div>
             
-            {/* Quantity Selector */}
-            <div className="space-y-3">
-              <p className="text-sm font-medium">{language === "en" ? "Quantity:" : "จำนวน:"}</p>
-              <div className="flex items-center w-full max-w-[140px]">
-                <Button 
-                  variant="outline" 
-                  size="icon" 
-                  onClick={decrementQuantity} 
-                  disabled={quantity <= 1}
-                  className="h-10 w-10 rounded-l-md rounded-r-none"
-                >
-                  <span className="text-lg">−</span>
-                </Button>
-                <div className="flex items-center justify-center h-10 w-20 border-y">
-                  <span className="font-medium">{quantity}</span>
+            <div className="space-y-6">
+              <div className="flex space-x-4 items-center">
+                <span className="font-medium">{language === "en" ? "Quantity:" : "จำนวน:"}</span>
+                <div className={`flex border rounded-md ${theme === 'dark' ? 'border-gray-600' : 'border-gray-300'}`}>
+                  <button 
+                    onClick={decrementQuantity}
+                    disabled={quantity <= 1}
+                    className={`px-3 py-1 ${theme === 'dark' 
+                      ? (quantity <= 1 ? 'text-gray-600' : 'text-white hover:bg-white/10') 
+                      : (quantity <= 1 ? 'text-gray-300' : 'text-black hover:bg-gray-100')}`}
+                  >
+                    -
+                  </button>
+                  <span className="px-4 py-1 flex items-center justify-center min-w-[40px]">
+                    {quantity}
+                  </span>
+                  <button 
+                    onClick={incrementQuantity}
+                    disabled={product && quantity >= product.stock}
+                    className={`px-3 py-1 ${theme === 'dark' 
+                      ? (product && quantity >= product.stock ? 'text-gray-600' : 'text-white hover:bg-white/10') 
+                      : (product && quantity >= product.stock ? 'text-gray-300' : 'text-black hover:bg-gray-100')}`}
+                  >
+                    +
+                  </button>
                 </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Button 
-                  variant="outline" 
-                  size="icon" 
-                  onClick={incrementQuantity} 
-                  disabled={product && quantity >= product.stock}
-                  className="h-10 w-10 rounded-r-md rounded-l-none"
+                  onClick={handleAddToCart}
+                  className="h-12 text-base font-medium"
                 >
-                  <span className="text-lg">+</span>
+                  <ShoppingCart className="w-5 h-5 mr-2" />
+                  {t("add_to_cart")}
+                </Button>
+                <Button 
+                  variant="outline"
+                  className="h-12 text-base font-medium"
+                >
+                  <Heart className="w-5 h-5 mr-2" />
+                  {language === "en" ? "Add to Wishlist" : "เพิ่มในรายการโปรด"}
                 </Button>
               </div>
             </div>
             
-            {/* Action Buttons */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <Button 
-                onClick={handleAddToCart}
-                className="h-12 text-base font-medium"
-              >
-                <ShoppingCart className="w-5 h-5 mr-2" />
-                {t("add_to_cart")}
-              </Button>
-              <Button 
-                variant="outline"
-                className="h-12 text-base font-medium"
-              >
-                <Heart className="w-5 h-5 mr-2" />
-                {language === "en" ? "Add to Wishlist" : "เพิ่มในรายการโปรด"}
-              </Button>
+            <div className="grid grid-cols-2 gap-4 py-4">
+              <div className={`p-3 rounded-lg text-center ${theme === 'dark' ? 'bg-white/5' : 'bg-gray-50'}`}>
+                <div className="text-sm opacity-70">{language === "en" ? "Free Shipping" : "จัดส่งฟรี"}</div>
+                <div className="font-medium">{language === "en" ? "For orders over 1,500 ฿" : "สำหรับคำสั่งซื้อมากกว่า 1,500 ฿"}</div>
+              </div>
+              <div className={`p-3 rounded-lg text-center ${theme === 'dark' ? 'bg-white/5' : 'bg-gray-50'}`}>
+                <div className="text-sm opacity-70">{language === "en" ? "Warranty" : "รับประกัน"}</div>
+                <div className="font-medium">{language === "en" ? "1 Year Official Warranty" : "รับประกันอย่างเป็นทางการ 1 ปี"}</div>
+              </div>
             </div>
-            
-            {/* Shipping & Warranty Info */}
-            <div className="grid grid-cols-2 gap-4">
-              <Card className="bg-primary/5 border-none">
-                <CardContent className="p-4 text-center space-y-1">
-                  <p className="text-xs text-muted-foreground">{language === "en" ? "Free Shipping" : "จัดส่งฟรี"}</p>
-                  <p className="text-sm font-medium">{language === "en" ? "Orders over 1,500 ฿" : "คำสั่งซื้อมากกว่า 1,500 ฿"}</p>
-                </CardContent>
-              </Card>
-              <Card className="bg-primary/5 border-none">
-                <CardContent className="p-4 text-center space-y-1">
-                  <p className="text-xs text-muted-foreground">{language === "en" ? "Warranty" : "รับประกัน"}</p>
-                  <p className="text-sm font-medium">{language === "en" ? "1 Year Official" : "รับประกัน 1 ปี"}</p>
-                </CardContent>
-              </Card>
-            </div>
-            
-            <Button 
-              variant="ghost" 
-              className="w-full flex items-center justify-center text-muted-foreground"
-              onClick={() => window.open("https://line.me", "_blank")}
-            >
-              <Share2 className="w-4 h-4 mr-2" />
-              {language === "en" ? "Share this product" : "แชร์สินค้านี้"}
-            </Button>
           </motion.div>
         </div>
         
         {/* Product Details Tabs */}
         <div className="mt-16">
-          <Tabs defaultValue="features" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
+          <Tabs defaultValue="features" className={theme === 'dark' ? 'text-white' : 'text-black'}>
+            <TabsList className="grid grid-cols-3 mb-8">
               <TabsTrigger value="features">{language === "en" ? "Features" : "คุณสมบัติ"}</TabsTrigger>
               <TabsTrigger value="specifications">{language === "en" ? "Specifications" : "ข้อมูลจำเพาะ"}</TabsTrigger>
-              <TabsTrigger value="package">{language === "en" ? "In the Box" : "สิ่งที่อยู่ในกล่อง"}</TabsTrigger>
+              <TabsTrigger value="package">{language === "en" ? "What's in the Box" : "สิ่งที่อยู่ในกล่อง"}</TabsTrigger>
             </TabsList>
             
-            <TabsContent value="features">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <TabsContent value="features" className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {product.features.map((feature, index) => (
                   <motion.div 
                     key={index}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="space-y-2"
+                    className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-white/5' : 'bg-gray-50'}`}
                   >
-                    <h3 className="text-lg font-semibold">
+                    <h3 className="text-xl font-bold mb-2">
                       {language === "en" ? feature.title : feature.title_th}
                     </h3>
-                    <p className="text-muted-foreground text-sm">
+                    <p className={theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}>
                       {language === "en" ? feature.description : feature.description_th}
                     </p>
                   </motion.div>
@@ -625,34 +593,39 @@ const ProductDetail = () => {
             </TabsContent>
             
             <TabsContent value="specifications">
-              <div className="rounded-lg overflow-hidden border">
-                <div className="grid divide-y">
-                  {product.specs.map((spec, index) => (
-                    <div 
-                      key={index} 
-                      className={`grid grid-cols-2 p-4 ${index % 2 === 0 ? 'bg-muted/50' : ''}`}
-                    >
-                      <div className="font-medium">{language === "en" ? spec.name : spec.name_th}</div>
-                      <div>{language === "en" ? spec.value : spec.value_th}</div>
-                    </div>
-                  ))}
-                </div>
+              <div className={`rounded-xl overflow-hidden ${theme === 'dark' ? 'border border-white/10' : 'border border-gray-200'}`}>
+                <table className="w-full">
+                  <tbody>
+                    {product.specs.map((spec, index) => (
+                      <tr 
+                        key={index} 
+                        className={`${index % 2 === 0 
+                          ? (theme === 'dark' ? 'bg-white/5' : 'bg-gray-50') 
+                          : ''}`}
+                      >
+                        <td className="py-4 px-6 font-medium">{language === "en" ? spec.name : spec.name_th}</td>
+                        <td className="py-4 px-6">{language === "en" ? spec.value : spec.value_th}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </TabsContent>
             
             <TabsContent value="package">
-              <Card>
-                <CardContent className="pt-6">
-                  <ul className="space-y-3">
-                    {product.inBox.map((item, index) => (
-                      <li key={index} className="flex items-start">
-                        <Check className="w-5 h-5 mr-2 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span>{language === "en" ? item.name : item.name_th}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+              <div className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-white/5' : 'bg-gray-50'}`}>
+                <h3 className="text-xl font-bold mb-4">
+                  {language === "en" ? "Package Contents" : "สิ่งที่มีในกล่อง"}
+                </h3>
+                <ul className="space-y-2">
+                  {product.inBox.map((item, index) => (
+                    <li key={index} className="flex items-center">
+                      <Check className="w-5 h-5 mr-2 text-green-500" />
+                      <span>{language === "en" ? item.name : item.name_th}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </TabsContent>
           </Tabs>
         </div>
@@ -662,30 +635,28 @@ const ProductDetail = () => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-lg overflow-hidden"
+            className={`p-8 rounded-xl text-center ${theme === 'dark' 
+              ? 'bg-gradient-to-br from-purple-900/50 to-blue-900/50 border border-white/10' 
+              : 'bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-100'}`}
           >
-            <Card className="border-0 bg-gradient-to-r from-primary/5 to-primary/10">
-              <CardContent className="p-8 text-center space-y-6">
-                <h3 className="text-2xl font-bold">
-                  {language === "en" 
-                    ? "Premium Performance" 
-                    : "ประสิทธิภาพระดับพรีเมียม"}
-                </h3>
-                <p className="text-muted-foreground max-w-2xl mx-auto">
-                  {language === "en" 
-                    ? "Join thousands of satisfied customers who have upgraded their setup with our premium products."
-                    : "เข้าร่วมกับลูกค้าที่พึงพอใจนับพันที่ได้อัพเกรดการตั้งค่าของพวกเขาด้วยผลิตภัณฑ์ระดับพรีเมียมของเรา"}
-                </p>
-                <Button 
-                  size="lg" 
-                  onClick={handleAddToCart}
-                  className="px-8"
-                >
-                  {t("add_to_cart")}
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </CardContent>
-            </Card>
+            <h3 className="text-2xl font-bold mb-4">
+              {language === "en" 
+                ? "Experience Premium Performance Today" 
+                : "สัมผัสประสิทธิภาพระดับพรีเมียมวันนี้"}
+            </h3>
+            <p className={`max-w-2xl mx-auto mb-6 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+              {language === "en" 
+                ? "Join thousands of satisfied customers who have upgraded their setup with our premium products."
+                : "เข้าร่วมกับลูกค้าที่พึงพอใจนับพันที่ได้อัพเกรดการตั้งค่าของพวกเขาด้วยผลิตภัณฑ์ระดับพรีเมียมของเรา"}
+            </p>
+            <Button 
+              size="lg" 
+              onClick={handleAddToCart}
+              className="px-8 py-6 h-auto text-lg font-medium"
+            >
+              {t("add_to_cart")}
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
           </motion.div>
         </div>
       </div>
