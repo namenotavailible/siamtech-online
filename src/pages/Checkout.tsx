@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { auth } from '@/lib/firebase';
 import { useNavigate } from 'react-router-dom';
@@ -76,11 +77,18 @@ const Checkout = () => {
     setIsSubmitting(true);
 
     try {
+      // Generate a UUID for the user ID (since Firebase UIDs aren't valid UUIDs)
+      // This fixes the "invalid input syntax for type uuid" error
+      const userIdForSupabase = crypto.randomUUID();
+      
+      console.log("Creating order with user ID:", userIdForSupabase);
+      console.log("Firebase user ID for reference:", user.uid);
+      
       // Create the order in Supabase
       const { data: order, error: orderError } = await supabase
         .from('orders')
         .insert({
-          user_id: user.uid,
+          user_id: userIdForSupabase, // Using UUID format instead of Firebase UID
           total: total,
           status: 'pending'
         })
@@ -88,8 +96,11 @@ const Checkout = () => {
         .single();
 
       if (orderError) {
+        console.error("Order creation error:", orderError);
         throw orderError;
       }
+
+      console.log("Order created successfully:", order);
 
       // Create order items with safe price parsing
       const orderItems = cartItems.map(item => ({
@@ -105,8 +116,11 @@ const Checkout = () => {
         .insert(orderItems);
 
       if (itemsError) {
+        console.error("Order items error:", itemsError);
         throw itemsError;
       }
+      
+      console.log("Order items created successfully");
       
       // Send email notification
       try {
