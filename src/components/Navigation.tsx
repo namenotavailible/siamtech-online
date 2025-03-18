@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Search, ShoppingCart, User, Menu as MenuIcon, X, Sun, Moon } from "lucide-react";
@@ -12,6 +13,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Menu, MenuItem, ProductItem, HoveredLink } from "@/components/ui/navbar-menu";
 import { ToolbarIcons } from "./navigation/ToolbarIcons";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Navigation = () => {
   const { t, language } = useLanguage();
@@ -21,13 +23,32 @@ const Navigation = () => {
   const [isSearchPanelOpen, setIsSearchPanelOpen] = useState(false);
   const { isCartOpen, openCart, closeCart } = useCart();
   const [active, setActive] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(!!user);
+      // If user is authenticated and dialog is open, close it
+      if (user && isAuthDialogOpen) {
+        setIsAuthDialogOpen(false);
+      }
+    });
+    
+    return () => unsubscribe();
+  }, [isAuthDialogOpen]);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
   const openAuthDialog = () => {
-    setIsAuthDialogOpen(true);
+    // Only open dialog if not authenticated
+    if (!isAuthenticated) {
+      setIsAuthDialogOpen(true);
+    } else {
+      // If authenticated, navigate to profile page instead
+      window.location.href = '/profile';
+    }
   };
 
   const openSearchPanel = () => {
