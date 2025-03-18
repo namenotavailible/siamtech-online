@@ -20,31 +20,31 @@ export function ToolbarIcons({
   return (
     <>
       <button 
-        className="text-gray-300 hover:text-white transition-colors"
+        className="text-black hover:text-gray-600 transition-colors"
         onClick={onSearchClick}
       >
         <Search className="h-5 w-5" />
       </button>
       <button 
-        className="text-gray-300 hover:text-white transition-colors relative"
+        className="text-black hover:text-gray-600 transition-colors relative"
         onClick={onCartClick}
       >
         <ShoppingCart className="h-5 w-5" />
         {cartCount > 0 && (
-          <span className="absolute -top-2 -right-2 bg-white text-black text-xs w-4 h-4 rounded-full flex items-center justify-center">
+          <span className="absolute -top-2 -right-2 bg-black text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
             {cartCount}
           </span>
         )}
       </button>
       <button 
         data-auth-trigger
-        className="text-gray-300 hover:text-white transition-colors"
+        className="text-black hover:text-gray-600 transition-colors"
         onClick={onUserClick}
       >
         <User className="h-5 w-5" />
       </button>
       <button 
-        className="md:hidden text-gray-300 hover:text-white transition-colors" 
+        className="md:hidden text-black hover:text-gray-600 transition-colors" 
         onClick={onMenuClick}
       >
         <Menu className="h-5 w-5" />
