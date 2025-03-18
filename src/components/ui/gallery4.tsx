@@ -149,17 +149,17 @@ const Gallery4 = ({
   }, [carouselApi]);
 
   return (
-    <section className="py-16 relative bg-gray-50 dark:bg-gray-900" aria-labelledby="blog-section-heading">
+    <section className="py-16 relative bg-gray-50 dark:bg-black" aria-labelledby="blog-section-heading">
       <div className="container mx-auto">
         <div className="mb-8 flex items-end justify-between md:mb-14 lg:mb-16">
           <div className="flex flex-col gap-4 text-left">
             <h2 
               id="blog-section-heading" 
-              className={`text-3xl font-medium md:text-4xl lg:text-5xl ${!isDark ? "text-black" : ""}`}
+              className="text-3xl font-medium md:text-4xl lg:text-5xl text-black dark:text-white"
             >
               {language === "en" ? "Latest Blog Posts" : title}
             </h2>
-            <p className="max-w-lg text-muted-foreground">
+            <p className="max-w-lg text-black dark:text-white">
               {language === "en" ? "Discover the latest technology and innovations in the audio industry with our comprehensive guides and articles." : description}
             </p>
           </div>
@@ -171,7 +171,7 @@ const Gallery4 = ({
                 carouselApi?.scrollPrev();
               }}
               disabled={!canScrollPrev}
-              className={`disabled:pointer-events-auto ${!isDark ? "text-black hover:bg-gray-100 hover:text-black" : ""}`}
+              className="disabled:pointer-events-auto text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
               aria-label={language === "en" ? "Previous slide" : "สไลด์ก่อนหน้า"}
             >
               <ArrowLeft className="size-5" />
@@ -183,7 +183,7 @@ const Gallery4 = ({
                 carouselApi?.scrollNext();
               }}
               disabled={!canScrollNext}
-              className={`disabled:pointer-events-auto ${!isDark ? "text-black hover:bg-gray-100 hover:text-black" : ""}`}
+              className="disabled:pointer-events-auto text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
               aria-label={language === "en" ? "Next slide" : "สไลด์ถัดไป"}
             >
               <ArrowRight className="size-5" />
@@ -223,9 +223,9 @@ const Gallery4 = ({
                       width="360" 
                       height="240"
                     />
-                    {/* Background overlay with reduced opacity for better image visibility */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
-                    <div className="absolute inset-x-0 bottom-0 flex flex-col items-start p-6 text-primary-foreground md:p-8">
+                    {/* Background overlay with increased opacity for better text visibility */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30" />
+                    <div className="absolute inset-x-0 bottom-0 flex flex-col items-start p-6 text-white md:p-8">
                       <div className="mb-2 pt-4 text-xl font-semibold md:mb-3 md:pt-4 lg:pt-4">
                         {item.title}
                       </div>
