@@ -5,8 +5,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 interface SearchPanelProps {
-  isOpen: boolean;
-  onClose: () => void;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 }
 
 interface SearchResult {
@@ -17,7 +17,7 @@ interface SearchResult {
   image: string;
 }
 
-const SearchPanel = ({ isOpen, onClose }: SearchPanelProps) => {
+export function SearchPanel({ open, setOpen }: SearchPanelProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
 
@@ -58,14 +58,14 @@ const SearchPanel = ({ isOpen, onClose }: SearchPanelProps) => {
 
   return (
     <>
-      {isOpen && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" onClick={onClose} />
+      {open && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" onClick={() => setOpen(false)} />
       )}
       <motion.div
         initial={{ y: -20, opacity: 0 }}
-        animate={{ y: isOpen ? 0 : -20, opacity: isOpen ? 1 : 0 }}
+        animate={{ y: open ? 0 : -20, opacity: open ? 1 : 0 }}
         transition={{ type: "spring", damping: 20 }}
-        className={`fixed top-0 left-0 right-0 backdrop-blur-md z-50 ${!isOpen && 'pointer-events-none'}`}
+        className={`fixed top-0 left-0 right-0 backdrop-blur-md z-50 ${!open && 'pointer-events-none'}`}
       >
         <div className="max-w-2xl mx-auto p-4">
           <div className="flex items-center gap-3 bg-white/5 backdrop-blur-lg rounded-full px-4 py-2">
@@ -76,9 +76,9 @@ const SearchPanel = ({ isOpen, onClose }: SearchPanelProps) => {
               className="flex-1 bg-transparent border-none text-white text-sm focus:outline-none"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              autoFocus={isOpen}
+              autoFocus={open}
             />
-            <button onClick={onClose} className="text-gray-400 hover:text-white">
+            <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-white">
               <X className="h-4 w-4" />
             </button>
           </div>
@@ -90,7 +90,7 @@ const SearchPanel = ({ isOpen, onClose }: SearchPanelProps) => {
                   key={result.id}
                   to={`/product/${result.id}`}
                   className="flex items-center gap-4 bg-gray-800/50 p-3 rounded-lg hover:bg-gray-800 transition-colors"
-                  onClick={onClose}
+                  onClick={() => setOpen(false)}
                 >
                   <img src={result.image} alt={result.name} className="w-12 h-12 object-cover rounded" />
                   <div>

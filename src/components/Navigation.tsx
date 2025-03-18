@@ -1,29 +1,23 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { 
-  ShoppingCart, 
   Menu, 
   X, 
-  User, 
-  Search, 
-  Moon, 
-  Sun, 
   Globe, 
   ChevronDown 
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { SignUpDialog } from "./auth/signup-dialog";
 import { LoginDialog } from "./auth/login-dialog";
-import { Logo } from "./navigation/Logo";
 import { DropdownMenu } from "./navigation/DropdownMenu";
 import { ToolbarIcons } from "./navigation/ToolbarIcons";
+import { Logo } from "./navigation/Logo";
 import { SearchPanel } from "./SearchPanel";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
-import { DARK_LOGO_PATH, LIGHT_LOGO_PATH } from "@/contexts/ThemeContext";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useCart } from "@/contexts/CartContext";
+import SignUpDialog from "./SignUpDialog";
 
 interface NavigationProps {}
 
@@ -97,8 +91,6 @@ const Navigation: React.FC<NavigationProps> = () => {
     setLanguage(language === 'en' ? 'th' : 'en');
   };
 
-  const logoPath = theme === 'dark' ? DARK_LOGO_PATH : LIGHT_LOGO_PATH;
-
   const headerClass = `fixed top-0 w-full z-40 transition-all duration-300 ${
     isScrolled
       ? theme === 'dark'
@@ -125,24 +117,24 @@ const Navigation: React.FC<NavigationProps> = () => {
         <div className="flex justify-between items-center py-4">
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
-              <Logo logoPath={logoPath} />
+              <Logo />
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-4">
-            <DropdownMenu theme={theme} />
+            <DropdownMenu />
           </nav>
 
           <div className="flex items-center space-x-4">
             <ToolbarIcons 
-              theme={theme} 
-              isSearchOpen={isSearchOpen} 
-              toggleSearch={toggleSearch} 
-              cartCount={cartCount}
+              onSearchClick={toggleSearch}
               onCartClick={toggleCart}
-              isAuthenticated={isAuthenticated}
               onAuthClick={handleAuthClick}
+              isAuthenticated={isAuthenticated}
+              cartCount={cartCount}
+              isSearchOpen={isSearchOpen}
+              toggleSearch={toggleSearch}
               toggleTheme={toggleTheme}
             />
 
@@ -239,7 +231,7 @@ const Navigation: React.FC<NavigationProps> = () => {
         )}
       </AnimatePresence>
 
-      <SearchPanel isOpen={isSearchOpen} onClose={toggleSearch} />
+      <SearchPanel open={isSearchOpen} setOpen={setIsSearchOpen} />
       
       <LoginDialog
         open={showAuthDialog === 'login'}
@@ -249,6 +241,7 @@ const Navigation: React.FC<NavigationProps> = () => {
       <SignUpDialog
         open={showAuthDialog === 'signup'}
         setOpen={(open) => setShowAuthDialog(open ? 'signup' : null)}
+        onShowSignUp={() => setShowAuthDialog('signup')}
       />
 
       {/* Data attribute for triggering auth dialog from other components */}

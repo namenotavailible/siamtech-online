@@ -1,52 +1,68 @@
 
-import { Search, ShoppingCart, User, Menu } from "lucide-react";
+import { Search, ShoppingCart, User, Moon, Sun } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface ToolbarIconsProps {
   onSearchClick: () => void;
   onCartClick: () => void;
-  onUserClick: () => void;
-  onMenuClick: () => void;
+  onAuthClick: (type: 'login' | 'signup') => void;
+  isAuthenticated: boolean;
   cartCount: number;
+  isSearchOpen: boolean;
+  toggleSearch: () => void;
+  toggleTheme: () => void;
 }
 
 export function ToolbarIcons({
   onSearchClick,
   onCartClick,
-  onUserClick,
-  onMenuClick,
-  cartCount
+  onAuthClick,
+  isAuthenticated,
+  cartCount,
+  isSearchOpen,
+  toggleSearch,
+  toggleTheme
 }: ToolbarIconsProps) {
+  const { theme } = useTheme();
+
   return (
     <>
       <button 
-        className="text-gray-300 hover:text-white transition-colors"
-        onClick={onSearchClick}
+        className={`${theme === 'dark' ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'} transition-colors`}
+        onClick={toggleSearch}
+        aria-label="Search"
       >
         <Search className="h-5 w-5" />
       </button>
       <button 
-        className="text-gray-300 hover:text-white transition-colors relative"
+        className={`${theme === 'dark' ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'} transition-colors relative`}
         onClick={onCartClick}
+        aria-label="Shopping cart"
       >
         <ShoppingCart className="h-5 w-5" />
         {cartCount > 0 && (
-          <span className="absolute -top-2 -right-2 bg-white text-black text-xs w-4 h-4 rounded-full flex items-center justify-center">
+          <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs w-4 h-4 rounded-full flex items-center justify-center">
             {cartCount}
           </span>
         )}
       </button>
       <button 
-        data-auth-trigger
-        className="text-gray-300 hover:text-white transition-colors"
-        onClick={onUserClick}
+        className={`${theme === 'dark' ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'} transition-colors`}
+        onClick={() => onAuthClick('login')}
+        aria-label="User account"
       >
         <User className="h-5 w-5" />
       </button>
-      <button 
-        className="md:hidden text-gray-300 hover:text-white transition-colors" 
-        onClick={onMenuClick}
+      <button
+        onClick={toggleTheme}
+        className="p-2 rounded-full bg-opacity-20 hover:bg-opacity-30 transition-colors"
+        aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
       >
-        <Menu className="h-5 w-5" />
+        {theme === 'dark' ? (
+          <Sun size={20} className="text-yellow-200" aria-hidden="true" />
+        ) : (
+          <Moon size={20} className="text-gray-700" aria-hidden="true" />
+        )}
       </button>
     </>
   );
