@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { auth, googleProvider } from "@/lib/firebase";
@@ -102,31 +101,42 @@ const FeaturedProducts = () => {
     if (e) {
       e.preventDefault();
     }
+    
     const user = auth.currentUser;
     if (!user && !skipAuthCheck) {
       setPendingProduct(product);
       setShowAuthDialog(true);
       return;
     }
+    
     if (!user) return;
-    const savedCart = localStorage.getItem(`cart_${user.uid}`);
-    const currentCart = savedCart ? JSON.parse(savedCart) : [];
-    const existingItemIndex = currentCart.findIndex((item: any) => item.id === product.id);
-    if (existingItemIndex !== -1) {
-      currentCart[existingItemIndex].quantity += 1;
-    } else {
-      currentCart.push({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image: product.image,
-        quantity: 1
-      });
+    
+    try {
+      const savedCart = localStorage.getItem(`cart_${user.uid}`);
+      const currentCart = savedCart ? JSON.parse(savedCart) : [];
+      
+      const existingItemIndex = currentCart.findIndex((item: any) => item.id === product.id);
+      
+      if (existingItemIndex !== -1) {
+        currentCart[existingItemIndex].quantity += 1;
+      } else {
+        currentCart.push({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          quantity: 1
+        });
+      }
+      
+      localStorage.setItem(`cart_${user.uid}`, JSON.stringify(currentCart));
+      updateCartCount(user.uid);
+      toast.success("Added to cart successfully!");
+      setPendingProduct(null);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      toast.error("Failed to add to cart. Please try again.");
     }
-    localStorage.setItem(`cart_${user.uid}`, JSON.stringify(currentCart));
-    updateCartCount(user.uid);
-    toast.success("Added to cart successfully!");
-    setPendingProduct(null);
   };
 
   return <section className={`py-24 ${isDark ? 'bg-black' : 'bg-white'} ${isDark ? 'text-white' : 'text-gray-800'}`}>

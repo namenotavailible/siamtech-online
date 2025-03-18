@@ -22,6 +22,12 @@ const Checkout = () => {
   const { language } = useLanguage();
   const { theme } = useTheme();
 
+  // Parse price safely, handling both string and number formats
+  const parsePrice = (price: string | number): number => {
+    if (typeof price === 'number') return price;
+    return parseFloat(price.replace(/[^\d.]/g, '')) || 0;
+  };
+
   useEffect(() => {
     const user = auth.currentUser;
     if (!user) {
@@ -36,19 +42,24 @@ const Checkout = () => {
       return;
     }
 
-    const savedCart = localStorage.getItem(`cart_${user.uid}`);
-    if (savedCart) {
-      const items = JSON.parse(savedCart);
-      setCartItems(items);
-      
-      // Calculate total
-      const cartTotal = items.reduce((acc: number, item: CartItem) => {
-        const price = parseFloat(item.price.replace(/[^\d.]/g, ''));
-        return acc + (price * item.quantity);
-      }, 0);
-      setTotal(cartTotal);
+    try {
+      const savedCart = localStorage.getItem(`cart_${user.uid}`);
+      if (savedCart) {
+        const items = JSON.parse(savedCart);
+        setCartItems(items);
+        
+        // Calculate total with safe price parsing
+        const cartTotal = items.reduce((acc: number, item: CartItem) => {
+          return acc + (parsePrice(item.price) * item.quantity);
+        }, 0);
+        
+        setTotal(cartTotal);
+      }
+    } catch (error) {
+      console.error("Error loading cart:", error);
+      toast.error(language === "en" ? "Failed to load cart" : "ไม่สามารถโหลดตะกร้าสินค้าได้");
     }
-  }, [navigate]);
+  }, [navigate, language]);
 
   const handlePlaceOrder = async () => {
     const user = auth.currentUser;
@@ -86,12 +97,12 @@ const Checkout = () => {
         throw orderError;
       }
 
-      // Create order items
+      // Create order items with safe price parsing
       const orderItems = cartItems.map(item => ({
         order_id: order.id,
         product_id: item.id,
         product_name: item.name,
-        price: parseFloat(item.price.replace(/[^\d.]/g, '')),
+        price: parsePrice(item.price),
         quantity: item.quantity
       }));
 

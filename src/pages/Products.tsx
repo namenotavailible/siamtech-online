@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import { Footerdemo } from "@/components/ui/footer-section";
@@ -109,28 +110,33 @@ const Products = () => {
       return;
     }
 
-    const savedCart = localStorage.getItem(`cart_${user.uid}`);
-    const currentCart = savedCart ? JSON.parse(savedCart) : [];
-    
-    const existingItemIndex = currentCart.findIndex((item: any) => item.id === product.id);
-    
-    if (existingItemIndex !== -1) {
-      currentCart[existingItemIndex].quantity += 1;
-    } else {
-      currentCart.push({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image: product.image,
-        quantity: 1
-      });
-    }
+    try {
+      const savedCart = localStorage.getItem(`cart_${user.uid}`);
+      const currentCart = savedCart ? JSON.parse(savedCart) : [];
+      
+      const existingItemIndex = currentCart.findIndex((item: any) => item.id === product.id);
+      
+      if (existingItemIndex !== -1) {
+        currentCart[existingItemIndex].quantity += 1;
+      } else {
+        currentCart.push({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          quantity: 1
+        });
+      }
 
-    localStorage.setItem(`cart_${user.uid}`, JSON.stringify(currentCart));
-    toast.success("Added to cart successfully!");
-    
-    updateCartCount(user.uid);
-    openCart();
+      localStorage.setItem(`cart_${user.uid}`, JSON.stringify(currentCart));
+      toast.success("Added to cart successfully!");
+      
+      updateCartCount(user.uid);
+      openCart();
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      toast.error("Failed to add to cart. Please try again.");
+    }
   };
 
   return (

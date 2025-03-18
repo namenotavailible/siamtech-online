@@ -29,12 +29,17 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const toggleCart = () => setIsCartOpen(prev => !prev);
 
   const updateCartCount = (userId: string) => {
-    const savedCart = localStorage.getItem(`cart_${userId}`);
-    if (savedCart) {
-      const cart = JSON.parse(savedCart);
-      const count = cart.reduce((acc: number, item: any) => acc + item.quantity, 0);
-      setCartCount(count);
-    } else {
+    try {
+      const savedCart = localStorage.getItem(`cart_${userId}`);
+      if (savedCart) {
+        const cart = JSON.parse(savedCart);
+        const count = cart.reduce((acc: number, item: any) => acc + item.quantity, 0);
+        setCartCount(count);
+      } else {
+        setCartCount(0);
+      }
+    } catch (error) {
+      console.error("Error updating cart count:", error);
       setCartCount(0);
     }
   };

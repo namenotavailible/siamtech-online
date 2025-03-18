@@ -19,7 +19,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export interface CartItem {
   id: number;
   name: string;
-  price: string;
+  price: string | number;
   image: string;
   quantity: number;
 }
@@ -71,9 +71,15 @@ const CartPanel = () => {
     navigate('/checkout');
   };
 
+  const parsePrice = (price: string | number): number => {
+    if (typeof price === 'number') return price;
+    
+    // Handle string price formats like "2,490 ฿"
+    return parseFloat(price.replace(/[^\d.]/g, '')) || 0;
+  };
+
   const totalAmount = cartItems.reduce((total, item) => {
-    const price = parseFloat(item.price.replace(/[^0-9.]/g, ''));
-    return total + (price * item.quantity);
+    return total + (parsePrice(item.price) * item.quantity);
   }, 0);
 
   const containerVariants = {
@@ -193,7 +199,7 @@ const CartPanel = () => {
                                 </button>
                               </div>
                               <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} mt-1`}>
-                                {item.price}
+                                {typeof item.price === 'string' ? item.price : `฿${item.price.toFixed(2)}`}
                               </p>
                               <div className="flex items-center gap-3 mt-3">
                                 <button
