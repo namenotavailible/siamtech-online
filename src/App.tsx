@@ -24,10 +24,30 @@ import { Toaster } from "@/components/ui/sonner"
 import { CartProvider } from "./contexts/CartContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { auth } from "./lib/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 import "./App.css";
 
 function App() {
+  const [authChecked, setAuthChecked] = useState(false);
+  
+  useEffect(() => {
+    // Set up auth state listener
+    const unsubscribe = onAuthStateChanged(auth, () => {
+      // Mark auth check as complete
+      setAuthChecked(true);
+    });
+    
+    // Clean up subscription on unmount
+    return () => unsubscribe();
+  }, []);
+
+  // Show loading until auth is checked
+  if (!authChecked) {
+    return <div className="flex h-screen w-full items-center justify-center bg-white text-black">Loading...</div>;
+  }
+
   return (
     <LanguageProvider>
       <ThemeProvider>
