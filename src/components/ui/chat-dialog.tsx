@@ -22,25 +22,32 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   
-  // Detect keyboard visibility and height on mobile
+  // Improved keyboard detection logic
   useEffect(() => {
-    if (!isMobile) return;
+    if (!isMobile || !open) return;
     
     const detectKeyboard = () => {
-      // Check if the viewport height has changed significantly
-      const viewportHeight = window.visualViewport?.height || window.innerHeight;
+      if (!window.visualViewport) return;
+      
+      const viewportHeight = window.visualViewport.height;
       const windowHeight = window.innerHeight;
       const heightDiff = windowHeight - viewportHeight;
       
-      // If the difference is significant, we assume keyboard is visible
-      const isVisible = heightDiff > 150;
+      // More reliable keyboard detection with a lower threshold
+      const isVisible = heightDiff > 100;
+      
       setKeyboardVisible(isVisible);
-      setKeyboardHeight(isVisible ? heightDiff : 0);
+      // Add a small buffer to ensure the chat stays above the keyboard
+      setKeyboardHeight(isVisible ? heightDiff + 10 : 0);
     };
+    
+    // Initial detection
+    detectKeyboard();
     
     // Listen to viewport and window size changes
     window.visualViewport?.addEventListener('resize', detectKeyboard);
@@ -50,12 +57,30 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
       window.visualViewport?.removeEventListener('resize', detectKeyboard);
       window.removeEventListener('resize', detectKeyboard);
     };
-  }, [isMobile]);
+  }, [isMobile, open]);
   
-  // Scroll to bottom when new messages arrive
+  // Automatically scroll to bottom when new messages arrive or keyboard visibility changes
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    if (messagesEndRef.current) {
+      // Use a small timeout to ensure scrolling happens after render
+      setTimeout(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }, [messages, keyboardVisible]);
+
+  // Handle body scrolling when dialog is open
+  useEffect(() => {
+    if (isMobile && open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open, isMobile]);
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
@@ -83,30 +108,32 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent 
+        ref={dialogRef}
         className={`
-          !fixed !translate-x-0 
-          sm:!right-6 sm:!left-auto sm:!bottom-[88px] sm:max-w-[400px] sm:h-[600px]
-          ${keyboardVisible 
-            ? `!bottom-[${keyboardHeight}px] h-[40vh]` 
-            : '!bottom-0 !left-0 !right-0 !top-auto !translate-y-0 h-[60vh]'
-          }
-          flex flex-col p-0 rounded-t-2xl sm:rounded-2xl 
+          fixed p-0 flex flex-col
           bg-black/40 backdrop-blur-xl border border-white/10
           transition-all duration-300 ease-in-out
-          ${keyboardVisible ? 'keyboard-visible' : ''}
+          
+          ${isMobile 
+            ? "w-full max-w-full rounded-t-2xl" 
+            : "sm:max-w-[400px] sm:rounded-2xl sm:right-6 sm:left-auto sm:bottom-[88px] sm:h-[600px]"
+          }
         `}
         style={{
-          bottom: keyboardVisible ? keyboardHeight : 0,
-          left: 0,
-          right: 0,
-          top: keyboardVisible ? 'auto' : 'auto',
+          bottom: keyboardVisible ? `${keyboardHeight}px` : 0,
+          left: isMobile ? 0 : undefined,
+          right: isMobile ? 0 : undefined,
+          top: "auto",
+          transform: "none",
+          height: keyboardVisible ? "50vh" : isMobile ? "60vh" : undefined,
+          maxHeight: keyboardVisible ? "50vh" : isMobile ? "60vh" : undefined,
+          zIndex: 100,
         }}
       >
         <DialogTitle className="sr-only">Chat Dialog</DialogTitle>
         <div 
           className="flex-1 overflow-y-auto p-4 space-y-4 pb-28 sm:pb-24 
-                    scrollbar-thin scrollbar-track-black/20 scrollbar-thumb-white/10 
-                    max-h-[calc(60vh-80px)] sm:max-h-[520px]"
+                    scrollbar-thin scrollbar-track-black/20 scrollbar-thumb-white/10"
         >
           {messages.map((message, index) => (
             <motion.div
