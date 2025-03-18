@@ -95,7 +95,7 @@ export function SocialSection({ isDarkMode, onDarkModeChange }: SocialSectionPro
                     <img 
                       src="/lovable-uploads/778d4e2b-b5f8-49be-bc82-100877bcf092.png" 
                       alt="Shopee" 
-                      className="h-4 w-4 object-contain" 
+                      className="h-6 w-6 object-contain" 
                     />
                     <span className="sr-only">Shopee</span>
                   </Button>
