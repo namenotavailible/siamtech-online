@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import { Footerdemo } from "@/components/ui/footer-section";
@@ -12,7 +13,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 
 const Products = () => {
   const navigate = useNavigate();
-  const { updateCartCount, openCart } = useCart();
+  const { updateCartCount } = useCart();
   const { t, language } = useLanguage();
   const { theme } = useTheme();
   
@@ -129,8 +130,9 @@ const Products = () => {
     localStorage.setItem(`cart_${user.uid}`, JSON.stringify(currentCart));
     toast.success("Added to cart successfully!");
     
-    updateCartCount(user.uid);
-    openCart();
+    setTimeout(() => {
+      updateCartCount(user.uid);
+    }, 1000);
   };
 
   return (

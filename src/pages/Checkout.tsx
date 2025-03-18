@@ -102,28 +102,6 @@ const Checkout = () => {
       if (itemsError) {
         throw itemsError;
       }
-      
-      // Send email notification
-      try {
-        const { error: emailError } = await supabase.functions.invoke("send-order-notification", {
-          body: {
-            orderId: order.id,
-            userEmail: user.email,
-            userName: user.displayName || user.email,
-            orderItems: orderItems,
-            total: total,
-            language: language
-          }
-        });
-        
-        if (emailError) {
-          console.error("Error sending order notification email:", emailError);
-          // Continue with order process even if email fails
-        }
-      } catch (emailSendError) {
-        console.error("Error invoking send-order-notification function:", emailSendError);
-        // Continue with order process even if email fails
-      }
 
       // Clear the cart
       localStorage.removeItem(`cart_${user.uid}`);
