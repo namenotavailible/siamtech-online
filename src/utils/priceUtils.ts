@@ -20,6 +20,8 @@ export const parsePrice = (price: string | number): number => {
  * @param currency - The currency symbol to use (default: ฿)
  * @returns Formatted price string
  */
-export const formatPrice = (price: number, currency: string = '฿'): string => {
-  return `${price.toFixed(2)} ${currency}`;
+export const formatPrice = (price: number | string, currency: string = '฿'): string => {
+  // Ensure we're working with a number
+  const numericPrice = typeof price === 'string' ? parsePrice(price) : price;
+  return `${numericPrice.toFixed(2)} ${currency}`;
 };

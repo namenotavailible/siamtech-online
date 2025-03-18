@@ -17,7 +17,7 @@ interface SearchResult {
   image: string;
 }
 
-export function SearchPanel({ open, setOpen }: SearchPanelProps) {
+export const SearchPanel = ({ open, setOpen }: SearchPanelProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
 
@@ -56,10 +56,12 @@ export function SearchPanel({ open, setOpen }: SearchPanelProps) {
     }
   }, [searchQuery]);
 
+  const onClose = () => setOpen(false);
+
   return (
     <>
       {open && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" onClick={() => setOpen(false)} />
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" onClick={onClose} />
       )}
       <motion.div
         initial={{ y: -20, opacity: 0 }}
@@ -78,7 +80,7 @@ export function SearchPanel({ open, setOpen }: SearchPanelProps) {
               onChange={(e) => setSearchQuery(e.target.value)}
               autoFocus={open}
             />
-            <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-white">
+            <button onClick={onClose} className="text-gray-400 hover:text-white">
               <X className="h-4 w-4" />
             </button>
           </div>
@@ -90,7 +92,7 @@ export function SearchPanel({ open, setOpen }: SearchPanelProps) {
                   key={result.id}
                   to={`/product/${result.id}`}
                   className="flex items-center gap-4 bg-gray-800/50 p-3 rounded-lg hover:bg-gray-800 transition-colors"
-                  onClick={() => setOpen(false)}
+                  onClick={onClose}
                 >
                   <img src={result.image} alt={result.name} className="w-12 h-12 object-cover rounded" />
                   <div>
@@ -112,4 +114,6 @@ export function SearchPanel({ open, setOpen }: SearchPanelProps) {
       </motion.div>
     </>
   );
-}
+};
+
+export default SearchPanel;

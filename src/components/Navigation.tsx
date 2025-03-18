@@ -1,15 +1,15 @@
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Search, ShoppingCart, User, Menu as MenuIcon, X } from "lucide-react";
+import { Search, ShoppingCart, User, Menu as MenuIcon, X, Sun, Moon } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
-import { SignUpDialog } from "@/components/auth/signup-dialog";
+import SignUpDialog from "@/components/SignUpDialog";
 import { SearchPanel } from "@/components/ui/search-panel";
 import CartPanel from "@/components/CartPanel";
 import { auth } from "@/lib/firebase";
 import { useCart } from '@/contexts/CartContext';
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import { Menu, MenuItem, ProductItem, HoveredLink } from "@/components/ui/navbar-menu";
 
 interface ToolbarIconsProps {
@@ -59,7 +59,7 @@ const ToolbarIcons: React.FC<ToolbarIconsProps> = ({ openAuthDialog, openSearchP
         <Link 
           to="/profile" 
           className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
-          aria-label={language === "en" ? "Go to profile" : "ไปที่โปรไฟล์"}
+          aria-label={language === "en" ? "Go to profile" : "ไปที่โ���รไฟล์"}
         >
           <User className="h-5 w-5" />
         </Link>
@@ -79,6 +79,7 @@ const ToolbarIcons: React.FC<ToolbarIconsProps> = ({ openAuthDialog, openSearchP
 
 const Navigation = () => {
   const { t, language } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isSearchPanelOpen, setIsSearchPanelOpen] = useState(false);
@@ -180,6 +181,13 @@ const Navigation = () => {
         </div>
         
         <div className="flex items-center space-x-4">
+          <button onClick={toggleTheme} className="p-2 text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white">
+            {theme === "dark" ? (
+              <Sun className="h-5 w-5" />
+            ) : (
+              <Moon className="h-5 w-5" />
+            )}
+          </button>
           <LanguageSwitcher />
           <ToolbarIcons 
             openAuthDialog={openAuthDialog} 
@@ -223,7 +231,7 @@ const Navigation = () => {
         </div>
       </div>
 
-      <SignUpDialog open={isAuthDialogOpen} setOpen={setIsAuthDialogOpen} />
+      <SignUpDialog isOpen={isAuthDialogOpen} onClose={() => setIsAuthDialogOpen(false)} />
       
       <SearchPanel open={isSearchPanelOpen} setOpen={setIsSearchPanelOpen} />
       

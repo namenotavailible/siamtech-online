@@ -149,7 +149,6 @@ const Checkout = () => {
     }
   };
 
-  // If not authenticated, don't render the page content
   if (!auth.currentUser) {
     return null;
   }
