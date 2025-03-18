@@ -24,8 +24,9 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
   const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
   
-  // Detect keyboard visibility on mobile
+  // Detect keyboard visibility and height on mobile
   useEffect(() => {
     if (!isMobile) return;
     
@@ -36,7 +37,9 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
       const heightDiff = windowHeight - viewportHeight;
       
       // If the difference is significant, we assume keyboard is visible
-      setKeyboardVisible(heightDiff > 150);
+      const isVisible = heightDiff > 150;
+      setKeyboardVisible(isVisible);
+      setKeyboardHeight(isVisible ? heightDiff : 0);
     };
     
     // Listen to viewport and window size changes
@@ -81,13 +84,23 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent 
         className={`
-          !fixed !bottom-0 !left-0 !right-0 !top-auto !translate-x-0 !translate-y-0 
-          sm:!right-6 sm:!left-auto sm:!bottom-[88px] sm:max-w-[400px] 
-          ${keyboardVisible ? 'h-[40vh]' : 'h-[60vh]'} sm:h-[600px] 
+          !fixed !translate-x-0 
+          sm:!right-6 sm:!left-auto sm:!bottom-[88px] sm:max-w-[400px] sm:h-[600px]
+          ${keyboardVisible 
+            ? `!bottom-[${keyboardHeight}px] h-[40vh]` 
+            : '!bottom-0 !left-0 !right-0 !top-auto !translate-y-0 h-[60vh]'
+          }
           flex flex-col p-0 rounded-t-2xl sm:rounded-2xl 
           bg-black/40 backdrop-blur-xl border border-white/10
+          transition-all duration-300 ease-in-out
           ${keyboardVisible ? 'keyboard-visible' : ''}
         `}
+        style={{
+          bottom: keyboardVisible ? keyboardHeight : 0,
+          left: 0,
+          right: 0,
+          top: keyboardVisible ? 'auto' : 'auto',
+        }}
       >
         <DialogTitle className="sr-only">Chat Dialog</DialogTitle>
         <div 
