@@ -11,71 +11,7 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Menu, MenuItem, ProductItem, HoveredLink } from "@/components/ui/navbar-menu";
-
-interface ToolbarIconsProps {
-  openAuthDialog: () => void;
-  openSearchPanel: () => void;
-  openCartPanel: () => void;
-}
-
-const ToolbarIcons: React.FC<ToolbarIconsProps> = ({ openAuthDialog, openSearchPanel, openCartPanel }) => {
-  const { cartCount, updateCartCount } = useCart();
-  const { language } = useLanguage();
-  const [user, setUser] = useState<any>(null);
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
-      if (user) {
-        updateCartCount(user.uid);
-      }
-    });
-
-    return () => unsubscribe();
-  }, [updateCartCount]);
-
-  return (
-    <div className="flex items-center space-x-4">
-      <button 
-        onClick={openSearchPanel} 
-        className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
-        aria-label={language === "en" ? "Open search panel" : "เปิดแผงค้นหา"}
-      >
-        <Search className="h-5 w-5" />
-      </button>
-      <button 
-        onClick={openCartPanel} 
-        className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors relative"
-        aria-label={language === "en" ? "Open cart panel" : "เปิดแผงตะกร้าสินค้า"}
-      >
-        <ShoppingCart className="h-5 w-5" />
-        {cartCount > 0 && (
-          <span className="absolute -top-2 -right-2 bg-primary text-white text-xs px-1 rounded-full">
-            {cartCount}
-          </span>
-        )}
-      </button>
-      {user ? (
-        <Link 
-          to="/profile" 
-          className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
-          aria-label={language === "en" ? "Go to profile" : "ไปที่โ���รไฟล์"}
-        >
-          <User className="h-5 w-5" />
-        </Link>
-      ) : (
-        <button 
-          onClick={openAuthDialog} 
-          className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors" 
-          data-auth-trigger
-          aria-label={language === "en" ? "Open authentication dialog" : "เปิดหน้าต่างยืนยันตัวตน"}
-        >
-          <User className="h-5 w-5" />
-        </button>
-      )}
-    </div>
-  );
-};
+import { ToolbarIcons } from "./navigation/ToolbarIcons";
 
 const Navigation = () => {
   const { t, language } = useLanguage();
@@ -83,7 +19,7 @@ const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isSearchPanelOpen, setIsSearchPanelOpen] = useState(false);
-  const [isCartPanelOpen, setIsCartPanelOpen] = useState(false);
+  const { isCartOpen, openCart, closeCart } = useCart();
   const [active, setActive] = useState<string | null>(null);
 
   const toggleMobileMenu = () => {
@@ -96,10 +32,6 @@ const Navigation = () => {
 
   const openSearchPanel = () => {
     setIsSearchPanelOpen(true);
-  };
-
-  const openCartPanel = () => {
-    setIsCartPanelOpen(true);
   };
 
   return (
@@ -190,9 +122,10 @@ const Navigation = () => {
           </button>
           <LanguageSwitcher />
           <ToolbarIcons 
-            openAuthDialog={openAuthDialog} 
-            openSearchPanel={openSearchPanel} 
-            openCartPanel={openCartPanel} 
+            onSearchClick={openSearchPanel}
+            onCartClick={openCart}
+            onUserClick={openAuthDialog}
+            onMenuClick={toggleMobileMenu}
           />
           <button
             className="md:hidden text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white"
@@ -231,11 +164,16 @@ const Navigation = () => {
         </div>
       </div>
 
-      <SignUpDialog isOpen={isAuthDialogOpen} onClose={() => setIsAuthDialogOpen(false)} />
+      {isAuthDialogOpen && (
+        <SignUpDialog
+          isOpen={isAuthDialogOpen}
+          onClose={() => setIsAuthDialogOpen(false)}
+        />
+      )}
       
       <SearchPanel open={isSearchPanelOpen} setOpen={setIsSearchPanelOpen} />
       
-      <CartPanel isOpen={isCartPanelOpen} onClose={() => setIsCartPanelOpen(false)} />
+      <CartPanel isOpen={isCartOpen} onClose={closeCart} />
     </header>
   );
 };

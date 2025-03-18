@@ -1,21 +1,22 @@
 
 import { Search, ShoppingCart, User, Menu } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
 
 interface ToolbarIconsProps {
   onSearchClick: () => void;
   onCartClick: () => void;
   onUserClick: () => void;
   onMenuClick: () => void;
-  cartCount: number;
 }
 
 export function ToolbarIcons({
   onSearchClick,
   onCartClick,
   onUserClick,
-  onMenuClick,
-  cartCount
+  onMenuClick
 }: ToolbarIconsProps) {
+  const { cartCount } = useCart();
+  
   return (
     <>
       <button 
