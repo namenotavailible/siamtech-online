@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Facebook, Instagram } from "lucide-react";
+import { Facebook, Instagram, ExternalLink } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -72,6 +72,38 @@ export function SocialSection({ isDarkMode, onDarkModeChange }: SocialSectionPro
               </TooltipTrigger>
               <TooltipContent>
                 <p>{language === "en" ? "Follow us on Instagram" : "ติดตามเราบน Instagram"}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          
+          {/* Shopee Button */}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <a 
+                  href="https://shopee.co.th/siamtechonline" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="group"
+                >
+                  <Button 
+                    variant="outline" 
+                    size="icon" 
+                    className="rounded-full dark:border-gray-700 dark:bg-gray-900/50 dark:hover:bg-gray-800
+                              light:border-gray-300 light:bg-gray-100 light:hover:bg-gray-200"
+                  >
+                    <div className="flex items-center justify-center h-4 w-4 relative">
+                      {/* Simple Shopee logo using styled elements */}
+                      <div className="h-4 w-4 rounded-sm bg-gradient-to-b from-orange-500 to-orange-600 flex items-center justify-center">
+                        <span className="text-[8px] text-white font-bold">S</span>
+                      </div>
+                    </div>
+                    <span className="sr-only">Shopee</span>
+                  </Button>
+                </a>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{language === "en" ? "Shop on Shopee" : "ซื้อสินค้าบน Shopee"}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
