@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,7 +21,13 @@ import { CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogo } from "@/components/ui/google-logo";
 
-function SignUpDialog() {
+interface SignUpDialogProps {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  onShowSignUp?: () => void;
+}
+
+function SignUpDialog({ open, setOpen, onShowSignUp }: SignUpDialogProps) {
   const id = useId();
   const { t } = useLanguage();
   const navigate = useNavigate();
@@ -30,7 +37,6 @@ function SignUpDialog() {
     password: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showSignedInAlert, setShowSignedInAlert] = useState(false);
 
@@ -57,7 +63,7 @@ function SignUpDialog() {
       }, 3000);
       return;
     }
-    setIsOpen(open);
+    setOpen(open);
   };
 
   const handleEmailSignUp = async (e: React.FormEvent) => {
@@ -74,7 +80,7 @@ function SignUpDialog() {
       await sendEmailVerification(userCredential.user);
       
       toast.success(t("account_created_success"));
-      setIsOpen(false);
+      setOpen(false);
       console.log("User signed up:", userCredential.user);
       
       // Redirect directly to profile
@@ -114,7 +120,7 @@ function SignUpDialog() {
       console.log('Generated OTP:', otp);
       
       toast.success(t("google_signin_success"));
-      setIsOpen(false);
+      setOpen(false);
       
       // In a real app, here we would send the email with the OTP
       // For now, we're just displaying it in the console
@@ -139,12 +145,7 @@ function SignUpDialog() {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        <button className="text-gray-300 hover:text-white transition-colors">
-          <User className="h-5 w-5" />
-        </button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent>
         <div className="flex flex-col items-center gap-2">
           <div

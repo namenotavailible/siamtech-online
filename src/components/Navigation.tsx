@@ -1,17 +1,20 @@
+
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { 
   Menu, 
   X, 
   Globe, 
-  ChevronDown 
+  ChevronDown,
+  Sun,
+  Moon
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LoginDialog } from "./auth/login-dialog";
 import { DropdownMenu } from "./navigation/DropdownMenu";
 import { ToolbarIcons } from "./navigation/ToolbarIcons";
 import { Logo } from "./navigation/Logo";
-import { SearchPanel } from "./SearchPanel";
+import SearchPanel from "./SearchPanel";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { onAuthStateChanged } from "firebase/auth";
@@ -241,7 +244,6 @@ const Navigation: React.FC<NavigationProps> = () => {
       <SignUpDialog
         open={showAuthDialog === 'signup'}
         setOpen={(open) => setShowAuthDialog(open ? 'signup' : null)}
-        onShowSignUp={() => setShowAuthDialog('signup')}
       />
 
       {/* Data attribute for triggering auth dialog from other components */}

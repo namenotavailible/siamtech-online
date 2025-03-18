@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface DropdownMenuItem {
   href: string;
@@ -16,6 +17,7 @@ export function DropdownMenu() {
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
   const { language } = useLanguage();
+  const { theme } = useTheme();
 
   const productItems: DropdownMenuItem[] = [
     { href: "/products", label: { en: "All Products", th: "สินค้าทั้งหมด" } },
@@ -28,6 +30,14 @@ export function DropdownMenu() {
     { href: "/warranty", label: { en: "Warranty", th: "การรับประกัน" } }
   ];
 
+  const menuItemClass = theme === 'dark'
+    ? "block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors"
+    : "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100/50 hover:text-black transition-colors";
+    
+  const dropdownClass = theme === 'dark'
+    ? "absolute left-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg py-1 z-50 border border-white/10"
+    : "absolute left-0 mt-2 w-48 bg-white/95 backdrop-blur-md rounded-md shadow-lg py-1 z-50 border border-gray-200";
+
   return (
     <div className="flex space-x-6">
       <div className="relative">
@@ -39,12 +49,12 @@ export function DropdownMenu() {
           <ChevronDown className="h-4 w-4" />
         </button>
         {isProductsOpen && (
-          <div className="absolute left-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg py-1 z-50 border border-white/10">
+          <div className={dropdownClass}>
             {productItems.map((item) => (
               <Link
                 key={item.href}
                 to={item.href}
-                className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors"
+                className={menuItemClass}
                 onClick={() => setIsProductsOpen(false)}
               >
                 {language === 'en' ? item.label.en : item.label.th}
@@ -63,12 +73,12 @@ export function DropdownMenu() {
           <ChevronDown className="h-4 w-4" />
         </button>
         {isSupportOpen && (
-          <div className="absolute left-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg py-1 z-50 border border-white/10">
+          <div className={dropdownClass}>
             {supportItems.map((item) => (
               <Link
                 key={item.href}
                 to={item.href}
-                className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800/50 hover:text-white transition-colors"
+                className={menuItemClass}
                 onClick={() => setIsSupportOpen(false)}
               >
                 {language === 'en' ? item.label.en : item.label.th}
