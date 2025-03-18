@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Minus, Plus, ShoppingCart, X } from "lucide-react";
 import { auth } from "@/lib/firebase";
@@ -7,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from '@/contexts/CartContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { parsePrice, formatPrice } from "@/utils/priceUtils";
 import {
   SidebarProvider,
   Sidebar,
@@ -69,13 +69,6 @@ const CartPanel = () => {
   const handleCheckout = () => {
     closeCart();
     navigate('/checkout');
-  };
-
-  const parsePrice = (price: string | number): number => {
-    if (typeof price === 'number') return price;
-    
-    // Handle string price formats like "2,490 ฿"
-    return parseFloat(price.replace(/[^\d.]/g, '')) || 0;
   };
 
   const totalAmount = cartItems.reduce((total, item) => {
@@ -199,7 +192,7 @@ const CartPanel = () => {
                                 </button>
                               </div>
                               <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} mt-1`}>
-                                {typeof item.price === 'string' ? item.price : `฿${item.price.toFixed(2)}`}
+                                {typeof item.price === 'string' ? item.price : formatPrice(item.price)}
                               </p>
                               <div className="flex items-center gap-3 mt-3">
                                 <button
@@ -240,7 +233,7 @@ const CartPanel = () => {
                   <div className="flex justify-between mb-4">
                     <span className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Total</span>
                     <span className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                      ฿{totalAmount.toFixed(2)}
+                      {formatPrice(totalAmount)}
                     </span>
                   </div>
                   <button 

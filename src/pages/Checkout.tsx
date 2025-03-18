@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { auth } from '@/lib/firebase';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +12,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { parsePrice, formatPrice } from '@/utils/priceUtils';
 
 const Checkout = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -21,12 +21,6 @@ const Checkout = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
   const { theme } = useTheme();
-
-  // Parse price safely, handling both string and number formats
-  const parsePrice = (price: string | number): number => {
-    if (typeof price === 'number') return price;
-    return parseFloat(price.replace(/[^\d.]/g, '')) || 0;
-  };
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -207,7 +201,7 @@ const Checkout = () => {
                             <span className="font-medium">{item.name}</span>
                           </TableCell>
                           <TableCell className="text-center">{item.quantity}</TableCell>
-                          <TableCell className="text-right">{item.price}</TableCell>
+                          <TableCell className="text-right">{formatPrice(item.price)}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

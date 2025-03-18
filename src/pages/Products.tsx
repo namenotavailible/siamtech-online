@@ -10,6 +10,7 @@ import { useCart } from '@/contexts/CartContext';
 import { Helmet } from "react-helmet";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
+import { parsePrice } from "@/utils/priceUtils";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -119,6 +120,7 @@ const Products = () => {
       if (existingItemIndex !== -1) {
         currentCart[existingItemIndex].quantity += 1;
       } else {
+        // Store the price as is (as a string) to maintain display format
         currentCart.push({
           id: product.id,
           name: product.name,

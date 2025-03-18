@@ -1,6 +1,7 @@
 
 import { createContext, useContext, useState, useEffect } from 'react';
 import { auth } from '@/lib/firebase';
+import { parsePrice } from '@/utils/priceUtils';
 
 interface CartContextType {
   cartCount: number;
