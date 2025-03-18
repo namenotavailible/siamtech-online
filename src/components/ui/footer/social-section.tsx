@@ -76,7 +76,7 @@ export function SocialSection({ isDarkMode, onDarkModeChange }: SocialSectionPro
             </Tooltip>
           </TooltipProvider>
           
-          {/* Shopee Button */}
+          {/* Shopee Button with actual logo */}
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -92,12 +92,11 @@ export function SocialSection({ isDarkMode, onDarkModeChange }: SocialSectionPro
                     className="rounded-full dark:border-gray-700 dark:bg-gray-900/50 dark:hover:bg-gray-800
                               light:border-gray-300 light:bg-gray-100 light:hover:bg-gray-200"
                   >
-                    <div className="flex items-center justify-center h-4 w-4 relative">
-                      {/* Simple Shopee logo using styled elements */}
-                      <div className="h-4 w-4 rounded-sm bg-gradient-to-b from-orange-500 to-orange-600 flex items-center justify-center">
-                        <span className="text-[8px] text-white font-bold">S</span>
-                      </div>
-                    </div>
+                    <img 
+                      src="/lovable-uploads/778d4e2b-b5f8-49be-bc82-100877bcf092.png" 
+                      alt="Shopee" 
+                      className="h-4 w-4 object-contain" 
+                    />
                     <span className="sr-only">Shopee</span>
                   </Button>
                 </a>
