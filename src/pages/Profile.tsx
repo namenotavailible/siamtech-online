@@ -46,6 +46,7 @@ const Profile = () => {
   const { t, language } = useLanguage();
   const { theme } = useTheme();
   const [isEditing, setIsEditing] = useState(false);
+  const [authInitialized, setAuthInitialized] = useState(false);
 
   // Form schema for validation
   const formSchema = z.object({
@@ -114,36 +115,59 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    // Check if this is an email link sign-in attempt
-    if (isSignInWithEmailLink(auth, window.location.href)) {
-      const emailFromStorage = window.localStorage.getItem('emailForSignIn');
-      if (emailFromStorage) {
-        signInWithEmailLink(auth, emailFromStorage, window.location.href)
-          .then(() => {
+    const processPendingEmailLink = async () => {
+      // Check if this is an email link sign-in attempt
+      if (isSignInWithEmailLink(auth, window.location.href)) {
+        const emailFromStorage = window.localStorage.getItem('emailForSignIn');
+        if (emailFromStorage) {
+          try {
+            await signInWithEmailLink(auth, emailFromStorage, window.location.href);
             window.localStorage.removeItem('emailForSignIn');
             toast.success(language === "en" ? 'Successfully signed in!' : 'เข้าสู่ระบบสำเร็จ!');
-          })
-          .catch((error) => {
+            
+            // Wait a moment to ensure Firebase auth state updates
+            setTimeout(() => {
+              if (auth.currentUser) {
+                // Force refresh profile data after successful sign-in
+                const profileData = getProfileData();
+                if (profileData) {
+                  form.reset(profileData);
+                }
+              }
+            }, 500);
+          } catch (error) {
             console.error('Error signing in with email link:', error);
             toast.error(language === "en" ? 'Failed to sign in. Please try again.' : 'ไม่สามารถเข้าสู่ระบบได้ โปรดลองอีกครั้ง');
             navigate('/');
-          });
+          }
+        }
       }
-    }
+      
+      setAuthInitialized(true);
+    };
 
-    // Check if user is authenticated
-    const user = auth.currentUser;
-    if (!user) {
-      navigate('/');
-      return;
-    }
+    processPendingEmailLink();
+    
+    // Set up auth state change listener
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user && authInitialized) {
+        console.log("No user detected, redirecting to home");
+        navigate('/');
+        return;
+      }
+      
+      if (user) {
+        console.log("User authenticated:", user.uid);
+        // Load profile data when auth state changes
+        const profileData = getProfileData();
+        if (profileData) {
+          form.reset(profileData);
+        }
+      }
+    });
 
-    // Load profile data
-    const profileData = getProfileData();
-    if (profileData) {
-      form.reset(profileData);
-    }
-  }, [navigate, language, form]);
+    return () => unsubscribe();
+  }, [navigate, language, form, authInitialized]);
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
@@ -193,7 +217,21 @@ const Profile = () => {
     'อ่างทอง', 'อำนาจเจริญ', 'อุดรธานี', 'อุตรดิตถ์', 'อุทัยธานี', 'อุบลราชธานี'
   ];
 
+  // Show loading state while checking authentication
+  if (!authInitialized) {
+    return (
+      <div className={`flex h-screen w-full items-center justify-center ${theme === "dark" ? "bg-black text-white" : "bg-gray-50 text-gray-900"}`}>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900 dark:border-white mx-auto mb-4"></div>
+          <p>{language === "en" ? "Checking authentication..." : "กำลังตรวจสอบการเข้าสู่ระบบ..."}</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Protect route - redirect to home if not authenticated
   if (!auth.currentUser) {
+    console.log("No current user in Profile component, should have been redirected");
     return null;
   }
 

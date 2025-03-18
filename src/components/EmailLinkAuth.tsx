@@ -37,36 +37,40 @@ const EmailLinkAuth = () => {
   };
 
   // Check if the current URL contains a sign-in link
-  const checkEmailLink = async () => {
-    if (isSignInWithEmailLink(auth, window.location.href)) {
-      let emailFromStorage = window.localStorage.getItem('emailForSignIn');
-      
-      if (!emailFromStorage) {
-        // If email is not in storage, prompt user to provide it
-        emailFromStorage = window.prompt('Please provide your email for confirmation');
+  useEffect(() => {
+    const checkEmailLink = async () => {
+      // Only execute this code if we're not already logged in
+      if (auth.currentUser) {
+        return;
       }
+      
+      if (isSignInWithEmailLink(auth, window.location.href)) {
+        let emailFromStorage = window.localStorage.getItem('emailForSignIn');
+        
+        if (!emailFromStorage) {
+          // If email is not in storage, prompt user to provide it
+          emailFromStorage = window.prompt('Please provide your email for confirmation');
+        }
 
-      if (emailFromStorage) {
-        try {
-          await signInWithEmailLink(auth, emailFromStorage, window.location.href);
-          window.localStorage.removeItem('emailForSignIn'); // Clean up
-          toast.success('Successfully signed in!');
-          navigate('/profile');
-        } catch (error) {
-          console.error('Error signing in with email link:', error);
-          toast.error('Failed to sign in. Please try again.');
+        if (emailFromStorage) {
+          setIsLoading(true);
+          try {
+            await signInWithEmailLink(auth, emailFromStorage, window.location.href);
+            window.localStorage.removeItem('emailForSignIn'); // Clean up
+            toast.success('Successfully signed in!');
+            navigate('/profile');
+          } catch (error) {
+            console.error('Error signing in with email link:', error);
+            toast.error('Failed to sign in. Please try again.');
+          } finally {
+            setIsLoading(false);
+          }
         }
       }
-    }
-  };
+    };
 
-  // Check for email link sign-in when component mounts
-  useEffect(() => {
-    console.log('Checking email link...');
-    console.log('Current URL:', window.location.href);
-    console.log('Is sign in with email link?', isSignInWithEmailLink(auth, window.location.href));
     checkEmailLink();
-  }, [navigate]); // Add navigate to dependency array
+  }, []); // Run once on component mount
 
   return (
     <div className="space-y-4 w-full max-w-sm mx-auto">
