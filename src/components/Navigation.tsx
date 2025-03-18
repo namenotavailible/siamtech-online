@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { 
@@ -10,7 +9,7 @@ import {
   Moon
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { LoginDialog } from "./auth/login-dialog";
+import { LoginDialog } from "@/components/auth/login-dialog";
 import { DropdownMenu } from "./navigation/DropdownMenu";
 import { ToolbarIcons } from "./navigation/ToolbarIcons";
 import { Logo } from "./navigation/Logo";
@@ -258,3 +257,4 @@ const Navigation: React.FC<NavigationProps> = () => {
 };
 
 export default Navigation;
+
