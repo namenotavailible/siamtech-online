@@ -19,6 +19,7 @@ import NewArrivals from "./pages/NewArrivals";
 import Team from "./pages/Team";
 import BlogTech from "./pages/BlogTech";
 import BlogReviews from "./pages/BlogReviews";
+import CartPanel from "./components/CartPanel";
 
 import { Toaster } from "@/components/ui/sonner"
 import { CartProvider } from "./contexts/CartContext";
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/mfa" element={<MFAPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
+              <CartPanel />
               <Toaster />
             </CartProvider>
           </Router>

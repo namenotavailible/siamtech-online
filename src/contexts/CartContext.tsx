@@ -4,16 +4,29 @@ import { auth } from '@/lib/firebase';
 
 interface CartContextType {
   cartCount: number;
+  isCartOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
+  toggleCart: () => void;
   updateCartCount: (userId: string) => void;
 }
 
 const CartContext = createContext<CartContextType>({
   cartCount: 0,
+  isCartOpen: false,
+  openCart: () => {},
+  closeCart: () => {},
+  toggleCart: () => {},
   updateCartCount: () => {},
 });
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const openCart = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
+  const toggleCart = () => setIsCartOpen(prev => !prev);
 
   const updateCartCount = (userId: string) => {
     const savedCart = localStorage.getItem(`cart_${userId}`);
@@ -39,7 +52,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   return (
-    <CartContext.Provider value={{ cartCount, updateCartCount }}>
+    <CartContext.Provider value={{ cartCount, isCartOpen, openCart, closeCart, toggleCart, updateCartCount }}>
       {children}
     </CartContext.Provider>
   );
