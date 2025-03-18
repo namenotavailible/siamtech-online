@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef } from "react";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
@@ -24,7 +24,6 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
-  const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   
   // Improved keyboard detection logic
@@ -38,12 +37,13 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
       const windowHeight = window.innerHeight;
       const heightDiff = windowHeight - viewportHeight;
       
-      // More reliable keyboard detection with a lower threshold
-      const isVisible = heightDiff > 100;
-      
-      setKeyboardVisible(isVisible);
-      // Add a small buffer to ensure the chat stays above the keyboard
-      setKeyboardHeight(isVisible ? heightDiff + 10 : 0);
+      // Only update if the difference is significant (keyboard is likely open)
+      if (heightDiff > 60) {
+        // Position chat just above keyboard with some padding
+        setKeyboardHeight(heightDiff);
+      } else {
+        setKeyboardHeight(0);
+      }
     };
     
     // Initial detection
@@ -59,7 +59,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
     };
   }, [isMobile, open]);
   
-  // Automatically scroll to bottom when new messages arrive or keyboard visibility changes
+  // Automatically scroll to bottom when new messages arrive
   useEffect(() => {
     if (messagesEndRef.current) {
       // Use a small timeout to ensure scrolling happens after render
@@ -67,7 +67,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
       }, 100);
     }
-  }, [messages, keyboardVisible]);
+  }, [messages, keyboardHeight]);
 
   // Handle body scrolling when dialog is open
   useEffect(() => {
@@ -105,6 +105,16 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
     }
   };
 
+  // Calculate appropriate height for mobile chat
+  const getMobileHeight = () => {
+    if (keyboardHeight > 0) {
+      // When keyboard is open, use a percentage of the available space
+      return `calc(${window.visualViewport?.height || window.innerHeight}px - ${keyboardHeight}px - 20px)`;
+    }
+    // Default height when keyboard is closed
+    return "60vh";
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent 
@@ -120,17 +130,20 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
           }
         `}
         style={{
-          bottom: keyboardVisible ? `${keyboardHeight}px` : 0,
+          bottom: isMobile ? (keyboardHeight > 0 ? `${keyboardHeight}px` : 0) : undefined,
           left: isMobile ? 0 : undefined,
           right: isMobile ? 0 : undefined,
           top: "auto",
           transform: "none",
-          height: keyboardVisible ? "50vh" : isMobile ? "60vh" : undefined,
-          maxHeight: keyboardVisible ? "50vh" : isMobile ? "60vh" : undefined,
+          maxHeight: isMobile ? getMobileHeight() : undefined,
+          height: isMobile ? getMobileHeight() : undefined,
           zIndex: 100,
         }}
       >
         <DialogTitle className="sr-only">Chat Dialog</DialogTitle>
+        <DialogDescription className="sr-only">
+          Chat with our AI assistant
+        </DialogDescription>
         <div 
           className="flex-1 overflow-y-auto p-4 space-y-4 pb-28 sm:pb-24 
                     scrollbar-thin scrollbar-track-black/20 scrollbar-thumb-white/10"
