@@ -58,7 +58,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
         >
           {isDark ? (
             <Sun 
-              className="w-4 h-4 text-gray-500" 
+              className="w-4 h-4 text-white" 
               strokeWidth={1.5}
             />
           ) : (

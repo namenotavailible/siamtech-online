@@ -8,6 +8,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 export function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage();
   const { theme } = useTheme();
+  const isDarkMode = theme === "dark";
 
   const toggleLanguage = () => {
     const newLang: Language = language === "en" ? "th" : "en";
@@ -29,10 +30,12 @@ export function LanguageSwitcher() {
       onClick={toggleLanguage}
       variant="outline"
       size="sm"
-      className="flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors text-sm px-3 py-1 h-auto border-none"
+      className={`flex items-center justify-center rounded-full ${
+        isDarkMode ? 'bg-zinc-800/50 hover:bg-zinc-700/60' : 'bg-white/10 hover:bg-white/20'
+      } transition-colors text-sm px-3 py-1 h-auto border-none`}
       aria-label={language === "en" ? "Switch to Thai language" : "เปลี่ยนเป็นภาษาอังกฤษ"}
     >
-      <span className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
+      <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-black'}`}>
         {language === "en" ? "TH" : "EN"}
       </span>
     </Button>

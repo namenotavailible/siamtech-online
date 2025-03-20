@@ -134,7 +134,7 @@ const Navigation = () => {
         </div>
         
         <div className="flex items-center space-x-4">
-          <button onClick={toggleTheme} className="p-2 text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white">
+          <button onClick={toggleTheme} className="p-2 text-gray-700 dark:text-white hover:text-black dark:hover:text-gray-300">
             {theme === "dark" ? (
               <Sun className="h-5 w-5" />
             ) : (
@@ -149,7 +149,7 @@ const Navigation = () => {
             onMenuClick={toggleMobileMenu}
           />
           <button
-            className="md:hidden text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white"
+            className="md:hidden text-gray-700 dark:text-white hover:text-black dark:hover:text-gray-300"
             onClick={toggleMobileMenu}
             aria-label={language === "en" ? "Toggle mobile menu" : "สลับเมนูมือถือ"}
           >
