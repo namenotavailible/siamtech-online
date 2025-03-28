@@ -85,8 +85,8 @@ const EarthquakeFeature = () => {
         <div className="md:flex">
           <div className="md:w-2/5 h-64 md:h-auto">
             <img 
-              src="/lovable-uploads/0f82fd40-daa0-40de-9205-97344aaafee5.png" 
-              alt="แผ่นดินไหวขนาด 7.7 ในเมียนมา ส่งแรงสั่นสะเทือนถึงกรุงเทพฯ" 
+              src="/lovable-uploads/497c7389-b78d-4ecf-aa00-072dcff5d94e.png" 
+              alt="แผ่นดินไหวรุนแรงขนาด 7.7 ใกล้เมืองสะกาย ประเทศเมียนมา" 
               className="w-full h-full object-cover"
             />
           </div>
@@ -100,10 +100,10 @@ const EarthquakeFeature = () => {
               <span className="text-xs font-medium bg-primary/10 text-primary px-2 py-1 rounded-full">วิธีปฏิบัติตัวเมื่อเกิดแผ่นดินไหว</span>
             </div>
             <h2 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
-              แผ่นดินไหวขนาด 7.7 ในเมียนมา: ส่งแรงสั่นสะเทือนถึงกรุงเทพฯ สร้างความตื่นตระหนกทั่วประเทศ
+              แผ่นดินไหวรุนแรงขนาด 7.7 ใกล้เมืองสะกาย ประเทศเมียนมา: อาฟเตอร์ช็อกอาจยังตามมา
             </h2>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              เมื่อวันที่ 28 มีนาคม พ.ศ. 2568 เวลา 13:20 น. เกิดเหตุแผ่นดินไหวขนาด 7.7 แมกนิจูด ในประเทศเมียนมา ส่งแรงสั่นสะเทือนถึงกรุงเทพฯ และหลายจังหวัดในไทย
+              เมื่อเวลา 13:20 น. ตามเวลาท้องถิ่นของประเทศเมียนมา เกิดเหตุการณ์แผ่นดินไหวขนาด 7.7 แมกนิจูด ใกล้เมืองสะกาย ซึ่งอยู่ไม่ไกลจากกรุงเนปิดอว์ ส่งแรงสั่นสะเทือนถึงหลายประเทศ
             </p>
             <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
               <div className="flex items-center">
@@ -166,11 +166,11 @@ const Blog = () => {
     // Add earthquake blog post in Thai version
     {
       id: "earthquake-2025",
-      title: "แผ่นดินไหวขนาด 7.7 ในเมียนมา: ส่งแรงสั่นสะเทือนถึงกรุงเทพฯ สร้างความตื่นตระหนกทั่วประเทศ",
-      excerpt: "เมื่อวันที่ 28 มีนาคม พ.ศ. 2568 เวลา 13:20 น. เกิดเหตุแผ่นดินไหวขนาด 7.7 แมกนิจูด ในประเทศเมียนมา ส่งแรงสั่นสะเทือนถึงกรุงเทพฯ และหลายจังหวัดในไทย",
+      title: "แผ่นดินไหวรุนแรงขนาด 7.7 ใกล้เมืองสะกาย ประเทศเมียนมา: อาฟเตอร์ช็อกอาจยังตามมา",
+      excerpt: "เมื่อเวลา 13:20 น. ตามเวลาท้องถิ่นของประเทศเมียนมา เกิดเหตุการณ์แผ่นดินไหวขนาด 7.7 แมกนิจูด ใกล้เมืองสะกาย ส่งแรงสั่นสะเทือนถึงหลายประเทศรวมถึงไทย",
       date: "28 มีนาคม 2568",
       author: "ทีมข่าว SiamTech",
-      image: "/lovable-uploads/0f82fd40-daa0-40de-9205-97344aaafee5.png",
+      image: "/lovable-uploads/497c7389-b78d-4ecf-aa00-072dcff5d94e.png",
       tags: ["แผ่นดินไหวในประเทศไทย", "วิธีปฏิบัติตัวเมื่อเกิดแผ่นดินไหว"],
       isHighlighted: true
     }
