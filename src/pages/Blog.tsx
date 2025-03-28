@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
@@ -80,6 +79,7 @@ const EarthquakeFeature = () => {
     <Link 
       to="/blog/earthquake-2025" 
       className="block group col-span-full"
+      aria-label="Read more about earthquake in Myanmar"
     >
       <article className="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-red-500">
         <div className="md:flex">
@@ -143,6 +143,16 @@ const Blog = () => {
       author: "Alex Thompson",
       image: "/lovable-uploads/7ad1289c-87c2-4ad4-8225-58052b5431be.png",
       tags: ["Audio Equipment", "Microphones", "Buying Guide"]
+    },
+    {
+      id: "earthquake-2025",
+      title: "Magnitude 7.7 Earthquake Near Sagaing, Myanmar: Aftershocks May Follow",
+      excerpt: "At 13:20 local time in Myanmar, a 7.7 magnitude earthquake struck near Sagaing, not far from Naypyidaw, sending tremors to several countries including Thailand.",
+      date: "March 28, 2025",
+      author: "SiamTech News Team",
+      image: "/lovable-uploads/497c7389-b78d-4ecf-aa00-072dcff5d94e.png",
+      tags: ["Earthquake in Thailand", "Earthquake Safety Tips"],
+      isHighlighted: true
     }
   ] : [
     {
@@ -163,7 +173,6 @@ const Blog = () => {
       image: "/lovable-uploads/7ad1289c-87c2-4ad4-8225-58052b5431be.png",
       tags: ["อุปกรณ์เสียง", "ไมโครโฟน", "คู่มือการซื้อ"]
     },
-    // Add earthquake blog post in Thai version
     {
       id: "earthquake-2025",
       title: "แผ่นดินไหวรุนแรงขนาด 7.7 ใกล้เมืองสะกาย ประเทศเมียนมา: อาฟเตอร์ช็อกอาจยังตามมา",
@@ -191,7 +200,7 @@ const Blog = () => {
           </p>
         </header>
 
-        <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-12">
+        <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 mb-12">
           <EarthquakeFeature />
         </div>
 
