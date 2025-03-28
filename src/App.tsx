@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Products from "./pages/Products";
@@ -19,6 +18,7 @@ import NewArrivals from "./pages/NewArrivals";
 import Team from "./pages/Team";
 import BlogTech from "./pages/BlogTech";
 import BlogReviews from "./pages/BlogReviews";
+import EarthquakeBlog from "./pages/EarthquakeBlog";
 
 import { Toaster } from "@/components/ui/sonner"
 import { CartProvider } from "./contexts/CartContext";
@@ -67,6 +67,7 @@ function App() {
                 <Route path="/blog/tech" element={<BlogTech />} />
                 <Route path="/blog/reviews" element={<BlogReviews />} />
                 <Route path="/blog/:id" element={<BlogPost />} />
+                <Route path="/blog/earthquake-2025" element={<EarthquakeBlog />} />
                 <Route path="/featured" element={<Featured />} />
                 <Route path="/new-arrivals" element={<NewArrivals />} />
                 <Route path="/product/:id" element={<ProductDetail />} />

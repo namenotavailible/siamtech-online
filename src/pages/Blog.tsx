@@ -1,9 +1,10 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Footerdemo } from "@/components/ui/footer-section";
-import { Calendar, User } from "lucide-react";
+import { Calendar, User, AlertTriangle } from "lucide-react";
 
 const BlogCard = ({ 
   title, 
@@ -12,7 +13,8 @@ const BlogCard = ({
   author, 
   image, 
   id,
-  tags = [] 
+  tags = [],
+  isHighlighted = false
 }: { 
   title: string; 
   excerpt: string; 
@@ -21,6 +23,7 @@ const BlogCard = ({
   image: string;
   id: string;
   tags?: string[];
+  isHighlighted?: boolean;
 }) => {
   return (
     <Link 
@@ -28,7 +31,7 @@ const BlogCard = ({
       className="block group"
       aria-label={`Read more about ${title}`}
     >
-      <article className="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 h-full">
+      <article className={`bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 h-full ${isHighlighted ? 'border-2 border-red-500' : ''}`}>
         <div className="h-48 overflow-hidden">
           <img 
             src={image} 
@@ -37,6 +40,12 @@ const BlogCard = ({
           />
         </div>
         <div className="p-6">
+          {isHighlighted && (
+            <div className="flex items-center gap-2 mb-3">
+              <AlertTriangle className="h-4 w-4 text-red-500" />
+              <span className="text-xs font-medium text-red-500">ข่าวสำคัญ</span>
+            </div>
+          )}
           <div className="flex flex-wrap gap-2 mb-3">
             {tags.map((tag, index) => (
               <span 
@@ -58,6 +67,53 @@ const BlogCard = ({
             <div className="flex items-center" aria-label="Author">
               <User className="w-4 h-4 mr-1" aria-hidden="true" />
               <span>{author}</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </Link>
+  );
+};
+
+const EarthquakeFeature = () => {
+  return (
+    <Link 
+      to="/blog/earthquake-2025" 
+      className="block group col-span-full"
+    >
+      <article className="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-red-500">
+        <div className="md:flex">
+          <div className="md:w-2/5 h-64 md:h-auto">
+            <img 
+              src="/lovable-uploads/0f82fd40-daa0-40de-9205-97344aaafee5.png" 
+              alt="แผ่นดินไหวขนาด 7.7 ในเมียนมา ส่งแรงสั่นสะเทือนถึงกรุงเทพฯ" 
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="p-6 md:w-3/5">
+            <div className="flex items-center gap-2 mb-3">
+              <AlertTriangle className="h-5 w-5 text-red-500" />
+              <span className="text-sm font-medium text-red-500">ข่าวสำคัญล่าสุด</span>
+            </div>
+            <div className="flex flex-wrap gap-2 mb-3">
+              <span className="text-xs font-medium bg-primary/10 text-primary px-2 py-1 rounded-full">แผ่นดินไหวในประเทศไทย</span>
+              <span className="text-xs font-medium bg-primary/10 text-primary px-2 py-1 rounded-full">วิธีปฏิบัติตัวเมื่อเกิดแผ่นดินไหว</span>
+            </div>
+            <h2 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
+              แผ่นดินไหวขนาด 7.7 ในเมียนมา: ส่งแรงสั่นสะเทือนถึงกรุงเทพฯ สร้างความตื่นตระหนกทั่วประเทศ
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              เมื่อวันที่ 28 มีนาคม พ.ศ. 2568 เวลา 13:20 น. เกิดเหตุแผ่นดินไหวขนาด 7.7 แมกนิจูด ในประเทศเมียนมา ส่งแรงสั่นสะเทือนถึงกรุงเทพฯ และหลายจังหวัดในไทย
+            </p>
+            <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+              <div className="flex items-center">
+                <Calendar className="w-4 h-4 mr-1" />
+                <time dateTime="28 มีนาคม 2568">28 มีนาคม 2568</time>
+              </div>
+              <div className="flex items-center">
+                <User className="w-4 h-4 mr-1" />
+                <span>ทีมข่าว SiamTech</span>
+              </div>
             </div>
           </div>
         </div>
@@ -124,6 +180,13 @@ const Blog = () => {
           </p>
         </header>
 
+        <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-12">
+          <EarthquakeFeature />
+        </div>
+
+        <h2 className="text-2xl font-bold mb-6 mt-12">
+          {language === "en" ? "All Articles" : "บทความทั้งหมด"}
+        </h2>
         <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {blogPosts.map((post, index) => (
             <BlogCard key={index} {...post} />
