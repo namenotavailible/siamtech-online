@@ -1,3 +1,4 @@
+
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loading } from "@/components/ui/loading";
@@ -15,7 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { ResizablePanelGroup, ResizablePanel } from "@/components/ui/resizable";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 import { Helmet } from "react-helmet";
 import { cn } from "@/lib/utils";
 
@@ -314,6 +315,7 @@ const ProductDetail = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState("Black");
+  const [activeTab, setActiveTab] = useState("features");
 
   const product = products.find(p => p.id === Number(id));
 
@@ -321,6 +323,7 @@ const ProductDetail = () => {
     setSelectedImage(0);
     setQuantity(1);
     setSelectedColor("Black");
+    setActiveTab("features");
   }, [id, product]);
 
   const handleAddToCart = () => {
@@ -409,7 +412,7 @@ const ProductDetail = () => {
     : `ไมโครโฟนไดนามิก FIFINE AM8 | ไมค์คุณภาพสูงสำหรับเกมมิ่งและสตรีมมิ่ง`;
 
   return (
-    <div className={`min-h-screen bg-background text-foreground`}>
+    <div className="min-h-screen bg-background text-foreground">
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={metaDescription} />
@@ -506,6 +509,8 @@ const ProductDetail = () => {
             </div>
           </ResizablePanel>
           
+          <ResizableHandle withHandle />
+          
           <ResizablePanel defaultSize={50} minSize={40}>
             <div className="flex h-full flex-col">
               <div className="flex-1 overflow-auto p-6">
@@ -581,7 +586,7 @@ const ProductDetail = () => {
                     <Button 
                       variant="outline" 
                       size="icon" 
-                      onClick={decrementQuantity} 
+                      onClick={() => decrementQuantity()} 
                       disabled={quantity <= 1}
                       className="h-10 w-10 rounded-l-md rounded-r-none"
                     >
@@ -590,3 +595,168 @@ const ProductDetail = () => {
                     <div className="flex items-center justify-center h-10 w-20 border-y">
                       <span className="font-medium">{quantity}</span>
                     </div>
+                    <Button 
+                      variant="outline" 
+                      size="icon" 
+                      onClick={() => incrementQuantity()} 
+                      disabled={product ? quantity >= product.stock : false}
+                      className="h-10 w-10 rounded-l-none rounded-r-md"
+                    >
+                      <span className="text-lg">+</span>
+                    </Button>
+                  </div>
+                  
+                  <p className="text-sm mt-2 text-muted-foreground">
+                    {language === "en" 
+                      ? `${product.stock} units available` 
+                      : `มีสินค้าเหลือ ${product.stock} ชิ้น`}
+                  </p>
+                </div>
+                
+                <div className="mt-8 mb-4 space-y-4">
+                  <Button 
+                    onClick={() => handleAddToCart()} 
+                    className="w-full py-6 text-base font-medium"
+                  >
+                    <ShoppingCart className="mr-2 h-5 w-5" />
+                    {language === "en" ? "Add to Cart" : "เพิ่มลงตะกร้า"}
+                  </Button>
+                </div>
+                
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center space-x-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star 
+                        key={i} 
+                        className={`h-4 w-4 ${i < Math.floor(product.rating) ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}`} 
+                      />
+                    ))}
+                    <span className="ml-2 text-sm font-medium">
+                      {product.rating.toFixed(1)} ({product.reviews})
+                    </span>
+                  </div>
+                  
+                  <div className="flex items-center space-x-3">
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="rounded-full hover:text-rose-500"
+                      aria-label={language === "en" ? "Add to wishlist" : "เพิ่มในรายการโปรด"}
+                    >
+                      <Heart className="h-5 w-5" />
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="rounded-full"
+                      aria-label={language === "en" ? "Share product" : "แชร์สินค้า"}
+                    >
+                      <Share2 className="h-5 w-5" />
+                    </Button>
+                  </div>
+                </div>
+                
+                <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-8">
+                  <TabsList className="grid grid-cols-4 h-auto">
+                    <TabsTrigger value="features" className="py-3">
+                      {language === "en" ? "Features" : "คุณสมบัติ"}
+                    </TabsTrigger>
+                    <TabsTrigger value="specifications" className="py-3">
+                      {language === "en" ? "Specifications" : "สเปค"}
+                    </TabsTrigger>
+                    <TabsTrigger value="compatibility" className="py-3">
+                      {language === "en" ? "Compatibility" : "การเชื่อมต่อ"}
+                    </TabsTrigger>
+                    <TabsTrigger value="warranty" className="py-3">
+                      {language === "en" ? "Warranty" : "การรับประกัน"}
+                    </TabsTrigger>
+                  </TabsList>
+                  
+                  <TabsContent value="features" className="pt-4">
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="space-y-4">
+                          <p className="text-sm font-medium">{language === "en" ? "Key Features" : "คุณสมบัติสำคัญ"}</p>
+                          <ul className="space-y-2 text-sm">
+                            {product.features.map((feature, index) => (
+                              <li key={index} className="flex items-start">
+                                <Check className="mr-2 h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                                <span>{language === "en" ? feature.description : feature.description_th}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                  
+                  <TabsContent value="specifications" className="pt-4">
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="space-y-4">
+                          <p className="text-sm font-medium">{language === "en" ? "Technical Specifications" : "ข้อมูลจำเพาะทางเทคนิค"}</p>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            {product.specs.map((spec, index) => (
+                              <div key={index} className="py-2 border-b last:border-0">
+                                <p className="text-sm text-muted-foreground">{language === "en" ? spec.name : spec.name_th}</p>
+                                <p className="text-sm font-medium">{language === "en" ? spec.value : spec.value_th}</p>
+                              </div>
+                            ))}
+                          </div>
+                          
+                          <p className="text-sm font-medium mt-6">{language === "en" ? "What's in the Box" : "อุปกรณ์ในกล่อง"}</p>
+                          <ul className="space-y-1 text-sm">
+                            {product.inBox.map((item, index) => (
+                              <li key={index} className="flex items-center">
+                                <span className="mr-2 text-primary">•</span>
+                                <span>{language === "en" ? item.name : item.name_th}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                  
+                  <TabsContent value="compatibility" className="pt-4">
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="space-y-4">
+                          <p className="text-sm font-medium">{language === "en" ? "Compatible Systems" : "ระบบที่รองรับ"}</p>
+                          <p className="text-sm">{language === "en" ? product.compatibility.en : product.compatibility.th}</p>
+                          
+                          <p className="text-sm font-medium mt-4">{language === "en" ? "Connection Types" : "ประเภทการเชื่อมต่อ"}</p>
+                          <p className="text-sm">{language === "en" ? product.connections.en : product.connections.th}</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                  
+                  <TabsContent value="warranty" className="pt-4">
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="space-y-4">
+                          <p className="text-sm font-medium">{language === "en" ? "Warranty Information" : "ข้อมูลการรับประกัน"}</p>
+                          <p className="text-sm">{language === "en" ? product.warranty.en : product.warranty.th}</p>
+                          
+                          <div className="mt-4 p-3 bg-primary/10 rounded-md border border-primary/20">
+                            <p className="text-sm font-medium flex items-center">
+                              <Check className="mr-2 h-4 w-4 text-green-500" />
+                              {language === "en" ? "Authentic Product Guarantee" : "การรับประกันผลิตภัณฑ์แท้"}
+                            </p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                </Tabs>
+              </div>
+            </div>
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      </div>
+    </div>
+  );
+};
+
+export default ProductDetail;
