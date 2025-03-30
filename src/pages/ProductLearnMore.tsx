@@ -1,7 +1,10 @@
+
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { X, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Navigation from "@/components/Navigation";
+import { Footerdemo } from "@/components/ui/footer-section";
 
 type ProductData = {
   name: string;
@@ -114,70 +117,74 @@ const ProductLearnMore = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white relative">
-      <div className="absolute top-4 left-4 z-10">
-        <Button variant="link" onClick={() => navigate(-1)} className="text-white">
-          <ChevronLeft className="me-1 opacity-60" size={16} strokeWidth={2} aria-hidden="true" />
-          Go back
-        </Button>
-      </div>
+    <>
+      <Navigation />
+      <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white relative pt-16">
+        <div className="absolute top-20 left-4 z-10">
+          <Button variant="link" onClick={() => navigate(-1)} className="text-white">
+            <ChevronLeft className="me-1 opacity-60" size={16} strokeWidth={2} aria-hidden="true" />
+            Go back
+          </Button>
+        </div>
 
-      <button 
-        onClick={() => navigate(-1)}
-        className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors z-10"
-      >
-        <X className="w-6 h-6" />
-      </button>
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-12"
+        <button 
+          onClick={() => navigate(-1)}
+          className="absolute top-20 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors z-10"
         >
-          <div>
-            <h1 className="text-4xl font-bold">{product.name}</h1>
-            <p className="mt-4 text-lg text-gray-300">{product.details}</p>
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Key Features</h2>
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {product.features.map((feature, index) => (
-                <motion.li
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="flex items-center space-x-2"
-                >
-                  <span className="w-2 h-2 bg-white rounded-full" />
-                  <span>{feature}</span>
-                </motion.li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Technical Specifications</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {Object.entries(product.specs).map(([key, value], index) => (
-                <motion.div
-                  key={key}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white/5 p-4 rounded-lg"
-                >
-                  <div className="text-gray-400 capitalize">{key}</div>
-                  <div className="text-lg">{value}</div>
-                </motion.div>
-              ))}
+          <X className="w-6 h-6" />
+        </button>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-12"
+          >
+            <div>
+              <h1 className="text-4xl font-bold">{product.name}</h1>
+              <p className="mt-4 text-lg text-gray-300">{product.details}</p>
             </div>
-          </div>
-        </motion.div>
+
+            <div>
+              <h2 className="text-2xl font-semibold mb-4">Key Features</h2>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {product.features.map((feature, index) => (
+                  <motion.li
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex items-center space-x-2"
+                  >
+                    <span className="w-2 h-2 bg-white rounded-full" />
+                    <span>{feature}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-semibold mb-4">Technical Specifications</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {Object.entries(product.specs).map(([key, value], index) => (
+                  <motion.div
+                    key={key}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-white/5 p-4 rounded-lg"
+                  >
+                    <div className="text-gray-400 capitalize">{key}</div>
+                    <div className="text-lg">{value}</div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
-    </div>
+      <Footerdemo />
+    </>
   );
 };
 
