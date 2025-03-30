@@ -103,7 +103,7 @@ const products = [
     isBestSeller: true,
     warranty: {
       en: "1-year warranty (replace with new unit)",
-      th: "ประกันสินค้า 1 ปี - ประกันคุณภาพสินค้า 1 ปี (เสียเปลี่ยนตัวใหม่)* - ��ารันตีของแท้ 100%"
+      th: "ประกันสินค้า 1 ปี - ประกันคุณภาพสินค้า 1 ปี (เสี��เปลี่ยนตัวใหม่)* - ��ารันตีของแท้ 100%"
     },
     compatibility: {
       en: "Mac, Laptop, PC, PlayStation and Smartphone (dongle not included)",
@@ -224,7 +224,7 @@ const products = [
       { name: "DPI Range", name_th: "ช่วง DPI", value: "400-16,000", value_th: "400-16,000" },
       { name: "Buttons", name_th: "ปุ่ม", value: "6 Programmable", value_th: "6 ตั้งโปรแกรมได้" },
       { name: "Weight", name_th: "น้ำหนัก", value: "68g", value_th: "68 กรัม" },
-      { name: "Polling Rate", name_th: "อัตราการส่งข้อมูล", value: "1000Hz", value_th: "1000Hz" },
+      { name: "Polling Rate", name_th: "อั��ราการส่งข้อมูล", value: "1000Hz", value_th: "1000Hz" },
       { name: "Cable", name_th: "สายเคเบิล", value: "1.8m Paracord", value_th: "1.8 เมตร Paracord" }
     ],
     inBox: [
@@ -286,7 +286,7 @@ const products = [
       { name: "Buttons", name_th: "ปุ่ม", value: "10 Programmable", value_th: "10 ตั้งโปรแกรมได้" },
       { name: "Weight", name_th: "น้ำหนัก", value: "95-120g (Adjustable)", value_th: "95-120 กรัม (ปรับได้)" },
       { name: "Polling Rate", name_th: "อัตราการส่งข้อมูล", value: "8000Hz", value_th: "8000Hz" },
-      { name: "Connectivity", name_th: "การเชื่อมต่อ", value: "Wired/Wireless", value_th: "มีสาย/ไร้สาย" }
+      { name: "Connectivity", name_th: "การเ��ื่อมต่อ", value: "Wired/Wireless", value_th: "มีสาย/ไร้สาย" }
     ],
     inBox: [
       { name: "Gaming Mouse", name_th: "เมาส์เกมมิ่ง" },
@@ -508,7 +508,7 @@ const ProductDetail = () => {
                   </div>
                   
                   <h1 className="text-3xl font-bold mb-3 text-left leading-tight">
-                    {language === "en" ? "Fifine Ampligame AM8" : "Fifine Ampligame AM8"} {language === "en" ? "Premium" : "พรีเมียม"} 
+                    {language === "en" ? "Fifine Ampligame AM8" : "Fifine Ampligame AM8"} {language === "en" ? "Premium" : "ไดนามิก"} 
                     {product.category.includes("Microphone") ? (language === "en" ? " Microphone" : " ไมโครโฟน") : ""}
                   </h1>
                   
