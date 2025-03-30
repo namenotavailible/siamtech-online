@@ -1,3 +1,4 @@
+
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loading } from "@/components/ui/loading";
@@ -439,7 +440,7 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      <div className="fixed top-4 left-4 z-10">
+      <div className="fixed top-4 left-10 z-10">
         <Button 
           variant="ghost" 
           size="icon" 
