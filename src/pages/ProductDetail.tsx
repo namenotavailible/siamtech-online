@@ -1,9 +1,8 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loading } from "@/components/ui/loading";
 import { useEffect, useState } from "react";
-import { X, ChevronLeft, Check, ShoppingCart, Star, Heart, Share2, ArrowRight } from "lucide-react";
+import { X, ChevronLeft, Check, ShoppingCart, Star, Heart, Share2 } from "lucide-react";
 import { auth } from "@/lib/firebase";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -19,6 +18,8 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 import { Helmet } from "react-helmet";
 import { cn } from "@/lib/utils";
+import { useCart } from "@/contexts/CartContext";
+import { Footerdemo } from "@/components/ui/footer-section";
 
 const products = [
   {
@@ -57,7 +58,7 @@ const products = [
         title: "Durable Construction",
         title_th: "การก่อสร้างที่ทนทาน",
         description: "Built to last with premium materials and solid construction",
-        description_th: "สร้างขึ้นเพื่อความทนทานด้วยวัสดุคุณภาพสูงและการก่อสร้างที่แข็งแรง"
+        description_th: "สร้างขึ้นเพื่อความทนทา��ด้วยวัสดุคุณภาพสูงและการก่อสร้างที่แข็งแรง"
       },
       {
         title: "Cardioid Pickup Pattern",
@@ -312,6 +313,7 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const { t, language } = useLanguage();
   const { theme } = useTheme();
+  const { addItemToCart } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState("Black");
@@ -337,17 +339,8 @@ const ProductDetail = () => {
       return;
     }
 
-    const savedCart = localStorage.getItem(`cart_${user.uid}`);
-    const currentCart = savedCart ? JSON.parse(savedCart) : [];
-    
-    const existingItemIndex = currentCart.findIndex((item: any) => 
-      item.id === product?.id && item.color === selectedColor
-    );
-    
-    if (existingItemIndex !== -1) {
-      currentCart[existingItemIndex].quantity += quantity;
-    } else if (product) {
-      currentCart.push({
+    if (product) {
+      addItemToCart({
         id: product.id,
         name: product.name,
         price: product.price,
@@ -355,10 +348,9 @@ const ProductDetail = () => {
         quantity: quantity,
         color: selectedColor
       });
+      
+      toast.success(language === "en" ? "Added to cart successfully!" : "เพิ่มลงในตะกร้าเรียบร้อยแล้ว!");
     }
-
-    localStorage.setItem(`cart_${user.uid}`, JSON.stringify(currentCart));
-    toast.success(language === "en" ? "Added to cart successfully!" : "เพิ่มลงในตะกร้าเรียบร้อยแล้ว!");
   };
 
   const incrementQuantity = () => {
@@ -412,7 +404,7 @@ const ProductDetail = () => {
     : `ไมโครโฟนไดนามิก FIFINE AM8 | ไมค์คุณภาพสูงสำหรับเกมมิ่งและสตรีมมิ่ง`;
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={metaDescription} />
@@ -471,7 +463,7 @@ const ProductDetail = () => {
         </Button>
       </div>
       
-      <div className="container max-w-6xl mx-auto px-4 py-8">
+      <div className="container max-w-6xl mx-auto px-4 py-8 flex-grow">
         <ResizablePanelGroup direction="horizontal" className="min-h-[200px]">
           <ResizablePanel defaultSize={50} minSize={40}>
             <div className="flex h-full flex-col">
@@ -755,6 +747,8 @@ const ProductDetail = () => {
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>
+      
+      <Footerdemo />
     </div>
   );
 };
