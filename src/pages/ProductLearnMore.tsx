@@ -117,9 +117,9 @@ const ProductLearnMore = () => {
   }
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Navigation />
-      <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white relative pt-16">
+      <div className="flex-grow bg-gradient-to-b from-black to-gray-900 text-white relative pt-16">
         <div className="absolute top-20 left-4 z-10">
           <Button variant="link" onClick={() => navigate(-1)} className="text-white">
             <ChevronLeft className="me-1 opacity-60" size={16} strokeWidth={2} aria-hidden="true" />
@@ -184,7 +184,7 @@ const ProductLearnMore = () => {
         </div>
       </div>
       <Footerdemo />
-    </>
+    </div>
   );
 };
 
