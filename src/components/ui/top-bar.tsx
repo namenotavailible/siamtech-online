@@ -31,7 +31,7 @@ export function TopBar({ className }: TopBarProps) {
   ];
 
   return (
-    <div className={`fixed top-0 left-0 right-0 h-10 bg-black/10 backdrop-blur-md border-b border-white/5 z-50 px-4 ${className}`}>
+    <div className={`fixed top-0 left-0 right-0 h-10 z-50 px-4 ${className}`}>
       <div className="h-full max-w-7xl mx-auto flex items-center justify-end space-x-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
