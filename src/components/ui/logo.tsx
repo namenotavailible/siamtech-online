@@ -18,7 +18,7 @@ export function Logo() {
           alt={language === "en" ? "SIAMTECH Online" : "บริษัท สยามเทค ออนไลน์ กรุ๊ป จำกัด"}
           className="h-32 w-auto object-contain pt-2"
           loading="eager" 
-          fetchPriority="high"
+          fetchpriority="high"
           decoding="sync"
         />
       </div>
