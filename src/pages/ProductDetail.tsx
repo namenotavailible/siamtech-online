@@ -1,6 +1,4 @@
-
 import { useParams, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 import { Loading } from "@/components/ui/loading";
 import { useEffect, useState } from "react";
 import { X, ChevronLeft, Check, ShoppingCart, Star, Heart, Share2 } from "lucide-react";
@@ -18,9 +16,10 @@ import { Separator } from "@/components/ui/separator";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 import { Helmet } from "react-helmet";
-import { cn } from "@/lib/utils";
 import { useCart } from "@/contexts/CartContext";
 import { Footerdemo } from "@/components/ui/footer-section";
+import { TopBar } from "@/components/ui/top-bar";
+import Navigation from "@/components/Navigation";
 
 const products = [
   {
@@ -104,7 +103,7 @@ const products = [
     isBestSeller: true,
     warranty: {
       en: "1-year warranty (replace with new unit)",
-      th: "ประกันสินค้า 1 ปี - ประกันคุณภาพสินค้า 1 ปี (เสียเปลี่ยนตัวใหม่)* - การันตีของแท้ 100%"
+      th: "ประกันสินค้า 1 ปี - ประกันคุณภาพสินค้า 1 ปี (เสียเปลี่ยนตัวใหม่)* - ��ารันตีของแท้ 100%"
     },
     compatibility: {
       en: "Mac, Laptop, PC, PlayStation and Smartphone (dongle not included)",
@@ -162,7 +161,7 @@ const products = [
       { name: "Frequency Response", name_th: "การตอบสนองความถี่", value: "20Hz-20kHz", value_th: "20Hz-20kHz" },
       { name: "Sensitivity", name_th: "ความไว", value: "-34dB ±2dB", value_th: "-34dB ±2dB" },
       { name: "Connectivity", name_th: "การเชื่อมต่อ", value: "USB Type-C", value_th: "USB Type-C" },
-      { name: "Cable Length", name_th: "ความยาวสาย", value: "2 meters", value_th: "2 เมตร" },
+      { name: "Cable Length", name_th: "���วามยาวสาย", value: "2 meters", value_th: "2 เมตร" },
       { name: "Compatibility", name_th: "ความเข้ากันได้", value: "Windows, Mac, PS4, PS5", value_th: "Windows, Mac, PS4, PS5" }
     ],
     inBox: [
@@ -405,7 +404,7 @@ const ProductDetail = () => {
     : `ไมโครโฟนไดนามิก FIFINE AM8 | ไมค์คุณภาพสูงสำหรับเกมมิ่งและสตรีมมิ่ง`;
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="flex flex-col min-h-screen bg-background">
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={metaDescription} />
@@ -423,331 +422,327 @@ const ProductDetail = () => {
         <meta name="twitter:image" content={product.image} />
         <link rel="canonical" href={`/product/${product.id}`} />
       </Helmet>
-
-      <div className="container max-w-6xl mx-auto px-4 pt-8 pb-2">
-        <div className="flex items-center text-sm text-muted-foreground">
-          <span className="hover:underline cursor-pointer" onClick={() => navigate("/")}>
-            {language === "en" ? "Home" : "หน้าแรก"}
-          </span>
-          <span className="mx-2">/</span>
-          <span className="hover:underline cursor-pointer" onClick={() => navigate("/products")}>
-            {language === "en" ? "Products" : "สินค้า"}
-          </span>
-          <span className="mx-2">/</span>
-          <span className="text-foreground">
-            {language === "en" ? product.category : product.category_th}
-          </span>
+      
+      <Navigation />
+      
+      <div className="h-16"></div>
+      
+      <TopBar className="top-16" />
+      
+      <main className="flex-grow pt-8">
+        <div className="container max-w-6xl mx-auto px-4 pb-4">
+          <div className="flex items-center text-sm text-muted-foreground">
+            <span className="hover:underline cursor-pointer" onClick={() => navigate("/")}>
+              {language === "en" ? "Home" : "หน้าแรก"}
+            </span>
+            <span className="mx-2">/</span>
+            <span className="hover:underline cursor-pointer" onClick={() => navigate("/products")}>
+              {language === "en" ? "Products" : "สินค้า"}
+            </span>
+            <span className="mx-2">/</span>
+            <span className="text-foreground">
+              {language === "en" ? product.category : product.category_th}
+            </span>
+          </div>
         </div>
-      </div>
-
-      <div className="fixed top-4 left-10 z-10">
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          onClick={() => navigate(-1)} 
-          className="rounded-full"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </Button>
-      </div>
-      
-      <div className="fixed top-4 right-4 flex items-center space-x-2 z-10">
-        <LanguageSwitcher />
-        <ThemeToggle />
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          onClick={() => navigate("/")} 
-          className="rounded-full"
-        >
-          <X className="h-5 w-5" />
-        </Button>
-      </div>
-      
-      <div className="container max-w-6xl mx-auto px-4 py-8 flex-grow">
-        <ResizablePanelGroup direction="horizontal" className="min-h-[200px]">
-          <ResizablePanel defaultSize={50} minSize={40}>
-            <div className="flex h-full flex-col">
-              <div className="flex-1 p-4">
-                <div className="aspect-square rounded-lg overflow-hidden mb-4">
-                  <AspectRatio ratio={1/1} className="bg-muted">
-                    <img
-                      src={product.gallery[selectedImage]}
-                      alt={language === "en" ? product.name : product.name_th}
-                      className="object-contain h-full w-full"
-                    />
-                  </AspectRatio>
-                </div>
-                
-                <div className="grid grid-cols-6 gap-3">
-                  {product.gallery.map((image, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setSelectedImage(index)}
-                      className={`aspect-square rounded-md overflow-hidden ${
-                        selectedImage === index 
-                          ? `ring-2 ring-primary bg-primary/10` 
-                          : `bg-muted`
-                      }`}
-                    >
+        
+        <div className="container max-w-6xl mx-auto px-4 mb-4">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => navigate(-1)} 
+            className="flex items-center"
+          >
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            {language === "en" ? "Back" : "กลับ"}
+          </Button>
+        </div>
+        
+        <div className="container max-w-6xl mx-auto px-4 py-4">
+          <ResizablePanelGroup direction="horizontal" className="min-h-[200px]">
+            <ResizablePanel defaultSize={50} minSize={40}>
+              <div className="flex h-full flex-col">
+                <div className="flex-1 p-4">
+                  <div className="aspect-square rounded-lg overflow-hidden mb-4">
+                    <AspectRatio ratio={1/1} className="bg-muted">
                       <img
-                        src={image}
-                        alt={`${language === "en" ? product.name : product.name_th} - ${index + 1}`}
-                        className="w-full h-full object-contain p-1"
+                        src={product.gallery[selectedImage]}
+                        alt={language === "en" ? product.name : product.name_th}
+                        className="object-contain h-full w-full"
                       />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </ResizablePanel>
-          
-          <ResizableHandle withHandle />
-          
-          <ResizablePanel defaultSize={50} minSize={40}>
-            <div className="flex h-full flex-col">
-              <div className="flex-1 overflow-auto p-6">
-                <div className="mb-2 text-left">
-                  <span className="text-primary font-medium tracking-wide">
-                    {language === "en" ? "Fifine Ampligame AM8" : "Fifine Ampligame AM8"}
-                  </span>
-                </div>
-                
-                <h1 className="text-3xl font-bold mb-3 text-left leading-tight">
-                  {language === "en" ? "Fifine Ampligame AM8" : "Fifine Ampligame AM8"} {language === "en" ? "Premium" : "พรีเมียม"} 
-                  {product.category.includes("Microphone") ? (language === "en" ? " Microphone" : " ไมโครโฟน") : ""}
-                </h1>
-                
-                <div className="mb-6 text-left">
-                  <div className="flex items-baseline space-x-2">
-                    <span className="text-2xl font-bold">{formatPrice(product.price)} ฿</span>
-                    {product.originalPrice > product.price && (
-                      <span className="text-sm line-through text-muted-foreground">
-                        {formatPrice(product.originalPrice)} ฿
-                      </span>
-                    )}
-                  </div>
-                  {product.originalPrice > product.price && (
-                    <p className="text-red-500 text-sm font-medium mt-1">
-                      {language === "en" 
-                        ? `Save ${discount}%` 
-                        : `ประหยัด ${discount}%`}
-                    </p>
-                  )}
-                </div>
-                
-                <div className="mb-8 space-y-3 text-left">
-                  {product.features.map((feature, index) => (
-                    <div key={index} className="flex items-start">
-                      <span className="text-primary mr-2 flex-shrink-0">•</span>
-                      <span className="text-base">
-                        {language === "en" ? feature.title : feature.title_th}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                
-                <Separator className="my-6" />
-                
-                <div className="mb-6 text-left">
-                  <h3 className="text-base font-medium mb-3">
-                    {language === "en" ? "Choose color" : "เลือกสี"}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {colors.map((color) => (
-                      <Button
-                        key={color}
-                        variant={selectedColor === color ? "default" : "outline"}
-                        onClick={() => setSelectedColor(color)}
-                        className={`min-w-[80px] ${
-                          color === "Black" 
-                            ? selectedColor === "Black" ? "bg-black text-white" : "border-black text-black" 
-                            : selectedColor === "White" ? "bg-white text-black border border-gray-200" : "bg-transparent text-black border border-gray-200"
-                        }`}
-                      >
-                        {language === "en" ? color : color === "Black" ? "สีดำ" : "สีขาว"}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="mb-6 text-left">
-                  <h3 className="text-base font-medium mb-3">
-                    {language === "en" ? "Quantity" : "จำนวน"}
-                  </h3>
-                  <div className="flex items-center">
-                    <Button 
-                      variant="outline" 
-                      size="icon" 
-                      onClick={() => decrementQuantity()} 
-                      disabled={quantity <= 1}
-                      className="h-10 w-10 rounded-l-md rounded-r-none"
-                    >
-                      <span className="text-lg">−</span>
-                    </Button>
-                    <div className="flex items-center justify-center h-10 w-20 border-y">
-                      <span className="font-medium">{quantity}</span>
-                    </div>
-                    <Button 
-                      variant="outline" 
-                      size="icon" 
-                      onClick={() => incrementQuantity()} 
-                      disabled={product ? quantity >= product.stock : false}
-                      className="h-10 w-10 rounded-l-none rounded-r-md"
-                    >
-                      <span className="text-lg">+</span>
-                    </Button>
+                    </AspectRatio>
                   </div>
                   
-                  <p className="text-sm mt-2 text-muted-foreground">
-                    {language === "en" 
-                      ? `${product.stock} units available` 
-                      : `มีสินค้าเหลือ ${product.stock} ชิ้น`}
-                  </p>
-                </div>
-                
-                <div className="mt-8 mb-4 space-y-4">
-                  <Button 
-                    onClick={() => handleAddToCart()} 
-                    className="w-full py-6 text-base font-medium"
-                  >
-                    <ShoppingCart className="mr-2 h-5 w-5" />
-                    {language === "en" ? "Add to Cart" : "เพิ่มลงตะกร้า"}
-                  </Button>
-                </div>
-                
-                <div className="flex items-center justify-between mb-8">
-                  <div className="flex items-center space-x-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star 
-                        key={i} 
-                        className={`h-4 w-4 ${i < Math.floor(product.rating) ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}`} 
-                      />
+                  <div className="grid grid-cols-6 gap-3">
+                    {product.gallery.map((image, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setSelectedImage(index)}
+                        className={`aspect-square rounded-md overflow-hidden ${
+                          selectedImage === index 
+                            ? `ring-2 ring-primary bg-primary/10` 
+                            : `bg-muted`
+                        }`}
+                      >
+                        <img
+                          src={image}
+                          alt={`${language === "en" ? product.name : product.name_th} - ${index + 1}`}
+                          className="w-full h-full object-contain p-1"
+                        />
+                      </button>
                     ))}
-                    <span className="ml-2 text-sm font-medium">
-                      {product.rating.toFixed(1)} ({product.reviews})
+                  </div>
+                </div>
+              </div>
+            </ResizablePanel>
+            
+            <ResizableHandle withHandle />
+            
+            <ResizablePanel defaultSize={50} minSize={40}>
+              <div className="flex h-full flex-col">
+                <div className="flex-1 overflow-auto p-6">
+                  <div className="mb-2 text-left">
+                    <span className="text-primary font-medium tracking-wide">
+                      {language === "en" ? "Fifine Ampligame AM8" : "Fifine Ampligame AM8"}
                     </span>
                   </div>
                   
-                  <div className="flex items-center space-x-3">
+                  <h1 className="text-3xl font-bold mb-3 text-left leading-tight">
+                    {language === "en" ? "Fifine Ampligame AM8" : "Fifine Ampligame AM8"} {language === "en" ? "Premium" : "พรีเมียม"} 
+                    {product.category.includes("Microphone") ? (language === "en" ? " Microphone" : " ไมโครโฟน") : ""}
+                  </h1>
+                  
+                  <div className="mb-6 text-left">
+                    <div className="flex items-baseline space-x-2">
+                      <span className="text-2xl font-bold">{formatPrice(product.price)} ฿</span>
+                      {product.originalPrice > product.price && (
+                        <span className="text-sm line-through text-muted-foreground">
+                          {formatPrice(product.originalPrice)} ฿
+                        </span>
+                      )}
+                    </div>
+                    {product.originalPrice > product.price && (
+                      <p className="text-red-500 text-sm font-medium mt-1">
+                        {language === "en" 
+                          ? `Save ${discount}%` 
+                          : `ประหยัด ${discount}%`}
+                      </p>
+                    )}
+                  </div>
+                  
+                  <div className="mb-8 space-y-3 text-left">
+                    {product.features.map((feature, index) => (
+                      <div key={index} className="flex items-start">
+                        <span className="text-primary mr-2 flex-shrink-0">•</span>
+                        <span className="text-base">
+                          {language === "en" ? feature.title : feature.title_th}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <Separator className="my-6" />
+                  
+                  <div className="mb-6 text-left">
+                    <h3 className="text-base font-medium mb-3">
+                      {language === "en" ? "Choose color" : "เลือกสี"}
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {colors.map((color) => (
+                        <Button
+                          key={color}
+                          variant={selectedColor === color ? "default" : "outline"}
+                          onClick={() => setSelectedColor(color)}
+                          className={`min-w-[80px] ${
+                            color === "Black" 
+                              ? selectedColor === "Black" ? "bg-black text-white" : "border-black text-black" 
+                              : selectedColor === "White" ? "bg-white text-black border border-gray-200" : "bg-transparent text-black border border-gray-200"
+                          }`}
+                        >
+                          {language === "en" ? color : color === "Black" ? "สีดำ" : "สีขาว"}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="mb-6 text-left">
+                    <h3 className="text-base font-medium mb-3">
+                      {language === "en" ? "Quantity" : "จำนวน"}
+                    </h3>
+                    <div className="flex items-center">
+                      <Button 
+                        variant="outline" 
+                        size="icon" 
+                        onClick={() => decrementQuantity()} 
+                        disabled={quantity <= 1}
+                        className="h-10 w-10 rounded-l-md rounded-r-none"
+                      >
+                        <span className="text-lg">−</span>
+                      </Button>
+                      <div className="flex items-center justify-center h-10 w-20 border-y">
+                        <span className="font-medium">{quantity}</span>
+                      </div>
+                      <Button 
+                        variant="outline" 
+                        size="icon" 
+                        onClick={() => incrementQuantity()} 
+                        disabled={product ? quantity >= product.stock : false}
+                        className="h-10 w-10 rounded-l-none rounded-r-md"
+                      >
+                        <span className="text-lg">+</span>
+                      </Button>
+                    </div>
+                    
+                    <p className="text-sm mt-2 text-muted-foreground">
+                      {language === "en" 
+                        ? `${product.stock} units available` 
+                        : `มีสินค้าเหลือ ${product.stock} ชิ้น`}
+                    </p>
+                  </div>
+                  
+                  <div className="mt-8 mb-4 space-y-4">
                     <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      className="rounded-full hover:text-rose-500"
-                      aria-label={language === "en" ? "Add to wishlist" : "เพิ่มในรายการโปรด"}
+                      onClick={() => handleAddToCart()} 
+                      className="w-full py-6 text-base font-medium"
                     >
-                      <Heart className="h-5 w-5" />
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      className="rounded-full"
-                      aria-label={language === "en" ? "Share product" : "แชร์สินค้า"}
-                    >
-                      <Share2 className="h-5 w-5" />
+                      <ShoppingCart className="mr-2 h-5 w-5" />
+                      {language === "en" ? "Add to Cart" : "เพิ่มลงตะกร้า"}
                     </Button>
                   </div>
+                  
+                  <div className="flex items-center justify-between mb-8">
+                    <div className="flex items-center space-x-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star 
+                          key={i} 
+                          className={`h-4 w-4 ${i < Math.floor(product.rating) ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}`} 
+                        />
+                      ))}
+                      <span className="ml-2 text-sm font-medium">
+                        {product.rating.toFixed(1)} ({product.reviews})
+                      </span>
+                    </div>
+                    
+                    <div className="flex items-center space-x-3">
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="rounded-full hover:text-rose-500"
+                        aria-label={language === "en" ? "Add to wishlist" : "เพิ่มในรายการโปรด"}
+                      >
+                        <Heart className="h-5 w-5" />
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="rounded-full"
+                        aria-label={language === "en" ? "Share product" : "แชร์สินค้า"}
+                      >
+                        <Share2 className="h-5 w-5" />
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-8">
+                    <TabsList className="grid grid-cols-4 h-auto">
+                      <TabsTrigger value="features" className="py-3">
+                        {language === "en" ? "Features" : "คุณสมบัติ"}
+                      </TabsTrigger>
+                      <TabsTrigger value="specifications" className="py-3">
+                        {language === "en" ? "Specifications" : "สเปค"}
+                      </TabsTrigger>
+                      <TabsTrigger value="compatibility" className="py-3">
+                        {language === "en" ? "Compatibility" : "การเชื่อมต่อ"}
+                      </TabsTrigger>
+                      <TabsTrigger value="warranty" className="py-3">
+                        {language === "en" ? "Warranty" : "การรับประกัน"}
+                      </TabsTrigger>
+                    </TabsList>
+                    
+                    <TabsContent value="features" className="pt-4">
+                      <Card>
+                        <CardContent className="p-4">
+                          <div className="space-y-4">
+                            <p className="text-sm font-medium">{language === "en" ? "Key Features" : "คุณสมบัติสำคัญ"}</p>
+                            <ul className="space-y-2 text-sm">
+                              {product.features.map((feature, index) => (
+                                <li key={index} className="flex items-start">
+                                  <Check className="mr-2 h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                                  <span>{language === "en" ? feature.description : feature.description_th}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                    
+                    <TabsContent value="specifications" className="pt-4">
+                      <Card>
+                        <CardContent className="p-4">
+                          <div className="space-y-4">
+                            <p className="text-sm font-medium">{language === "en" ? "Technical Specifications" : "ข้อมูลจำเพาะทางเทคนิค"}</p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                              {product.specs.map((spec, index) => (
+                                <div key={index} className="py-2 border-b last:border-0">
+                                  <p className="text-sm text-muted-foreground">{language === "en" ? spec.name : spec.name_th}</p>
+                                  <p className="text-sm font-medium">{language === "en" ? spec.value : spec.value_th}</p>
+                                </div>
+                              ))}
+                            </div>
+                            
+                            <p className="text-sm font-medium mt-6">{language === "en" ? "What's in the Box" : "อุปกรณ์ในกล่อง"}</p>
+                            <ul className="space-y-1 text-sm">
+                              {product.inBox.map((item, index) => (
+                                <li key={index} className="flex items-center">
+                                  <span className="mr-2 text-primary">•</span>
+                                  <span>{language === "en" ? item.name : item.name_th}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                    
+                    <TabsContent value="compatibility" className="pt-4">
+                      <Card>
+                        <CardContent className="p-4">
+                          <div className="space-y-4">
+                            <p className="text-sm font-medium">{language === "en" ? "Compatible Systems" : "ระบบที่รองรับ"}</p>
+                            <p className="text-sm">{language === "en" ? product.compatibility.en : product.compatibility.th}</p>
+                            
+                            <p className="text-sm font-medium mt-4">{language === "en" ? "Connection Types" : "ประเภทการเชื่อมต่อ"}</p>
+                            <p className="text-sm">{language === "en" ? product.connections.en : product.connections.th}</p>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                    
+                    <TabsContent value="warranty" className="pt-4">
+                      <Card>
+                        <CardContent className="p-4">
+                          <div className="space-y-4">
+                            <p className="text-sm font-medium">{language === "en" ? "Warranty Information" : "ข้อมูลการรับประกัน"}</p>
+                            <p className="text-sm">{language === "en" ? product.warranty.en : product.warranty.th}</p>
+                            
+                            <div className="mt-4 p-3 bg-primary/10 rounded-md border border-primary/20">
+                              <p className="text-sm font-medium flex items-center">
+                                <Check className="mr-2 h-4 w-4 text-green-500" />
+                                {language === "en" ? "Authentic Product Guarantee" : "การรับประกันผลิตภัณฑ์แท้"}
+                              </p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                  </Tabs>
                 </div>
-                
-                <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-8">
-                  <TabsList className="grid grid-cols-4 h-auto">
-                    <TabsTrigger value="features" className="py-3">
-                      {language === "en" ? "Features" : "คุณสมบัติ"}
-                    </TabsTrigger>
-                    <TabsTrigger value="specifications" className="py-3">
-                      {language === "en" ? "Specifications" : "สเปค"}
-                    </TabsTrigger>
-                    <TabsTrigger value="compatibility" className="py-3">
-                      {language === "en" ? "Compatibility" : "การเชื่อมต่อ"}
-                    </TabsTrigger>
-                    <TabsTrigger value="warranty" className="py-3">
-                      {language === "en" ? "Warranty" : "การรับประกัน"}
-                    </TabsTrigger>
-                  </TabsList>
-                  
-                  <TabsContent value="features" className="pt-4">
-                    <Card>
-                      <CardContent className="p-4">
-                        <div className="space-y-4">
-                          <p className="text-sm font-medium">{language === "en" ? "Key Features" : "คุณสมบัติสำคัญ"}</p>
-                          <ul className="space-y-2 text-sm">
-                            {product.features.map((feature, index) => (
-                              <li key={index} className="flex items-start">
-                                <Check className="mr-2 h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
-                                <span>{language === "en" ? feature.description : feature.description_th}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </TabsContent>
-                  
-                  <TabsContent value="specifications" className="pt-4">
-                    <Card>
-                      <CardContent className="p-4">
-                        <div className="space-y-4">
-                          <p className="text-sm font-medium">{language === "en" ? "Technical Specifications" : "ข้อมูลจำเพาะทางเทคนิค"}</p>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                            {product.specs.map((spec, index) => (
-                              <div key={index} className="py-2 border-b last:border-0">
-                                <p className="text-sm text-muted-foreground">{language === "en" ? spec.name : spec.name_th}</p>
-                                <p className="text-sm font-medium">{language === "en" ? spec.value : spec.value_th}</p>
-                              </div>
-                            ))}
-                          </div>
-                          
-                          <p className="text-sm font-medium mt-6">{language === "en" ? "What's in the Box" : "อุปกรณ์ในกล่อง"}</p>
-                          <ul className="space-y-1 text-sm">
-                            {product.inBox.map((item, index) => (
-                              <li key={index} className="flex items-center">
-                                <span className="mr-2 text-primary">•</span>
-                                <span>{language === "en" ? item.name : item.name_th}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </TabsContent>
-                  
-                  <TabsContent value="compatibility" className="pt-4">
-                    <Card>
-                      <CardContent className="p-4">
-                        <div className="space-y-4">
-                          <p className="text-sm font-medium">{language === "en" ? "Compatible Systems" : "ระบบที่รองรับ"}</p>
-                          <p className="text-sm">{language === "en" ? product.compatibility.en : product.compatibility.th}</p>
-                          
-                          <p className="text-sm font-medium mt-4">{language === "en" ? "Connection Types" : "ประเภทการเชื่อมต่อ"}</p>
-                          <p className="text-sm">{language === "en" ? product.connections.en : product.connections.th}</p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </TabsContent>
-                  
-                  <TabsContent value="warranty" className="pt-4">
-                    <Card>
-                      <CardContent className="p-4">
-                        <div className="space-y-4">
-                          <p className="text-sm font-medium">{language === "en" ? "Warranty Information" : "ข้อมูลการรับประกัน"}</p>
-                          <p className="text-sm">{language === "en" ? product.warranty.en : product.warranty.th}</p>
-                          
-                          <div className="mt-4 p-3 bg-primary/10 rounded-md border border-primary/20">
-                            <p className="text-sm font-medium flex items-center">
-                              <Check className="mr-2 h-4 w-4 text-green-500" />
-                              {language === "en" ? "Authentic Product Guarantee" : "การรับประกันผลิตภัณฑ์แท้"}
-                            </p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </TabsContent>
-                </Tabs>
               </div>
-            </div>
-          </ResizablePanel>
-        </ResizablePanelGroup>
-      </div>
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        </div>
+      </main>
       
       <Footerdemo />
     </div>
