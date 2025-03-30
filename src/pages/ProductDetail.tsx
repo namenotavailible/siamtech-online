@@ -15,6 +15,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 
 const products = [
   {
@@ -283,8 +285,24 @@ const ProductDetail = () => {
   const { theme } = useTheme();
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState("");
 
   const product = products.find(p => p.id === Number(id));
+
+  useEffect(() => {
+    // Reset selection when product changes
+    setSelectedImage(0);
+    setQuantity(1);
+    
+    // Set default size based on product category
+    if (product) {
+      if (product.category.includes("Mouse")) {
+        setSelectedSize("Standard");
+      } else if (product.category.includes("Microphone")) {
+        setSelectedSize("Medium");
+      }
+    }
+  }, [id, product]);
 
   const handleAddToCart = () => {
     const user = auth.currentUser;
@@ -310,7 +328,8 @@ const ProductDetail = () => {
         name: product.name,
         price: product.price,
         image: product.image,
-        quantity: quantity
+        quantity: quantity,
+        size: selectedSize
       });
     }
 
@@ -344,12 +363,6 @@ const ProductDetail = () => {
     };
   }, [navigate]);
 
-  useEffect(() => {
-    // Reset selection when product changes
-    setSelectedImage(0);
-    setQuantity(1);
-  }, [id]);
-
   if (!id) {
     return <Loading />;
   }
@@ -363,9 +376,38 @@ const ProductDetail = () => {
   }
 
   const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+  
+  // Available sizes based on product category
+  const getSizes = () => {
+    if (product.category.includes("Mouse")) {
+      return ["Small", "Standard", "Large"];
+    } else if (product.category.includes("Microphone")) {
+      return ["Small", "Medium", "Large"];
+    }
+    return [];
+  };
+
+  const sizes = getSizes();
 
   return (
     <div className={`min-h-screen bg-background text-foreground`}>
+      {/* Breadcrumb Navigation */}
+      <div className="container max-w-6xl mx-auto px-4 pt-8 pb-2">
+        <div className="flex items-center text-sm text-muted-foreground">
+          <span className="hover:underline cursor-pointer" onClick={() => navigate("/")}>
+            {language === "en" ? "Home" : "หน้าแรก"}
+          </span>
+          <span className="mx-2">/</span>
+          <span className="hover:underline cursor-pointer" onClick={() => navigate("/products")}>
+            {language === "en" ? "Products" : "สินค้า"}
+          </span>
+          <span className="mx-2">/</span>
+          <span className="text-foreground">
+            {language === "en" ? product.category : product.category_th}
+          </span>
+        </div>
+      </div>
+
       {/* Navigation Controls */}
       <div className="fixed top-4 left-4 z-10">
         <Button 
@@ -391,216 +433,211 @@ const ProductDetail = () => {
         </Button>
       </div>
       
-      <div className="container max-w-6xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="container max-w-6xl mx-auto px-4 py-6">
+        <ResizablePanelGroup direction="horizontal" className="min-h-[200px] rounded-lg border">
           {/* Product Images Section */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="space-y-4"
-          >
-            <div className={`aspect-square rounded-lg overflow-hidden ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
-              <img
-                src={product.gallery[selectedImage]}
-                alt={language === "en" ? product.name : product.name_th}
-                className="w-full h-full object-contain mix-blend-multiply"
-              />
-            </div>
-            
-            <div className="grid grid-cols-6 gap-2">
-              {product.gallery.map((image, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedImage(index)}
-                  className={`aspect-square rounded-md overflow-hidden ${
-                    selectedImage === index 
-                      ? `ring-2 ${theme === 'dark' ? 'ring-primary' : 'ring-primary'} bg-primary/10` 
-                      : `${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`
-                  }`}
-                >
-                  <img
-                    src={image}
-                    alt={`${language === "en" ? product.name : product.name_th} - ${index + 1}`}
-                    className="w-full h-full object-contain mix-blend-multiply p-1"
-                  />
-                </button>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Product Details Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-8"
-          >
-            {/* Product Header */}
-            <div className="space-y-2">
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="outline" className="rounded-full">
-                  {language === "en" ? product.category : product.category_th}
-                </Badge>
-                {product.isNew && (
-                  <Badge variant="destructive" className="rounded-full">
-                    {language === "en" ? "New" : "ใหม่"}
-                  </Badge>
-                )}
-                {product.isBestSeller && (
-                  <Badge className="bg-amber-500 hover:bg-amber-600 rounded-full">
-                    {language === "en" ? "Best Seller" : "ขายดี"}
-                  </Badge>
-                )}
-              </div>
-              
-              <h1 className="text-3xl font-bold tracking-tight">
-                {language === "en" ? product.name : product.name_th}
-              </h1>
-              
-              <div className="flex items-center space-x-2">
-                <div className="flex">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-4 h-4 ${
-                        i < Math.floor(product.rating) 
-                          ? 'fill-amber-400 text-amber-400' 
-                          : 'text-gray-300'
-                      }`}
+          <ResizablePanel defaultSize={50} minSize={40}>
+            <div className="flex h-full flex-col">
+              <div className="flex-1 p-4">
+                <div className="aspect-square rounded-lg overflow-hidden mb-3">
+                  <AspectRatio ratio={1/1} className="bg-muted">
+                    <img
+                      src={product.gallery[selectedImage]}
+                      alt={language === "en" ? product.name : product.name_th}
+                      className="object-contain h-full w-full"
                     />
+                  </AspectRatio>
+                </div>
+                
+                <div className="grid grid-cols-6 gap-2">
+                  {product.gallery.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImage(index)}
+                      className={`aspect-square rounded-md overflow-hidden ${
+                        selectedImage === index 
+                          ? `ring-2 ring-primary bg-primary/10` 
+                          : `bg-muted`
+                      }`}
+                    >
+                      <img
+                        src={image}
+                        alt={`${language === "en" ? product.name : product.name_th} - ${index + 1}`}
+                        className="w-full h-full object-contain p-1"
+                      />
+                    </button>
                   ))}
                 </div>
-                <span className="text-sm text-muted-foreground">
-                  {product.rating.toFixed(1)} ({product.reviews})
-                </span>
               </div>
-              
-              <div className="pt-2">
-                <div className="flex items-baseline space-x-2">
-                  <span className="text-3xl font-bold">{formatPrice(product.price)} ฿</span>
+            </div>
+          </ResizablePanel>
+          
+          <ResizableHandle withHandle />
+          
+          {/* Product Details Section */}
+          <ResizablePanel defaultSize={50} minSize={40}>
+            <div className="flex h-full flex-col">
+              <div className="flex-1 overflow-auto p-4">
+                {/* Model Number */}
+                <div className="mb-2">
+                  <span className="text-primary font-medium">
+                    {product.id}{language === "en" ? product.name : product.name_th}
+                  </span>
+                </div>
+                
+                {/* Product Title */}
+                <h1 className="text-3xl font-bold mb-2">
+                  {language === "en" ? product.name : product.name_th} {language === "en" ? "Premium" : "พรีเมียม"} 
+                  {product.category.includes("Microphone") ? (language === "en" ? "Microphone" : "ไมโครโฟน") : ""}
+                </h1>
+                
+                {/* Price Information */}
+                <div className="mb-6">
+                  <div className="flex items-baseline space-x-2">
+                    <span className="text-2xl font-bold">{formatPrice(product.price)} ฿</span>
+                    {product.originalPrice > product.price && (
+                      <span className="text-sm line-through text-muted-foreground">
+                        {formatPrice(product.originalPrice)} ฿
+                      </span>
+                    )}
+                  </div>
                   {product.originalPrice > product.price && (
-                    <span className="text-sm line-through text-muted-foreground">
-                      {formatPrice(product.originalPrice)} ฿
-                    </span>
+                    <p className="text-red-500 text-sm font-medium mt-1">
+                      {language === "en" 
+                        ? `Save ${discount}%` 
+                        : `ประหยัด ${discount}%`}
+                    </p>
                   )}
                 </div>
-                {product.originalPrice > product.price && (
-                  <p className="text-red-500 text-sm font-medium mt-1">
-                    {language === "en" 
-                      ? `${discount}% off` 
-                      : `ประหยัด ${discount}%`}
-                  </p>
-                )}
-              </div>
-            </div>
-            
-            <p className="text-muted-foreground leading-relaxed">
-              {language === "en" ? product.description : product.description_th}
-            </p>
-            
-            <Separator />
-            
-            {/* Stock Information */}
-            <div className="flex items-center justify-between">
-              <span className="text-sm">
-                {language === "en" 
-                  ? `Stock: ${product.stock} units` 
-                  : `สินค้าคงเหลือ: ${product.stock} ชิ้น`}
-              </span>
-              <Badge variant={product.stock > 10 
-                ? "outline" 
-                : product.stock > 5 
-                  ? "secondary" 
-                  : "destructive"}
-                className="rounded-full"
-              >
-                {product.stock > 10 
-                  ? (language === "en" ? "In Stock" : "มีสินค้า") 
-                  : product.stock > 5 
-                    ? (language === "en" ? "Limited Stock" : "สินค้าเหลือน้อย") 
-                    : (language === "en" ? "Almost Sold Out" : "ใกล้หมด")}
-              </Badge>
-            </div>
-            
-            {/* Quantity Selector */}
-            <div className="space-y-3">
-              <p className="text-sm font-medium">{language === "en" ? "Quantity:" : "จำนวน:"}</p>
-              <div className="flex items-center w-full max-w-[140px]">
-                <Button 
-                  variant="outline" 
-                  size="icon" 
-                  onClick={decrementQuantity} 
-                  disabled={quantity <= 1}
-                  className="h-10 w-10 rounded-l-md rounded-r-none"
-                >
-                  <span className="text-lg">−</span>
-                </Button>
-                <div className="flex items-center justify-center h-10 w-20 border-y">
-                  <span className="font-medium">{quantity}</span>
+                
+                {/* Key Features as Bullet Points */}
+                <div className="mb-8 space-y-2">
+                  {product.features.map((feature, index) => (
+                    <div key={index} className="flex items-start">
+                      <span className="text-sm mr-2 text-primary">•</span>
+                      <span className="text-sm">
+                        {language === "en" ? feature.title : feature.title_th}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-                <Button 
-                  variant="outline" 
-                  size="icon" 
-                  onClick={incrementQuantity} 
-                  disabled={product && quantity >= product.stock}
-                  className="h-10 w-10 rounded-r-md rounded-l-none"
-                >
-                  <span className="text-lg">+</span>
-                </Button>
+                
+                <Separator className="my-6" />
+                
+                {/* Size Selection */}
+                {sizes.length > 0 && (
+                  <div className="mb-6">
+                    <h3 className="text-base font-medium mb-3">
+                      {language === "en" ? "Choose your size" : "เลือกขนาดของคุณ"}
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {sizes.map((size) => (
+                        <Button
+                          key={size}
+                          variant={selectedSize === size ? "default" : "outline"}
+                          onClick={() => setSelectedSize(size)}
+                          className="min-w-[80px]"
+                        >
+                          {size}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {/* Quantity Selector */}
+                <div className="mb-6">
+                  <h3 className="text-base font-medium mb-3">
+                    {language === "en" ? "Quantity" : "จำนวน"}
+                  </h3>
+                  <div className="flex items-center">
+                    <Button 
+                      variant="outline" 
+                      size="icon" 
+                      onClick={decrementQuantity} 
+                      disabled={quantity <= 1}
+                      className="h-10 w-10 rounded-l-md rounded-r-none"
+                    >
+                      <span className="text-lg">−</span>
+                    </Button>
+                    <div className="flex items-center justify-center h-10 w-20 border-y">
+                      <span className="font-medium">{quantity}</span>
+                    </div>
+                    <Button 
+                      variant="outline" 
+                      size="icon" 
+                      onClick={incrementQuantity} 
+                      disabled={product && quantity >= product.stock}
+                      className="h-10 w-10 rounded-r-md rounded-l-none"
+                    >
+                      <span className="text-lg">+</span>
+                    </Button>
+                  </div>
+                </div>
+                
+                {/* Stock Information */}
+                <div className="flex items-center justify-between mb-6">
+                  <span className="text-sm">
+                    {language === "en" 
+                      ? `Stock: ${product.stock} units` 
+                      : `สินค้าคงเหลือ: ${product.stock} ชิ้น`}
+                  </span>
+                  <Badge variant={product.stock > 10 
+                    ? "outline" 
+                    : product.stock > 5 
+                      ? "secondary" 
+                      : "destructive"}
+                    className="rounded-full"
+                  >
+                    {product.stock > 10 
+                      ? (language === "en" ? "In Stock" : "มีสินค้า") 
+                      : product.stock > 5 
+                        ? (language === "en" ? "Limited Stock" : "สินค้าเหลือน้อย") 
+                        : (language === "en" ? "Almost Sold Out" : "ใกล้หมด")}
+                  </Badge>
+                </div>
+                
+                {/* Action Buttons */}
+                <div className="grid grid-cols-1 gap-3">
+                  <Button 
+                    onClick={handleAddToCart}
+                    className="h-12 text-base font-medium"
+                    size="lg"
+                  >
+                    <ShoppingCart className="w-5 h-5 mr-2" />
+                    {t("add_to_cart")}
+                  </Button>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Button 
+                      variant="outline"
+                      className="h-10 text-sm font-medium"
+                    >
+                      <Heart className="w-4 h-4 mr-2" />
+                      {language === "en" ? "Wishlist" : "รายการโปรด"}
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      className="h-10 text-sm font-medium"
+                      onClick={() => window.open("https://line.me", "_blank")}
+                    >
+                      <Share2 className="w-4 h-4 mr-2" />
+                      {language === "en" ? "Share" : "แชร์"}
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
-            
-            {/* Action Buttons */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <Button 
-                onClick={handleAddToCart}
-                className="h-12 text-base font-medium"
-              >
-                <ShoppingCart className="w-5 h-5 mr-2" />
-                {t("add_to_cart")}
-              </Button>
-              <Button 
-                variant="outline"
-                className="h-12 text-base font-medium"
-              >
-                <Heart className="w-5 h-5 mr-2" />
-                {language === "en" ? "Add to Wishlist" : "เพิ่มในรายการโปรด"}
-              </Button>
-            </div>
-            
-            {/* Shipping & Warranty Info */}
-            <div className="grid grid-cols-2 gap-4">
-              <Card className="bg-primary/5 border-none">
-                <CardContent className="p-4 text-center space-y-1">
-                  <p className="text-xs text-muted-foreground">{language === "en" ? "Free Shipping" : "จัดส่งฟรี"}</p>
-                  <p className="text-sm font-medium">{language === "en" ? "Orders over 1,500 ฿" : "คำสั่งซื้อมากกว่า 1,500 ฿"}</p>
-                </CardContent>
-              </Card>
-              <Card className="bg-primary/5 border-none">
-                <CardContent className="p-4 text-center space-y-1">
-                  <p className="text-xs text-muted-foreground">{language === "en" ? "Warranty" : "รับประกัน"}</p>
-                  <p className="text-sm font-medium">{language === "en" ? "1 Year Official" : "รับประกัน 1 ปี"}</p>
-                </CardContent>
-              </Card>
-            </div>
-            
-            <Button 
-              variant="ghost" 
-              className="w-full flex items-center justify-center text-muted-foreground"
-              onClick={() => window.open("https://line.me", "_blank")}
-            >
-              <Share2 className="w-4 h-4 mr-2" />
-              {language === "en" ? "Share this product" : "แชร์สินค้านี้"}
-            </Button>
-          </motion.div>
-        </div>
+          </ResizablePanel>
+        </ResizablePanelGroup>
         
         {/* Product Details Tabs */}
-        <div className="mt-16">
+        <div className="mt-8">
           <Tabs defaultValue="features" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
+            <TabsList className="grid w-full grid-cols-4 mb-8">
               <TabsTrigger value="features">{language === "en" ? "Features" : "คุณสมบัติ"}</TabsTrigger>
               <TabsTrigger value="specifications">{language === "en" ? "Specifications" : "ข้อมูลจำเพาะ"}</TabsTrigger>
               <TabsTrigger value="package">{language === "en" ? "In the Box" : "สิ่งที่อยู่ในกล่อง"}</TabsTrigger>
+              <TabsTrigger value="shipping">{language === "en" ? "Shipping" : "การจัดส่ง"}</TabsTrigger>
             </TabsList>
             
             <TabsContent value="features">
@@ -654,39 +691,40 @@ const ProductDetail = () => {
                 </CardContent>
               </Card>
             </TabsContent>
+            
+            <TabsContent value="shipping">
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-semibold mb-2">{language === "en" ? "Free Delivery" : "จัดส่งฟรี"}</h3>
+                      <p className="text-sm text-muted-foreground">
+                        {language === "en" 
+                          ? "Free shipping on all orders over 1,500 ฿" 
+                          : "จัดส่งฟรีสำหรับคำสั่งซื้อมากกว่า 1,500 บาท"}
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold mb-2">{language === "en" ? "Delivery Time" : "เวลาจัดส่ง"}</h3>
+                      <p className="text-sm text-muted-foreground">
+                        {language === "en" 
+                          ? "2-3 business days for urban areas, 3-5 business days for rural areas" 
+                          : "2-3 วันทำการสำหรับพื้นที่ในเมือง, 3-5 วันทำการสำหรับพื้นที่ชนบท"}
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold mb-2">{language === "en" ? "Return Policy" : "นโยบายการคืนสินค้า"}</h3>
+                      <p className="text-sm text-muted-foreground">
+                        {language === "en" 
+                          ? "Returns accepted within 7 days of delivery for unopened items" 
+                          : "รับคืนสินค้าภายใน 7 วันหลังจากการจัดส่งสำหรับสินค้าที่ยังไม่ได้เปิด"}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
           </Tabs>
-        </div>
-        
-        {/* Call to Action Section */}
-        <div className="mt-16">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="rounded-lg overflow-hidden"
-          >
-            <Card className="border-0 bg-gradient-to-r from-primary/5 to-primary/10">
-              <CardContent className="p-8 text-center space-y-6">
-                <h3 className="text-2xl font-bold">
-                  {language === "en" 
-                    ? "Premium Performance" 
-                    : "ประสิทธิภาพระดับพรีเมียม"}
-                </h3>
-                <p className="text-muted-foreground max-w-2xl mx-auto">
-                  {language === "en" 
-                    ? "Join thousands of satisfied customers who have upgraded their setup with our premium products."
-                    : "เข้าร่วมกับลูกค้าที่พึงพอใจนับพันที่ได้อัพเกรดการตั้งค่าของพวกเขาด้วยผลิตภัณฑ์ระดับพรีเมียมของเรา"}
-                </p>
-                <Button 
-                  size="lg" 
-                  onClick={handleAddToCart}
-                  className="px-8"
-                >
-                  {t("add_to_cart")}
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </CardContent>
-            </Card>
-          </motion.div>
         </div>
       </div>
     </div>
