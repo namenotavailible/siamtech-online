@@ -1,3 +1,4 @@
+
 import { useParams, useNavigate } from "react-router-dom";
 import { Loading } from "@/components/ui/loading";
 import { useEffect, useState } from "react";
@@ -710,10 +711,26 @@ const ProductDetail = () => {
                         <CardContent className="p-4">
                           <div className="space-y-4">
                             <p className="text-sm font-medium">{language === "en" ? "Compatible Systems" : "ระบบที่รองรับ"}</p>
-                            <p className="text-sm">{language === "en" ? product.compatibility.en : product.compatibility.th}</p>
+                            <p className="text-sm">
+                              {product.compatibility && language === "en" 
+                                ? product.compatibility.en 
+                                : product.compatibility && product.compatibility.th
+                                  ? product.compatibility.th
+                                  : language === "en"
+                                    ? "Compatible with most modern systems"
+                                    : "ใช้งานได้กับระบบปฏิบัติการส่วนใหญ่ในปัจจุบัน"}
+                            </p>
                             
                             <p className="text-sm font-medium mt-4">{language === "en" ? "Connection Types" : "ประเภทการเชื่อมต่อ"}</p>
-                            <p className="text-sm">{language === "en" ? product.connections.en : product.connections.th}</p>
+                            <p className="text-sm">
+                              {product.connections && language === "en" 
+                                ? product.connections.en 
+                                : product.connections && product.connections.th
+                                  ? product.connections.th
+                                  : language === "en"
+                                    ? "Standard connection options"
+                                    : "ตัวเลือกการเชื่อมต่อมาตรฐาน"}
+                            </p>
                           </div>
                         </CardContent>
                       </Card>
@@ -724,7 +741,15 @@ const ProductDetail = () => {
                         <CardContent className="p-4">
                           <div className="space-y-4">
                             <p className="text-sm font-medium">{language === "en" ? "Warranty Information" : "ข้อมูลการรับประกัน"}</p>
-                            <p className="text-sm">{language === "en" ? product.warranty.en : product.warranty.th}</p>
+                            <p className="text-sm">
+                              {product.warranty && language === "en" 
+                                ? product.warranty.en 
+                                : product.warranty && product.warranty.th
+                                  ? product.warranty.th
+                                  : language === "en"
+                                    ? "Standard 1-year manufacturer warranty"
+                                    : "การรับประกันจากผู้ผลิต 1 ปีมาตรฐาน"}
+                            </p>
                             
                             <div className="mt-4 p-3 bg-primary/10 rounded-md border border-primary/20">
                               <p className="text-sm font-medium flex items-center">
