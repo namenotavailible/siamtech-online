@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loading } from "@/components/ui/loading";
@@ -16,7 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
+import { ResizablePanelGroup, ResizablePanel } from "@/components/ui/resizable";
 
 const products = [
   {
@@ -285,23 +284,14 @@ const ProductDetail = () => {
   const { theme } = useTheme();
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedColor, setSelectedColor] = useState("Black");
 
   const product = products.find(p => p.id === Number(id));
 
   useEffect(() => {
-    // Reset selection when product changes
     setSelectedImage(0);
     setQuantity(1);
-    
-    // Set default size based on product category
-    if (product) {
-      if (product.category.includes("Mouse")) {
-        setSelectedSize("Standard");
-      } else if (product.category.includes("Microphone")) {
-        setSelectedSize("Medium");
-      }
-    }
+    setSelectedColor("Black");
   }, [id, product]);
 
   const handleAddToCart = () => {
@@ -318,7 +308,9 @@ const ProductDetail = () => {
     const savedCart = localStorage.getItem(`cart_${user.uid}`);
     const currentCart = savedCart ? JSON.parse(savedCart) : [];
     
-    const existingItemIndex = currentCart.findIndex((item: any) => item.id === product?.id);
+    const existingItemIndex = currentCart.findIndex((item: any) => 
+      item.id === product?.id && item.color === selectedColor
+    );
     
     if (existingItemIndex !== -1) {
       currentCart[existingItemIndex].quantity += quantity;
@@ -329,7 +321,7 @@ const ProductDetail = () => {
         price: product.price,
         image: product.image,
         quantity: quantity,
-        size: selectedSize
+        color: selectedColor
       });
     }
 
@@ -377,21 +369,10 @@ const ProductDetail = () => {
 
   const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
   
-  // Available sizes based on product category
-  const getSizes = () => {
-    if (product.category.includes("Mouse")) {
-      return ["Small", "Standard", "Large"];
-    } else if (product.category.includes("Microphone")) {
-      return ["Small", "Medium", "Large"];
-    }
-    return [];
-  };
-
-  const sizes = getSizes();
+  const colors = ["Black", "White"];
 
   return (
     <div className={`min-h-screen bg-background text-foreground`}>
-      {/* Breadcrumb Navigation */}
       <div className="container max-w-6xl mx-auto px-4 pt-8 pb-2">
         <div className="flex items-center text-sm text-muted-foreground">
           <span className="hover:underline cursor-pointer" onClick={() => navigate("/")}>
@@ -408,7 +389,6 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      {/* Navigation Controls */}
       <div className="fixed top-4 left-4 z-10">
         <Button 
           variant="ghost" 
@@ -434,8 +414,7 @@ const ProductDetail = () => {
       </div>
       
       <div className="container max-w-6xl mx-auto px-4 py-6">
-        <ResizablePanelGroup direction="horizontal" className="min-h-[200px] rounded-lg border">
-          {/* Product Images Section */}
+        <ResizablePanelGroup direction="horizontal" className="min-h-[200px]">
           <ResizablePanel defaultSize={50} minSize={40}>
             <div className="flex h-full flex-col">
               <div className="flex-1 p-4">
@@ -472,26 +451,20 @@ const ProductDetail = () => {
             </div>
           </ResizablePanel>
           
-          <ResizableHandle withHandle />
-          
-          {/* Product Details Section */}
           <ResizablePanel defaultSize={50} minSize={40}>
             <div className="flex h-full flex-col">
               <div className="flex-1 overflow-auto p-4">
-                {/* Model Number */}
                 <div className="mb-2">
                   <span className="text-primary font-medium">
                     {product.id}{language === "en" ? product.name : product.name_th}
                   </span>
                 </div>
                 
-                {/* Product Title */}
                 <h1 className="text-3xl font-bold mb-2">
                   {language === "en" ? product.name : product.name_th} {language === "en" ? "Premium" : "พรีเมียม"} 
                   {product.category.includes("Microphone") ? (language === "en" ? "Microphone" : "ไมโครโฟน") : ""}
                 </h1>
                 
-                {/* Price Information */}
                 <div className="mb-6">
                   <div className="flex items-baseline space-x-2">
                     <span className="text-2xl font-bold">{formatPrice(product.price)} ฿</span>
@@ -510,7 +483,6 @@ const ProductDetail = () => {
                   )}
                 </div>
                 
-                {/* Key Features as Bullet Points */}
                 <div className="mb-8 space-y-2">
                   {product.features.map((feature, index) => (
                     <div key={index} className="flex items-start">
@@ -524,28 +496,28 @@ const ProductDetail = () => {
                 
                 <Separator className="my-6" />
                 
-                {/* Size Selection */}
-                {sizes.length > 0 && (
-                  <div className="mb-6">
-                    <h3 className="text-base font-medium mb-3">
-                      {language === "en" ? "Choose your size" : "เลือกขนาดของคุณ"}
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {sizes.map((size) => (
-                        <Button
-                          key={size}
-                          variant={selectedSize === size ? "default" : "outline"}
-                          onClick={() => setSelectedSize(size)}
-                          className="min-w-[80px]"
-                        >
-                          {size}
-                        </Button>
-                      ))}
-                    </div>
+                <div className="mb-6">
+                  <h3 className="text-base font-medium mb-3">
+                    {language === "en" ? "Choose color" : "เลือกสี"}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {colors.map((color) => (
+                      <Button
+                        key={color}
+                        variant={selectedColor === color ? "default" : "outline"}
+                        onClick={() => setSelectedColor(color)}
+                        className={`min-w-[80px] ${
+                          color === "Black" 
+                            ? selectedColor === "Black" ? "bg-black text-white" : "border-black text-black" 
+                            : selectedColor === "White" ? "bg-white text-black border border-gray-200" : "bg-transparent text-black border border-gray-200"
+                        }`}
+                      >
+                        {language === "en" ? color : color === "Black" ? "สีดำ" : "สีขาว"}
+                      </Button>
+                    ))}
                   </div>
-                )}
+                </div>
                 
-                {/* Quantity Selector */}
                 <div className="mb-6">
                   <h3 className="text-base font-medium mb-3">
                     {language === "en" ? "Quantity" : "จำนวน"}
@@ -575,7 +547,6 @@ const ProductDetail = () => {
                   </div>
                 </div>
                 
-                {/* Stock Information */}
                 <div className="flex items-center justify-between mb-6">
                   <span className="text-sm">
                     {language === "en" 
@@ -597,7 +568,6 @@ const ProductDetail = () => {
                   </Badge>
                 </div>
                 
-                {/* Action Buttons */}
                 <div className="grid grid-cols-1 gap-3">
                   <Button 
                     onClick={handleAddToCart}
@@ -630,7 +600,6 @@ const ProductDetail = () => {
           </ResizablePanel>
         </ResizablePanelGroup>
         
-        {/* Product Details Tabs */}
         <div className="mt-8">
           <Tabs defaultValue="features" className="w-full">
             <TabsList className="grid w-full grid-cols-4 mb-8">
