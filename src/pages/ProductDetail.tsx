@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loading } from "@/components/ui/loading";
@@ -17,6 +16,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { ResizablePanelGroup, ResizablePanel } from "@/components/ui/resizable";
+import { Helmet } from "react-helmet";
 
 const products = [
   {
@@ -37,7 +37,7 @@ const products = [
     category: "Dynamic Microphone",
     category_th: "ไมโครโฟนไดนามิก",
     description: "Professional dynamic microphone perfect for gaming, streaming, and content creation. Features crystal clear audio capture and robust build quality.",
-    description_th: "ไมโครโฟนไดนามิกระดับมืออาชีพที่เหมาะสำหรับการเล่นเกม สตรีมมิ่ง และการสร้างคอนเทนต์ มาพร้อมคุณสมบัติในการบันทึกเสียงที่คมชัดและคุณภาพการสร้างที่แข็งแรงทนทาน",
+    description_th: "ไมโครโฟนไดนามิก FIFINE รุ่น AM8 (Global Version) เชื่อมต่อด้วยพอร์ต USB-C หรือ XLR ใช้รูปแบบการรับเสียงหรือ Polar Pattern แบบ Cardioid มาพร้อมกับไฟ RGB ปรับเฉดสีได้ ตอบโจทย์การใช้งานที่หลากหลาย อาทิ เช่น Audio Podcast, อัดเสียง, อัดเพลง, ประชุม, ดิสคอร์ด, แต่งโต๊ะคอมพ์ ฯลฯ",
     features: [
       {
         title: "Superior Sound Quality",
@@ -49,7 +49,7 @@ const products = [
         title: "Plug & Play USB Connection",
         title_th: "การเชื่อมต่อ USB แบบพร้อมใช้งาน",
         description: "Simple setup with no drivers required, just plug in and start creating",
-        description_th: "การติดตั้งที่ง่ายดายโดยไม่ต้องใช้ไดรเวอร์ เพียงเสียบและเริ่มใช้งานได้ทันที"
+        description_th: "Plug and Play: รองรับการใช้งานแบบ Plug and Play ไม่จำเป็นต้องติดตั้งไดรเวอร์เพิ่มเติม"
       },
       {
         title: "Durable Construction",
@@ -61,7 +61,19 @@ const products = [
         title: "Cardioid Pickup Pattern",
         title_th: "รูปแบบการรับเสียงแบบ Cardioid",
         description: "Focuses on capturing your voice while rejecting off-axis sounds",
-        description_th: "เน้นการบันทึกเสียงของคุณในขณะที่ปฏิเสธเสียงนอกแกน"
+        description_th: "ลดเสียงรบกวนรอบข้าง: รูปแบบการรับเสียงแบบทิศทางเดียว (cardioid) สามารถลดเสียงรบกวนจากรอบข้างได้ดี"
+      },
+      {
+        title: "RGB Lighting",
+        title_th: "ไฟ RGB",
+        description: "Customizable RGB lighting with multiple color options",
+        description_th: "RGB: แสงสีที่ลงตัว สามารถปรับได้ถึง 10 เฉดสีโดยการสัมผัสเบาๆ และสามารถสัมผัสค้างเพื่อปิดได้"
+      },
+      {
+        title: "Professional Controls",
+        title_th: "การควบคุมระดับมืออาชีพ",
+        description: "Integrated gain control and headphone monitoring",
+        description_th: "Mute / Unmute: สัมผัสเพื่อเปิด/ปิดเสียง, Mic Gain knob: ปุ่มปรับการขยายเสียงของไมโครโฟน, Headphone Monitoring Gain Knob: ปุ่มปรับเสียงดังเบาสำหรับ Monitor เสียง"
       }
     ],
     specs: [
@@ -76,16 +88,28 @@ const products = [
       { name: "Shipping Weight", name_th: "น้ำหนักการจัดส่ง", value: "1.0 kg", value_th: "1.0 กก." }
     ],
     inBox: [
-      { name: "Microphone", name_th: "ไมโครโฟน" },
-      { name: "USB-C Cable", name_th: "สาย USB-C" },
-      { name: "Desktop Stand", name_th: "ขาตั้งโต๊ะ" },
+      { name: "Microphone", name_th: "Fifine AM8" },
+      { name: "USB-C Cable", name_th: "USB to USB Type-C Cable" },
+      { name: "Desktop Stand", name_th: "ฐานไมโครโฟน" },
       { name: "User Manual", name_th: "คู่มือการใช้งาน" }
     ],
     stock: 15,
     rating: 4.8,
     reviews: 126,
     isNew: true,
-    isBestSeller: true
+    isBestSeller: true,
+    warranty: {
+      en: "1-year warranty (replace with new unit)",
+      th: "ประกันสินค้า 1 ปี - ประกันคุณภาพสินค้า 1 ปี (เสียเปลี่ยนตัวใหม่)* - การันตีของแท้ 100%"
+    },
+    compatibility: {
+      en: "Mac, Laptop, PC, PlayStation and Smartphone (dongle not included)",
+      th: "Mac, Laptop, PC, Play station และ โทรศัพท์มือถือบางรุ่นโดยเชื่อมต่อผ่าน USB adapter"
+    },
+    connections: {
+      en: "USB Type-C, XLR (RGB lighting not available with XLR), 3.5mm Jack (for audio monitoring)",
+      th: "USB Type-C, XLR (ไม่สามารถเปิด RGB ได้), Jack 3.5 (สำหรับมอนิเตอร์เสียง)"
+    }
   },
   {
     id: 2,
@@ -375,8 +399,34 @@ const ProductDetail = () => {
   
   const colors = ["Black", "White"];
 
+  const metaDescription = language === "en" 
+    ? `FIFINE Ampligame AM8 - Professional dynamic microphone with USB-C/XLR connectivity, Cardioid polar pattern, and RGB lighting. Perfect for podcasting, streaming, and recording.`
+    : `ไมโครโฟนไดนามิก FIFINE รุ่น AM8 (Global Version) เชื่อมต่อด้วยพอร์ต USB-C หรือ XLR ใช้รูปแบบการรับเสียงแบบ Cardioid มาพร้อมกับไฟ RGB ปรับเฉดสีได้`;
+
+  const pageTitle = language === "en" 
+    ? `FIFINE AM8 Dynamic Microphone | Professional Audio for Gaming and Streaming` 
+    : `ไมโครโฟนไดนามิก FIFINE AM8 | ไมค์คุณภาพสูงสำหรับเกมมิ่งและสตรีมมิ่ง`;
+
   return (
     <div className={`min-h-screen bg-background text-foreground`}>
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <meta name="keywords" content="FIFINE AM8, dynamic microphone, gaming microphone, streaming microphone, USB-C microphone, XLR microphone, Cardioid microphone, RGB microphone, ไมโครโฟนไดนามิก, ไมค์เกมมิ่ง" />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:image" content={product.image} />
+        <meta property="og:type" content="product" />
+        <meta property="og:price:amount" content={product.price.toString()} />
+        <meta property="og:price:currency" content="THB" />
+        <meta property="og:availability" content={product.stock > 0 ? "instock" : "outofstock"} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={metaDescription} />
+        <meta name="twitter:image" content={product.image} />
+        <link rel="canonical" href={`/product/${product.id}`} />
+      </Helmet>
+
       <div className="container max-w-6xl mx-auto px-4 pt-8 pb-2">
         <div className="flex items-center text-sm text-muted-foreground">
           <span className="hover:underline cursor-pointer" onClick={() => navigate("/")}>
@@ -606,11 +656,12 @@ const ProductDetail = () => {
         
         <div className="mt-8">
           <Tabs defaultValue="features" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-8">
+            <TabsList className="grid w-full grid-cols-5 mb-8">
               <TabsTrigger value="features">{language === "en" ? "Features" : "คุณสมบัติ"}</TabsTrigger>
               <TabsTrigger value="specifications">{language === "en" ? "Specifications" : "ข้อมูลจำเพาะ"}</TabsTrigger>
               <TabsTrigger value="package">{language === "en" ? "In the Box" : "สิ่งที่อยู่ในกล่อง"}</TabsTrigger>
-              <TabsTrigger value="shipping">{language === "en" ? "Shipping" : "การจัดส่ง"}</TabsTrigger>
+              <TabsTrigger value="compatibility">{language === "en" ? "Compatibility" : "การใช้งานร่วมกัน"}</TabsTrigger>
+              <TabsTrigger value="warranty">{language === "en" ? "Warranty" : "การรับประกัน"}</TabsTrigger>
             </TabsList>
             
             <TabsContent value="features">
@@ -632,6 +683,31 @@ const ProductDetail = () => {
                   </motion.div>
                 ))}
               </div>
+              {language === "th" && (
+                <div className="mt-8 text-left">
+                  <h3 className="text-xl font-semibold mb-4">คุณสมบัติโดยทั่วไป</h3>
+                  <ul className="space-y-2 list-disc pl-5">
+                    <li>Plug and Play: รองรับการใช้งานแบบ Plug and Play ไม่จำเป็นต้องติดตั้งไดรเวอร์เพิ่มเติม</li>
+                    <li>RGB: แสงสีที่ลงตัว สามารถปรับได้ถึง 10 เฉดสีโดยการสัมผัสเบาๆ และสามารถสัมผัสค้างเพื่อปิดได้</li>
+                    <li>Mute / Unmute: สัมผัสเพื่อเปิด/ปิดเสียง</li>
+                    <li>Mic Gain knob: ปุ่มปรับการขยายเสียงของไมโครโฟน</li>
+                    <li>Headphone Monitoring Gain Knob: ปุ่มปรับเสียงดังเบาสำหรับ Monitor เสียง</li>
+                  </ul>
+                  
+                  <h3 className="text-xl font-semibold mt-6 mb-4">คุณสมบัติของไมโครโฟนไดนามิก</h3>
+                  <ul className="space-y-2 list-disc pl-5">
+                    <li>การจัดการกับเสียงดังได้ดี: สามารถจัดการกับระดับความดันเสียงที่สูงได้โดยไม่เกิดการบิดเบือน</li>
+                    <li>ลดเสียงรบกวนรอบข้าง: รูปแบบการรับเสียงแบบทิศทางเดียว (cardioid) สามารถลดเสียงรบกวนจากรอบข้างได้ดี</li>
+                  </ul>
+                  
+                  <h3 className="text-xl font-semibold mt-6 mb-4">พอร์ตการเชื่อมต่อ</h3>
+                  <ul className="space-y-2 list-disc pl-5">
+                    <li>USB Type-C</li>
+                    <li>XLR (ไม่สามา���ถเปิด RGB ได้)</li>
+                    <li>Jack 3.5 (สำหรับมอนิเตอร์เสียง)</li>
+                  </ul>
+                </div>
+              )}
             </TabsContent>
             
             <TabsContent value="specifications">
@@ -648,6 +724,22 @@ const ProductDetail = () => {
                   ))}
                 </div>
               </div>
+              
+              {language === "th" && (
+                <div className="mt-8 text-left">
+                  <h3 className="text-xl font-semibold mb-4">สเปก</h3>
+                  <ul className="space-y-2 list-disc pl-5">
+                    <li>รูปแบบการรับเสียง : Cardioid</li>
+                    <li>การเชื่อมต่อ : USB type-C, XLR</li>
+                    <li>อัตราการกินไฟ : 5±0.25 V</li>
+                    <li>Bit Depth : 16-bit</li>
+                    <li>Sample Rate : 44.1k-48k Hz</li>
+                    <li>Frequency Response : 50-16kHz</li>
+                    <li>S/N Ratio : ＞80 dB</li>
+                    <li>Sensitivity : -50±3dB</li>
+                  </ul>
+                </div>
+              )}
             </TabsContent>
             
             <TabsContent value="package">
@@ -663,36 +755,46 @@ const ProductDetail = () => {
                   </ul>
                 </CardContent>
               </Card>
+              
+              {language === "th" && (
+                <div className="mt-6 text-left">
+                  <h3 className="text-xl font-semibold mb-4">อุปกรณ์ที่มีมาให้ในกล่อง</h3>
+                  <ul className="space-y-2 list-disc pl-5">
+                    <li>USB to USB Type-C Cable *1</li>
+                    <li>Manual *1</li>
+                    <li>ฐานไมโครโฟน *1</li>
+                    <li>Fifine AM8 *1</li>
+                  </ul>
+                </div>
+              )}
             </TabsContent>
             
-            <TabsContent value="shipping">
+            <TabsContent value="compatibility">
               <Card>
                 <CardContent className="pt-6">
-                  <div className="space-y-4">
-                    <div className="text-left">
-                      <h3 className="font-semibold mb-2">{language === "en" ? "Free Delivery" : "จัดส่งฟรี"}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {language === "en" 
-                          ? "Free shipping on all orders over 1,500 ฿" 
-                          : "จัดส่งฟรีสำหรับคำสั่งซื้อมากกว่า 1,500 บาท"}
-                      </p>
-                    </div>
-                    <div className="text-left">
-                      <h3 className="font-semibold mb-2">{language === "en" ? "Delivery Time" : "เวลาจัดส่ง"}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {language === "en" 
-                          ? "2-3 business days for urban areas, 3-5 business days for rural areas" 
-                          : "2-3 วันทำการสำหรับพื้นที่ในเมือง, 3-5 วันทำการสำหรับพื้นที่ชนบท"}
-                      </p>
-                    </div>
-                    <div className="text-left">
-                      <h3 className="font-semibold mb-2">{language === "en" ? "Return Policy" : "นโยบายการคืนสินค้า"}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {language === "en" 
-                          ? "Returns accepted within 7 days of delivery for unopened items" 
-                          : "รับคืนสินค้าภายใน 7 วันหลังจากการจัดส่งสำหรับสินค้าที่ยังไม่ได้เปิด"}
-                      </p>
-                    </div>
+                  <div className="space-y-4 text-left">
+                    <h3 className="font-semibold mb-2">{language === "en" ? "Compatible Devices" : "อุปกรณ์ที่รองรับ"}</h3>
+                    <p>
+                      {language === "en" ? product.compatibility.en : product.compatibility.th}
+                    </p>
+                    
+                    <h3 className="font-semibold mb-2 mt-6">{language === "en" ? "Connection Ports" : "พอร์ตการเชื่อมต่อ"}</h3>
+                    <p>
+                      {language === "en" ? product.connections.en : product.connections.th}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+            
+            <TabsContent value="warranty">
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="space-y-4 text-left">
+                    <h3 className="font-semibold mb-2">{language === "en" ? "Warranty Information" : "ข้อมูลการรับประกัน"}</h3>
+                    <p>
+                      {language === "en" ? product.warranty.en : product.warranty.th}
+                    </p>
                   </div>
                 </CardContent>
               </Card>
