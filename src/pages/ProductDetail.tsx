@@ -1,3 +1,4 @@
+
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Loading } from "@/components/ui/loading";
@@ -454,18 +455,18 @@ const ProductDetail = () => {
           <ResizablePanel defaultSize={50} minSize={40}>
             <div className="flex h-full flex-col">
               <div className="flex-1 overflow-auto p-4">
-                <div className="mb-2">
+                <div className="mb-2 text-left">
                   <span className="text-primary font-medium">
-                    {product.id}{language === "en" ? product.name : product.name_th}
+                    {language === "en" ? product.name : product.name_th}
                   </span>
                 </div>
                 
-                <h1 className="text-3xl font-bold mb-2">
+                <h1 className="text-3xl font-bold mb-2 text-left">
                   {language === "en" ? product.name : product.name_th} {language === "en" ? "Premium" : "พรีเมียม"} 
                   {product.category.includes("Microphone") ? (language === "en" ? "Microphone" : "ไมโครโฟน") : ""}
                 </h1>
                 
-                <div className="mb-6">
+                <div className="mb-6 text-left">
                   <div className="flex items-baseline space-x-2">
                     <span className="text-2xl font-bold">{formatPrice(product.price)} ฿</span>
                     {product.originalPrice > product.price && (
@@ -483,7 +484,7 @@ const ProductDetail = () => {
                   )}
                 </div>
                 
-                <div className="mb-8 space-y-2">
+                <div className="mb-8 space-y-2 text-left">
                   {product.features.map((feature, index) => (
                     <div key={index} className="flex items-start">
                       <span className="text-sm mr-2 text-primary">•</span>
@@ -496,7 +497,7 @@ const ProductDetail = () => {
                 
                 <Separator className="my-6" />
                 
-                <div className="mb-6">
+                <div className="mb-6 text-left">
                   <h3 className="text-base font-medium mb-3">
                     {language === "en" ? "Choose color" : "เลือกสี"}
                   </h3>
@@ -518,7 +519,7 @@ const ProductDetail = () => {
                   </div>
                 </div>
                 
-                <div className="mb-6">
+                <div className="mb-6 text-left">
                   <h3 className="text-base font-medium mb-3">
                     {language === "en" ? "Quantity" : "จำนวน"}
                   </h3>
@@ -547,7 +548,7 @@ const ProductDetail = () => {
                   </div>
                 </div>
                 
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center justify-between mb-6 text-left">
                   <span className="text-sm">
                     {language === "en" 
                       ? `Stock: ${product.stock} units` 
@@ -568,7 +569,7 @@ const ProductDetail = () => {
                   </Badge>
                 </div>
                 
-                <div className="grid grid-cols-1 gap-3">
+                <div className="grid grid-cols-1 gap-3 text-left">
                   <Button 
                     onClick={handleAddToCart}
                     className="h-12 text-base font-medium"
@@ -617,7 +618,7 @@ const ProductDetail = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="space-y-2"
+                    className="space-y-2 text-left"
                   >
                     <h3 className="text-lg font-semibold">
                       {language === "en" ? feature.title : feature.title_th}
@@ -638,8 +639,8 @@ const ProductDetail = () => {
                       key={index} 
                       className={`grid grid-cols-2 p-4 ${index % 2 === 0 ? 'bg-muted/50' : ''}`}
                     >
-                      <div className="font-medium">{language === "en" ? spec.name : spec.name_th}</div>
-                      <div>{language === "en" ? spec.value : spec.value_th}</div>
+                      <div className="font-medium text-left">{language === "en" ? spec.name : spec.name_th}</div>
+                      <div className="text-left">{language === "en" ? spec.value : spec.value_th}</div>
                     </div>
                   ))}
                 </div>
@@ -651,7 +652,7 @@ const ProductDetail = () => {
                 <CardContent className="pt-6">
                   <ul className="space-y-3">
                     {product.inBox.map((item, index) => (
-                      <li key={index} className="flex items-start">
+                      <li key={index} className="flex items-start text-left">
                         <Check className="w-5 h-5 mr-2 text-green-500 mt-0.5 flex-shrink-0" />
                         <span>{language === "en" ? item.name : item.name_th}</span>
                       </li>
@@ -665,7 +666,7 @@ const ProductDetail = () => {
               <Card>
                 <CardContent className="pt-6">
                   <div className="space-y-4">
-                    <div>
+                    <div className="text-left">
                       <h3 className="font-semibold mb-2">{language === "en" ? "Free Delivery" : "จัดส่งฟรี"}</h3>
                       <p className="text-sm text-muted-foreground">
                         {language === "en" 
@@ -673,7 +674,7 @@ const ProductDetail = () => {
                           : "จัดส่งฟรีสำหรับคำสั่งซื้อมากกว่า 1,500 บาท"}
                       </p>
                     </div>
-                    <div>
+                    <div className="text-left">
                       <h3 className="font-semibold mb-2">{language === "en" ? "Delivery Time" : "เวลาจัดส่ง"}</h3>
                       <p className="text-sm text-muted-foreground">
                         {language === "en" 
@@ -681,7 +682,7 @@ const ProductDetail = () => {
                           : "2-3 วันทำการสำหรับพื้นที่ในเมือง, 3-5 วันทำการสำหรับพื้นที่ชนบท"}
                       </p>
                     </div>
-                    <div>
+                    <div className="text-left">
                       <h3 className="font-semibold mb-2">{language === "en" ? "Return Policy" : "นโยบายการคืนสินค้า"}</h3>
                       <p className="text-sm text-muted-foreground">
                         {language === "en" 
