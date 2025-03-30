@@ -17,6 +17,7 @@ import { Separator } from "@/components/ui/separator";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { ResizablePanelGroup, ResizablePanel } from "@/components/ui/resizable";
 import { Helmet } from "react-helmet";
+import { cn } from "@/lib/utils";
 
 const products = [
   {
@@ -467,12 +468,12 @@ const ProductDetail = () => {
         </Button>
       </div>
       
-      <div className="container max-w-6xl mx-auto px-4 py-6">
+      <div className="container max-w-6xl mx-auto px-4 py-8">
         <ResizablePanelGroup direction="horizontal" className="min-h-[200px]">
           <ResizablePanel defaultSize={50} minSize={40}>
             <div className="flex h-full flex-col">
               <div className="flex-1 p-4">
-                <div className="aspect-square rounded-lg overflow-hidden mb-3">
+                <div className="aspect-square rounded-lg overflow-hidden mb-4">
                   <AspectRatio ratio={1/1} className="bg-muted">
                     <img
                       src={product.gallery[selectedImage]}
@@ -482,7 +483,7 @@ const ProductDetail = () => {
                   </AspectRatio>
                 </div>
                 
-                <div className="grid grid-cols-6 gap-2">
+                <div className="grid grid-cols-6 gap-3">
                   {product.gallery.map((image, index) => (
                     <button
                       key={index}
@@ -507,16 +508,16 @@ const ProductDetail = () => {
           
           <ResizablePanel defaultSize={50} minSize={40}>
             <div className="flex h-full flex-col">
-              <div className="flex-1 overflow-auto p-4">
+              <div className="flex-1 overflow-auto p-6">
                 <div className="mb-2 text-left">
-                  <span className="text-primary font-medium">
-                    {language === "en" ? product.name : product.name_th}
+                  <span className="text-primary font-medium tracking-wide">
+                    {language === "en" ? "Fifine Ampligame AM8" : "Fifine Ampligame AM8"}
                   </span>
                 </div>
                 
-                <h1 className="text-3xl font-bold mb-2 text-left">
-                  {language === "en" ? product.name : product.name_th} {language === "en" ? "Premium" : "พรีเมียม"} 
-                  {product.category.includes("Microphone") ? (language === "en" ? "Microphone" : "ไมโครโฟน") : ""}
+                <h1 className="text-3xl font-bold mb-3 text-left leading-tight">
+                  {language === "en" ? "Fifine Ampligame AM8" : "Fifine Ampligame AM8"} {language === "en" ? "Premium" : "พรีเมียม"} 
+                  {product.category.includes("Microphone") ? (language === "en" ? " Microphone" : " ไมโครโฟน") : ""}
                 </h1>
                 
                 <div className="mb-6 text-left">
@@ -537,11 +538,11 @@ const ProductDetail = () => {
                   )}
                 </div>
                 
-                <div className="mb-8 space-y-2 text-left">
+                <div className="mb-8 space-y-3 text-left">
                   {product.features.map((feature, index) => (
                     <div key={index} className="flex items-start">
-                      <span className="text-sm mr-2 text-primary">•</span>
-                      <span className="text-sm">
+                      <span className="text-primary mr-2 flex-shrink-0">•</span>
+                      <span className="text-base">
                         {language === "en" ? feature.title : feature.title_th}
                       </span>
                     </div>
@@ -589,221 +590,3 @@ const ProductDetail = () => {
                     <div className="flex items-center justify-center h-10 w-20 border-y">
                       <span className="font-medium">{quantity}</span>
                     </div>
-                    <Button 
-                      variant="outline" 
-                      size="icon" 
-                      onClick={incrementQuantity} 
-                      disabled={product && quantity >= product.stock}
-                      className="h-10 w-10 rounded-r-md rounded-l-none"
-                    >
-                      <span className="text-lg">+</span>
-                    </Button>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between mb-6 text-left">
-                  <span className="text-sm">
-                    {language === "en" 
-                      ? `Stock: ${product.stock} units` 
-                      : `สินค้าคงเหลือ: ${product.stock} ชิ้น`}
-                  </span>
-                  <Badge variant={product.stock > 10 
-                    ? "outline" 
-                    : product.stock > 5 
-                      ? "secondary" 
-                      : "destructive"}
-                    className="rounded-full"
-                  >
-                    {product.stock > 10 
-                      ? (language === "en" ? "In Stock" : "มีสินค้า") 
-                      : product.stock > 5 
-                        ? (language === "en" ? "Limited Stock" : "สินค้าเหลือน้อย") 
-                        : (language === "en" ? "Almost Sold Out" : "ใกล้หมด")}
-                  </Badge>
-                </div>
-                
-                <div className="grid grid-cols-1 gap-3 text-left">
-                  <Button 
-                    onClick={handleAddToCart}
-                    className="h-12 text-base font-medium"
-                    size="lg"
-                  >
-                    <ShoppingCart className="w-5 h-5 mr-2" />
-                    {t("add_to_cart")}
-                  </Button>
-                  <div className="grid grid-cols-2 gap-3">
-                    <Button 
-                      variant="outline"
-                      className="h-10 text-sm font-medium"
-                    >
-                      <Heart className="w-4 h-4 mr-2" />
-                      {language === "en" ? "Wishlist" : "รายการโปรด"}
-                    </Button>
-                    <Button 
-                      variant="outline"
-                      className="h-10 text-sm font-medium"
-                      onClick={() => window.open("https://line.me", "_blank")}
-                    >
-                      <Share2 className="w-4 h-4 mr-2" />
-                      {language === "en" ? "Share" : "แชร์"}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ResizablePanel>
-        </ResizablePanelGroup>
-        
-        <div className="mt-8">
-          <Tabs defaultValue="features" className="w-full">
-            <TabsList className="grid w-full grid-cols-5 mb-8">
-              <TabsTrigger value="features">{language === "en" ? "Features" : "คุณสมบัติ"}</TabsTrigger>
-              <TabsTrigger value="specifications">{language === "en" ? "Specifications" : "ข้อมูลจำเพาะ"}</TabsTrigger>
-              <TabsTrigger value="package">{language === "en" ? "In the Box" : "สิ่งที่อยู่ในกล่อง"}</TabsTrigger>
-              <TabsTrigger value="compatibility">{language === "en" ? "Compatibility" : "การใช้งานร่วมกัน"}</TabsTrigger>
-              <TabsTrigger value="warranty">{language === "en" ? "Warranty" : "การรับประกัน"}</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="features">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {product.features.map((feature, index) => (
-                  <motion.div 
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="space-y-2 text-left"
-                  >
-                    <h3 className="text-lg font-semibold">
-                      {language === "en" ? feature.title : feature.title_th}
-                    </h3>
-                    <p className="text-muted-foreground text-sm">
-                      {language === "en" ? feature.description : feature.description_th}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
-              {language === "th" && (
-                <div className="mt-8 text-left">
-                  <h3 className="text-xl font-semibold mb-4">คุณสมบัติโดยทั่วไป</h3>
-                  <ul className="space-y-2 list-disc pl-5">
-                    <li>Plug and Play: รองรับการใช้งานแบบ Plug and Play ไม่จำเป็นต้องติดตั้งไดรเวอร์เพิ่มเติม</li>
-                    <li>RGB: แสงสีที่ลงตัว สามารถปรับได้ถึง 10 เฉดสีโดยการสัมผัสเบาๆ และสามารถสัมผัสค้างเพื่อปิดได้</li>
-                    <li>Mute / Unmute: สัมผัสเพื่อเปิด/ปิดเสียง</li>
-                    <li>Mic Gain knob: ปุ่มปรับการขยายเสียงของไมโครโฟน</li>
-                    <li>Headphone Monitoring Gain Knob: ปุ่มปรับเสียงดังเบาสำหรับ Monitor เสียง</li>
-                  </ul>
-                  
-                  <h3 className="text-xl font-semibold mt-6 mb-4">คุณสมบัติของไมโครโฟนไดนามิก</h3>
-                  <ul className="space-y-2 list-disc pl-5">
-                    <li>การจัดการกับเสียงดังได้ดี: สามารถจัดการกับระดับความดันเสียงที่สูงได้โดยไม่เกิดการบิดเบือน</li>
-                    <li>ลดเสียงรบกวนรอบข้าง: รูปแบบการรับเสียงแบบทิศทางเดียว (cardioid) สามารถลดเสียงรบกวนจากรอบข้างได้ดี</li>
-                  </ul>
-                  
-                  <h3 className="text-xl font-semibold mt-6 mb-4">พอร์ตการเชื่อมต่อ</h3>
-                  <ul className="space-y-2 list-disc pl-5">
-                    <li>USB Type-C</li>
-                    <li>XLR (ไม่สามา���ถเปิด RGB ได้)</li>
-                    <li>Jack 3.5 (สำหรับมอนิเตอร์เสียง)</li>
-                  </ul>
-                </div>
-              )}
-            </TabsContent>
-            
-            <TabsContent value="specifications">
-              <div className="rounded-lg overflow-hidden border">
-                <div className="grid divide-y">
-                  {product.specs.map((spec, index) => (
-                    <div 
-                      key={index} 
-                      className={`grid grid-cols-2 p-4 ${index % 2 === 0 ? 'bg-muted/50' : ''}`}
-                    >
-                      <div className="font-medium text-left">{language === "en" ? spec.name : spec.name_th}</div>
-                      <div className="text-left">{language === "en" ? spec.value : spec.value_th}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              {language === "th" && (
-                <div className="mt-8 text-left">
-                  <h3 className="text-xl font-semibold mb-4">สเปก</h3>
-                  <ul className="space-y-2 list-disc pl-5">
-                    <li>รูปแบบการรับเสียง : Cardioid</li>
-                    <li>การเชื่อมต่อ : USB type-C, XLR</li>
-                    <li>อัตราการกินไฟ : 5±0.25 V</li>
-                    <li>Bit Depth : 16-bit</li>
-                    <li>Sample Rate : 44.1k-48k Hz</li>
-                    <li>Frequency Response : 50-16kHz</li>
-                    <li>S/N Ratio : ＞80 dB</li>
-                    <li>Sensitivity : -50±3dB</li>
-                  </ul>
-                </div>
-              )}
-            </TabsContent>
-            
-            <TabsContent value="package">
-              <Card>
-                <CardContent className="pt-6">
-                  <ul className="space-y-3">
-                    {product.inBox.map((item, index) => (
-                      <li key={index} className="flex items-start text-left">
-                        <Check className="w-5 h-5 mr-2 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span>{language === "en" ? item.name : item.name_th}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-              
-              {language === "th" && (
-                <div className="mt-6 text-left">
-                  <h3 className="text-xl font-semibold mb-4">อุปกรณ์ที่มีมาให้ในกล่อง</h3>
-                  <ul className="space-y-2 list-disc pl-5">
-                    <li>USB to USB Type-C Cable *1</li>
-                    <li>Manual *1</li>
-                    <li>ฐานไมโครโฟน *1</li>
-                    <li>Fifine AM8 *1</li>
-                  </ul>
-                </div>
-              )}
-            </TabsContent>
-            
-            <TabsContent value="compatibility">
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="space-y-4 text-left">
-                    <h3 className="font-semibold mb-2">{language === "en" ? "Compatible Devices" : "อุปกรณ์ที่รองรับ"}</h3>
-                    <p>
-                      {language === "en" ? product.compatibility.en : product.compatibility.th}
-                    </p>
-                    
-                    <h3 className="font-semibold mb-2 mt-6">{language === "en" ? "Connection Ports" : "พอร์ตการเชื่อมต่อ"}</h3>
-                    <p>
-                      {language === "en" ? product.connections.en : product.connections.th}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="warranty">
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="space-y-4 text-left">
-                    <h3 className="font-semibold mb-2">{language === "en" ? "Warranty Information" : "ข้อมูลการรับประกัน"}</h3>
-                    <p>
-                      {language === "en" ? product.warranty.en : product.warranty.th}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default ProductDetail;
