@@ -397,19 +397,19 @@ const ProductDetail = () => {
   const colors = ["Black", "White"];
 
   const metaDescription = language === "en" 
-    ? `FIFINE Ampligame AM8 - Professional dynamic microphone with USB-C/XLR connectivity, Cardioid polar pattern, and RGB lighting. Perfect for podcasting, streaming, and recording.`
-    : `ไมโครโฟนไดนามิก FIFINE รุ่น AM8 (Global Version) เชื่อมต่อด้วยพอร์ต USB-C หรือ XLR ใช้รูปแบบการรับเสียงแบบ Cardioid มาพร้อมกับไฟ RGB ปรับเฉดสีได้`;
+    ? `${product.name} - ${product.description}`
+    : `${product.name_th} - ${product.description_th}`;
 
   const pageTitle = language === "en" 
-    ? `FIFINE AM8 Dynamic Microphone | Professional Audio for Gaming and Streaming` 
-    : `ไมโครโฟนไดนามิก FIFINE AM8 | ไมค์คุณภาพสูงสำหรับเกมมิ่งและสตรีมมิ่ง`;
+    ? `${product.name} | ${product.category}` 
+    : `${product.name_th} | ${product.category_th}`;
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={metaDescription} />
-        <meta name="keywords" content="FIFINE AM8, dynamic microphone, gaming microphone, streaming microphone, USB-C microphone, XLR microphone, Cardioid microphone, RGB microphone, ไมโครโฟนไดนามิก, ไมค์เกมมิ่ง" />
+        <meta name="keywords" content={`${product.name}, ${product.category}, ${product.name_th}, ${product.category_th}`} />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={metaDescription} />
         <meta property="og:image" content={product.image} />
@@ -504,12 +504,21 @@ const ProductDetail = () => {
                 <div className="flex-1 overflow-auto p-6">
                   <div className="mb-2 text-left">
                     <span className="text-primary font-medium tracking-wide">
-                      {language === "en" ? "Fifine Ampligame AM8" : "Fifine Ampligame AM8"}
+                      {product.id === 2 ? 
+                        (language === "en" ? "Fifine Ampligame A8" : "Fifine Ampligame A8") :
+                        (language === "en" ? "Fifine Ampligame AM8" : "Fifine Ampligame AM8")
+                      }
                     </span>
                   </div>
                   
                   <h1 className="text-3xl font-bold mb-3 text-left leading-tight">
-                    {language === "en" ? "Fifine Ampligame AM8" : "Fifine Ampligame AM8"} {language === "en" ? "Premium" : "ไดนามิก"} 
+                    {product.id === 2 ? 
+                      (language === "en" ? "Fifine Ampligame A8" : "Fifine Ampligame A8") : 
+                      (language === "en" ? "Fifine Ampligame AM8" : "Fifine Ampligame AM8")
+                    } {product.id === 2 ? 
+                        (language === "en" ? "Condenser" : "คอนเดนเซอร์") : 
+                        (language === "en" ? "Dynamic" : "ไดนามิก")
+                      } 
                     {product.category.includes("Microphone") ? (language === "en" ? " Microphone" : " ไมโครโฟน") : ""}
                   </h1>
                   
