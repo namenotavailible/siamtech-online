@@ -66,11 +66,14 @@ const products = [
     ],
     specs: [
       { name: "Type", name_th: "ประเภท", value: "Dynamic", value_th: "ไดนามิก" },
-      { name: "Frequency Response", name_th: "การตอบสนองความถี่", value: "50Hz-16kHz", value_th: "50Hz-16kHz" },
-      { name: "Sensitivity", name_th: "ความไว", value: "-54dB ±3dB", value_th: "-54dB ±3dB" },
-      { name: "Connectivity", name_th: "การเชื่อมต่อ", value: "USB Type-C", value_th: "USB Type-C" },
-      { name: "Cable Length", name_th: "ความยาวสาย", value: "2 meters", value_th: "2 เมตร" },
-      { name: "Compatibility", name_th: "ความเข้ากันได้", value: "Windows, Mac, PS4, PS5", value_th: "Windows, Mac, PS4, PS5" }
+      { name: "Polar Pattern", name_th: "รูปแบบโพลาร์", value: "Cardioid", value_th: "คาร์ดิออยด์" },
+      { name: "Output Connection", name_th: "การเชื่อมต่อขาออก", value: "USB type-C (mic end) to type-A 2.0 (computer end)/XLR", value_th: "USB type-C (ฝั่งไมค์) เป็น type-A 2.0 (ฝั่งคอมพิวเตอร์)/XLR" },
+      { name: "USB Power Consumption", name_th: "การใช้พลังงาน USB", value: "Voltage: 5±0.25 V", value_th: "แรงดัน: 5±0.25 V" },
+      { name: "Bit Depth/Sample Rate", name_th: "ความลึกบิต/อัตราการสุ่มตัวอย่าง", value: "16-bit/44.1k-48k Hz", value_th: "16-bit/44.1k-48k Hz" },
+      { name: "Frequency Response", name_th: "การตอบสนองความถี่", value: "50-16kHz", value_th: "50-16kHz" },
+      { name: "S/N Ratio", name_th: "อัตราส่วนสัญญาณต่อเสียงรบกวน", value: "＞80 dB", value_th: "＞80 dB" },
+      { name: "Sensitivity", name_th: "ความไว", value: "-50±3dB", value_th: "-50±3dB" },
+      { name: "Shipping Weight", name_th: "น้ำหนักการจัดส่ง", value: "1.0 kg", value_th: "1.0 กก." }
     ],
     inBox: [
       { name: "Microphone", name_th: "ไมโครโฟน" },
