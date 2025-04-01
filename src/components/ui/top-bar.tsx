@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
+import { Link } from "react-router-dom";
 
 interface TopBarProps {
   className?: string;
@@ -18,15 +19,24 @@ export function TopBar({ className }: TopBarProps) {
   const notifications = [
     {
       id: 1,
-      title: "Your order has shipped",
-      description: "Order #1234 has been shipped and will arrive soon.",
-      time: "5m ago",
+      title: "New Blog Post: FIFINE Microphones Under 3,000 Baht",
+      description: "Check out our latest guide on budget-friendly audio equipment!",
+      time: "Just now",
+      link: "/blog/fifine-microphones-under-3000-baht"
     },
     {
       id: 2,
+      title: "Your order has shipped",
+      description: "Order #1234 has been shipped and will arrive soon.",
+      time: "5m ago",
+      link: ""
+    },
+    {
+      id: 3,
       title: "New product available",
       description: "Check out our latest gaming mouse!",
       time: "1h ago",
+      link: ""
     },
   ];
 
@@ -49,9 +59,19 @@ export function TopBar({ className }: TopBarProps) {
             <DropdownMenuSeparator />
             {notifications.map((notification) => (
               <DropdownMenuItem key={notification.id} className="flex flex-col items-start p-4">
-                <div className="font-medium">{notification.title}</div>
-                <div className="text-sm text-gray-500">{notification.description}</div>
-                <div className="text-xs text-gray-400 mt-1">{notification.time}</div>
+                {notification.link ? (
+                  <Link to={notification.link} className="w-full">
+                    <div className="font-medium hover:text-primary">{notification.title}</div>
+                    <div className="text-sm text-gray-500">{notification.description}</div>
+                    <div className="text-xs text-gray-400 mt-1">{notification.time}</div>
+                  </Link>
+                ) : (
+                  <>
+                    <div className="font-medium">{notification.title}</div>
+                    <div className="text-sm text-gray-500">{notification.description}</div>
+                    <div className="text-xs text-gray-400 mt-1">{notification.time}</div>
+                  </>
+                )}
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>

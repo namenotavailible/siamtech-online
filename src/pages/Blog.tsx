@@ -103,7 +103,7 @@ const EarthquakeFeature = () => {
               แผ่นดินไหวรุนแรงขนาด 7.7 ใกล้เมืองสะกาย ประเทศเมียนมา: อาฟเตอร์ช็อกอาจยังตามมา
             </h2>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              เมื่อเวลา 13:20 น. ตามเวลาท้องถิ่นของประเทศเมียนมา เกิดเหตุการณ์แผ่นดินไหวขนาด 7.7 แมกนิจูด ใกล้เมืองสะกาย ซึ่งอยู่ไม่ไกลจากกรุงเนปิดอว์ ส่งแรงสั่นสะเทือนถึงหลายประเทศ
+              เมื่อเวลา 13:20 น. ตามเวลาท้องถิ่นของประเทศเมียนมา เกิดเหตุการณ์แผ่นดินไหวขนาด 7.7 แมกนิจูด ใกล้เมืองสะกาย ส่งแรงสั่นสะเทือนถึงหลายประเทศรวมถึงไทย
             </p>
             <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
               <div className="flex items-center">
@@ -126,6 +126,15 @@ const Blog = () => {
   const { language } = useLanguage();
 
   const blogPosts = language === "en" ? [
+    {
+      id: "fifine-microphones-under-3000-baht",
+      title: "Best FIFINE Microphones Under 3,000 Baht in 2023",
+      excerpt: "Looking for quality microphones on a budget? Check out our top picks from FIFINE that deliver excellent audio performance without breaking the bank.",
+      date: "April 15, 2023",
+      author: "Audio Team",
+      image: "/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png",
+      tags: ["Microphones", "Budget Audio", "FIFINE"]
+    },
     {
       id: "dynamic-vs-condenser",
       title: "Dynamic vs Condenser Microphones: Which One Is Right for You?",
@@ -155,6 +164,15 @@ const Blog = () => {
       isHighlighted: true
     }
   ] : [
+    {
+      id: "fifine-microphones-under-3000-baht",
+      title: "ไมโครโฟน FIFINE คุณภาพดีในงบไม่เกิน 3,000 บาท ปี 2023",
+      excerpt: "หากคุณกำลังมองหาไมโครโฟนคุณภาพดีในราคาที่จับต้องได้ FIFINE มีตัวเลือกที่น่าสนใจหลายรุ่น ทั้งแบบไดนามิกและคอนเดนเซอร์",
+      date: "15 เมษายน 2566",
+      author: "ทีมงานด้านเสียง",
+      image: "/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png",
+      tags: ["ไมโครโฟน", "อุปกรณ์เสียงราคาประหยัด", "FIFINE"]
+    },
     {
       id: "dynamic-vs-condenser",
       title: "ไมโครโฟนไดนามิกกับคอนเดนเซอร์: การเลือกที่เหมาะสมกับการใช้งานของคุณ",

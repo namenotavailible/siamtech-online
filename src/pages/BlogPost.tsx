@@ -12,6 +12,92 @@ const BlogPost = () => {
 
   // Sample blog posts data with full content - in a real app this would come from an API
   const blogPosts = language === "en" ? {
+    "fifine-microphones-under-3000-baht": {
+      title: "Best FIFINE Microphones Under 3,000 Baht in 2023",
+      content: `
+        <p>If you're looking for a quality microphone without breaking the bank, FIFINE offers several options that meet different needs and budgets. Here are our top FIFINE microphone picks under 3,000 baht:</p>
+        
+        <img src="/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png" alt="FIFINE Microphones" class="my-8 rounded-lg shadow-md w-full max-w-2xl mx-auto" />
+        
+        <h2>1. FIFINE AM8 – Best-Selling Dynamic Microphone</h2>
+        
+        <h3>Key Features:</h3>
+        <ul>
+          <li><strong>USB and XLR Connectivity:</strong> Supports both connection types. The USB Type-C port is perfect for plug-and-play use, ideal for beginners, while the included XLR port offers future upgrade potential.</li>
+          <li><strong>Touch Mute/Unmute Button:</strong> Quickly mute with a single touch.</li>
+          <li><strong>Adjustable RGB Lighting:</strong> Change colors according to your preference and hold to turn off when you don't want light distraction.</li>
+          <li><strong>3.5mm Headphone Port:</strong> For real-time audio monitoring.</li>
+        </ul>
+        
+        <h3>Sound Quality:</h3>
+        <p>The FIFINE AM8 is a dynamic microphone with a cardioid pickup pattern that helps reduce surrounding noise. The sound it produces is well-balanced, making it suitable for various applications.</p>
+        
+        <h3>Product Design:</h3>
+        <p>Comes with a circular base that holds the microphone with a sturdy metal and plastic frame. It also includes a foam windscreen to help reduce wind noise and pops during use.</p>
+        
+        <h3>Price:</h3>
+        <p>Approximately 2,490 baht (depending on promotions).</p>
+        
+        <h2>2. FIFINE A8 – Best-Selling Condenser Microphone</h2>
+        
+        <h3>Key Features:</h3>
+        <ul>
+          <li><strong>USB Connectivity:</strong> Compatible with PC, Mac, and PlayStation.</li>
+          <li><strong>Customizable RGB Lighting:</strong> Multiple patterns available to enhance your setup atmosphere.</li>
+          <li><strong>Touch Mute Button and Volume Control:</strong> For convenient usage control.</li>
+          <li><strong>3.5mm Headphone Port:</strong> For real-time audio monitoring.</li>
+        </ul>
+        
+        <h3>Sound Quality:</h3>
+        <p>The FIFINE A8 is a condenser microphone with a wide frequency response, allowing it to capture sound details clearly. It's ideal for high-detail audio recording such as singing or podcasting.</p>
+        
+        <h3>Design and Accessories:</h3>
+        <p>Comes with a desk stand and shock mount to reduce vibrations. Also includes a foam windscreen to minimize wind noise and pops.</p>
+        
+        <h3>Price:</h3>
+        <p>Approximately $46.99 USD or about 1,500 baht.</p>
+        
+        <h3>User Feedback:</h3>
+        <p>Some users report that the mute button may have functionality issues. However, overall, this microphone provides good sound quality and value for money.</p>
+        
+        <h2>3. FIFINE A6V – Best Budget Condenser Microphone</h2>
+        
+        <h3>Key Features:</h3>
+        <ul>
+          <li><strong>USB Connectivity:</strong> Compatible with PC and Mac.</li>
+          <li><strong>Customizable RGB Lighting:</strong> Adds aesthetic appeal to your setup.</li>
+          <li><strong>Volume Control:</strong> Makes recording level control easy.</li>
+        </ul>
+        
+        <h3>Sound Quality:</h3>
+        <p>The FIFINE A6V is a condenser microphone that offers good sound quality at an accessible price. It's perfect for those who need a microphone for streaming or podcasting without a large investment.</p>
+        
+        <h3>Design and Accessories:</h3>
+        <p>Comes with a desk stand and shock mount to reduce vibrations. Also includes a foam windscreen to minimize wind noise and pops.</p>
+        
+        <h3>Price:</h3>
+        <p>Approximately $39.99 USD or about 1,300 baht.</p>
+        
+        <h3>User Feedback:</h3>
+        <p>Some users appreciate the sound quality relative to the price and find this microphone suitable for beginners.</p>
+        
+        <h2>4. FIFINE AM6 – Latest New Model</h2>
+        
+        <h3>Key Features:</h3>
+        <ul>
+          <li><strong>USB Connectivity:</strong> Compatible with PC and Mac.</li>
+          <li><strong>Customizable RGB Lighting:</strong> Enhances your setup atmosphere.</li>
+          <li><strong>Volume Control and Mute Button:</strong> Makes recording control convenient.</li>
+          <li><strong>3.5mm Headphone Port:</strong> For real-time audio monitoring.</li>
+        </ul>
+        
+        <p>Whether you're looking for a dynamic microphone like the AM8 or a condenser option like the A8 or A6V, FIFINE offers quality products at accessible prices. Consider your specific needs—streaming, podcasting, vocal recording, or gaming—to select the model that best suits your requirements.</p>
+      `,
+      date: "April 15, 2023",
+      author: "Audio Team",
+      image: "/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png",
+      tags: ["Microphones", "Budget Audio", "FIFINE"]
+    },
     "microphone-selection-guide": {
       title: "How to Choose the Right Microphone for Your Needs",
       content: `
@@ -305,8 +391,104 @@ const BlogPost = () => {
       author: "Michael Wong",
       image: "/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png",
       tags: ["Microphones", "Audio Equipment", "Recording"]
+    },
+    "earthquake-2025": {
+      title: "Magnitude 7.7 Earthquake Near Sagaing, Myanmar: Aftershocks May Follow",
+      content: `
+        <p>At 13:20 local time in Myanmar, a 7.7 magnitude earthquake struck near Sagaing, not far from Naypyidaw, sending tremors to several countries including Thailand.</p>
+      `,
+      date: "March 28, 2025",
+      author: "SiamTech News Team",
+      image: "/lovable-uploads/497c7389-b78d-4ecf-aa00-072dcff5d94e.png",
+      tags: ["Earthquake in Thailand", "Earthquake Safety Tips"]
     }
   } : {
+    "fifine-microphones-under-3000-baht": {
+      title: "ไมโครโฟน FIFINE คุณภาพดีในงบไม่เกิน 3,000 บาท ปี 2023",
+      content: `
+        <p>หากคุณกำลังมองหาไมโครโฟนคุณภาพในงบประมาณไม่เกิน 3,000 บาท FIFINE มีไมโครโฟนที่ตอบโจทย์ความต้องการของคุณ:</p>
+        
+        <img src="/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png" alt="ไมโครโฟน FIFINE" class="my-8 rounded-lg shadow-md w-full max-w-2xl mx-auto" />
+        
+        <h2>1. FIFINE AM8 – ไมโครโฟน Dynamic Best Seller</h2>
+        
+        <h3>คุณสมบัติหลัก:</h3>
+        <ul>
+          <li><strong>การเชื่อมต่อแบบ USB และ XLR:</strong> รองรับการใช้งานทั้งสองรูปแบบ ช่อง USB Type-c เหมาะสำหรับการใช้งานแบบ Plug and Play ตอบโจทย์การใช้งานระดับเริ่มต้น และช่อง XLR ที่มีมาให้ ก็ตอบโจทย์สำหรับการอัพเกรดในอนาคต</li>
+          <li><strong>ปุ่ม Mute / Unmute แบบสัมผัส:</strong> ปิดเสียงได้อย่างรวดเร็วด้วยการสัมผัสเพียงครั้งเดียว</li>
+          <li><strong>ไฟ RGB แบบปรับได้:</strong> เปลี่ยนสีได้ตามความต้องการของคุณ และสามารถกดค้างเพื่อเปิดปิดได้ในยามที่คุณไม่ต้องการแสงรบกวน</li>
+          <li><strong>พอร์ตหูฟัง 3.5 มม.:</strong> สำหรับการมอนิเตอร์เสียงแบบเรียลไทม์</li>
+        </ul>
+        
+        <h3>คุณภาพเสียง:</h3>
+        <p>FIFINE AM8 เป็นไมโครโฟนไดนามิกที่มีรูปแบบการรับเสียงแบบ Cardioid ช่วยลดเสียงรบกวนจากรอบข้าง เสียงที่ได้จากตัวไมค์มีความสมดุล ทำให้เหมาะสำหรับการใช้งานที่หลากหลาย</p>
+        
+        <h3>การออกแบบผลิตภัณฑ์:</h3>
+        <p>มาพร้อมกับฐานตั้งทรงกลมที่ยึดไมโครโฟนด้วยโครงเหล็กและพลาสติกที่แข็งแรง นอกจากนี้ยังมีฟองน้ำกันลมเพื่อช่วยลดเสียงลมและเสียงป๊อปที่เกิดขึ้นระหว่างการใช้งาน</p>
+        
+        <h3>ราคา:</h3>
+        <p>ราคาโดยประมาณ 2,490 บาท (ขึ้นอยู่กับช่วงโปรโมชั่น)</p>
+        
+        <h2>2. FIFINE A8 – ไมโครโฟน Condenser Best Seller</h2>
+        
+        <h3>คุณสมบัติหลัก:</h3>
+        <ul>
+          <li><strong>การเชื่อมต่อแบบ USB:</strong> รองรับการใช้งานกับ PC, Mac และ PlayStation</li>
+          <li><strong>ไฟ RGB ที่ปรับแต่งได้:</strong> มีหลายรูปแบบให้เลือกเพื่อเพิ่มบรรยากาศในการใช้งาน</li>
+          <li><strong>ปุ่มปิดเสียงแบบสัมผัสและปุ่มปรับระดับเสียง:</strong> ช่วยให้ควบคุมการใช้งานได้อย่างสะดวก</li>
+          <li><strong>พอร์ตหูฟัง 3.5 มม.:</strong> สำหรับการมอนิเตอร์เสียงแบบเรียลไทม์</li>
+        </ul>
+        
+        <h3>คุณภาพเสียง:</h3>
+        <p>FIFINE A8 เป็นไมโครโฟนคอนเดนเซอร์ที่มีการตอบสนองความถี่ที่กว้าง ทำให้สามารถจับรายละเอียดเสียงได้อย่างชัดเจน เหมาะสำหรับการบันทึกเสียงที่ต้องการความละเอียดสูง เช่น การร้องเพลงหรือพอดแคสต์</p>
+        
+        <h3>การออกแบบและอุปกรณ์เสริม:</h3>
+        <p>มาพร้อมกับขาตั้งและโช้คเมาท์ที่ช่วยลดการสั่นสะเทือน นอกจากนี้ยังมีฟองน้ำกันลมเพื่อช่วยลดเสียงลมและเสียงป๊อป</p>
+        
+        <h3>ราคา:</h3>
+        <p>ราคาประมาณ $46.99 USD หรือประมาณ 1,500 บาท</p>
+        
+        <h3>ความคิดเห็นจากผู้ใช้:</h3>
+        <p>ผู้ใช้บางรายรายงานว่าปุ่มปิดเสียงอาจมีปัญหาในการทำงาน อย่างไรก็ตาม โดยรวมแล้วไมโครโฟนนี้ให้คุณภาพเสียงที่ดีและคุ้มค่ากับราคา</p>
+        
+        <h2>3. FIFINE A6V – ไมโครโฟนคอนเดนเซอร์ราคาประหยัดที่ดีที่สุด</h2>
+        
+        <h3>คุณสมบัติหลัก:</h3>
+        <ul>
+          <li><strong>การเชื่อมต่อแบบ USB:</strong> รองรับการใช้งานกับ PC และ Mac</li>
+          <li><strong>ไฟ RGB ที่ปรับแต่งได้:</strong> เพิ่มความสวยงามในการใช้งาน</li>
+          <li><strong>ปุ่มปรับระดับเสียง:</strong> ช่วยให้ควบคุมการบันทึกเสียงได้อย่างง่ายดาย</li>
+        </ul>
+        
+        <h3>คุณภาพเสียง:</h3>
+        <p>FIFINE A6V เป็นไมโครโฟนคอนเดนเซอร์ที่ให้คุณภาพเสียงที่ดีในราคาที่เข้าถึงได้ เหมาะสำหรับผู้ที่ต้องการไมโครโฟนสำหรับการสตรีมหรือพอดแคสต์โดยไม่ต้องลงทุนมาก</p>
+        
+        <h3>การออกแบบและอุปกรณ์เสริม:</h3>
+        <p>มาพร้อมกับขาตั้งและโช้คเมาท์ที่ช่วยลดการสั่นสะเทือน นอกจากนี้ยังมีฟองน้ำกันลมเพื่อช่วยลดเสียงลมและเสียงป๊อป</p>
+        
+        <h3>ราคา:</h3>
+        <p>ราคาประมาณ $39.99 USD หรือประมาณ 1,300 บาท</p>
+        
+        <h3>ความคิดเห็นจากผู้ใช้:</h3>
+        <p>ผู้ใช้บางรายชื่นชมคุณภาพเสียงที่ได้รับเมื่อเทียบกับราคา และพบว่าไมโครโฟนนี้เหมาะสำหรับผู้เริ่มต้น</p>
+        
+        <h2>4. FIFINE AM6 – ไมโครโฟนรุ่นใหม่ล่าสุด</h2>
+        
+        <h3>คุณสมบัติหลัก:</h3>
+        <ul>
+          <li><strong>การเชื่อมต่อแบบ USB:</strong> รองรับการใช้งานกับ PC และ Mac</li>
+          <li><strong>ไฟ RGB ที่ปรับแต่งได้:</strong> เพิ่มบรรยากาศในการใช้งาน</li>
+          <li><strong>ปุ่มปรับระดับเสียงและปุ่มปิดเสียง:</strong> ช่วยให้ควบคุมการบันทึกเสียงได้อย่างสะดวก</li>
+          <li><strong>พอร์ตหูฟัง 3.5 มม.:</strong> สำหรับการมอนิเตอร์เสียงแบบเรียลไทม์</li>
+        </ul>
+        
+        <p>ไม่ว่าคุณจะมองหาไมโครโฟนไดนามิกอย่าง AM8 หรือคอนเดนเซอร์อย่าง A8 หรือ A6V, FIFINE มอบผลิตภัณฑ์คุณภาพในราคาที่เข้าถึงได้ พิจารณาความต้องการเฉพาะของคุณ—การสตรีม, พอดแคสต์, การบันทึกเสียงร้อง, หรือเกมมิ่ง—เพื่อเลือกรุ่นที่เหมาะกับความต้องการของคุณมากที่สุด</p>
+      `,
+      date: "15 เมษายน 2566",
+      author: "ทีมงานด้านเสียง",
+      image: "/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png",
+      tags: ["ไมโครโฟน", "อุปกรณ์เสียงราคาประหยัด", "FIFINE"]
+    },
     "microphone-selection-guide": {
       title: "วิธีเลือกไมโครโฟนที่เหมาะสมกับความต้องการของคุณ",
       content: `
@@ -354,347 +536,4 @@ const BlogPost = () => {
         <h2>บทสรุป</h2>
         <p>การเลือกไมโครโฟนที่เหมาะสมเป็นกุญแจสำคัญในการสร้างเสียงที่มีคุณภาพ และ Fifine เป็นตัวเลือกที่ยอดเยี่ยมสำหรับผู้ที่ต้องการสมดุลระหว่างราคาและประสิทธิภาพ ไม่ว่าคุณจะเป็นสตรีมเมอร์ พอดแคสเตอร์ หรือศิลปิน ไมโครโฟน Fifine จะช่วยให้คุณได้เสียงที่ดีที่สุด</p>
         
-        <p>หากคุณกำลังมองหาไมโครโฟนที่เหมาะกับคุณ ลองดูไมโครโฟน Fifine รุ่นต่าง ๆ และเลือกตัวที่ใช่ได้เลย</p>
-      `,
-      date: "10 มิถุนายน 2566",
-      author: "อเล็กซ์ ทอมป์สัน",
-      image: "/lovable-uploads/7ad1289c-87c2-4ad4-8225-58052b5431be.png",
-      tags: ["อุปกรณ์เสียง", "ไมโครโฟน", "คู่มือการซื้อ"]
-    },
-    "audio-equipment-guide": {
-      title: "วิธีเลือกอุปกรณ์เสียงที่เหมาะสมสำหรับสตูดิโอของคุณ",
-      content: `
-        <p>การตั้งค่าสตูดิโอบันทึกเสียงมืออาชีพต้องพิจารณาอุปกรณ์เสียงต่างๆ อย่างรอบคอบ คุณภาพของการบันทึกของคุณขึ้นอยู่กับเครื่องมือที่คุณใช้อย่างมาก ดังนั้นจึงจำเป็นต้องตัดสินใจอย่างมีข้อมูลเมื่อลงทุนในอุปกรณ์เสียง</p>
-        
-        <h2>ไมโครโฟน: จุดเริ่มต้น</h2>
-        <p>ไมโครโฟนอาจเป็นอุปกรณ์ที่สำคัญที่สุดในการตั้งค่าการบันทึกใดๆ ไมโครโฟนประเภทต่างๆ มีไว้เพื่อวัตถุประสงค์ที่แตกต่างกัน:</p>
-        <ul>
-          <li><strong>ไมโครโฟนแบบไดนามิก</strong> มีความหลากหลายและทนทาน เหมาะสำหรับแหล่งเสียงที่ดังและการแสดงสด</li>
-          <li><strong>ไมโครโฟนคอนเดนเซอร์</strong> มีความไวและการตอบสนองความถี่ที่มากกว่า เหมาะสำหรับการบันทึกเสียงร้องและเครื่องดนตรีอะคูสติก</li>
-          <li><strong>ไมโครโฟนริบบอน</strong> ให้โทนเสียงอบอุ่น แบบวินเทจ เหมาะสำหรับเครื่องดนตรีและสไตล์เสียงร้องบางประเภท</li>
-        </ul>
-        
-        <h2>อินเตอร์เฟซเสียง: สะพานเชื่อม</h2>
-        <p>อินเตอร์เฟซเสียงทำหน้าที่เป็นสะพานเชื่อมระหว่างไมโครโฟนและคอมพิวเตอร์ของคุณ เมื่อเลือกอินเตอร์เฟซ ให้พิจารณาปัจจัยต่อไปนี้:</p>
-        <ul>
-          <li>จำนวนอินพุต/เอาต์พุตที่ต้องการ</li>
-          <li>คุณภาพของพรีแอมป์</li>
-          <li>คุณภาพการแปลงสัญญาณ (ความลึกบิตและอัตราการสุ่มตัวอย่าง)</li>
-          <li>ตัวเลือกการเชื่อมต่อ (USB, Thunderbolt เป็นต้น)</li>
-        </ul>
-        
-        <h2>มอนิเตอร์: เครื่องมือฟังที่สำคัญของคุณ</h2>
-        <p>มอนิเตอร์สตูดิโอช่วยให้คุณได้ยินการบันทึกและการมิกซ์ของคุณอย่างแม่นยำ ไม่เหมือนกับลำโพงทั่วไปที่อาจปรับแต่งเสียง มอนิเตอร์สตูดิโอมีเป้าหมายเพื่อสร้างเสียงที่เป็นกลางมากที่สุด ข้อพิจารณาที่สำคัญได้แก่:</p>
-        <ul>
-          <li>Near-field กับ mid-field</li>
-          <li>แบบแอ็คทีฟกับแบบพาสซีฟ</li>
-          <li>การตอบสนองความถี่</li>
-          <li>อะคูสติกของห้องและการจัดวาง</li>
-        </ul>
-        
-        <h2>หูฟัง: สำหรับงานที่ต้องการความละเอียด</h2>
-        <p>หูฟังคุณภาพดีเป็���สิ่งจำเป็นสำหรับการฟังอย่างละเอียดและเซสชันการบันทึก พิจารณา:</p>
-        <ul>
-          <li><strong>หูฟังแบบปิด</strong> สำหรับการบันทึก (เพื่อป้องกันเสียงรั่วไหล)</li>
-          <li><strong>หูฟังแบบเปิด</strong> สำหรับการมิกซ์ (เพื่อให้มี soundstage ที่กว้างขึ้น)</li>
-        </ul>
-        
-        <h2>การปรับแต่งอะคูสติก: มักถูกมองข้าม</h2>
-        <p>แม้จะไม่ใช่อุปกรณ์โดยตรง แต่การปรับแต่งอะคูสติกส่งผลอย่างมากต่อคุณภาพของการบันทึกและความสามารถในการมิกซ์อย่างแม่นยำ การปรับแต่งอะคูสติกพื้นฐานประกอบด้วย:</p>
-        <ul>
-          <li>กับดักเสียงทุ้มสำหรับมุมห้อง</li>
-          <li>แผงดูดซับสำหรับการสะท้อนแรก</li>
-          <li>ตัวกระจายเสียงเพื่อรักษาความมีชีวิตชีวาบางส่วน</li>
-        </ul>
-        
-        <h2>บทสรุป</h2>
-        <p>การเลือกอุปกรณ์เสียงที่เหมาะสมเกี่ยวข้องกับการเข้าใจความต้องการเฉพาะของคุณ ข้อจำกัดด้านงบประมาณ และสภาพแวดล้อมทางเสียงที่คุณกำลังทำงาน เริ่มต้นด้วยสิ่งที่จำเป็น มุ่งเน้นที่คุณภาพมากกว่าปริมาณ และค่อยๆ สร้างสตูดิโอของคุณตามความต้องการที่เปลี่ยนไป</p>
-      `,
-      date: "15 พฤษภาคม 2566",
-      author: "ดาวิด เชน",
-      image: "/lovable-uploads/0bdd554b-e74a-4fe7-8d87-867680dd35bb.png",
-      tags: ["อุปกรณ์เสียง", "การตั้งค่าสตูดิโอ", "คู่มือ"]
-    },
-    "sound-engineering-future": {
-      title: "อนาคตของวิศวกรรมเสียง: แนวโน้มที่ควรจับตามอง",
-      content: `
-        <p>อุตสาหกรรมเสียงมีการพัฒนาอย่างต่อเนื่องด้วยเทคโนโลยีและวิธีการใหม่ๆ ที่กำลังเปลี่ยนรูปแบบการบันทึก การมิกซ์ และการกระจายเสียง นี่คือแนวโน้มที่กำลังเกิดขึ้นที่วิศวกรเสียงควรจับตามอง</p>
-        
-        <h2>รูปแบบเสียงแบบโอบล้อม</h2>
-        <p>เสียงเชิงพื้นที่และรูปแบบแบบโอบล้อมเช่น Dolby Atmos และ Sony 360 Reality Audio กำลังได้รับความนิยมมากขึ้น เทคโนโลยีเหล่านี้สร้างภูมิทัศน์เสียงสามมิติที่ห่อหุ้มผู้ฟัง มอบประสบการณ์ที่น่าสนใจมากกว่าระบบสเตอริโอแบบดั้งเดิม</p>
-        
-        <h2>เครื่องมือที่ขับเคลื่อนด้วย AI</h2>
-        <p>ปัญญาประดิษฐ์กำลังเข้ามามีบทบาทสำคัญในการผลิตเสียง เครื่องมือที่ขับเคลื่อนด้วย AI ตอนนี้สามารถ:</p>
-        <ul>
-          <li>มิกซ์และมาสเตอร์แทร็คโดยอัตโนมัติ</li>
-          <li>แยกสเต็มจากการบันทึกที่มิกซ์แล้ว</li>
-          <li>สร้างเสียงเครื่องดนตรีที่สมจริง</li>
-          <li>เพิ่มประสิทธิภาพการร้อง</li>
-          <li>ลดเสียงรบกวนและฟื้นฟูเสียง</li>
-        </ul>
-        
-        <h2>การทำงานร่วมกันเสมือนจริง</h2>
-        <p>เครื่องมือการทำงานร่วมกันระยะไกลได้กลายเป็นสิ่งจำเป็นในวิศวกรรมเสียงสมัยใหม่ แพลตฟอร์มที่อนุญาตให้มีการทำงานร่วมกันแบบเรียลไทม์ระหว่างศิลปินและวิศวกรในสถานที่ต่างๆ จะยังคงพัฒนาต่อไป โดยมีความหน่วงเวลาที่ต่ำลงและการผสานรวมกับ DAW ที่ดีขึ้น</p>
-        
-        <h2>บล็อกเชนสำหรับการจัดการสิทธิ์</h2>
-        <p>เทคโนโลยีบล็อกเชนกำลังเริ่มเปลี่ยนแปลงวิธีการจัดการสิทธิ์และค่าลิขสิทธิ์ในอุตสาหกรรมเสียง สัญญาอัจฉริยะสามารถรับประกันได้ว่าผู้สร้างจะได้รับค่าตอบแทนอย่างเหมาะสมสำหรับผลงานของพวกเขา ด้วยการติดตามการใช้งานอย่างโปร่งใสและการชำระเงินอัตโนมัติ</p>
-        
-        <h2>เทคโนโลยีเสมือนจริงและเสริมความเป็นจริง</h2>
-        <p>เทคโนโลยี VR และ AR กำลังเปิดพรมแดนใหม่สำหรับการออกแบบเสียงและวิศวกรรม การสร้างภูมิทัศน์เสียงที่น่าเชื่อถือสำหรับสภาพแวดล้อมเสมือนจริงต้องใช้ทักษะเฉพาะทางในด้านเสียงเชิงพื้นที่และการออกแบบเสียงแบบโต้ตอบ</p>
-        
-        <h2>แนวทางปฏิบัติที่ยั่งยืน</h2>
-        <p>ความยั่งยืนกำลังกลายเป็นสิ่งสำคัญในทุกอุตสาหกรรมรวมถึงการผลิตเสียง ซึ่งรวมถึง:</p>
-        <ul>
-          <li>อุปกรณ์ที่ประหยัดพลังงาน</li>
-          <li>โซลูชันบนคลาวด์ที่ลดความต้องการฮาร์ดแวร์</li>
-          <li>การผลิตและการจัดหาส่วนประกอบอย่างมีจริยธรรม</li>
-          <li>การกระจายแบบดิจิทัลลดขยะจากสื่อกายภาพ</li>
-        </ul>
-        
-        <h2>บทสรุป</h2>
-        <p>อนาคตของวิศวกรรมเสียงอยู่ที่จุดตัดของเทคโนโลยี ความคิดสร้างสรรค์ และการเข้าถึง วิศวกรที่ปรับตัวได้และเรียนรู้อย่างต่อเนื่องจะอยู่ในตำแหน่งที่ดีในการใช้ประโยชน์จากแนวโน้มและเทคโนโลยีที่กำลังเกิดขึ้นเหล่านี้</p>
-      `,
-      date: "22 เมษายน 2566",
-      author: "ซาร่า จอห์นสัน",
-      image: "/lovable-uploads/0f82fd40-daa0-40de-9205-97344aaafee5.png",
-      tags: ["เทคโนโลยี", "แนวโน้ม", "วิศวกรรมเสียง"]
-    },
-    "audio-maintenance": {
-      title: "การดูแลรักษาอุปกรณ์เสียงของคุณ: แนวทางปฏิบัติที่ดีที่สุด",
-      content: `
-        <p>อุปกรณ์เสียงมืออาชีพถือเป็นการลงทุนที่สำคัญ การบำรุงรักษาที่เหมาะสมไม่เพียงแต่ช่วยยืดอายุการใช้งานของอุปกรณ์เท่านั้น แต่ยังช่วยให้มั่นใจในประสิทธิภาพสูงสุดอีกด้วย นี่คือแนวทางปฏิบัติที่ดีที่สุดบางประการสำหรับการบำรุงรักษาอุปกรณ์เสียงของคุณ</p>
-        
-        <h2>การทำความสะอาดเป็นประจำ</h2>
-        <p>ฝุ่นและเศษขยะสามารถส่งผลกระทบต่อประสิทธิภาพของอุปกรณ์และอาจทำให้เกิดความเสียหายในระยะยาว กำหนดตารางการทำความสะอาดเป็นประจำ:</p>
-        <ul>
-          <li>ใช้ลมอัดเพื่อกำจัดฝุ่นออกจากปุ่มควบคุม เฟดเดอร์ และขั้วต่อ</li>
-          <li>ทำความสะอาดเฟดเดอร์และโพเทนชิโอมิเตอร์ด้วยน้ำยาทำความสะอาดหน้าสัมผัสเฉพาะทาง</li>
-          <li>เช็ดพื้นผิวด้วยน้ำยาทำความสะอาดที่เหมาะสม (หลีกเลี่ยงแอลกอฮอล์บนพื้นผิวบางชนิด)</li>
-          <li>ทำความสะอาดตะแกรงไมโครโฟนเพื่อป้องกันการสะสมที่อาจส่งผลต่อคุณภาพเสียง</li>
-        </ul>
-        
-        <h2>การจัดการสายสัญญาณ</h2>
-        <p>การจัดการสายสัญญาณที่เหมาะสมช่วยป้องกันความเสียหายและทำให้การแก้ไขปัญหาง่ายขึ้น:</p>
-        <ul>
-          <li>ม้วนสายให้ถูกต้องโดยใช้เทคนิค over-under</li>
-          <li>เก็บสายอย่างเป็นระเบียบ หลีกเลี่ยงการหักงอและการงอมุมแหลม</li>
-          <li>ติดป้ายสายเพื่อการระบุที่รวดเร็ว</li>
-          <li>ตรวจสอบสายเป็นประจำเพื่อหาการสึกหรอและความเสียหาย</li>
-          <li>เปลี่ยนสายที่เสียหายทันทีแทนที่จะใช้การแก้ไขชั่วคราว</li>
-        </ul>
-        
-        <h2>การจัดการพลังงาน</h2>
-        <p>ปัญหาพลังงานสามารถสร้างความเสียหายให้กับอุปกรณ์และส่งผลต่อคุณภาพเสียง:</p>
-        <ul>
-          <li>ใช้เครื่องป้องกันไฟกระชากหรือเครื่องปรับแต่งไฟฟ้าที่มีคุณภาพ</li>
-          <li>ปฏิบัติตามลำดับการเปิดและปิดเครื่องที่เหมาะสม</li>
-          <li>หลีกเลี่ยงการใช้วงจรเกินกำลัง</li>
-          <li>พิจารณาใช้เครื่องสำรองไฟฟ้า (UPS) สำหรับอุปกรณ์สำคัญ</li>
-        </ul>
-        
-        <h2>การควบคุมสภาพแวดล้อม</h2>
-        <p>สภาพแวดล้อมที่คุณเก็บและใช้อุปกรณ์มีความสำคัญ:</p>
-        <ul>
-          <li>รักษาระดับอุณหภูมิและความชื้นให้คงที่</li>
-          <li>หลีกเลี่ยงแสงแดดโดยตรงที่อุปกรณ์</li>
-          <li>เก็บอาหารและเครื่องดื่มให้ห่างจากอุปกรณ์เสียง</li>
-          <li>ใช้เครื่องลดความชื้นในสภาพแวดล้อมที่ชื้นเพื่อป้องกันการกัดกร่อน</li>
-        </ul>
-        
-        <h2>การทดสอบและการปรับเทียบเป็นประจำ</h2>
-        <p>การทดสอบเป็���ระยะช่วยให้มั่นใจว่าอุปกรณ์ของคุณทำงานอย่างถูกต้อง:</p>
-        <ul>
-          <li>ทดสอบทุกช่องและฟังก์ชันเป็นประจำ</li>
-          <li>ปรับเทียบมอนิเตอร์และอุปกรณ์อื่นๆ ตามความจำเป็น</li>
-          <li>ติดตามตารางการบำรุงรักษาและประวัติ</li>
-        </ul>
-        
-        <h2>การเก็บรักษาที่เหมาะสม</h2>
-        <p>เมื่อไม่ใช้งาน ให้เก็บอุปกรณ์อย่างเหมาะสม:</p>
-        <ul>
-          <li>ใช้กล่องป้องกันสำหรับอุปกรณ์พกพา</li>
-          <li>คลุมอุปกรณ์ที่อยู่กับที่เพื่อป้องกันการสะสมของฝุ่น</li>
-          <li>เก็บไมโครโฟนในแนวตั้งเพื่อป้องกันความชื้นสะสมในแคปซูล</li>
-          <li>ถอดแบตเตอรี่ออกจากอุปกรณ์ระหว่างการเก็บรักษาระยะยาว</li>
-        </ul>
-        
-        <h2>บทสรุป</h2>
-        <p>การลงทุนเวลาในการบำรุงรักษาอย่างเหมาะสมช่วยประหยัดเงินในระยะยาวและช่วยให้มั่นใจว่าอุปกรณ์ของคุณทำงานได้ดีที่สุด พัฒนาตารางการบำรุงรักษาเป็นประจำและยึดมั่นในตารางนั้นเพื่อปกป้องการลงทุนด้านเสียงของคุณ</p>
-      `,
-      date: "10 มีนาคม 2566",
-      author: "ไมเคิล หว่อง",
-      image: "/lovable-uploads/3cdd087c-645e-4a74-a9e9-59680079c17f.png",
-      tags: ["การบำรุงรักษา", "การดูแลอุปกรณ์", "อุปกรณ์เสียง"]
-    },
-    "dynamic-vs-condenser": {
-      title: "ไมโครโฟนไดนามิกกับคอนเดนเซอร์: การเลือกที่เหมาะสมกับการใช้งานของคุณ",
-      content: `
-        <p>ไมโครโฟนเป็นอุปกรณ์ที่สำคัญในการบันทึกเสียงและการแสดงสด โดยทั่วไปแล้วไมโครโฟนสามารถแบ่งออกเป็นสองประเภทหลัก ๆ คือ ไมโครโฟนไดนามิก (Dynamic Microphone) และไมโครโฟนคอนเดนเซอร์ (Condenser Microphone) ซึ่งแต่ละประเภทมีคุณสมบัติและการใช้งานที่แตกต่างกัน</p>
-        
-        <img src="/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png" alt="ไมโครโฟนไดนามิกและคอนเดนเซอร์" class="my-8 rounded-lg shadow-md w-full max-w-2xl mx-auto" />
-        
-        <h2>ไมโครโฟนไดนามิก (Dynamic Microphone)</h2>
-        <p>ไมโครโฟนไดนามิกทำงานโดยใช้หลักการของการเหนี่ยวนำแม่เหล็กไฟฟ้า ภายในไมโครโฟนจะมีแผ่นไดอะแฟรมที่เชื่อมต่อกับขดลวด เมื่อเสียงมากระทบแผ่นไดอะแฟรม จะทำให้ขดลวดเคลื่อนที่ในสนามแม่เหล็ก เกิดเป็นสัญญาณไฟฟ้า</p>
-        
-        <h3>ข้อดีของไมโครโฟนไดนามิก:</h3>
-        <ul>
-          <li>มีความทนทานสูง เหมาะสำหรับการใช้งานที่ต้องการความแข็งแรง</li>
-          <li>ไม่ต้องการพลังงานภายนอกในการทำงาน</li>
-          <li>สามารถรับระดับความดันเสียงสูงได้ดี เหมาะสำหรับการบันทึกเสียงเครื่องดนตรีที่มีความดัง เช่น กลอง หรือกีตาร์��ฟฟ้า</li>
-          <li>ทนทานต่อสภาพแวดล้อมต่างๆ เช่น ความชื้น</li>
-          <li>ราคาไม่สูงมากเมื่อเทียบกับไมโครโฟนคอนเดนเซอร์</li>
-        </ul>
-        
-        <h3>ข้อเสียของไมโครโฟนไดนามิก:</h3>
-        <ul>
-          <li>ความไวต่อเสียงต่ำ ไม่เหมาะสำหรับการบันทึกเสียงที่ต้องการรายละเอียดสูง</li>
-          <li>ตอบสนองต่อความถี่เสียงได้จำกัด โดยเฉพาะในย่านความถี่สูง</li>
-          <li>อาจไม่สามารถบันทึกรายละเอียดเล็กๆ น้อยๆ ของเสียงดนตรีหรือเสียงร้องได้ครบถ้วน</li>
-        </ul>
-        
-        <h2>ไมโครโฟนคอนเดนเซอร์ (Condenser Microphone)</h2>
-        <p>ไมโครโฟนคอนเดนเซอร์ใช้หลักการทำงานของตัวเก็บประจุ โดยมีแผ่นไดอะแฟรมบาง ๆ ที่อยู่ใกล้กับแผ่นโลหะคงที่ เมื่อเสียงมากระทบแผ่นไดอะแฟรม จะทำให้ระยะห่างระหว่างแผ่นเปลี่ยนแปลง ส่งผลให้ความจุไฟฟ้าเปลี่ยนแปลงและเกิดเป็นสัญญาณไฟฟ้า</p>
-        
-        <h3>ข้อดีของไมโครโฟนคอนเดนเซอร์:</h3>
-        <ul>
-          <li>มีความไวต่อเสียงสูง สามารถบันทึกรายละเอียดของเสียงได้ดี</li>
-          <li>ตอบสนองต่อความถี่เสียงได้กว้าง เหมาะสำหรับการบันทึกเสียงร้องและเครื่องดนตรีที่ต้องการความละเอียด</li>
-          <li>สามารถจับเสียงที่มีการเปลี่ยนแปลงอย่างรวดเร็วได้ดี</li>
-          <li>เหมาะอย่างยิ่งสำหรับการบันทึกในสตูดิโอที่ควบคุมเสียงที่ดี</li>
-        </ul>
-        
-        <h3>ข้อเสียของไมโครโฟนคอนเดนเซอร์:</h3>
-        <ul>
-          <li>ต้องการพลังงานภายนอกในการทำงาน เช่น แหล่งจ่ายไฟ Phantom Power</li>
-          <li>มีความเปราะบาง ไม่ทนทานเท่าไมโครโฟนไดนามิก</li>
-          <li>อาจรับเสียงรบกวนจากสภาพแวดล้อมได้ง่าย ไม่เหมาะสำหรับการใช้งานในสถานที่ที่มีเสียงรบกวนสูง</li>
-          <li>อาจเกิดเสียงแตกเมื���อบันทึกเสียงที่มีความดังมาก</li>
-          <li>ราคาสูงกว่าไมโครโฟนไดนามิกโดยทั่วไป</li>
-        </ul>
-        
-        <h2>การเลือกใช้ไมโครโฟน</h2>
-        <p>การเลือกใช้ไมโครโฟนควรพิจารณาจากลักษณะการใช้งานและสภาพแวดล้อม:</p>
-        
-        <h3>เลือกใช้ไมโครโฟนไดนามิกเมื่อ:</h3>
-        <ul>
-          <li>ต้องการบันทึกเสียงเครื่องดนตรีที่มีความดังสูง (กลอง แอมป์กีตาร์)</li>
-          <li>ใช้งานในการแสดงสดที่ต้องการความทนทาน</li>
-          <li>ทำงานในสภาพแวดล้อมที่มีเสียงรบกวนมาก</li>
-          <li>ต้องการไมโครโฟนที่ทนต่อการใช้งานหนัก</li>
-          <li>ไม่มีแหล่งจ่ายไฟ Phantom Power</li>
-        </ul>
-        
-        <h3>เลือกใช้ไมโครโฟนคอนเดนเซอร์เมื่อ:</h3>
-        <ul>
-          <li>บันทึกเสียงในสตูดิโอที่มีการควบคุมเสียงที่ดี</li>
-          <li>ต้องการบันทึกเสียงร้องที่มีรายละเอียดและความชัดเจนสูง</li>
-          <li>บันทึกเครื่องดนตรีอะคูสติกที่ต้องการความละเอียดของเสียง</li>
-          <li>ต้องการจับเสียงที่มีความละเอียดหรือเสียงแวดล้อม</li>
-          <li>มีแหล่งจ่ายไฟ Phantom Power</li>
-        </ul>
-        
-        <h2>บทสรุป</h2>
-        <p>ทั้งไมโครโฟนไดนามิกและคอนเดนเซอร์ต่างมีจุดเด่นและข้อจำกัดของตัวเอง การเข้าใจคุณสมบัติและข้อจำกัดเหล่านี้จะช่วยให้คุณตัดสินใจเลือกประเภทที่เหมาะสมกับความต้องการเฉพาะของคุณได้ดียิ่งขึ้น นักเสียงมืออาชีพหลายคนมักมีไมโครโฟนทั้งสองประเภทเพื่อให้มั่นใจว่ามีเครื่องมือที่เหมาะสมสำหรับทุกสถานการณ์การบันทึกเสียง</p>
-      `,
-      date: "15 สิงหาคม 2566",
-      author: "ไมเคิล หว่อง",
-      image: "/lovable-uploads/751b5dbf-29fa-4896-80bb-27f6a0f1f1f3.png",
-      tags: ["ไมโครโฟน", "อุปกรณ์เสียง", "การบันทึกเสียง"]
-    }
-  };
-
-  const post = blogPosts[id as string];
-
-  if (!post) {
-    // Redirect to blog listing if post not found
-    return (
-      <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-950">
-        <Navigation />
-        <main className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto w-full flex-grow">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold mb-6">
-              {language === "en" ? "Post Not Found" : "ไม่พบบทความ"}
-            </h1>
-            <p className="mb-8">
-              {language === "en" 
-                ? "The blog post you're looking for doesn't exist or has been removed." 
-                : "ไม่พบบทความที่คุณกำลังมองหาหรือถูกลบออกไปแล้ว"}
-            </p>
-            <Link 
-              to="/blog" 
-              className="inline-flex items-center text-primary hover:underline"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              {language === "en" ? "Back to all posts" : "กลับไปยังบทความทั้งหมด"}
-            </Link>
-          </div>
-        </main>
-        <Footerdemo />
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-950">
-      <Navigation />
-      <main className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto w-full flex-grow">
-        {/* Back link */}
-        <div className="mb-8">
-          <button 
-            onClick={() => navigate('/blog')} 
-            className="inline-flex items-center text-primary hover:underline"
-            aria-label={language === "en" ? "Back to all posts" : "กลับไปยังบทความทั้งหมด"}
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            {language === "en" ? "Back to all posts" : "กลับไปยังบทความทั้งหมด"}
-          </button>
-        </div>
-        
-        {/* Post header */}
-        <header className="mb-8">
-          <div className="flex flex-wrap gap-2 mb-4">
-            {post?.tags.map((tag: string, index: number) => (
-              <span 
-                key={index} 
-                className="text-xs font-medium bg-primary/10 text-primary px-2 py-1 rounded-full"
-                role="note"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-left">{post?.title}</h1>
-          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-            <div className="flex items-center" aria-label="Published date">
-              <Calendar className="w-4 h-4 mr-1" aria-hidden="true" />
-              <time dateTime={post?.date}>{post?.date}</time>
-            </div>
-            <div className="flex items-center" aria-label="Author">
-              <User className="w-4 h-4 mr-1" aria-hidden="true" />
-              <span>{post?.author}</span>
-            </div>
-          </div>
-        </header>
-        
-        {/* Featured image */}
-        <div className="mb-8 rounded-lg overflow-hidden">
-          <img
-            src={post?.image}
-            alt={post?.title}
-            className="w-full h-auto object-cover"
-          />
-        </div>
-        
-        {/* Post content with improved readability */}
-        <article 
-          className="prose dark:prose-invert max-w-none text-left [&>p]:text-base [&>p]:leading-relaxed [&>p]:mb-6 [&>h2]:text-2xl [&>h2]:font-semibold [&>h2]:mt-8 [&>h2]:mb-4 [&>ul]:mb-6 [&>ul]:list-disc [&>ul]:pl-6"
-          dangerouslySetInnerHTML={{ __html: post?.content }}
-        />
-      </main>
-      <Footerdemo />
-    </div>
-  );
-};
-
-export default BlogPost;
-
+        <p>หากคุณกำลังมองหาไมโครโฟนที่เหมาะกับคุณ ลองดูไมโครโฟน Fifine รุ่นต่าง ๆ
