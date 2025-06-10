@@ -1,6 +1,7 @@
 
 import { initializeApp, getApps } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDVvRFbYunXAenLAoctEJNUAvzLpY8ngg4",
@@ -16,6 +17,9 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0
 export const auth = getAuth(app);
 auth.useDeviceLanguage(); // Use the device's default language
 
+// Initialize Firestore
+export const db = getFirestore(app);
+
 // Configure Google provider
 export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
@@ -25,4 +29,3 @@ googleProvider.setCustomParameters({
 // Add additional scopes for Google provider
 googleProvider.addScope('email');
 googleProvider.addScope('profile');
-

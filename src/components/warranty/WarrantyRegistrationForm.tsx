@@ -1,9 +1,13 @@
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/lib/firebase";
+import { submitWarrantyRegistration } from "@/services/warrantyService";
 
 const productOptions = [
   { id: 1, name: "FIFINE Ampligame AM8" },
@@ -17,6 +21,8 @@ interface WarrantyRegistrationFormProps {
 }
 
 const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) => {
+  const [user, loading] = useAuthState(auth);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     productId: "",
     orderNumber: "",
@@ -42,12 +48,41 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Warranty Registration Data:", formData);
-    toast.success("Warranty registration submitted successfully!");
-    onClose();
+    
+    if (!user) {
+      toast.error("You must be signed in to submit a warranty registration");
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      const selectedProduct = productOptions.find(p => p.id.toString() === formData.productId);
+      const registrationData = {
+        ...formData,
+        productName: selectedProduct?.name || "Unknown Product",
+      };
+
+      await submitWarrantyRegistration(registrationData, user);
+      toast.success("Warranty registration submitted successfully!");
+      onClose();
+    } catch (error) {
+      console.error("Error submitting warranty registration:", error);
+      toast.error("Failed to submit warranty registration. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  if (loading) {
+    return <div className="p-4 text-center">Loading...</div>;
+  }
+
+  if (!user) {
+    return <div className="p-4 text-center">Please sign in to register your warranty.</div>;
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -128,8 +163,8 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
           required
         />
       </div>
-      <Button type="submit" className="w-full">
-        Submit Warranty Registration
+      <Button type="submit" className="w-full" disabled={isSubmitting}>
+        {isSubmitting ? "Submitting..." : "Submit Warranty Registration"}
       </Button>
     </form>
   );

@@ -1,0 +1,26 @@
+
+// Firestore Security Rules for Warranty Registrations
+// Apply these rules in your Firebase Console under Firestore > Rules
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Warranty registrations - users can only read/write their own data
+    match /warranty_registrations/{document} {
+      allow read, write: if request.auth != null && 
+        (resource == null || resource.data.userId == request.auth.uid) &&
+        (request.auth.uid == resource.data.userId);
+    }
+    
+    // Service account access for Google Sheets sync
+    // Add your service account email to this rule
+    match /warranty_registrations/{document} {
+      allow read: if request.auth.token.email == "your-service-account@account-siamtech.iam.gserviceaccount.com";
+    }
+    
+    // Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
