@@ -1,35 +1,36 @@
 
-import { collection, addDoc, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore';
+import { collection, addDoc, query, where, getDocs, orderBy, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { User } from 'firebase/auth';
 
-export interface WarrantyRegistration {
+export interface WarrantySubmission {
   id?: string;
-  userId: string;
-  productId: string;
-  productName: string;
-  orderNumber: string;
-  purchaseDate: string;
-  purchaseSource: string;
-  fullName: string;
-  email: string;
-  phoneNumber: string;
-  timestamp: Date;
+  user_id: string;
+  product_name: string;
+  serial_number: string;
+  purchase_date: string;
+  submitted_at: any; // Firestore Timestamp
 }
 
 export const submitWarrantyRegistration = async (
-  formData: Omit<WarrantyRegistration, 'id' | 'userId' | 'timestamp'>,
+  formData: {
+    product_name: string;
+    serial_number: string;
+    purchase_date: string;
+  },
   user: User
 ): Promise<string> => {
   try {
-    const warrantyData = {
-      ...formData,
-      userId: user.uid,
-      timestamp: Timestamp.now(),
+    const submissionData = {
+      user_id: user.uid,
+      product_name: formData.product_name,
+      serial_number: formData.serial_number,
+      purchase_date: formData.purchase_date,
+      submitted_at: serverTimestamp(),
     };
 
-    const docRef = await addDoc(collection(db, 'warranty_registrations'), warrantyData);
-    console.log('Warranty registration submitted with ID:', docRef.id);
+    const docRef = await addDoc(collection(db, 'warranty_submissions'), submissionData);
+    console.log('Warranty submission saved with ID:', docRef.id);
     return docRef.id;
   } catch (error) {
     console.error('Error submitting warranty registration:', error);
@@ -37,29 +38,28 @@ export const submitWarrantyRegistration = async (
   }
 };
 
-export const getUserWarrantyRegistrations = async (user: User): Promise<WarrantyRegistration[]> => {
+export const getUserWarrantySubmissions = async (user: User): Promise<WarrantySubmission[]> => {
   try {
     const q = query(
-      collection(db, 'warranty_registrations'),
-      where('userId', '==', user.uid),
-      orderBy('timestamp', 'desc')
+      collection(db, 'warranty_submissions'),
+      where('user_id', '==', user.uid),
+      orderBy('submitted_at', 'desc')
     );
     
     const querySnapshot = await getDocs(q);
-    const registrations: WarrantyRegistration[] = [];
+    const submissions: WarrantySubmission[] = [];
     
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      registrations.push({
+      submissions.push({
         id: doc.id,
         ...data,
-        timestamp: data.timestamp.toDate(),
-      } as WarrantyRegistration);
+      } as WarrantySubmission);
     });
     
-    return registrations;
+    return submissions;
   } catch (error) {
-    console.error('Error fetching warranty registrations:', error);
-    throw new Error('Failed to fetch warranty registrations');
+    console.error('Error fetching warranty submissions:', error);
+    throw new Error('Failed to fetch warranty submissions');
   }
 };

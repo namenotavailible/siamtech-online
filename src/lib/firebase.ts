@@ -1,7 +1,7 @@
 
 import { initializeApp, getApps } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, serverTimestamp } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDVvRFbYunXAenLAoctEJNUAvzLpY8ngg4",
@@ -29,3 +29,6 @@ googleProvider.setCustomParameters({
 // Add additional scopes for Google provider
 googleProvider.addScope('email');
 googleProvider.addScope('profile');
+
+// Export serverTimestamp for use in components
+export { serverTimestamp };
