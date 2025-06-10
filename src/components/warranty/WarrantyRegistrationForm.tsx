@@ -28,9 +28,13 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
+    full_name: "",
+    email: "",
+    phone_number: "",
     product_name: "",
-    serial_number: "",
+    order_number: "",
     purchase_date: "",
+    source_of_purchase: "Shopee"
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,20 +46,37 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     }));
   };
 
-  const handleSelectChange = (value: string) => {
-    console.log(`Product selected: ${value}`);
-    const selectedProduct = productOptions.find(p => p.id === value);
-    setFormData(prev => ({
-      ...prev,
-      product_name: selectedProduct?.name || ""
-    }));
+  const handleSelectChange = (field: string) => (value: string) => {
+    console.log(`Select changed: ${field} = ${value}`);
+    if (field === 'product_name') {
+      const selectedProduct = productOptions.find(p => p.id === value);
+      setFormData(prev => ({
+        ...prev,
+        product_name: selectedProduct?.name || ""
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [field]: value
+      }));
+    }
   };
 
   const handleGoogleSignIn = async () => {
     try {
       console.log("Attempting Google sign in...");
-      await signInWithPopup(auth, googleProvider);
-      console.log("Google sign in successful");
+      const result = await signInWithPopup(auth, googleProvider);
+      console.log("Google sign in successful, user:", result.user);
+      
+      // Pre-populate email from Google account
+      if (result.user.email) {
+        setFormData(prev => ({
+          ...prev,
+          email: result.user.email || "",
+          full_name: result.user.displayName || ""
+        }));
+      }
+      
       toast.success("Successfully signed in with Google!");
     } catch (error) {
       console.error("Error signing in with Google:", error);
@@ -78,14 +99,14 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
       return;
     }
 
-    if (!formData.product_name || !formData.serial_number || !formData.purchase_date) {
-      const errorMsg = "Please fill in all required fields";
+    // Validate required fields
+    const requiredFields = ['full_name', 'email', 'phone_number', 'product_name', 'order_number', 'purchase_date'];
+    const missingFields = requiredFields.filter(field => !formData[field as keyof typeof formData]);
+    
+    if (missingFields.length > 0) {
+      const errorMsg = `Please fill in all required fields: ${missingFields.join(', ')}`;
       console.error(errorMsg);
-      console.log("Missing fields:", {
-        product_name: !formData.product_name,
-        serial_number: !formData.serial_number,
-        purchase_date: !formData.purchase_date
-      });
+      console.log("Missing fields:", missingFields);
       setSubmitError(errorMsg);
       return;
     }
@@ -93,7 +114,7 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     setIsSubmitting(true);
     
     try {
-      console.log("Calling submitWarrantyRegistration...");
+      console.log("Calling submitWarrantyRegistration with data:", formData);
       const result = await submitWarrantyRegistration(formData, user);
       console.log("Warranty registration successful:", result);
       toast.success("Warranty registration submitted successfully!");
@@ -103,17 +124,18 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
       
       let errorMessage = "Failed to submit warranty registration. Please try again.";
       
-      // More specific error handling
       if (error instanceof Error) {
         console.error("Error message:", error.message);
         console.error("Error stack:", error.stack);
         
-        if (error.message.includes("permission")) {
-          errorMessage = "Permission denied. Please check your authentication.";
+        if (error.message.includes("permission") || error.message.includes("security")) {
+          errorMessage = "Permission denied. Please check your authentication or contact support.";
         } else if (error.message.includes("network")) {
           errorMessage = "Network error. Please check your connection.";
         } else if (error.message.includes("auth")) {
           errorMessage = "Authentication error. Please sign in again.";
+        } else if (error.message.includes("Missing or insufficient permissions")) {
+          errorMessage = "Database permission error. Please contact support.";
         }
       }
       
@@ -169,8 +191,42 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
       )}
       
       <div className="space-y-2">
+        <Label htmlFor="full_name">Full Name</Label>
+        <Input
+          id="full_name"
+          value={formData.full_name}
+          onChange={handleInputChange}
+          placeholder="Enter your full name"
+          required
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          type="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          placeholder="Enter your email address"
+          required
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="phone_number">Phone Number</Label>
+        <Input
+          id="phone_number"
+          value={formData.phone_number}
+          onChange={handleInputChange}
+          placeholder="Enter your phone number"
+          required
+        />
+      </div>
+      
+      <div className="space-y-2">
         <Label htmlFor="product_name">Product</Label>
-        <Select value={formData.product_name ? productOptions.find(p => p.name === formData.product_name)?.id : ""} onValueChange={handleSelectChange} required>
+        <Select value={formData.product_name ? productOptions.find(p => p.name === formData.product_name)?.id : ""} onValueChange={handleSelectChange('product_name')} required>
           <SelectTrigger>
             <SelectValue placeholder="Select your product" />
           </SelectTrigger>
@@ -185,12 +241,12 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
       </div>
       
       <div className="space-y-2">
-        <Label htmlFor="serial_number">Serial Number</Label>
+        <Label htmlFor="order_number">Order Number</Label>
         <Input
-          id="serial_number"
-          value={formData.serial_number}
+          id="order_number"
+          value={formData.order_number}
           onChange={handleInputChange}
-          placeholder="Enter your product's serial number"
+          placeholder="Enter your order number"
           required
         />
       </div>
@@ -204,6 +260,21 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
           onChange={handleInputChange}
           required
         />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="source_of_purchase">Source of Purchase</Label>
+        <Select value={formData.source_of_purchase} onValueChange={handleSelectChange('source_of_purchase')} required>
+          <SelectTrigger>
+            <SelectValue placeholder="Select where you purchased" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="Shopee">Shopee</SelectItem>
+            <SelectItem value="Lazada">Lazada</SelectItem>
+            <SelectItem value="Official Store">Official Store</SelectItem>
+            <SelectItem value="Other">Other</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
       
       <Button type="submit" className="w-full" disabled={isSubmitting}>

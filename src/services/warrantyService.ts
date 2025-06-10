@@ -6,35 +6,61 @@ import { User } from 'firebase/auth';
 export interface WarrantySubmission {
   id?: string;
   user_id: string;
+  full_name: string;
+  email: string;
+  phone_number: string;
   product_name: string;
-  serial_number: string;
+  order_number: string;
   purchase_date: string;
+  source_of_purchase: string;
   submitted_at: any; // Firestore Timestamp
 }
 
 export const submitWarrantyRegistration = async (
   formData: {
+    full_name: string;
+    email: string;
+    phone_number: string;
     product_name: string;
-    serial_number: string;
+    order_number: string;
     purchase_date: string;
+    source_of_purchase: string;
   },
   user: User
 ): Promise<string> => {
   try {
+    console.log("submitWarrantyRegistration called with:", { formData, userId: user.uid });
+    
     const submissionData = {
       user_id: user.uid,
+      full_name: formData.full_name,
+      email: formData.email,
+      phone_number: formData.phone_number,
       product_name: formData.product_name,
-      serial_number: formData.serial_number,
+      order_number: formData.order_number,
       purchase_date: formData.purchase_date,
+      source_of_purchase: formData.source_of_purchase,
       submitted_at: serverTimestamp(),
     };
 
+    console.log("Submitting data to Firestore:", submissionData);
+    
     const docRef = await addDoc(collection(db, 'warranty_submissions'), submissionData);
     console.log('Warranty submission saved with ID:', docRef.id);
     return docRef.id;
   } catch (error) {
     console.error('Error submitting warranty registration:', error);
-    throw new Error('Failed to submit warranty registration');
+    
+    // Enhanced error logging
+    if (error instanceof Error) {
+      console.error('Error details:', {
+        name: error.name,
+        message: error.message,
+        stack: error.stack
+      });
+    }
+    
+    throw error; // Re-throw the original error so the form can handle it
   }
 };
 
