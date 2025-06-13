@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,7 +8,7 @@ import { toast } from "sonner";
 import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, googleProvider } from "@/lib/firebase";
-import { signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { signInWithPopup, signOut } from "firebase/auth";
 import { submitWarrantyRegistration } from "@/services/warrantyService";
 import { GoogleLogo } from "@/components/ui/google-logo";
 
@@ -26,7 +27,6 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
   const [user, loading, error] = useAuthState(auth);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [authReady, setAuthReady] = useState(false);
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -37,42 +37,20 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     source_of_purchase: "Shopee"
   });
 
-  // Enhanced authentication state monitoring
+  // Pre-populate form when user signs in
   useEffect(() => {
-    console.log("Setting up enhanced auth state monitoring...");
-    
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      console.log("Auth state changed:", {
-        user: user ? {
-          uid: user.uid,
-          email: user.email,
-          emailVerified: user.emailVerified,
-          isAnonymous: user.isAnonymous
-        } : null,
-        timestamp: new Date().toISOString()
-      });
-      
-      if (user) {
-        try {
-          // Get fresh token to ensure we have valid authentication
-          const token = await user.getIdToken(true);
-          console.log("Fresh token obtained for user:", user.uid);
-          setAuthReady(true);
-        } catch (tokenError) {
-          console.error("Error getting fresh token:", tokenError);
-          setAuthReady(false);
-        }
-      } else {
-        setAuthReady(false);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
+    if (user) {
+      console.log("User authenticated:", user.uid, user.email);
+      setFormData(prev => ({
+        ...prev,
+        email: user.email || "",
+        full_name: user.displayName || ""
+      }));
+    }
+  }, [user]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    console.log(`Input changed: ${id} = ${value}`);
     setFormData(prev => ({
       ...prev,
       [id]: value
@@ -80,7 +58,6 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
   };
 
   const handleSelectChange = (field: string) => (value: string) => {
-    console.log(`Select changed: ${field} = ${value}`);
     if (field === 'product_name') {
       const selectedProduct = productOptions.find(p => p.id === value);
       setFormData(prev => ({
@@ -97,28 +74,24 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
 
   const handleGoogleSignIn = async () => {
     try {
-      console.log("Attempting Google sign in...");
+      console.log("Starting Google sign in...");
       setSubmitError(null);
       
       const result = await signInWithPopup(auth, googleProvider);
-      console.log("Google sign in successful, user:", result.user);
-      
-      // Wait for auth state to stabilize
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Pre-populate email from Google account
-      if (result.user.email) {
-        setFormData(prev => ({
-          ...prev,
-          email: result.user.email || "",
-          full_name: result.user.displayName || ""
-        }));
-      }
-      
+      console.log("Google sign in successful:", result.user.uid);
       toast.success("Successfully signed in with Google!");
     } catch (error) {
-      console.error("Error signing in with Google:", error);
+      console.error("Google sign in error:", error);
       toast.error("Failed to sign in with Google. Please try again.");
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      toast.success("Signed out successfully");
+    } catch (error) {
+      console.error("Sign out error:", error);
     }
   };
 
@@ -126,23 +99,12 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     e.preventDefault();
     setSubmitError(null);
     
-    console.log("Form submission started");
-    console.log("Auth state:", { 
-      user: user ? { uid: user.uid, email: user.email } : "No user",
-      authReady,
-      loading 
-    });
+    console.log("=== FORM SUBMISSION START ===");
+    console.log("User state:", user ? { uid: user.uid, email: user.email } : "No user");
     console.log("Form data:", formData);
     
     if (!user) {
       const errorMsg = "You must be signed in to submit a warranty registration";
-      console.error(errorMsg);
-      setSubmitError(errorMsg);
-      return;
-    }
-
-    if (!authReady) {
-      const errorMsg = "Authentication is still loading. Please wait a moment and try again.";
       console.error(errorMsg);
       setSubmitError(errorMsg);
       return;
@@ -154,8 +116,6 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     
     if (missingFields.length > 0) {
       const errorMsg = `Please fill in all required fields: ${missingFields.join(', ')}`;
-      console.error(errorMsg);
-      console.log("Missing fields:", missingFields);
       setSubmitError(errorMsg);
       return;
     }
@@ -163,33 +123,23 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     setIsSubmitting(true);
     
     try {
-      // Get fresh authentication token before submission
-      console.log("Getting fresh auth token before submission...");
-      await user.getIdToken(true);
+      console.log("Getting fresh auth token...");
+      const token = await user.getIdToken(true);
+      console.log("Fresh token obtained:", !!token);
       
-      console.log("Calling submitWarrantyRegistration with data:", formData);
+      console.log("Submitting to Firestore...");
       const result = await submitWarrantyRegistration(formData, user);
-      console.log("Warranty registration successful:", result);
+      console.log("Submission successful:", result);
+      
       toast.success("Warranty registration submitted successfully!");
       onClose();
     } catch (error) {
-      console.error("Detailed error submitting warranty registration:", error);
+      console.error("=== SUBMISSION ERROR ===", error);
       
       let errorMessage = "Failed to submit warranty registration. Please try again.";
       
-      if (error instanceof Error) {
-        console.error("Error message:", error.message);
-        console.error("Error stack:", error.stack);
-        
-        if (error.message.includes("Missing or insufficient permissions")) {
-          errorMessage = "Authentication error. Please sign out and sign in again, then try submitting.";
-        } else if (error.message.includes("permission") || error.message.includes("security")) {
-          errorMessage = "Permission denied. Please check your authentication or contact support.";
-        } else if (error.message.includes("network")) {
-          errorMessage = "Network error. Please check your connection.";
-        } else if (error.message.includes("auth")) {
-          errorMessage = "Authentication error. Please sign in again.";
-        }
+      if (error instanceof Error && error.message.includes("Missing or insufficient permissions")) {
+        errorMessage = "Authentication error. Please sign out and sign in again, then try submitting.";
       }
       
       setSubmitError(errorMessage);
@@ -200,12 +150,10 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
   };
 
   if (loading) {
-    console.log("Auth loading...");
     return <div className="p-4 text-center">Loading authentication...</div>;
   }
 
   if (error) {
-    console.error("Auth error:", error);
     return (
       <div className="p-4">
         <Alert>
@@ -218,7 +166,6 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
   }
 
   if (!user) {
-    console.log("No user found, showing sign in form");
     return (
       <div className="p-4 space-y-4">
         <div className="text-center">
@@ -238,119 +185,125 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     );
   }
 
-  console.log("Rendering form for user:", user.uid, "Auth ready:", authReady);
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      {submitError && (
-        <Alert>
-          <AlertDescription>{submitError}</AlertDescription>
-        </Alert>
-      )}
-      
-      {!authReady && (
-        <Alert>
-          <AlertDescription>
-            Finalizing authentication... Please wait a moment before submitting.
-          </AlertDescription>
-        </Alert>
-      )}
-      
-      <div className="space-y-2">
-        <Label htmlFor="full_name">Full Name</Label>
-        <Input
-          id="full_name"
-          value={formData.full_name}
-          onChange={handleInputChange}
-          placeholder="Enter your full name"
-          required
-        />
+    <div className="space-y-4">
+      {/* User info display */}
+      <div className="p-3 bg-green-50 border border-green-200 rounded-md">
+        <div className="flex justify-between items-center">
+          <div>
+            <p className="text-sm text-green-800">
+              Signed in as: <strong>{user.email}</strong>
+            </p>
+          </div>
+          <Button onClick={handleSignOut} size="sm" variant="outline">
+            Sign Out
+          </Button>
+        </div>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
-        <Input
-          id="email"
-          type="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          placeholder="Enter your email address"
-          required
-        />
-      </div>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {submitError && (
+          <Alert>
+            <AlertDescription>{submitError}</AlertDescription>
+          </Alert>
+        )}
+        
+        <div className="space-y-2">
+          <Label htmlFor="full_name">Full Name</Label>
+          <Input
+            id="full_name"
+            value={formData.full_name}
+            onChange={handleInputChange}
+            placeholder="Enter your full name"
+            required
+          />
+        </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="phone_number">Phone Number</Label>
-        <Input
-          id="phone_number"
-          value={formData.phone_number}
-          onChange={handleInputChange}
-          placeholder="Enter your phone number"
-          required
-        />
-      </div>
-      
-      <div className="space-y-2">
-        <Label htmlFor="product_name">Product</Label>
-        <Select value={formData.product_name ? productOptions.find(p => p.name === formData.product_name)?.id : ""} onValueChange={handleSelectChange('product_name')} required>
-          <SelectTrigger>
-            <SelectValue placeholder="Select your product" />
-          </SelectTrigger>
-          <SelectContent>
-            {productOptions.map(product => (
-              <SelectItem key={product.id} value={product.id}>
-                {product.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-      
-      <div className="space-y-2">
-        <Label htmlFor="order_number">Order Number</Label>
-        <Input
-          id="order_number"
-          value={formData.order_number}
-          onChange={handleInputChange}
-          placeholder="Enter your order number"
-          required
-        />
-      </div>
-      
-      <div className="space-y-2">
-        <Label htmlFor="purchase_date">Purchase Date</Label>
-        <Input
-          id="purchase_date"
-          type="date"
-          value={formData.purchase_date}
-          onChange={handleInputChange}
-          required
-        />
-      </div>
+        <div className="space-y-2">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            type="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder="Enter your email address"
+            required
+          />
+        </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="source_of_purchase">Source of Purchase</Label>
-        <Select value={formData.source_of_purchase} onValueChange={handleSelectChange('source_of_purchase')} required>
-          <SelectTrigger>
-            <SelectValue placeholder="Select where you purchased" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="Shopee">Shopee</SelectItem>
-            <SelectItem value="Lazada">Lazada</SelectItem>
-            <SelectItem value="Official Store">Official Store</SelectItem>
-            <SelectItem value="Other">Other</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      
-      <Button 
-        type="submit" 
-        className="w-full" 
-        disabled={isSubmitting || !authReady}
-      >
-        {isSubmitting ? "Submitting..." : "Submit Warranty Registration"}
-      </Button>
-    </form>
+        <div className="space-y-2">
+          <Label htmlFor="phone_number">Phone Number</Label>
+          <Input
+            id="phone_number"
+            value={formData.phone_number}
+            onChange={handleInputChange}
+            placeholder="Enter your phone number"
+            required
+          />
+        </div>
+        
+        <div className="space-y-2">
+          <Label htmlFor="product_name">Product</Label>
+          <Select value={formData.product_name ? productOptions.find(p => p.name === formData.product_name)?.id : ""} onValueChange={handleSelectChange('product_name')} required>
+            <SelectTrigger>
+              <SelectValue placeholder="Select your product" />
+            </SelectTrigger>
+            <SelectContent>
+              {productOptions.map(product => (
+                <SelectItem key={product.id} value={product.id}>
+                  {product.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        
+        <div className="space-y-2">
+          <Label htmlFor="order_number">Order Number</Label>
+          <Input
+            id="order_number"
+            value={formData.order_number}
+            onChange={handleInputChange}
+            placeholder="Enter your order number"
+            required
+          />
+        </div>
+        
+        <div className="space-y-2">
+          <Label htmlFor="purchase_date">Purchase Date</Label>
+          <Input
+            id="purchase_date"
+            type="date"
+            value={formData.purchase_date}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="source_of_purchase">Source of Purchase</Label>
+          <Select value={formData.source_of_purchase} onValueChange={handleSelectChange('source_of_purchase')} required>
+            <SelectTrigger>
+              <SelectValue placeholder="Select where you purchased" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Shopee">Shopee</SelectItem>
+              <SelectItem value="Lazada">Lazada</SelectItem>
+              <SelectItem value="Official Store">Official Store</SelectItem>
+              <SelectItem value="Other">Other</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        
+        <Button 
+          type="submit" 
+          className="w-full" 
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Submitting..." : "Submit Warranty Registration"}
+        </Button>
+      </form>
+    </div>
   );
 };
 

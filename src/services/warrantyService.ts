@@ -28,22 +28,25 @@ export const submitWarrantyRegistration = async (
   },
   user: User
 ): Promise<string> => {
+  console.log("=== FIRESTORE SUBMISSION START ===");
+  console.log("User:", { 
+    uid: user.uid, 
+    email: user.email,
+    emailVerified: user.emailVerified,
+    isAnonymous: user.isAnonymous
+  });
+  console.log("Form data:", formData);
+  
   try {
-    console.log("submitWarrantyRegistration called with:", { formData, userId: user.uid });
+    // Verify user is authenticated
+    if (!user.uid) {
+      throw new Error("User not authenticated - no UID");
+    }
     
-    // Add detailed authentication debugging
-    console.log("User authentication details:", {
-      uid: user.uid,
-      email: user.email,
-      emailVerified: user.emailVerified,
-      accessToken: await user.getIdToken(),
-      isAnonymous: user.isAnonymous,
-      providerData: user.providerData
-    });
-    
-    // Wait for fresh token to ensure we have valid authentication
+    // Get fresh token to ensure authentication
+    console.log("Getting fresh authentication token...");
     const token = await user.getIdToken(true);
-    console.log("Fresh ID token obtained:", token ? "✓ Token exists" : "✗ No token");
+    console.log("Token obtained:", !!token);
     
     const submissionData = {
       user_id: user.uid,
@@ -58,33 +61,23 @@ export const submitWarrantyRegistration = async (
     };
 
     console.log("Submitting data to Firestore:", submissionData);
-    console.log("Collection path: warranty_submissions");
     
     const docRef = await addDoc(collection(db, 'warranty_submissions'), submissionData);
-    console.log('Warranty submission saved with ID:', docRef.id);
+    console.log('✅ Warranty submission successful! Document ID:', docRef.id);
     return docRef.id;
-  } catch (error) {
-    console.error('Error submitting warranty registration:', error);
     
-    // Enhanced error logging with Firebase-specific details
+  } catch (error) {
+    console.error('❌ FIRESTORE ERROR:', error);
+    
     if (error instanceof Error) {
       console.error('Error details:', {
         name: error.name,
         message: error.message,
-        stack: error.stack
+        code: (error as any).code
       });
-      
-      // Check for specific Firebase permission errors
-      if (error.message.includes('Missing or insufficient permissions')) {
-        console.error('🔥 FIREBASE PERMISSION ERROR:');
-        console.error('- Check if user is properly authenticated');
-        console.error('- Verify Firestore security rules');
-        console.error('- User ID:', user?.uid);
-        console.error('- User email:', user?.email);
-      }
     }
     
-    throw error; // Re-throw the original error so the form can handle it
+    throw error;
   }
 };
 
