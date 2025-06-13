@@ -15,7 +15,7 @@ service cloud.firestore {
       // Allow service account read access for Google Sheets sync
       // Replace with your actual service account email
       allow read: if request.auth != null && 
-        request.auth.token.email == "sheets-sync-service@account-siamtech.iam.gserviceaccount.com";
+        request.auth.token.email == "info@siamtechonline.com";
     }
     
     // Deny all other access
