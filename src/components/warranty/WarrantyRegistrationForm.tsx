@@ -1,14 +1,13 @@
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, googleProvider } from "@/lib/firebase";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, onAuthStateChanged } from "firebase/auth";
 import { submitWarrantyRegistration } from "@/services/warrantyService";
 import { GoogleLogo } from "@/components/ui/google-logo";
 
@@ -27,6 +26,7 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
   const [user, loading, error] = useAuthState(auth);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [authReady, setAuthReady] = useState(false);
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -36,6 +36,39 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     purchase_date: "",
     source_of_purchase: "Shopee"
   });
+
+  // Enhanced authentication state monitoring
+  useEffect(() => {
+    console.log("Setting up enhanced auth state monitoring...");
+    
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      console.log("Auth state changed:", {
+        user: user ? {
+          uid: user.uid,
+          email: user.email,
+          emailVerified: user.emailVerified,
+          isAnonymous: user.isAnonymous
+        } : null,
+        timestamp: new Date().toISOString()
+      });
+      
+      if (user) {
+        try {
+          // Get fresh token to ensure we have valid authentication
+          const token = await user.getIdToken(true);
+          console.log("Fresh token obtained for user:", user.uid);
+          setAuthReady(true);
+        } catch (tokenError) {
+          console.error("Error getting fresh token:", tokenError);
+          setAuthReady(false);
+        }
+      } else {
+        setAuthReady(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -65,8 +98,13 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
   const handleGoogleSignIn = async () => {
     try {
       console.log("Attempting Google sign in...");
+      setSubmitError(null);
+      
       const result = await signInWithPopup(auth, googleProvider);
       console.log("Google sign in successful, user:", result.user);
+      
+      // Wait for auth state to stabilize
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
       // Pre-populate email from Google account
       if (result.user.email) {
@@ -89,11 +127,22 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     setSubmitError(null);
     
     console.log("Form submission started");
-    console.log("User:", user ? { uid: user.uid, email: user.email } : "No user");
+    console.log("Auth state:", { 
+      user: user ? { uid: user.uid, email: user.email } : "No user",
+      authReady,
+      loading 
+    });
     console.log("Form data:", formData);
     
     if (!user) {
       const errorMsg = "You must be signed in to submit a warranty registration";
+      console.error(errorMsg);
+      setSubmitError(errorMsg);
+      return;
+    }
+
+    if (!authReady) {
+      const errorMsg = "Authentication is still loading. Please wait a moment and try again.";
       console.error(errorMsg);
       setSubmitError(errorMsg);
       return;
@@ -114,6 +163,10 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     setIsSubmitting(true);
     
     try {
+      // Get fresh authentication token before submission
+      console.log("Getting fresh auth token before submission...");
+      await user.getIdToken(true);
+      
       console.log("Calling submitWarrantyRegistration with data:", formData);
       const result = await submitWarrantyRegistration(formData, user);
       console.log("Warranty registration successful:", result);
@@ -128,14 +181,14 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
         console.error("Error message:", error.message);
         console.error("Error stack:", error.stack);
         
-        if (error.message.includes("permission") || error.message.includes("security")) {
+        if (error.message.includes("Missing or insufficient permissions")) {
+          errorMessage = "Authentication error. Please sign out and sign in again, then try submitting.";
+        } else if (error.message.includes("permission") || error.message.includes("security")) {
           errorMessage = "Permission denied. Please check your authentication or contact support.";
         } else if (error.message.includes("network")) {
           errorMessage = "Network error. Please check your connection.";
         } else if (error.message.includes("auth")) {
           errorMessage = "Authentication error. Please sign in again.";
-        } else if (error.message.includes("Missing or insufficient permissions")) {
-          errorMessage = "Database permission error. Please contact support.";
         }
       }
       
@@ -148,7 +201,7 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
 
   if (loading) {
     console.log("Auth loading...");
-    return <div className="p-4 text-center">Loading...</div>;
+    return <div className="p-4 text-center">Loading authentication...</div>;
   }
 
   if (error) {
@@ -172,6 +225,11 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
           <h3 className="text-lg font-semibold mb-2">Sign In Required</h3>
           <p className="text-gray-600 mb-4">Please sign in to register your warranty.</p>
         </div>
+        {submitError && (
+          <Alert>
+            <AlertDescription>{submitError}</AlertDescription>
+          </Alert>
+        )}
         <Button onClick={handleGoogleSignIn} className="w-full" variant="outline">
           <GoogleLogo />
           Sign in with Google
@@ -180,13 +238,21 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     );
   }
 
-  console.log("Rendering form for user:", user.uid);
+  console.log("Rendering form for user:", user.uid, "Auth ready:", authReady);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {submitError && (
         <Alert>
           <AlertDescription>{submitError}</AlertDescription>
+        </Alert>
+      )}
+      
+      {!authReady && (
+        <Alert>
+          <AlertDescription>
+            Finalizing authentication... Please wait a moment before submitting.
+          </AlertDescription>
         </Alert>
       )}
       
@@ -277,7 +343,11 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
         </Select>
       </div>
       
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
+      <Button 
+        type="submit" 
+        className="w-full" 
+        disabled={isSubmitting || !authReady}
+      >
         {isSubmitting ? "Submitting..." : "Submit Warranty Registration"}
       </Button>
     </form>
