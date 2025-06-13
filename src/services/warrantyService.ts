@@ -39,14 +39,22 @@ export const submitWarrantyRegistration = async (
   
   try {
     // Verify user is authenticated
-    if (!user.uid) {
+    if (!user || !user.uid) {
       throw new Error("User not authenticated - no UID");
     }
     
-    // Get fresh token to ensure authentication
+    // Wait a moment to ensure auth state is fully settled
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Get fresh token with force refresh to ensure we have valid auth
     console.log("Getting fresh authentication token...");
     const token = await user.getIdToken(true);
     console.log("Token obtained:", !!token);
+    
+    // Additional auth verification
+    if (!token) {
+      throw new Error("Failed to obtain authentication token");
+    }
     
     const submissionData = {
       user_id: user.uid,
@@ -61,7 +69,9 @@ export const submitWarrantyRegistration = async (
     };
 
     console.log("Submitting data to Firestore:", submissionData);
+    console.log("Auth token available:", !!token);
     
+    // Try the Firestore write
     const docRef = await addDoc(collection(db, 'warranty_submissions'), submissionData);
     console.log('✅ Warranty submission successful! Document ID:', docRef.id);
     return docRef.id;
@@ -75,6 +85,16 @@ export const submitWarrantyRegistration = async (
         message: error.message,
         code: (error as any).code
       });
+      
+      // Check if it's a permission error
+      if (error.message.includes("Missing or insufficient permissions")) {
+        console.error("PERMISSION ERROR: User may not be properly authenticated for Firestore");
+        console.error("Current user state:", {
+          uid: user?.uid,
+          email: user?.email,
+          emailVerified: user?.emailVerified
+        });
+      }
     }
     
     throw error;

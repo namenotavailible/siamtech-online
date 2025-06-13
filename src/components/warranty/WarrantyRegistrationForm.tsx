@@ -27,6 +27,7 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
   const [user, loading, error] = useAuthState(auth);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [authReady, setAuthReady] = useState(false);
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -37,7 +38,7 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     source_of_purchase: "Shopee"
   });
 
-  // Pre-populate form when user signs in
+  // Pre-populate form when user signs in and wait for auth to be ready
   useEffect(() => {
     if (user) {
       console.log("User authenticated:", user.uid, user.email);
@@ -46,6 +47,22 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
         email: user.email || "",
         full_name: user.displayName || ""
       }));
+      
+      // Wait for auth to settle and token to be available
+      const checkAuthReady = async () => {
+        try {
+          const token = await user.getIdToken();
+          console.log("Auth token ready:", !!token);
+          setAuthReady(true);
+        } catch (error) {
+          console.error("Error getting auth token:", error);
+          setAuthReady(false);
+        }
+      };
+      
+      checkAuthReady();
+    } else {
+      setAuthReady(false);
     }
   }, [user]);
 
@@ -101,10 +118,18 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     
     console.log("=== FORM SUBMISSION START ===");
     console.log("User state:", user ? { uid: user.uid, email: user.email } : "No user");
+    console.log("Auth ready:", authReady);
     console.log("Form data:", formData);
     
     if (!user) {
       const errorMsg = "You must be signed in to submit a warranty registration";
+      console.error(errorMsg);
+      setSubmitError(errorMsg);
+      return;
+    }
+
+    if (!authReady) {
+      const errorMsg = "Authentication is still loading, please wait a moment and try again";
       console.error(errorMsg);
       setSubmitError(errorMsg);
       return;
@@ -123,9 +148,13 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     setIsSubmitting(true);
     
     try {
-      console.log("Getting fresh auth token...");
+      console.log("Getting fresh auth token before submission...");
       const token = await user.getIdToken(true);
       console.log("Fresh token obtained:", !!token);
+      
+      if (!token) {
+        throw new Error("Failed to get authentication token. Please sign out and sign in again.");
+      }
       
       console.log("Submitting to Firestore...");
       const result = await submitWarrantyRegistration(formData, user);
@@ -138,8 +167,12 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
       
       let errorMessage = "Failed to submit warranty registration. Please try again.";
       
-      if (error instanceof Error && error.message.includes("Missing or insufficient permissions")) {
-        errorMessage = "Authentication error. Please sign out and sign in again, then try submitting.";
+      if (error instanceof Error) {
+        if (error.message.includes("Missing or insufficient permissions")) {
+          errorMessage = "Authentication error. Please sign out and sign in again, then try submitting.";
+        } else if (error.message.includes("Failed to get authentication token")) {
+          errorMessage = error.message;
+        }
       }
       
       setSubmitError(errorMessage);
@@ -193,6 +226,9 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
           <div>
             <p className="text-sm text-green-800">
               Signed in as: <strong>{user.email}</strong>
+            </p>
+            <p className="text-xs text-green-600">
+              Auth Status: {authReady ? "✅ Ready" : "⏳ Loading..."}
             </p>
           </div>
           <Button onClick={handleSignOut} size="sm" variant="outline">
@@ -298,9 +334,9 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
         <Button 
           type="submit" 
           className="w-full" 
-          disabled={isSubmitting}
+          disabled={isSubmitting || !authReady}
         >
-          {isSubmitting ? "Submitting..." : "Submit Warranty Registration"}
+          {isSubmitting ? "Submitting..." : !authReady ? "Waiting for authentication..." : "Submit Warranty Registration"}
         </Button>
       </form>
     </div>
