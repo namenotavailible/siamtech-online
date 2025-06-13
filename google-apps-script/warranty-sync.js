@@ -1,3 +1,4 @@
+
 /**
  * Google Apps Script to sync Firestore warranty registrations to Google Sheets
  * 
@@ -13,8 +14,8 @@
 
 // Configuration - Update these with your Firebase project details
 const FIREBASE_PROJECT_ID = 'account-siamtech';
-const COLLECTION_NAME = 'warranty_registrations';
-const SHEET_NAME = 'Warranty Registrations';
+const COLLECTION_NAME = 'warranty_submissions'; // Updated to match the actual collection name
+const SHEET_NAME = 'Warranty Submissions';
 
 // Service account credentials (store these in PropertiesService for security)
 function getServiceAccountKey() {
@@ -78,18 +79,18 @@ function setupSheet() {
   // Clear existing content
   sheet.clear();
   
-  // Set up headers
+  // Set up headers - Updated to match the actual field names from our web app
   const headers = [
     'ID',
     'User ID',
-    'Product Name',
-    'Order Number',
-    'Purchase Date',
-    'Purchase Source',
     'Full Name',
     'Email',
     'Phone Number',
-    'Timestamp',
+    'Product Name',
+    'Order Number',
+    'Purchase Date',
+    'Source of Purchase',
+    'Submitted At',
     'Last Updated'
   ];
   
@@ -124,7 +125,7 @@ function syncWarrantyData() {
     }
     
     if (documents.length === 0) {
-      console.log('No warranty registrations found');
+      console.log('No warranty submissions found');
       return;
     }
     
@@ -134,15 +135,15 @@ function syncWarrantyData() {
       
       return [
         docId,
-        data.userId?.stringValue || '',
-        data.productName?.stringValue || '',
-        data.orderNumber?.stringValue || '',
-        data.purchaseDate?.stringValue || '',
-        data.purchaseSource?.stringValue || '',
-        data.fullName?.stringValue || '',
+        data.user_id?.stringValue || '',
+        data.full_name?.stringValue || '',
         data.email?.stringValue || '',
-        data.phoneNumber?.stringValue || '',
-        data.timestamp?.timestampValue ? new Date(data.timestamp.timestampValue) : '',
+        data.phone_number?.stringValue || '',
+        data.product_name?.stringValue || '',
+        data.order_number?.stringValue || '',
+        data.purchase_date?.stringValue || '',
+        data.source_of_purchase?.stringValue || '',
+        data.submitted_at?.timestampValue ? new Date(data.submitted_at.timestampValue) : '',
         new Date() // Last updated timestamp
       ];
     });
@@ -152,7 +153,7 @@ function syncWarrantyData() {
       sheet.autoResizeColumns(1, rows[0].length);
     }
     
-    console.log(`Successfully synced ${rows.length} warranty registrations`);
+    console.log(`Successfully synced ${rows.length} warranty submissions`);
     
   } catch (error) {
     console.error('Error syncing warranty data:', error);

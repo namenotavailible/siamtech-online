@@ -13,9 +13,9 @@ service cloud.firestore {
     }
     
     // Service account access for Google Sheets sync
-    // Add your service account email to this rule
+    // Replace with your actual service account email
     match /warranty_submissions/{document} {
-      allow read: if request.auth.token.email == "your-service-account@account-siamtech.iam.gserviceaccount.com";
+      allow read: if request.auth.token.email == "sheets-sync-service@account-siamtech.iam.gserviceaccount.com";
     }
     
     // Deny all other access
