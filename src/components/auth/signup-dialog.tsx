@@ -31,6 +31,8 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showSignedInAlert, setShowSignedInAlert] = useState(false);
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [marketingConsent, setMarketingConsent] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -59,6 +61,12 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
 
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!privacyConsent) {
+      toast.error("Please agree to the Privacy Policy to continue.");
+      return;
+    }
+    
     setIsLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -197,8 +205,47 @@ export function SignUpDialog({ open, setOpen }: { open: boolean; setOpen: (open:
                     onChange={handleInputChange}
                   />
                 </div>
+
+                {/* Consent Checkboxes */}
+                <div className="space-y-3 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
+                  <div className="flex items-start space-x-3">
+                    <input
+                      type="checkbox"
+                      id="privacy-consent-auth-signup"
+                      checked={privacyConsent}
+                      onChange={(e) => setPrivacyConsent(e.target.checked)}
+                      className="mt-1 h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600 rounded"
+                      required
+                    />
+                    <label htmlFor="privacy-consent-auth-signup" className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed cursor-pointer">
+                      I agree to the{" "}
+                      <a 
+                        href="/privacy" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-primary hover:underline font-medium"
+                      >
+                        Privacy Policy
+                      </a>{" "}
+                      and consent to the processing of my personal data for account registration and service delivery.
+                    </label>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <input
+                      type="checkbox"
+                      id="marketing-consent-auth-signup"
+                      checked={marketingConsent}
+                      onChange={(e) => setMarketingConsent(e.target.checked)}
+                      className="mt-1 h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600 rounded"
+                    />
+                    <label htmlFor="marketing-consent-auth-signup" className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed cursor-pointer">
+                      I consent to receive marketing emails and promotional updates (optional).
+                    </label>
+                  </div>
+                </div>
               </div>
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className="w-full" disabled={isLoading || !privacyConsent}>
                 {isLoading ? `${t("signup_button")}...` : t("signup_button")}
               </Button>
             </form>

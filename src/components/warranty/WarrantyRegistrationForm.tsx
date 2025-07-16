@@ -37,6 +37,7 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     purchase_date: "",
     source_of_purchase: "Shopee"
   });
+  const [privacyConsent, setPrivacyConsent] = useState(false);
 
   // Pre-populate form when user signs in and wait for auth to be ready
   useEffect(() => {
@@ -141,6 +142,13 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
     
     if (missingFields.length > 0) {
       const errorMsg = `Please fill in all required fields: ${missingFields.join(', ')}`;
+      setSubmitError(errorMsg);
+      return;
+    }
+
+    // Validate privacy consent
+    if (!privacyConsent) {
+      const errorMsg = "Please agree to the Privacy Policy and consent to data collection.";
       setSubmitError(errorMsg);
       return;
     }
@@ -330,11 +338,40 @@ const WarrantyRegistrationForm = ({ onClose }: WarrantyRegistrationFormProps) =>
             </SelectContent>
           </Select>
         </div>
+
+        {/* Privacy Consent Checkbox */}
+        <div className="space-y-3 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
+          <div className="flex items-start space-x-3">
+            <input
+              type="checkbox"
+              id="privacy-consent"
+              checked={privacyConsent}
+              onChange={(e) => setPrivacyConsent(e.target.checked)}
+              className="mt-1 h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600 rounded"
+              required
+            />
+            <Label htmlFor="privacy-consent" className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed cursor-pointer">
+              I have read and agree to the{" "}
+              <a 
+                href="/privacy" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-primary hover:underline font-medium"
+              >
+                Privacy Policy
+              </a>
+              , and I consent to the collection and use of my personal data for warranty registration and support purposes.
+            </Label>
+          </div>
+          <p className="text-xs text-gray-500 dark:text-gray-400 ml-7">
+            This consent is required under GDPR and PDPA regulations. You can withdraw your consent at any time by contacting our support team.
+          </p>
+        </div>
         
         <Button 
           type="submit" 
           className="w-full" 
-          disabled={isSubmitting || !authReady}
+          disabled={isSubmitting || !authReady || !privacyConsent}
         >
           {isSubmitting ? "Submitting..." : !authReady ? "Waiting for authentication..." : "Submit Warranty Registration"}
         </Button>
